@@ -14,4 +14,4 @@ Requires the AR Foundation package
 3. Open your choice of sample scenes.
 
 4. See the documentation for the AR Foundation for usage instructions and more information
-See the [AR Foundation Documentation](https://docs.unity3d.com/Packages/com.unity.xr.arutilities@1.0/manual/index.html) to learn how to get started with the core components.
+See the [AR Foundation Documentation](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@1.0/manual/index.html) to learn how to get started with the core components.
