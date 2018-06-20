@@ -6,68 +6,41 @@ using UnityEngine.XR.ARFoundation;
 [RequireComponent(typeof(ARSessionOrigin))]
 public class PlaceOnPlane : MonoBehaviour
 {
-    [SerializeField]
-    [Tooltip("Instantiates this prefab on a plane at the touch location.")]
-    GameObject m_PlacedPrefab;
+    [SerializeField] [Tooltip("Instantiates this prefab on a plane at the touch location.")]
+    public GameObject placedPrefab;
 
-    /// <summary>
-    /// The prefab to instantiate on touch.
-    /// </summary>
-    public GameObject placedPrefab
-    {
-        get { return m_PlacedPrefab; }
-        set { m_PlacedPrefab = value; }
-    }
-
-    /// <summary>
-    /// The object instantiated as a result of a successful raycast intersection with a plane.
-    /// </summary>
-    public GameObject placedObject { get; private set; }
+    List<ARRaycastHit> m_Hits;
+    GameObject m_SpawnedObject;
+    ARSessionOrigin m_SessionOrigin;
 
     void Awake()
     {
         m_SessionOrigin = GetComponent<ARSessionOrigin>();
+        m_Hits = new List<ARRaycastHit>();
     }
 
     void Update()
     {
-        if (Input.touchCount == 0)
-            return;
-
-        var touch = Input.GetTouch(0);
-
-        var hits = s_RaycastHits;
-        
-        if (!m_SessionOrigin.Raycast(touch.position, hits, TrackableType.PlaneWithinPolygon))
-            return;
-
-        placementHit = hits[0];
-    }
-
-    ARSessionOrigin m_SessionOrigin;
-
-    ARRaycastHit m_PlacementHit;
-
-    ARRaycastHit placementHit
-    {
-        get { return m_PlacementHit; }
-        set
+        if (Input.touchCount > 0)
         {
-            m_PlacementHit = value;
+            Touch touch = Input.GetTouch(0);
 
-            if (placedObject == null && m_PlacedPrefab != null)
+            if (m_SessionOrigin.Raycast(touch.position, m_Hits, TrackableType.PlaneWithinPolygon))
             {
-                placedObject = Instantiate(m_PlacedPrefab);
-            }
+                Pose hitPose = m_Hits[0].pose;
 
-            if (placedObject != null)
-            {
-                var pose = m_PlacementHit.pose;
-                placedObject.transform.position = pose.position;
-                placedObject.transform.rotation = pose.rotation;
+                if (m_SpawnedObject == null)
+                {
+                    if (touch.phase == TouchPhase.Began)
+                    {
+                        m_SpawnedObject = Instantiate(placedPrefab, hitPose.position, hitPose.rotation);
+                    }
+                }
+                else
+                {
+                    m_SpawnedObject.transform.position = hitPose.position;
+                }
             }
         }
     }
-
-    List<ARRaycastHit> s_RaycastHits = new List<ARRaycastHit>();
 }
