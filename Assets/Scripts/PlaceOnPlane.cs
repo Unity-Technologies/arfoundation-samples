@@ -7,17 +7,16 @@ using UnityEngine.XR.ARFoundation;
 public class PlaceOnPlane : MonoBehaviour
 {
     [SerializeField] [Tooltip("Instantiates this prefab on a plane at the touch location.")]
-    public GameObject PlacedPrefab;
+    public GameObject placedPrefab;
 
-    private List<ARRaycastHit> hits;
-    private bool spawnedPrefab = false;
-    private GameObject spawnedObject;
-    private ARSessionOrigin sessionOrigin;
+    List<ARRaycastHit> m_Hits;
+    GameObject m_SpawnedObject;
+    ARSessionOrigin m_SessionOrigin;
 
     void Awake()
     {
-        sessionOrigin = GetComponent<ARSessionOrigin>();
-        hits = new List<ARRaycastHit>();
+        m_SessionOrigin = GetComponent<ARSessionOrigin>();
+        m_Hits = new List<ARRaycastHit>();
     }
 
     void Update()
@@ -26,25 +25,20 @@ public class PlaceOnPlane : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
 
-            if (!spawnedPrefab)
+            if (m_SessionOrigin.Raycast(touch.position, m_Hits, TrackableType.PlaneWithinPolygon))
             {
-                if (touch.phase == TouchPhase.Began)
+                Pose hitPose = m_Hits[0].pose;
+
+                if (m_SpawnedObject == null)
                 {
-                    if (sessionOrigin.Raycast(touch.position, hits, TrackableType.PlaneWithinPolygon))
+                    if (touch.phase == TouchPhase.Began)
                     {
-                        Pose hitPose = hits[0].pose;
-                       
-                        spawnedObject = Instantiate(PlacedPrefab, hitPose.position, hitPose.rotation);
-                        spawnedPrefab = true;                    
+                        m_SpawnedObject = Instantiate(placedPrefab, hitPose.position, hitPose.rotation);
                     }
                 }
-            }
-            else
-            {
-                if (sessionOrigin.Raycast(touch.position, hits, TrackableType.PlaneWithinPolygon))
+                else
                 {
-                    Pose hitPose = hits[0].pose;
-                    spawnedObject.transform.position = hitPose.position;                 
+                    m_SpawnedObject.transform.position = hitPose.position;
                 }
             }
         }
