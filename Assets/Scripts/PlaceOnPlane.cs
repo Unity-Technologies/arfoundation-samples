@@ -6,17 +6,27 @@ using UnityEngine.XR.ARFoundation;
 [RequireComponent(typeof(ARSessionOrigin))]
 public class PlaceOnPlane : MonoBehaviour
 {
-    [SerializeField] [Tooltip("Instantiates this prefab on a plane at the touch location.")]
-    public GameObject placedPrefab;
+    [SerializeField]
+    [Tooltip("Instantiates this prefab on a plane at the touch location.")]
+    GameObject m_PlacedPrefab;
 
-    List<ARRaycastHit> m_Hits;
+    /// <summary>
+    /// The prefab to instantiate on touch.
+    /// </summary>
+    public GameObject placedPrefab
+    {
+        get { return m_PlacedPrefab; }
+        set { m_PlacedPrefab = value; }
+    }
+    
+    static List<ARRaycastHit> s_Hits;
     GameObject m_SpawnedObject;
     ARSessionOrigin m_SessionOrigin;
 
     void Awake()
     {
         m_SessionOrigin = GetComponent<ARSessionOrigin>();
-        m_Hits = new List<ARRaycastHit>();
+        s_Hits = new List<ARRaycastHit>();
     }
 
     void Update()
@@ -25,15 +35,15 @@ public class PlaceOnPlane : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
 
-            if (m_SessionOrigin.Raycast(touch.position, m_Hits, TrackableType.PlaneWithinPolygon))
+            if (m_SessionOrigin.Raycast(touch.position, s_Hits, TrackableType.PlaneWithinPolygon))
             {
-                Pose hitPose = m_Hits[0].pose;
+                Pose hitPose = s_Hits[0].pose;
 
                 if (m_SpawnedObject == null)
                 {
                     if (touch.phase == TouchPhase.Began)
                     {
-                        m_SpawnedObject = Instantiate(placedPrefab, hitPose.position, hitPose.rotation);
+                        m_SpawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
                     }
                 }
                 else
