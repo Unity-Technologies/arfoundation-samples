@@ -19,14 +19,18 @@ public class PlaceOnPlane : MonoBehaviour
         set { m_PlacedPrefab = value; }
     }
     
-    static List<ARRaycastHit> s_Hits;
-    GameObject m_SpawnedObject;
-    ARSessionOrigin m_SessionOrigin;
+    /// <summary>
+    /// The object instantiated as a result of a successful raycast intersection with a plane.
+    /// </summary>
+    public GameObject spawnedObject { get; private set; }
 
+    ARSessionOrigin m_SessionOrigin;
+    
+    static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
+    
     void Awake()
     {
         m_SessionOrigin = GetComponent<ARSessionOrigin>();
-        s_Hits = new List<ARRaycastHit>();
     }
 
     void Update()
@@ -39,16 +43,13 @@ public class PlaceOnPlane : MonoBehaviour
             {
                 Pose hitPose = s_Hits[0].pose;
 
-                if (m_SpawnedObject == null)
+                if (spawnedObject == null)
                 {
-                    if (touch.phase == TouchPhase.Began)
-                    {
-                        m_SpawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
-                    }
+                    spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
                 }
                 else
                 {
-                    m_SpawnedObject.transform.position = hitPose.position;
+                    spawnedObject.transform.position = hitPose.position;
                 }
             }
         }
