@@ -17,7 +17,7 @@ public class LightEstimationUI : MonoBehaviour
 
 	LightEstimation m_LightEstimation;
 
-	const string k_UnsupportedText = "Not Supported";
+	const string k_UnavailableText = "Unavailable";
 
 	void Awake()
 	{
@@ -26,31 +26,24 @@ public class LightEstimationUI : MonoBehaviour
 
 	void Update()
 	{
-		if (m_LightEstimation.Brightness.HasValue)
-		{
-			m_BrightnessVal.text = m_LightEstimation.Brightness.Value.ToString();
-		}
-		else
-		{
-			m_BrightnessVal.text = k_UnsupportedText;
-		}
 		
-		if (m_LightEstimation.ColorTemperature.HasValue)
-		{
-			m_ColorTempVal.text = m_LightEstimation.ColorTemperature.Value.ToString();
-		}
-		else
-		{
-			m_ColorTempVal.text = k_UnsupportedText;
-		}
+		SetUIValue(m_LightEstimation.Brightness.HasValue, m_BrightnessVal, m_LightEstimation.Brightness.Value.ToString());
+		SetUIValue(m_LightEstimation.ColorTemperature.HasValue, m_ColorTempVal, m_LightEstimation.ColorTemperature.Value.ToString());
+		SetUIValue(m_LightEstimation.ColorCorrection.HasValue, m_ColorCorrectVal, m_LightEstimation.ColorTemperature.Value.ToString());
+	}
 
-		if (m_LightEstimation.ColorCorrection.HasValue)
+	void SetUIValue(bool ContainsValue, Text UIText, string DisplayValue)
+	{
+		if (UIText)
 		{
-			m_ColorCorrectVal.text = m_LightEstimation.ColorCorrection.Value.ToString();
-		}
-		else
-		{
-			m_ColorCorrectVal.text = k_UnsupportedText;
+			if (ContainsValue)
+			{
+				UIText.text = DisplayValue;
+			}
+			else
+			{
+				UIText.text = k_UnavailableText;
+			}
 		}
 	}
 	

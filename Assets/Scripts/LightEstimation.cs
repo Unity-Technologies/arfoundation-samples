@@ -6,15 +6,6 @@ public class LightEstimation : MonoBehaviour
 {
 	Light m_Light;
 
-	/// <summary>
-	/// The light affected
-	/// </summary>
-	public Light Light
-	{
-		get { return m_Light; }
-		set { m_Light = value; }
-	}
-
 	float? m_Brightness;
 
 	public float? Brightness
