@@ -10,9 +10,9 @@ public class ARFeatheredPlaneMeshVisualizer : MonoBehaviour
     [Tooltip("The width of the texture feathering (in world units).")]
     public float m_FeatheringWidth = 0.2f;
 
-    private ARPlaneMeshVisualizer m_PlaneMeshVisualizer;
-    private ARPlane m_ARPlane;
-    private Material m_FeatheredPlaneMaterial;
+    ARPlaneMeshVisualizer m_PlaneMeshVisualizer;
+    ARPlane m_ARPlane;
+    Material m_FeatheredPlaneMaterial;
 
     private void Awake()
     {
@@ -56,9 +56,8 @@ public class ARFeatheredPlaneMeshVisualizer : MonoBehaviour
 
         // Figure out where the plane center is in plane-local space (it's in session-local space)
         BoundedPlane boundedPlane = m_ARPlane.boundedPlane;
-                Pose planePose = boundedPlane.Pose;
-                Vector3 planeCenter = boundedPlane.Center;
-                Vector3 centerInPlaneSpace = planePose.InverseTransformPosition(boundedPlane.Center);
+        Pose planePose = boundedPlane.Pose;
+        Vector3 centerInPlaneSpace = planePose.InverseTransformPosition(boundedPlane.Center);
 
         mesh.GetVertices(s_Vertices);
 
@@ -95,6 +94,6 @@ public class ARFeatheredPlaneMeshVisualizer : MonoBehaviour
         mesh.UploadMeshData(false);
     }
 
-    private static List<Vector3> s_FeatheringUVs = new List<Vector3>();
-    private static List<Vector3> s_Vertices = new List<Vector3>();
+    static List<Vector3> s_FeatheringUVs = new List<Vector3>();
+    static List<Vector3> s_Vertices = new List<Vector3>();
 }
