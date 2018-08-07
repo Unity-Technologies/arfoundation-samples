@@ -8,7 +8,8 @@ using UnityEngine.XR.ARFoundation;
 public class ARFeatheredPlaneMeshVisualizer : MonoBehaviour
 {
     [Tooltip("The width of the texture feathering (in world units).")]
-    public float m_FeatheringWidth = 0.2f;
+    [SerializeField]
+    float m_FeatheringWidth = 0.2f;
 
     ARPlaneMeshVisualizer m_PlaneMeshVisualizer;
     ARPlane m_ARPlane;
