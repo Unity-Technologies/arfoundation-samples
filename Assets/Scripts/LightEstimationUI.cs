@@ -26,10 +26,9 @@ public class LightEstimationUI : MonoBehaviour
 
 	void Update()
 	{
-		
-		SetUIValue(m_LightEstimation.Brightness.HasValue, m_BrightnessVal, m_LightEstimation.Brightness.Value.ToString());
-		SetUIValue(m_LightEstimation.ColorTemperature.HasValue, m_ColorTempVal, m_LightEstimation.ColorTemperature.Value.ToString());
-		SetUIValue(m_LightEstimation.ColorCorrection.HasValue, m_ColorCorrectVal, m_LightEstimation.ColorTemperature.Value.ToString());
+		SetUIValue(m_LightEstimation.brightness.HasValue, m_BrightnessVal, m_LightEstimation.brightness.Value.ToString());
+		SetUIValue(m_LightEstimation.colorTemperature.HasValue, m_ColorTempVal, m_LightEstimation.colorTemperature.Value.ToString());
+		SetUIValue(m_LightEstimation.colorCorrection.HasValue, m_ColorCorrectVal, m_LightEstimation.colorTemperature.Value.ToString());
 	}
 
 	void SetUIValue(bool ContainsValue, Text UIText, string DisplayValue)
