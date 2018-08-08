@@ -7,6 +7,12 @@ using UnityEngine.XR.ARFoundation;
 [RequireComponent(typeof(ARPlaneMeshVisualizer), typeof(MeshRenderer), typeof(ARPlane))]
 public class ARFeatheredPlaneMeshVisualizer : MonoBehaviour
 {
+    float featheringWidth
+    { 
+        get { return m_FeatheringWidth; }
+        set { m_FeatheringWidth = value; } 
+    }
+
     [Tooltip("The width of the texture feathering (in world units).")]
     [SerializeField]
     float m_FeatheringWidth = 0.2f;
@@ -74,7 +80,7 @@ public class ARFeatheredPlaneMeshVisualizer : MonoBehaviour
             // Remap the UV so that a UV of "1" marks the feathering boudary.
             // The ratio of featherBoundaryDistance/edgeDistance is the same as featherUV/edgeUV.
             // Rearrange to get the edge UV.
-            float uvMapping = vertexDist / (vertexDist - m_FeatheringWidth);
+            float uvMapping = vertexDist / (vertexDist - featheringWidth);
             uv.x = uvMapping;
 
             // All the UV mappings will be different. In the shader we need to know the UV value we need to fade out by.
