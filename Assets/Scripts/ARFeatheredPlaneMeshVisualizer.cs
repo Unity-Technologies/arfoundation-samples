@@ -18,13 +18,11 @@ public class ARFeatheredPlaneMeshVisualizer : MonoBehaviour
     float m_FeatheringWidth = 0.2f;
 
     ARPlaneMeshVisualizer m_PlaneMeshVisualizer;
-    ARPlane m_ARPlane;
     Material m_FeatheredPlaneMaterial;
 
     void Awake()
     {
         m_PlaneMeshVisualizer = GetComponent<ARPlaneMeshVisualizer>();
-        m_ARPlane = GetComponent<ARPlane>();
         m_FeatheredPlaneMaterial = GetComponent<MeshRenderer>().material;
     }
 
@@ -61,12 +59,16 @@ public class ARFeatheredPlaneMeshVisualizer : MonoBehaviour
         s_FeatheringUVs.Clear();
         if (s_FeatheringUVs.Capacity < vertexCount) { s_FeatheringUVs.Capacity = vertexCount; }
 
-        // Figure out where the plane center is in plane-local space (it's in session-local space)
-        BoundedPlane boundedPlane = m_ARPlane.boundedPlane;
-        Pose planePose = boundedPlane.Pose;
-        Vector3 centerInPlaneSpace = planePose.InverseTransformPosition(boundedPlane.Center);
-
+        
         mesh.GetVertices(s_Vertices);
+
+        // Figure out where the plane center is in plane-local space (it's in session-local space)
+        Vector3 centerInPlaneSpace = Vector3.zero;
+        for (int i = 0; i < vertexCount - 1; i++)
+        {
+            centerInPlaneSpace += s_Vertices[i];
+        }
+        centerInPlaneSpace /= vertexCount;
 
         Vector3 uv = new Vector3(0, 0, 0);
 
@@ -75,12 +77,12 @@ public class ARFeatheredPlaneMeshVisualizer : MonoBehaviour
         // Assume the last vertex is the center vertex.
         for (int i = 0; i < vertexCount - 1; i++)
         {
-            float vertexDist = Vector3.Distance(planePose.InverseTransformPosition(s_Vertices[i]), centerInPlaneSpace);
+            float vertexDist = Vector3.Distance(s_Vertices[i], centerInPlaneSpace);
 
             // Remap the UV so that a UV of "1" marks the feathering boudary.
             // The ratio of featherBoundaryDistance/edgeDistance is the same as featherUV/edgeUV.
             // Rearrange to get the edge UV.
-            float uvMapping = vertexDist / (vertexDist - featheringWidth);
+            float uvMapping = vertexDist / Mathf.Max(vertexDist - featheringWidth, 0.001f);
             uv.x = uvMapping;
 
             // All the UV mappings will be different. In the shader we need to know the UV value we need to fade out by.
