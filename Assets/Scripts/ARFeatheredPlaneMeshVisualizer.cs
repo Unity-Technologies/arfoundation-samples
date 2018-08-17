@@ -62,7 +62,7 @@ public class ARFeatheredPlaneMeshVisualizer : MonoBehaviour
         
         mesh.GetVertices(s_Vertices);
 
-        // Figure out where the plane center is in plane-local space (it's in session-local space)
+        // Figure out where the plane center is
         Vector3 centerInPlaneSpace = Vector3.zero;
         for (int i = 0; i < vertexCount - 1; i++)
         {
