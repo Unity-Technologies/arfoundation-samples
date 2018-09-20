@@ -25,21 +25,21 @@ namespace UnityEngine.XR.ARFoundation.LWRPSupport
 
             if (bUseRenderPipeline)
             {
-                var lbcr = cameraGameObject.GetComponent<LWRPBeforeCameraRender>();
-                if (lbcr == null)
+                var lwrpBeforeCameraRender = cameraGameObject.GetComponent<LWRPBeforeCameraRender>();
+                if (lwrpBeforeCameraRender == null)
                 {
                     cameraGameObject.AddComponent<LWRPBeforeCameraRender>();
                 }
 
-                var lacd = cameraGameObject.GetComponent<LightweightAdditionalCameraData>();
-                if (lacd == null)
+                var lightweightAdditionalCameraData = cameraGameObject.GetComponent<LightweightAdditionalCameraData>();
+                if (lightweightAdditionalCameraData == null)
                 {
-                    lacd = cameraGameObject.AddComponent<LightweightAdditionalCameraData>();
+                    lightweightAdditionalCameraData = cameraGameObject.AddComponent<LightweightAdditionalCameraData>();
                 }
 
-                lacd.renderShadows = false;
-                lacd.requiresColorTexture = false;
-                lacd.requiresDepthTexture = false;
+                lightweightAdditionalCameraData.renderShadows = false;
+                lightweightAdditionalCameraData.requiresColorTexture = false;
+                lightweightAdditionalCameraData.requiresDepthTexture = false;
 
             }
         }
@@ -51,7 +51,7 @@ namespace UnityEngine.XR.ARFoundation.LWRPSupport
                 return null;
 
             // Try to create a material from the plugin's provided shader.
-            string shaderName = "";
+            var shaderName = "";
             if (!cameraSubsystem.TryGetShaderName(ref shaderName))
                 return null;
 

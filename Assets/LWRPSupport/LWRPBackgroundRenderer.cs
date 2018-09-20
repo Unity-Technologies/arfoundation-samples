@@ -4,8 +4,8 @@ namespace UnityEngine.XR.ARFoundation.LWRPSupport
 
     public class LWRPBackgroundRenderer : ARFoundationBackgroundRenderer
     {
-        CameraClearFlags _savedClearFlags;
-        LWRPBeforeCameraRender _lwrpBeforeCameraRender;
+        CameraClearFlags m_SavedClearFlags;
+        LWRPBeforeCameraRender m_LWRPBeforeCameraRender;
 
         protected override bool EnableARBackgroundRendering()
         {
@@ -18,15 +18,15 @@ namespace UnityEngine.XR.ARFoundation.LWRPSupport
                 return false;
 
             // Clear flags
-            _savedClearFlags = camera.clearFlags;
+            m_SavedClearFlags = camera.clearFlags;
             camera.clearFlags = CameraClearFlags.Depth;
 
-            if (_lwrpBeforeCameraRender == null)
+            if (m_LWRPBeforeCameraRender == null)
             {
-                _lwrpBeforeCameraRender = camera.gameObject.GetComponent<LWRPBeforeCameraRender>();
+                m_LWRPBeforeCameraRender = camera.gameObject.GetComponent<LWRPBeforeCameraRender>();
             }
             
-            _lwrpBeforeCameraRender.SetupBlitMaterial(m_BackgroundMaterial);
+            m_LWRPBeforeCameraRender.SetupBlitMaterial(m_BackgroundMaterial);
 
             return true;
 
@@ -41,12 +41,12 @@ namespace UnityEngine.XR.ARFoundation.LWRPSupport
             camera = m_Camera ? m_Camera : Camera.main;
             if (camera == null)
                 return;
-            camera.clearFlags = _savedClearFlags;
+            camera.clearFlags = m_SavedClearFlags;
 
-            if (_lwrpBeforeCameraRender != null)
+            if (m_LWRPBeforeCameraRender != null)
             {
-                _lwrpBeforeCameraRender.SetupBlitMaterial(null);
-                _lwrpBeforeCameraRender = null;
+                m_LWRPBeforeCameraRender.SetupBlitMaterial(null);
+                m_LWRPBeforeCameraRender = null;
             }
 
         }
