@@ -2,6 +2,7 @@
 using System;
 using UnityEngine.Experimental.Rendering.LightweightPipeline;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 
 namespace UnityEngine.XR.ARFoundation.LWRPSupport
 {
@@ -11,19 +12,20 @@ namespace UnityEngine.XR.ARFoundation.LWRPSupport
         /// <summary>
         /// we're going to reference all materials that we want to use so that they get built into the project
         /// </summary>
-        public Material[] MaterialsUsed;
+        [SerializeField]
+        Material[] m_MaterialsUsed;
         
         public override ARFoundationBackgroundRenderer CreateARBackgroundRenderer()
         {
-            var bUseRenderPipeline = GraphicsSettings.renderPipelineAsset != null;
-            return bUseRenderPipeline ? new LWRPBackgroundRenderer() : new ARFoundationBackgroundRenderer();
+            var useRenderPipeline = GraphicsSettings.renderPipelineAsset != null;
+            return useRenderPipeline ? new LWRPBackgroundRenderer() : new ARFoundationBackgroundRenderer();
         }
 
         public override void CreateHelperComponents(GameObject cameraGameObject)
         {
-            var bUseRenderPipeline = GraphicsSettings.renderPipelineAsset != null;
+            var useRenderPipeline = GraphicsSettings.renderPipelineAsset != null;
 
-            if (bUseRenderPipeline)
+            if (useRenderPipeline)
             {
                 var lwrpBeforeCameraRender = cameraGameObject.GetComponent<LWRPBeforeCameraRender>();
                 if (lwrpBeforeCameraRender == null)
