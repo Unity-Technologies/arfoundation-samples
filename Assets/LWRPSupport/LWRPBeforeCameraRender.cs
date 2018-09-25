@@ -8,21 +8,21 @@ namespace UnityEngine.XR.ARFoundation
 	{
 		const string k_ARBlitTag = "ARBackground Blit Pass";
 
-		Material BlitMaterial { get; set; }
+		Material blitMaterial { get; set; }
 
 		public void SetupBlitMaterial(Material material)
 		{
-			this.BlitMaterial = material;
+			this.blitMaterial = material;
 		}
 
 		public void ExecuteBeforeCameraRender(ScriptableRenderContext context, Camera currentCamera, LightweightPipeline.PipelineSettings pipelineSettings,
 			ScriptableRenderer currentRenderer)
 		{
-			if (BlitMaterial == null) return;
+			if (blitMaterial == null) return;
 			
 			var cmd = CommandBufferPool.Get(k_ARBlitTag);
 			
-			cmd.Blit(null, BuiltinRenderTextureType.CameraTarget, BlitMaterial);
+			cmd.Blit(null, BuiltinRenderTextureType.CameraTarget, blitMaterial);
 
 			context.ExecuteCommandBuffer(cmd);
 			CommandBufferPool.Release(cmd);
