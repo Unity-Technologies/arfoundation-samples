@@ -1,12 +1,12 @@
 Shader "Unlit/ARKitLWRP"
 {
-	Properties
-	{
-    	_textureY ("TextureY", 2D) = "white" {}
+    Properties
+    {
+        _textureY ("TextureY", 2D) = "white" {}
         _textureCbCr ("TextureCbCr", 2D) = "black" {}
-	}
-	
-	SubShader
+    }
+    
+    SubShader
     {
         Tags { "RenderType" = "Opaque" "RenderPipeline" = "LightweightPipeline"}
         LOD 100

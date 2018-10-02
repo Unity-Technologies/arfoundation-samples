@@ -26,7 +26,7 @@ namespace UnityEngine.XR.ARFoundation.LWRPSupport
                 m_LWRPBeforeCameraRender = camera.gameObject.GetComponent<LWRPBeforeCameraRender>();
             }
             
-            m_LWRPBeforeCameraRender.SetupBlitMaterial(m_BackgroundMaterial);
+            m_LWRPBeforeCameraRender.blitMaterial = m_BackgroundMaterial;
 
             return true;
 
@@ -45,7 +45,7 @@ namespace UnityEngine.XR.ARFoundation.LWRPSupport
 
             if (m_LWRPBeforeCameraRender != null)
             {
-                m_LWRPBeforeCameraRender.SetupBlitMaterial(null);
+                m_LWRPBeforeCameraRender.blitMaterial = null;
                 m_LWRPBeforeCameraRender = null;
             }
 

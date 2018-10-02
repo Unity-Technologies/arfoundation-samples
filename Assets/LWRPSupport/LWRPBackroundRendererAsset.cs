@@ -14,17 +14,16 @@ namespace UnityEngine.XR.ARFoundation.LWRPSupport
         /// </summary>
         [SerializeField]
         Material[] m_MaterialsUsed;
+
+        static bool useRenderPipeline {  get { return GraphicsSettings.renderPipelineAsset != null; } }
         
         public override ARFoundationBackgroundRenderer CreateARBackgroundRenderer()
         {
-            var useRenderPipeline = GraphicsSettings.renderPipelineAsset != null;
             return useRenderPipeline ? new LWRPBackgroundRenderer() : new ARFoundationBackgroundRenderer();
         }
 
         public override void CreateHelperComponents(GameObject cameraGameObject)
         {
-            var useRenderPipeline = GraphicsSettings.renderPipelineAsset != null;
-
             if (useRenderPipeline)
             {
                 var lwrpBeforeCameraRender = cameraGameObject.GetComponent<LWRPBeforeCameraRender>();
