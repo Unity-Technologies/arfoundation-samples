@@ -13,6 +13,22 @@ using Unity.Collections;
 /// and converting it to RGBA format. If successful,
 /// it displays the image on the screen as a RawImage
 /// and also displays information about the image.
+/// 
+/// This is useful for computer vision applications where
+/// you need to access the raw pixels from camera image
+/// on the CPU.
+/// 
+/// This is different from the ARCameraBackground component, which
+/// efficiently displays the camera image on the screen. If you
+/// just want to blit the camera texture to the screen, use
+/// the ARCameraBackground, or use Graphics.Blit to create
+/// a GPU-friendly RenderTexture.
+/// 
+/// In this example, we get the camera image data on the CPU,
+/// convert it to an RGBA format, then display it on the screen
+/// as a RawImage texture to demonstrate it is working.
+/// This is done as an example; do not use this technique simply
+/// to render the camera image on screen.
 /// </summary>
 public class TestCameraImage : MonoBehaviour
 {
@@ -64,6 +80,12 @@ public class TestCameraImage : MonoBehaviour
         m_ImageInfo.text = string.Format(
             "Image info:\n\twidth: {0}\n\theight: {1}\n\tplaneCount: {2}\n\ttimestamp: {3}\n\tformat: {4}",
             image.width, image.height, image.planeCount, image.timestamp, image.format);
+
+        // Once we have a valid CameraImage, we can access the individual image "planes"
+        // (the separate channels in the image). CameraImage.GetPlane provides
+        // low-overhead access to this data. This could then be passed to a
+        // computer vision algorithm. Here, we will convert the camera image
+        // to an RGBA texture and draw it on the screen.
 
         // Choose an RGBA format.
         // See CameraImage.FormatSupported for a complete list of supported formats.
