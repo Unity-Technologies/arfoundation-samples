@@ -9,6 +9,14 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARKit;
 #endif
 
+/// <summary>
+/// Demonstrates the saving and loading of an
+/// <a href="https://developer.apple.com/documentation/arkit/arworldmap">ARWorldMap</a>
+/// </summary>
+/// <remarks>
+/// ARWorldMaps are only supported by ARKit, so this API is in the
+/// <c>UntyEngine.XR.ARKit</c> namespace.
+/// </remarks>
 public class ARWorldMapController : MonoBehaviour
 {
     [SerializeField]
@@ -29,6 +37,9 @@ public class ARWorldMapController : MonoBehaviour
     [SerializeField]
     Text m_MappingStatus;
 
+    /// <summary>
+    /// Create an <c>ARWorldMap</c> and save it to disk.
+    /// </summary>
     public void OnSaveButton()
     {
 #if UNITY_IOS
@@ -36,6 +47,10 @@ public class ARWorldMapController : MonoBehaviour
 #endif
     }
 
+    /// <summary>
+    /// Load an <c>ARWorldMap</c> from disk and apply it
+    /// to the current session.
+    /// </summary>
     public void OnLoadButton()
     {
 #if UNITY_IOS
@@ -43,6 +58,11 @@ public class ARWorldMapController : MonoBehaviour
 #endif
     }
 
+    /// <summary>
+    /// Reset the <c>ARSession</c>, destroying any existing trackables,
+    /// such as planes. Upon loading a saved <c>ARWorldMap</c>, saved
+    /// trackables will be restored.
+    /// </summary>
     public void OnResetButton()
     {
         m_ARSession.Reset();
