@@ -178,15 +178,17 @@ public class ARWorldMapController : MonoBehaviour
     {
         if (supported)
         {
-            m_ErrorText.enabled = false;
-            m_SaveButton.enabled = true;
-            m_LoadButton.enabled = true;
+            m_ErrorText.gameObject.SetActive(false);
+            m_SaveButton.gameObject.SetActive(true);
+            m_LoadButton.gameObject.SetActive(true);
+            m_MappingStatus.gameObject.SetActive(true);
         }
         else
         {
-            m_ErrorText.enabled = true;
-            m_SaveButton.enabled = false;
-            m_LoadButton.enabled = false;
+            m_ErrorText.gameObject.SetActive(true);
+            m_SaveButton.gameObject.SetActive(false);
+            m_LoadButton.gameObject.SetActive(false);
+            m_MappingStatus.gameObject.SetActive(false);
         }
 
         var sessionSubsystem = ARSubsystemManager.sessionSubsystem;
