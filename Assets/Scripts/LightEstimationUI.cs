@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(LightEstimation))]
@@ -26,22 +24,22 @@ public class LightEstimationUI : MonoBehaviour
 
 	void Update()
 	{
-		SetUIValue(m_LightEstimation.brightness.HasValue, m_BrightnessVal, m_LightEstimation.brightness.Value.ToString());
-		SetUIValue(m_LightEstimation.colorTemperature.HasValue, m_ColorTempVal, m_LightEstimation.colorTemperature.Value.ToString());
-		SetUIValue(m_LightEstimation.colorCorrection.HasValue, m_ColorCorrectVal, m_LightEstimation.colorTemperature.Value.ToString());
+		SetUIValue(m_LightEstimation.brightness, m_BrightnessVal);
+		SetUIValue(m_LightEstimation.colorTemperature, m_ColorTempVal);
+		SetUIValue(m_LightEstimation.colorCorrection, m_ColorCorrectVal);
 	}
 
-	void SetUIValue(bool ContainsValue, Text UIText, string DisplayValue)
+	void SetUIValue<T>(T? displayVar, Text uiText) where T : struct
 	{
-		if (UIText)
+		if (uiText)
 		{
-			if (ContainsValue)
+			if (displayVar.HasValue)
 			{
-				UIText.text = DisplayValue;
+				uiText.text = displayVar.Value.ToString();
 			}
 			else
 			{
-				UIText.text = k_UnavailableText;
+				uiText.text = k_UnavailableText;
 			}
 		}
 	}
