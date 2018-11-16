@@ -1,5 +1,5 @@
 <linker>
-    <assembly fullname="Unity.XR.ARCore" ignoreIfMissing="1" preserve="all"/>
-    <assembly fullname="Unity.XR.ARKit" ignoreIfMissing="1" preserve="all"/>
-    <assembly fullname="Unity.XR.ARKit.FaceTracking" ignoreIfMissing="1" preserve="all"/>
+  <assembly fullname="Unity.XR.ARKit.FaceTracking" preserve="none" ignoreIfMissing="1" />
+  <assembly fullname="Unity.XR.ARKit" preserve="none" ignoreIfMissing="1" />
+  <assembly fullname="Unity.XR.ARCore" preserve="none" ignoreIfMissing="1" />
 </linker>
