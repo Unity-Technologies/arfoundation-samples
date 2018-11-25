@@ -6,10 +6,19 @@ public class LightEstimation : MonoBehaviour
 {
     Light m_Light;
 
+    /// <summary>
+    /// The estimated brightness of the physical environment, if available.
+    /// </summary>
     public float? brightness { get; private set; }
 
+    /// <summary>
+    /// The estimated color temperature of the physical environment, if available.
+    /// </summary>
     public float? colorTemperature { get; private set; }
 
+    /// <summary>
+    /// The estimated color correction value of the physical environment, if available.
+    /// </summary>
     public Color? colorCorrection { get; private set; }
 
     void Awake ()
