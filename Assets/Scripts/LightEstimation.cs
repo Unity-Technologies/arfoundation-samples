@@ -22,7 +22,7 @@ public class LightEstimation : MonoBehaviour
 		ARSubsystemManager.cameraFrameReceived += FrameChanged;
 	}
 
-	private void OnDisable()
+	void OnDisable()
 	{
 		ARSubsystemManager.cameraFrameReceived -= FrameChanged;
 	}
