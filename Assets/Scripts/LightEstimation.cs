@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 
+/// <summary>
+/// A component that can be used to access the most
+/// recently received light estimation information
+/// for the physical environment as observed by an
+/// AR device.
+/// </summary>
 [RequireComponent(typeof(Light))]
 public class LightEstimation : MonoBehaviour
 {
