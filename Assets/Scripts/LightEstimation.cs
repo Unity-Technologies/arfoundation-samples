@@ -15,7 +15,16 @@ public class LightEstimation : MonoBehaviour
 	void Awake ()
 	{
 		m_Light = GetComponent<Light>();
+	}
+
+	void OnEnable()
+	{
 		ARSubsystemManager.cameraFrameReceived += FrameChanged;
+	}
+
+	private void OnDisable()
+	{
+		ARSubsystemManager.cameraFrameReceived -= FrameChanged;
 	}
 
 	void FrameChanged(ARCameraFrameEventArgs args)
