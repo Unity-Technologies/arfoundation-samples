@@ -91,32 +91,26 @@ public class TestCameraImage : MonoBehaviour
         // See CameraImage.FormatSupported for a complete list of supported formats.
         var format = TextureFormat.RGBA32;
 
-        if (m_Texture == null)
+        if (m_Texture == null || m_Texture.width != image.width || m_Texture.height != image.height)
             m_Texture = new Texture2D(image.width, image.height, format, false);
 
         // Convert the image to format, flipping the image across the Y axis.
         // We can also get a sub rectangle, but we'll get the full image here.
         var conversionParams = new CameraImageConversionParams(image, format, CameraImageTransformation.MirrorY);
 
-#if UNITY_2018_2_OR_NEWER
-        // In 2018.2+, Texture2D allows us write directly to the raw texture data
+        // Texture2D allows us write directly to the raw texture data
         // This allows us to do the conversion in-place without making any copies.
         var rawTextureData = m_Texture.GetRawTextureData<byte>();
-        image.Convert(conversionParams, new IntPtr(rawTextureData.GetUnsafePtr()), rawTextureData.Length);
-#else
-        // In 2018.1, Texture2D didn't have this feature, so we'll create
-        // a temporary buffer and perform the conversion using that data.
-        int size = image.GetConvertedDataSize(conversionParams);
-        var rawTextureData = new NativeArray<byte>(size, Allocator.Temp);
-        var ptr = new IntPtr(rawTextureData.GetUnsafePtr());
-        image.Convert(conversionParams, ptr, rawTextureData.Length);
-        m_Texture.LoadRawTextureData(ptr, rawTextureData.Length);
-        rawTextureData.Dispose();
-#endif
-
-        // We must dispose of the CameraImage after we're finished
-        // with it to avoid leaking native resources.
-        image.Dispose();
+        try
+        {
+            image.Convert(conversionParams, new IntPtr(rawTextureData.GetUnsafePtr()), rawTextureData.Length);
+        }
+        finally
+        {
+            // We must dispose of the CameraImage after we're finished
+            // with it to avoid leaking native resources.
+            image.Dispose();
+        }
 
         // Apply the updated texture data to our texture
         m_Texture.Apply();
