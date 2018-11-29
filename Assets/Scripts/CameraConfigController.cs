@@ -4,6 +4,14 @@ using UnityEngine.UI;
 using UnityEngine.XR.ARExtensions;
 using UnityEngine.XR.ARFoundation;
 
+/// <summary>
+/// Populates a drop down UI element with all the supported
+/// camera configurations and changes the active camera
+/// configuration when the user changes the selection in the dropdown.
+/// 
+/// The camera configuration affects the resolution (and possibly framerate)
+/// of the hardware camera during an AR session.
+/// </summary>
 [RequireComponent(typeof(Dropdown))]
 public class CameraConfigController : MonoBehaviour
 {
@@ -11,6 +19,12 @@ public class CameraConfigController : MonoBehaviour
 
     Dropdown m_Dropdown;
 
+    /// <summary>
+    /// Callback invoked when <see cref="m_Dropdown"/> changes. This
+    /// lets us change the camera configuration when the user changes
+    /// the selection in the UI.
+    /// </summary>
+    /// <param name="dropdown">The <c>Dropdown</c> which changed.</param>
     public void OnValueChanged(Dropdown dropdown)
     {
         var cameraSubsystem = ARSubsystemManager.cameraSubsystem;
@@ -44,11 +58,28 @@ public class CameraConfigController : MonoBehaviour
         if (cameraSubsystem == null)
             return;
 
-        // Typically, you would only need to do this once.
+        // No configurations available probably means this feature
+        // isn't supported by the current device.
+        if (cameraSubsystem.GetConfigurationCount() == 0)
+            return;
+
+        // Here we demonstrate the two ways to enumerate the camera configurations.
+        // Typically, you would do this once, perhaps at the start of the AR app
+        // rather than every frame.
+
+        // Here, we use a foreach to iterate over all the available configurations
         m_ConfigurationNames.Clear();
         foreach (var config in cameraSubsystem.Configurations())
             m_ConfigurationNames.Add(config.ToString());
-
         m_Dropdown.AddOptions(m_ConfigurationNames);
+
+        // We can also use a normal for...loop
+        var currentConfig = cameraSubsystem.GetCurrentConfiguration();
+        for (int i = 0; i < cameraSubsystem.GetConfigurationCount(); i++)
+        {
+            // Find the current configuration and update the drop down value
+            if (currentConfig == cameraSubsystem.GetConfiguration(i))
+                m_Dropdown.value = i;
+        }
     }
 }
