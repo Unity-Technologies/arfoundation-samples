@@ -34,14 +34,15 @@ public class CameraConfigController : MonoBehaviour
         var configurationIndex = dropdown.value;
 
         // Check that the value makes sense
-        if (configurationIndex >= cameraSubsystem.GetConfigurationCount())
+        var configurations = cameraSubsystem.Configurations();
+        if (configurationIndex >= configurations.count)
             return;
 
         // Get that configuration by index
-        var configuration = cameraSubsystem.GetConfiguration(configurationIndex);
+        var configuration = configurations[configurationIndex];
 
         // Make it the active one
-        cameraSubsystem.SetConfiguration(configuration);
+        cameraSubsystem.SetCurrentConfiguration(configuration);
     }
 
     void Awake()
@@ -60,7 +61,8 @@ public class CameraConfigController : MonoBehaviour
 
         // No configurations available probably means this feature
         // isn't supported by the current device.
-        if (cameraSubsystem.GetConfigurationCount() == 0)
+        var configurations = cameraSubsystem.Configurations();
+        if (configurations.count == 0)
             return;
 
         // Here we demonstrate the two ways to enumerate the camera configurations.
@@ -69,16 +71,16 @@ public class CameraConfigController : MonoBehaviour
 
         // Here, we use a foreach to iterate over all the available configurations
         m_ConfigurationNames.Clear();
-        foreach (var config in cameraSubsystem.Configurations())
+        foreach (var config in configurations)
             m_ConfigurationNames.Add(config.ToString());
         m_Dropdown.AddOptions(m_ConfigurationNames);
 
         // We can also use a normal for...loop
         var currentConfig = cameraSubsystem.GetCurrentConfiguration();
-        for (int i = 0; i < cameraSubsystem.GetConfigurationCount(); i++)
+        for (int i = 0; i < configurations.count; i++)
         {
             // Find the current configuration and update the drop down value
-            if (currentConfig == cameraSubsystem.GetConfiguration(i))
+            if (currentConfig == configurations[i])
                 m_Dropdown.value = i;
         }
     }
