@@ -15,9 +15,10 @@ using UnityEngine.XR.ARKit;
 [RequireComponent(typeof(ARFace))]
 public class ARFaceArkitBlendShapeVisualizer : MonoBehaviour
 {
-    public float CoefficientScale = 100.0f;
-
-    public SkinnedMeshRenderer SkinnedMeshRenderer;
+    [SerializeField]
+    float coefficientScale = 100.0f;
+    [SerializeField]
+    SkinnedMeshRenderer skinnedMeshRenderer;
     
     ARFace m_Face;
     ARKitFaceSubsystem arkitFaceSubsystem;
@@ -31,7 +32,6 @@ public class ARFaceArkitBlendShapeVisualizer : MonoBehaviour
         s_FaceArkitBlendShapeCoefficients = new List<XRFaceArkitBlendShapeCoefficient>();
         m_Face = GetComponent<ARFace>();
         CreateFeatureBlendMapping();
- 
     }
 
     void CreateFeatureBlendMapping()
@@ -95,9 +95,9 @@ public class ARFaceArkitBlendShapeVisualizer : MonoBehaviour
 
     void SetVisible(bool visible)
     {
-        if (SkinnedMeshRenderer == null) return;
+        if (skinnedMeshRenderer == null) return;
                     
-        SkinnedMeshRenderer.enabled = visible;
+        skinnedMeshRenderer.enabled = visible;
     }
 
     void UpdateVisibility()
@@ -140,7 +140,7 @@ public class ARFaceArkitBlendShapeVisualizer : MonoBehaviour
     
     void UpdateFaceFeatures()
     {
-        if (SkinnedMeshRenderer == null || !SkinnedMeshRenderer.enabled)
+        if (skinnedMeshRenderer == null || !skinnedMeshRenderer.enabled)
         {
             return;
         }
@@ -156,9 +156,9 @@ public class ARFaceArkitBlendShapeVisualizer : MonoBehaviour
             string mappedBlendShapeName;
             if (m_FaceArkitBlendShapeNameMap.TryGetValue(xrFaceFeatureCoefficient.arkitBlendShapeLocation, out mappedBlendShapeName))
             {
-                int blendShapeIndex = SkinnedMeshRenderer.sharedMesh.GetBlendShapeIndex (strPrefix + mappedBlendShapeName);
+                int blendShapeIndex = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex (strPrefix + mappedBlendShapeName);
                 if (blendShapeIndex >= 0 ) {
-                    SkinnedMeshRenderer.SetBlendShapeWeight (blendShapeIndex, xrFaceFeatureCoefficient.coefficient * CoefficientScale);
+                    skinnedMeshRenderer.SetBlendShapeWeight (blendShapeIndex, xrFaceFeatureCoefficient.coefficient * coefficientScale);
                 }
             }
         }
