@@ -25,7 +25,7 @@ public class ARFaceArkitBlendShapeVisualizer : MonoBehaviour
 
     static List<XRFaceArkitBlendShapeCoefficient> s_FaceArkitBlendShapeCoefficients;
 
-    Dictionary<XRArkitBlendShapeLocation, string> m_FaceArkitBlendShapeNameMap;
+    Dictionary<XRArkitBlendShapeLocation, int> m_FaceArkitBlendShapeIndexMap;
     
     void Awake()
     {
@@ -36,60 +36,66 @@ public class ARFaceArkitBlendShapeVisualizer : MonoBehaviour
 
     void CreateFeatureBlendMapping()
     {
-        m_FaceArkitBlendShapeNameMap = new Dictionary<XRArkitBlendShapeLocation, string>();
+        if (skinnedMeshRenderer == null || skinnedMeshRenderer.sharedMesh == null)
+        {
+            return;
+        }
+ 
+        const string strPrefix = "blendShape2.";
+        m_FaceArkitBlendShapeIndexMap = new Dictionary<XRArkitBlendShapeLocation, int>();
         
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.BrowDownLeft        ]   =   "browDown_L";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.BrowDownRight       ]   =   "browDown_R";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.BrowInnerUp         ]   =   "browInnerUp";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.BrowOuterUpLeft     ]   =   "browOuterUp_L";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.BrowOuterUpRight    ]   =   "browOuterUp_R";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.CheekPuff           ]   =   "cheekPuff";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.CheekSquintLeft     ]   =   "cheekSquint_L";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.CheekSquintRight    ]   =   "cheekSquint_R";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.EyeBlinkLeft        ]   =   "eyeBlink_L";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.EyeBlinkRight       ]   =   "eyeBlink_R";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.EyeLookDownLeft     ]   =   "eyeLookDown_L";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.EyeLookDownRight    ]   =   "eyeLookDown_R";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.EyeLookInLeft       ]   =   "eyeLookIn_L";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.EyeLookInRight      ]   =   "eyeLookIn_R";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.EyeLookOutLeft      ]   =   "eyeLookOut_L";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.EyeLookOutRight     ]   =   "eyeLookOut_R";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.EyeLookUpLeft       ]   =   "eyeLookUp_L";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.EyeLookUpRight      ]   =   "eyeLookUp_R";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.EyeSquintLeft       ]   =   "eyeSquint_L";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.EyeSquintRight      ]   =   "eyeSquint_R";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.EyeWideLeft         ]   =   "eyeWide_L";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.EyeWideRight        ]   =   "eyeWide_R";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.JawForward          ]   =   "jawForward";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.JawLeft             ]   =   "jawLeft";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.JawOpen             ]   =   "jawOpen";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.JawRight            ]   =   "jawRight";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.MouthClose          ]   =   "mouthClose";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.MouthDimpleLeft     ]   =   "mouthDimple_L";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.MouthDimpleRight    ]   =   "mouthDimple_R";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.MouthFrownLeft      ]   =   "mouthFrown_L";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.MouthFrownRight     ]   =   "mouthFrown_R";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.MouthFunnel         ]   =   "mouthFunnel";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.MouthLeft           ]   =   "mouthLeft";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.MouthLowerDownLeft  ]   =   "mouthLowerDown_L";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.MouthLowerDownRight ]   =   "mouthLowerDown_R";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.MouthPressLeft      ]   =   "mouthPress_L";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.MouthPressRight     ]   =   "mouthPress_R";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.MouthPucker         ]   =   "mouthPucker";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.MouthRight          ]   =   "mouthRight";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.MouthRollLower      ]   =   "mouthRollLower";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.MouthRollUpper      ]   =   "mouthRollUpper";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.MouthShrugLower     ]   =   "mouthShrugLower";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.MouthShrugUpper     ]   =   "mouthShrugUpper";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.MouthSmileLeft      ]   =   "mouthSmile_L";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.MouthSmileRight     ]   =   "mouthSmile_R";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.MouthStretchLeft    ]   =   "mouthStretch_L";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.MouthStretchRight   ]   =   "mouthStretch_R";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.MouthUpperUpLeft    ]   =   "mouthUpperUp_L";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.MouthUpperUpRight   ]   =   "mouthUpperUp_R";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.NoseSneerLeft       ]   =   "noseSneer_L";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.NoseSneerRight      ]   =   "noseSneer_R";
-        m_FaceArkitBlendShapeNameMap[XRArkitBlendShapeLocation.TongueOut           ]   =   "tongueOut";
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.BrowDownLeft        ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "browDown_L");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.BrowDownRight       ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "browDown_R");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.BrowInnerUp         ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "browInnerUp");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.BrowOuterUpLeft     ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "browOuterUp_L");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.BrowOuterUpRight    ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "browOuterUp_R");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.CheekPuff           ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "cheekPuff");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.CheekSquintLeft     ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "cheekSquint_L");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.CheekSquintRight    ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "cheekSquint_R");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.EyeBlinkLeft        ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "eyeBlink_L");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.EyeBlinkRight       ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "eyeBlink_R");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.EyeLookDownLeft     ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "eyeLookDown_L");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.EyeLookDownRight    ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "eyeLookDown_R");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.EyeLookInLeft       ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "eyeLookIn_L");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.EyeLookInRight      ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "eyeLookIn_R");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.EyeLookOutLeft      ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "eyeLookOut_L");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.EyeLookOutRight     ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "eyeLookOut_R");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.EyeLookUpLeft       ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "eyeLookUp_L");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.EyeLookUpRight      ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "eyeLookUp_R");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.EyeSquintLeft       ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "eyeSquint_L");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.EyeSquintRight      ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "eyeSquint_R");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.EyeWideLeft         ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "eyeWide_L");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.EyeWideRight        ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "eyeWide_R");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.JawForward          ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "jawForward");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.JawLeft             ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "jawLeft");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.JawOpen             ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "jawOpen");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.JawRight            ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "jawRight");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.MouthClose          ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "mouthClose");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.MouthDimpleLeft     ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "mouthDimple_L");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.MouthDimpleRight    ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "mouthDimple_R");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.MouthFrownLeft      ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "mouthFrown_L");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.MouthFrownRight     ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "mouthFrown_R");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.MouthFunnel         ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "mouthFunnel");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.MouthLeft           ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "mouthLeft");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.MouthLowerDownLeft  ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "mouthLowerDown_L");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.MouthLowerDownRight ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "mouthLowerDown_R");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.MouthPressLeft      ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "mouthPress_L");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.MouthPressRight     ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "mouthPress_R");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.MouthPucker         ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "mouthPucker");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.MouthRight          ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "mouthRight");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.MouthRollLower      ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "mouthRollLower");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.MouthRollUpper      ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "mouthRollUpper");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.MouthShrugLower     ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "mouthShrugLower");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.MouthShrugUpper     ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "mouthShrugUpper");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.MouthSmileLeft      ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "mouthSmile_L");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.MouthSmileRight     ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "mouthSmile_R");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.MouthStretchLeft    ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "mouthStretch_L");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.MouthStretchRight   ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "mouthStretch_R");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.MouthUpperUpLeft    ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "mouthUpperUp_L");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.MouthUpperUpRight   ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "mouthUpperUp_R");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.NoseSneerLeft       ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "noseSneer_L");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.NoseSneerRight      ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "noseSneer_R");
+        m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.TongueOut           ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "tongueOut");
         
     }
 
@@ -152,13 +158,11 @@ public class ARFaceArkitBlendShapeVisualizer : MonoBehaviour
 
         foreach (var xrFaceFeatureCoefficient in s_FaceArkitBlendShapeCoefficients)
         {
-            const string strPrefix = "blendShape2.";
-            string mappedBlendShapeName;
-            if (m_FaceArkitBlendShapeNameMap.TryGetValue(xrFaceFeatureCoefficient.arkitBlendShapeLocation, out mappedBlendShapeName))
+            int mappedBlendShapeIndex;
+            if (m_FaceArkitBlendShapeIndexMap.TryGetValue(xrFaceFeatureCoefficient.arkitBlendShapeLocation, out mappedBlendShapeIndex))
             {
-                int blendShapeIndex = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex (strPrefix + mappedBlendShapeName);
-                if (blendShapeIndex >= 0 ) {
-                    skinnedMeshRenderer.SetBlendShapeWeight (blendShapeIndex, xrFaceFeatureCoefficient.coefficient * coefficientScale);
+                if (mappedBlendShapeIndex >= 0 ) {
+                    skinnedMeshRenderer.SetBlendShapeWeight (mappedBlendShapeIndex, xrFaceFeatureCoefficient.coefficient * coefficientScale);
                 }
             }
         }
