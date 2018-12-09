@@ -13,6 +13,12 @@ public class DisableVerticalPlanes : MonoBehaviour
     [SerializeField]
     Text m_LogText;
 
+    public Text logText
+    {
+        get { return m_LogText; }
+        set { m_LogText = value; }
+    }
+
     void OnEnable()
     {
         GetComponent<ARPlaneManager>().planeAdded += OnPlaneAdded;
@@ -34,7 +40,8 @@ public class DisableVerticalPlanes : MonoBehaviour
             plane.gameObject.SetActive(false);
 
             // Add to our log so the user knows something happened.
-            m_LogText.text += string.Format("\n{0}", plane.boundedPlane.Id);
+            if (logText != null)
+                logText.text = string.Format("\n{0}", plane.boundedPlane.Id);
         }
     }
 }

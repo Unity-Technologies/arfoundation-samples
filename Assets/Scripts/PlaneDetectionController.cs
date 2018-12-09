@@ -13,6 +13,12 @@ public class PlaneDetectionController : MonoBehaviour
     [SerializeField]
     Text m_TogglePlaneDetectionText;
 
+    public Text togglePlaneDetectionText
+    {
+        get { return m_TogglePlaneDetectionText; }
+        set { m_TogglePlaneDetectionText = value; }
+    }
+
     /// <summary>
     /// Toggles plane detection and the visualization of the planes.
     /// </summary>
@@ -20,16 +26,20 @@ public class PlaneDetectionController : MonoBehaviour
     {
         m_ARPlaneManager.enabled = !m_ARPlaneManager.enabled;
 
+        string planeDetectionMessage = "";
         if (m_ARPlaneManager.enabled)
         {
-            m_TogglePlaneDetectionText.text = "Disable Plane Detection and Hide Existing";
+            planeDetectionMessage = "Disable Plane Detection and Hide Existing";
             SetAllPlanesActive(true);
         }
         else
         {
-            m_TogglePlaneDetectionText.text = "Enable Plane Detection and Show Existing";
+            planeDetectionMessage = "Enable Plane Detection and Show Existing";
             SetAllPlanesActive(false);
         }
+
+        if (togglePlaneDetectionText != null)
+            togglePlaneDetectionText.text = planeDetectionMessage;
     }
 
     /// <summary>

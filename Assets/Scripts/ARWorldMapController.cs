@@ -22,20 +22,56 @@ public class ARWorldMapController : MonoBehaviour
     [SerializeField]
     ARSession m_ARSession;
 
+    public ARSession arSession
+    {
+        get { return m_ARSession; }
+        set { m_ARSession = value; }
+    }
+
     [SerializeField]
     Text m_ErrorText;
+
+    public Text errorText
+    {
+        get { return m_ErrorText; }
+        set { m_ErrorText = value; }
+    }
 
     [SerializeField]
     Button m_SaveButton;
 
+    public Button saveButton
+    {
+        get { return m_SaveButton; }
+        set { m_SaveButton = value; }
+    }
+
     [SerializeField]
     Button m_LoadButton;
+
+    public Button loadButton
+    {
+        get { return m_LoadButton; }
+        set { m_LoadButton = value; }
+    }
 
     [SerializeField]
     Text m_LogText;
 
+    public Text logText
+    {
+        get { return m_LogText; }
+        set { m_LogText = value; }
+    }
+
     [SerializeField]
-    Text m_MappingStatus;
+    Text m_MappingStatusText;
+
+    public Text mappingStatusText
+    {
+        get { return m_MappingStatusText; }
+        set { m_MappingStatusText = value; }
+    }
 
     /// <summary>
     /// Create an <c>ARWorldMap</c> and save it to disk.
@@ -194,21 +230,39 @@ public class ARWorldMapController : MonoBehaviour
         m_LogMessages.Add(logMessage);
     }
 
+    void SetActive(Button button, bool active)
+    {
+        if (button != null)
+            button.gameObject.SetActive(active);
+    }
+
+    void SetActive(Text text, bool active)
+    {
+        if (text != null)
+            text.gameObject.SetActive(active);
+    }
+
+    void SetText(Text text, string value)
+    {
+        if (text != null)
+            text.text = value;
+    }
+
     void Update()
     {
         if (supported)
         {
-            m_ErrorText.gameObject.SetActive(false);
-            m_SaveButton.gameObject.SetActive(true);
-            m_LoadButton.gameObject.SetActive(true);
-            m_MappingStatus.gameObject.SetActive(true);
+            SetActive(errorText, false);
+            SetActive(saveButton, true);
+            SetActive(loadButton, true);
+            SetActive(mappingStatusText, true);
         }
         else
         {
-            m_ErrorText.gameObject.SetActive(true);
-            m_SaveButton.gameObject.SetActive(false);
-            m_LoadButton.gameObject.SetActive(false);
-            m_MappingStatus.gameObject.SetActive(false);
+            SetActive(errorText, true);
+            SetActive(saveButton, false);
+            SetActive(loadButton, false);
+            SetActive(mappingStatusText, false);
         }
 
         var sessionSubsystem = ARSubsystemManager.sessionSubsystem;
@@ -222,10 +276,10 @@ public class ARWorldMapController : MonoBehaviour
             msg += m_LogMessages[i];
             msg += "\n";
         }
-        m_LogText.text = msg;
+        SetText(logText, msg);
 
 #if UNITY_IOS
-        m_MappingStatus.text = string.Format("Mapping Status: {0}", sessionSubsystem.GetWorldMappingStatus());
+        SetText(mappingStatusText, string.Format("Mapping Status: {0}", sessionSubsystem.GetWorldMappingStatus()));
 #endif
     }
 
