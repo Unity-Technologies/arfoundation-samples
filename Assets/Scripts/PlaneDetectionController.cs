@@ -10,9 +10,13 @@ using UnityEngine.XR.ARFoundation;
 [RequireComponent(typeof(ARPlaneManager))]
 public class PlaneDetectionController : MonoBehaviour
 {
+    [Tooltip("The UI Text element used to display plane detection messages.")]
     [SerializeField]
     Text m_TogglePlaneDetectionText;
 
+    /// <summary>
+    /// The UI Text element used to display plane detection messages.
+    /// </summary>
     public Text togglePlaneDetectionText
     {
         get { return m_TogglePlaneDetectionText; }

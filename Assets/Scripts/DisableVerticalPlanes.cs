@@ -10,9 +10,13 @@ using UnityEngine.XR.ARFoundation;
 [RequireComponent(typeof(ARPlaneManager))]
 public class DisableVerticalPlanes : MonoBehaviour
 {
+    [Tooltip("The UI Text element used to display log messages.")]
     [SerializeField]
     Text m_LogText;
 
+    /// <summary>
+    /// The UI Text element used to display log messages.
+    /// </summary>
     public Text logText
     {
         get { return m_LogText; }

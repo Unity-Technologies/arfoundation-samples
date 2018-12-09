@@ -4,9 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARExtensions;
 using UnityEngine.XR.ARFoundation;
-#if !UNITY_2018_2_OR_NEWER
-using Unity.Collections;
-#endif
 
 /// <summary>
 /// This component tests getting the latest camera image
@@ -56,8 +53,6 @@ public class TestCameraImage : MonoBehaviour
         set { m_ImageInfo = value; }
     }
 
-    Texture2D m_Texture;
-
     void OnEnable()
     {
         ARSubsystemManager.cameraFrameReceived += OnCameraFrameReceived;
@@ -98,21 +93,10 @@ public class TestCameraImage : MonoBehaviour
         // We can also get a sub rectangle, but we'll get the full image here.
         var conversionParams = new CameraImageConversionParams(image, format, CameraImageTransformation.MirrorY);
 
-#if UNITY_2018_2_OR_NEWER
-        // In 2018.2+, Texture2D allows us write directly to the raw texture data
+        // Texture2D allows us write directly to the raw texture data
         // This allows us to do the conversion in-place without making any copies.
         var rawTextureData = m_Texture.GetRawTextureData<byte>();
         image.Convert(conversionParams, new IntPtr(rawTextureData.GetUnsafePtr()), rawTextureData.Length);
-#else
-        // In 2018.1, Texture2D didn't have this feature, so we'll create
-        // a temporary buffer and perform the conversion using that data.
-        int size = image.GetConvertedDataSize(conversionParams);
-        var rawTextureData = new NativeArray<byte>(size, Allocator.Temp);
-        var ptr = new IntPtr(rawTextureData.GetUnsafePtr());
-        image.Convert(conversionParams, ptr, rawTextureData.Length);
-        m_Texture.LoadRawTextureData(ptr, rawTextureData.Length);
-        rawTextureData.Dispose();
-#endif
 
         // We must dispose of the CameraImage after we're finished
         // with it to avoid leaking native resources.
@@ -124,4 +108,6 @@ public class TestCameraImage : MonoBehaviour
         // Set the RawImage's texture so we can visualize it.
         m_RawImage.texture = m_Texture;
     }
+
+    Texture2D m_Texture;
 }
