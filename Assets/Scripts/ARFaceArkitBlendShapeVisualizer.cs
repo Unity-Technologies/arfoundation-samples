@@ -18,7 +18,7 @@ public class ARFaceArkitBlendShapeVisualizer : MonoBehaviour
     [SerializeField]
     float coefficientScale = 100.0f;
     [SerializeField]
-    SkinnedMeshRenderer skinnedMeshRenderer;
+    SkinnedMeshRenderer skinnedMeshRenderer = null;
     
     ARFace m_Face;
     ARKitFaceSubsystem arkitFaceSubsystem;
@@ -161,7 +161,8 @@ public class ARFaceArkitBlendShapeVisualizer : MonoBehaviour
             int mappedBlendShapeIndex;
             if (m_FaceArkitBlendShapeIndexMap.TryGetValue(xrFaceFeatureCoefficient.arkitBlendShapeLocation, out mappedBlendShapeIndex))
             {
-                if (mappedBlendShapeIndex >= 0 ) {
+                if (mappedBlendShapeIndex >= 0 ) 
+                {
                     skinnedMeshRenderer.SetBlendShapeWeight (mappedBlendShapeIndex, xrFaceFeatureCoefficient.coefficient * coefficientScale);
                 }
             }
