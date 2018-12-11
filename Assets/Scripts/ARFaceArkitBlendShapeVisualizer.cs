@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.XR;
+using UnityEngine.Serialization;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARKit;
 
@@ -16,17 +17,36 @@ using UnityEngine.XR.ARKit;
 public class ARFaceArkitBlendShapeVisualizer : MonoBehaviour
 {
     [SerializeField]
-    float coefficientScale = 100.0f;
+    float m_CoefficientScale = 100.0f;
     [SerializeField]
-    SkinnedMeshRenderer skinnedMeshRenderer = null;
+    SkinnedMeshRenderer m_SkinnedMeshRenderer;
     
     ARFace m_Face;
-    ARKitFaceSubsystem arkitFaceSubsystem;
+    ARKitFaceSubsystem m_ArkitFaceSubsystem;
 
     static List<XRFaceArkitBlendShapeCoefficient> s_FaceArkitBlendShapeCoefficients;
 
     Dictionary<XRArkitBlendShapeLocation, int> m_FaceArkitBlendShapeIndexMap;
-    
+
+    public SkinnedMeshRenderer skinnedMeshRenderer
+    {
+        get
+        {
+            return m_SkinnedMeshRenderer;
+        }
+        set
+        {
+            m_SkinnedMeshRenderer = value;
+            CreateFeatureBlendMapping();
+        }
+    }
+
+    public float coefficientScale
+    {
+        get { return m_CoefficientScale; }
+        set { m_CoefficientScale = value; }
+    }
+
     void Awake()
     {
         s_FaceArkitBlendShapeCoefficients = new List<XRFaceArkitBlendShapeCoefficient>();
@@ -117,8 +137,8 @@ public class ARFaceArkitBlendShapeVisualizer : MonoBehaviour
 
     void OnEnable()
     {
-        arkitFaceSubsystem = (ARKitFaceSubsystem) ARSubsystemManager.faceSubsystem;
-        if (arkitFaceSubsystem == null )
+        m_ArkitFaceSubsystem = (ARKitFaceSubsystem) ARSubsystemManager.faceSubsystem;
+        if (m_ArkitFaceSubsystem == null )
         {
             return;
         }
@@ -146,12 +166,12 @@ public class ARFaceArkitBlendShapeVisualizer : MonoBehaviour
     
     void UpdateFaceFeatures()
     {
-        if (skinnedMeshRenderer == null || !skinnedMeshRenderer.enabled)
+        if (skinnedMeshRenderer == null || !skinnedMeshRenderer.enabled || skinnedMeshRenderer.sharedMesh == null)
         {
             return;
         }
 
-        if (!arkitFaceSubsystem.TryGetFaceARKitBlendShapeCoefficients(m_Face.xrFace.trackableId,s_FaceArkitBlendShapeCoefficients))
+        if (!m_ArkitFaceSubsystem.TryGetFaceARKitBlendShapeCoefficients(m_Face.xrFace.trackableId,s_FaceArkitBlendShapeCoefficients))
         {
             return;
         }
