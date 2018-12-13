@@ -19,23 +19,83 @@ using UnityEngine.XR.ARKit;
 /// </remarks>
 public class ARWorldMapController : MonoBehaviour
 {
+    [Tooltip("The ARSession component controlling the session from which to generate ARWorldMaps.")]
     [SerializeField]
     ARSession m_ARSession;
 
+    /// <summary>
+    /// The ARSession component controlling the session from which to generate ARWorldMaps.
+    /// </summary>
+    public ARSession arSession
+    {
+        get { return m_ARSession; }
+        set { m_ARSession = value; }
+    }
+
+    [Tooltip("UI Text component to display error messages")]
     [SerializeField]
     Text m_ErrorText;
 
-    [SerializeField]
-    Button m_SaveButton;
+    /// <summary>
+    /// The UI Text component used to display error messages
+    /// </summary>
+    public Text errorText
+    {
+        get { return m_ErrorText; }
+        set { m_ErrorText = value; }
+    }
 
-    [SerializeField]
-    Button m_LoadButton;
-
+    [Tooltip("The UI Text element used to display log messages.")]
     [SerializeField]
     Text m_LogText;
 
+    /// <summary>
+    /// The UI Text element used to display log messages.
+    /// </summary>
+    public Text logText
+    {
+        get { return m_LogText; }
+        set { m_LogText = value; }
+    }
+
+    [Tooltip("The UI Text element used to display the current AR world mapping status.")]
     [SerializeField]
-    Text m_MappingStatus;
+    Text m_MappingStatusText;
+
+    /// <summary>
+    /// The UI Text element used to display the current AR world mapping status.
+    /// </summary>
+    public Text mappingStatusText
+    {
+        get { return m_MappingStatusText; }
+        set { m_MappingStatusText = value; }
+    }
+
+    [Tooltip("A UI button component which will generate an ARWorldMap and save it to disk.")]
+    [SerializeField]
+    Button m_SaveButton;
+
+    /// <summary>
+    /// A UI button component which will generate an ARWorldMap and save it to disk.
+    /// </summary>
+    public Button saveButton
+    {
+        get { return m_SaveButton; }
+        set { m_SaveButton = value; }
+    }
+
+    [Tooltip("A UI button component which will load a previously saved ARWorldMap from disk and apply it to the current session.")]
+    [SerializeField]
+    Button m_LoadButton;
+
+    /// <summary>
+    /// A UI button component which will load a previously saved ARWorldMap from disk and apply it to the current session.
+    /// </summary>
+    public Button loadButton
+    {
+        get { return m_LoadButton; }
+        set { m_LoadButton = value; }
+    }
 
     /// <summary>
     /// Create an <c>ARWorldMap</c> and save it to disk.
@@ -194,21 +254,39 @@ public class ARWorldMapController : MonoBehaviour
         m_LogMessages.Add(logMessage);
     }
 
+    static void SetActive(Button button, bool active)
+    {
+        if (button != null)
+            button.gameObject.SetActive(active);
+    }
+
+    static void SetActive(Text text, bool active)
+    {
+        if (text != null)
+            text.gameObject.SetActive(active);
+    }
+
+    static void SetText(Text text, string value)
+    {
+        if (text != null)
+            text.text = value;
+    }
+
     void Update()
     {
         if (supported)
         {
-            m_ErrorText.gameObject.SetActive(false);
-            m_SaveButton.gameObject.SetActive(true);
-            m_LoadButton.gameObject.SetActive(true);
-            m_MappingStatus.gameObject.SetActive(true);
+            SetActive(errorText, false);
+            SetActive(saveButton, true);
+            SetActive(loadButton, true);
+            SetActive(mappingStatusText, true);
         }
         else
         {
-            m_ErrorText.gameObject.SetActive(true);
-            m_SaveButton.gameObject.SetActive(false);
-            m_LoadButton.gameObject.SetActive(false);
-            m_MappingStatus.gameObject.SetActive(false);
+            SetActive(errorText, true);
+            SetActive(saveButton, false);
+            SetActive(loadButton, false);
+            SetActive(mappingStatusText, false);
         }
 
         var sessionSubsystem = ARSubsystemManager.sessionSubsystem;
@@ -222,10 +300,10 @@ public class ARWorldMapController : MonoBehaviour
             msg += m_LogMessages[i];
             msg += "\n";
         }
-        m_LogText.text = msg;
+        SetText(logText, msg);
 
 #if UNITY_IOS
-        m_MappingStatus.text = string.Format("Mapping Status: {0}", sessionSubsystem.GetWorldMappingStatus());
+        SetText(mappingStatusText, string.Format("Mapping Status: {0}", sessionSubsystem.GetWorldMappingStatus()));
 #endif
     }
 

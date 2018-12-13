@@ -10,8 +10,6 @@ using UnityEngine.XR.ARFoundation;
 [RequireComponent(typeof(Light))]
 public class LightEstimation : MonoBehaviour
 {
-    Light m_Light;
-
     /// <summary>
     /// The estimated brightness of the physical environment, if available.
     /// </summary>
@@ -62,13 +60,6 @@ public class LightEstimation : MonoBehaviour
             m_Light.color = colorCorrection.Value;
         }
     }
+
+    Light m_Light;
 }
-
-
-
-
-
-
-
-
-
