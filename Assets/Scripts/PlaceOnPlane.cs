@@ -3,6 +3,13 @@ using UnityEngine;
 using UnityEngine.Experimental.XR;
 using UnityEngine.XR.ARFoundation;
 
+/// <summary>
+/// Listens for touch events and performs an AR raycast from the screen touch point.
+/// AR raycasts will only hit detected trackables like feature points and planes.
+/// 
+/// If a raycast hits a trackable, the <see cref="placedPrefab"/> is instantiated
+/// and moved to the hit position.
+/// </summary>
 [RequireComponent(typeof(ARSessionOrigin))]
 public class PlaceOnPlane : MonoBehaviour
 {
@@ -24,10 +31,6 @@ public class PlaceOnPlane : MonoBehaviour
     /// </summary>
     public GameObject spawnedObject { get; private set; }
 
-    ARSessionOrigin m_SessionOrigin;
-    
-    static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
-    
     void Awake()
     {
         m_SessionOrigin = GetComponent<ARSessionOrigin>();
@@ -35,23 +38,29 @@ public class PlaceOnPlane : MonoBehaviour
 
     void Update()
     {
-        if (Input.touchCount > 0)
+        if (Input.touchCount == 0)
+            return;
+
+        var touch = Input.GetTouch(0);
+
+        if (m_SessionOrigin.Raycast(touch.position, s_Hits, TrackableType.PlaneWithinPolygon))
         {
-            Touch touch = Input.GetTouch(0);
+            // Raycast hits are sorted by distance, so the first one
+            // will be the closest hit.
+            var hitPose = s_Hits[0].pose;
 
-            if (m_SessionOrigin.Raycast(touch.position, s_Hits, TrackableType.PlaneWithinPolygon))
+            if (spawnedObject == null)
             {
-                Pose hitPose = s_Hits[0].pose;
-
-                if (spawnedObject == null)
-                {
-                    spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
-                }
-                else
-                {
-                    spawnedObject.transform.position = hitPose.position;
-                }
+                spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
+            }
+            else
+            {
+                spawnedObject.transform.position = hitPose.position;
             }
         }
     }
+
+    static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
+
+    ARSessionOrigin m_SessionOrigin;
 }

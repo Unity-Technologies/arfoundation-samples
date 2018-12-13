@@ -10,8 +10,18 @@ using UnityEngine.XR.ARFoundation;
 [RequireComponent(typeof(ARPlaneManager))]
 public class DisableVerticalPlanes : MonoBehaviour
 {
+    [Tooltip("The UI Text element used to display log messages.")]
     [SerializeField]
     Text m_LogText;
+
+    /// <summary>
+    /// The UI Text element used to display log messages.
+    /// </summary>
+    public Text logText
+    {
+        get { return m_LogText; }
+        set { m_LogText = value; }
+    }
 
     void OnEnable()
     {
@@ -34,7 +44,8 @@ public class DisableVerticalPlanes : MonoBehaviour
             plane.gameObject.SetActive(false);
 
             // Add to our log so the user knows something happened.
-            m_LogText.text += string.Format("\n{0}", plane.boundedPlane.Id);
+            if (logText != null)
+                logText.text = string.Format("\n{0}", plane.boundedPlane.Id);
         }
     }
 }

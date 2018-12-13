@@ -4,9 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARExtensions;
 using UnityEngine.XR.ARFoundation;
-#if !UNITY_2018_2_OR_NEWER
-using Unity.Collections;
-#endif
 
 /// <summary>
 /// This component tests getting the latest camera image
@@ -55,8 +52,6 @@ public class TestCameraImage : MonoBehaviour
         get { return m_ImageInfo; }
         set { m_ImageInfo = value; }
     }
-
-    Texture2D m_Texture;
 
     void OnEnable()
     {
@@ -118,4 +113,6 @@ public class TestCameraImage : MonoBehaviour
         // Set the RawImage's texture so we can visualize it.
         m_RawImage.texture = m_Texture;
     }
+
+    Texture2D m_Texture;
 }
