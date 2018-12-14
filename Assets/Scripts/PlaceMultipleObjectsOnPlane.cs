@@ -26,15 +26,14 @@ public class PlaceMultipleObjectsOnPlane : MonoBehaviour
     /// </summary>
     public GameObject spawnedObject { get; private set; }
 
+    /// <summary>
+    /// Invoked whenever an object is placed in on a plane.
+    /// </summary>
+    public static event Action onPlacedObject;
+
     ARSessionOrigin m_SessionOrigin;
 
     static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
-
-    public delegate void PlacedObject();
-
-    private static Action s_PlacedObject;
-
-    public static event Action onPlacedObject;
 
     void Awake()
     {
