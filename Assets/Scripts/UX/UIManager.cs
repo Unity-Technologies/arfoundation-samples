@@ -37,6 +37,7 @@ public class UIManager : MonoBehaviour
     static List<ARPlane> s_Planes = new List<ARPlane>();
 
     bool m_ShowingTapToPlace = false;
+
     bool m_ShowingMoveDevice = true;
 
     void OnEnable()
@@ -55,8 +56,12 @@ public class UIManager : MonoBehaviour
     {
         if (PlanesFound() && m_ShowingMoveDevice)
         {
-            m_MoveDeviceAnimation.SetTrigger(k_FadeOffAnim);
-            m_TapToPlaceAnimation.SetTrigger(k_FadeOnAnim);
+            if (moveDeviceAnimation)
+                moveDeviceAnimation.SetTrigger(k_FadeOffAnim);
+
+            if (tapToPlaceAnimation)
+                tapToPlaceAnimation.SetTrigger(k_FadeOnAnim);
+
             m_ShowingTapToPlace = true;
             m_ShowingMoveDevice = false;
         }
@@ -64,21 +69,21 @@ public class UIManager : MonoBehaviour
 
     bool PlanesFound()
     {
-        if (m_PlaneManager)
-        {
-            m_PlaneManager.GetAllPlanes(m_Planes);
-            return m_Planes.Count > 0;
-        }
-        return false;
+        if (planeManager == null)
+            return false;
+
+        planeManager.GetAllPlanes(s_Planes);
+        return s_Planes.Count > 0;
     }
 
     void PlacedObject()
     {
         if (m_ShowingTapToPlace)
         {
-            m_TapToPlaceAnimation.SetTrigger(k_FadeOffAnim);
+            if (tapToPlaceAnimation)
+                tapToPlaceAnimation.SetTrigger(k_FadeOffAnim);
+
             m_ShowingTapToPlace = false;
         }
     }
-
 }
