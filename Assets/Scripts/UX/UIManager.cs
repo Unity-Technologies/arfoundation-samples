@@ -7,11 +7,34 @@ public class UIManager : MonoBehaviour
     const string k_FadeOffAnim = "FadeOff";
     const string k_FadeOnAnim = "FadeOn";
 
-    [SerializeField] ARPlaneManager m_PlaneManager;
-    [SerializeField] Animator m_MoveDeviceAnimation;
-    [SerializeField] Animator m_TapToPlaceAnimation;
-    
-    List<ARPlane> m_Planes = new List<ARPlane>();
+    [SerializeField]
+    ARPlaneManager m_PlaneManager;
+
+    public ARPlaneManager planeManager
+    {
+        get { return m_PlaneManager; }
+        set { m_PlaneManager = value; }
+    }
+
+    [SerializeField]
+    Animator m_MoveDeviceAnimation;
+
+    public Animator moveDeviceAnimation
+    {
+        get { return m_MoveDeviceAnimation; }
+        set { m_MoveDeviceAnimation = value; }
+    }
+
+    [SerializeField]
+    Animator m_TapToPlaceAnimation;
+
+    public Animator tapToPlaceAnimation
+    {
+        get { return m_TapToPlaceAnimation; }
+        set { m_TapToPlaceAnimation = value; }
+    }
+
+    static List<ARPlane> s_Planes = new List<ARPlane>();
 
     bool m_ShowingTapToPlace = false;
     bool m_ShowingMoveDevice = true;
