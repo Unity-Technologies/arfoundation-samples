@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 
+[RequireComponent(typeof(ARPlane))]
+[RequireComponent(typeof(Animator))]
 public class FadePlaneOnBoundaryChange : MonoBehaviour
 {
     const string k_FadeOffAnim = "FadeOff";
