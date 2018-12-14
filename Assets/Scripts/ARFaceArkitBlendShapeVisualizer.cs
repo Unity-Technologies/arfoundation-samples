@@ -18,15 +18,15 @@ public class ARFaceArkitBlendShapeVisualizer : MonoBehaviour
 {
     [SerializeField]
     float m_CoefficientScale = 100.0f;
+
+    public float coefficientScale
+    {
+        get { return m_CoefficientScale; }
+        set { m_CoefficientScale = value; }
+    }
+
     [SerializeField]
     SkinnedMeshRenderer m_SkinnedMeshRenderer;
-    
-    ARFace m_Face;
-    ARKitFaceSubsystem m_ArkitFaceSubsystem;
-
-    static List<XRFaceArkitBlendShapeCoefficient> s_FaceArkitBlendShapeCoefficients;
-
-    Dictionary<XRArkitBlendShapeLocation, int> m_FaceArkitBlendShapeIndexMap;
 
     public SkinnedMeshRenderer skinnedMeshRenderer
     {
@@ -41,11 +41,13 @@ public class ARFaceArkitBlendShapeVisualizer : MonoBehaviour
         }
     }
 
-    public float coefficientScale
-    {
-        get { return m_CoefficientScale; }
-        set { m_CoefficientScale = value; }
-    }
+    static List<XRFaceArkitBlendShapeCoefficient> s_FaceArkitBlendShapeCoefficients;
+
+    ARFace m_Face;
+
+    ARKitFaceSubsystem m_ArkitFaceSubsystem;
+
+    Dictionary<XRArkitBlendShapeLocation, int> m_FaceArkitBlendShapeIndexMap;
 
     void Awake()
     {
