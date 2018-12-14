@@ -48,13 +48,12 @@ public class CameraConfigController : MonoBehaviour
     void Awake()
     {
         m_Dropdown = GetComponent<Dropdown>();
+        m_Dropdown.ClearOptions();
         m_ConfigurationNames = new List<string>();
     }
 
-    void Update()
+    void PopulateDropdown()
     {
-        m_Dropdown.ClearOptions();
-
         var cameraSubsystem = ARSubsystemManager.cameraSubsystem;
         if (cameraSubsystem == null)
             return;
@@ -65,17 +64,14 @@ public class CameraConfigController : MonoBehaviour
         if (configurations.count == 0)
             return;
 
-        // Here we demonstrate the two ways to enumerate the camera configurations.
-        // Typically, you would do this once, perhaps at the start of the AR app
-        // rather than every frame.
+        // There are two ways to enumerate the camera configurations.
 
-        // Here, we use a foreach to iterate over all the available configurations
-        m_ConfigurationNames.Clear();
+        // 1. Use a foreach to iterate over all the available configurations
         foreach (var config in configurations)
             m_ConfigurationNames.Add(config.ToString());
         m_Dropdown.AddOptions(m_ConfigurationNames);
 
-        // We can also use a normal for...loop
+        // 2. Use a normal for...loop
         var currentConfig = cameraSubsystem.GetCurrentConfiguration();
         for (int i = 0; i < configurations.count; i++)
         {
@@ -83,5 +79,11 @@ public class CameraConfigController : MonoBehaviour
             if (currentConfig == configurations[i])
                 m_Dropdown.value = i;
         }
+    }
+
+    void Update()
+    {
+        if (m_ConfigurationNames.Count == 0)
+            PopulateDropdown();
     }
 }
