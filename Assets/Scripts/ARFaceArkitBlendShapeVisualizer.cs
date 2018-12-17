@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.XR;
-using UnityEngine.Serialization;
 using UnityEngine.XR.ARFoundation;
+#if UNITY_IOS
 using UnityEngine.XR.ARKit;
+#endif
 
 /// <summary>
 /// Populates the action unit coefficients for an <see cref="ARFace"/>.
@@ -41,17 +42,21 @@ public class ARFaceArkitBlendShapeVisualizer : MonoBehaviour
         }
     }
 
+#if UNITY_IOS
     static List<XRFaceArkitBlendShapeCoefficient> s_FaceArkitBlendShapeCoefficients;
-
-    ARFace m_Face;
 
     ARKitFaceSubsystem m_ArkitFaceSubsystem;
 
     Dictionary<XRArkitBlendShapeLocation, int> m_FaceArkitBlendShapeIndexMap;
+#endif
+
+    ARFace m_Face;
 
     void Awake()
     {
+#if UNITY_IOS
         s_FaceArkitBlendShapeCoefficients = new List<XRFaceArkitBlendShapeCoefficient>();
+#endif
         m_Face = GetComponent<ARFace>();
         CreateFeatureBlendMapping();
     }
@@ -62,7 +67,8 @@ public class ARFaceArkitBlendShapeVisualizer : MonoBehaviour
         {
             return;
         }
- 
+
+#if UNITY_IOS
         const string strPrefix = "blendShape2.";
         m_FaceArkitBlendShapeIndexMap = new Dictionary<XRArkitBlendShapeLocation, int>();
         
@@ -118,7 +124,7 @@ public class ARFaceArkitBlendShapeVisualizer : MonoBehaviour
         m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.NoseSneerLeft       ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "noseSneer_L");
         m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.NoseSneerRight      ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "noseSneer_R");
         m_FaceArkitBlendShapeIndexMap[XRArkitBlendShapeLocation.TongueOut           ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "tongueOut");
-        
+#endif
     }
 
     void SetVisible(bool visible)
@@ -139,14 +145,15 @@ public class ARFaceArkitBlendShapeVisualizer : MonoBehaviour
 
     void OnEnable()
     {
+#if UNITY_IOS
         m_ArkitFaceSubsystem = (ARKitFaceSubsystem) ARSubsystemManager.faceSubsystem;
-        if (m_ArkitFaceSubsystem == null )
-        {
+        if (m_ArkitFaceSubsystem == null)
             return;
-        }
+
         m_Face.updated += OnUpdated;
         ARSubsystemManager.systemStateChanged += OnSystemStateChanged;
         UpdateVisibility();
+#endif
     }
 
     void OnDisable()
@@ -173,10 +180,9 @@ public class ARFaceArkitBlendShapeVisualizer : MonoBehaviour
             return;
         }
 
+#if UNITY_IOS
         if (!m_ArkitFaceSubsystem.TryGetFaceARKitBlendShapeCoefficients(m_Face.xrFace.trackableId,s_FaceArkitBlendShapeCoefficients))
-        {
             return;
-        }
 
         foreach (var xrFaceFeatureCoefficient in s_FaceArkitBlendShapeCoefficients)
         {
@@ -189,5 +195,6 @@ public class ARFaceArkitBlendShapeVisualizer : MonoBehaviour
                 }
             }
         }
+#endif
     }
 }
