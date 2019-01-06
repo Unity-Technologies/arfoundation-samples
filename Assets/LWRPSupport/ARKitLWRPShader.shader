@@ -25,7 +25,7 @@ Shader "Unlit/ARKitLWRP"
             #pragma vertex Vertex
             #pragma fragment Fragment
 
-            #include "LWRP/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.lightweight/ShaderLibrary/Core.hlsl"
 
             float4x4 _UnityDisplayTransform;
 

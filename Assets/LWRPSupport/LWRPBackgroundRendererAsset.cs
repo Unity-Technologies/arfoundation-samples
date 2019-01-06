@@ -1,13 +1,11 @@
 ﻿
 using System;
-using UnityEngine.Experimental.Rendering.LightweightPipeline;
 using UnityEngine.Rendering;
-using UnityEngine.Serialization;
 
 namespace UnityEngine.XR.ARFoundation.LWRPSupport
 {
-    [CreateAssetMenu(fileName = "LWRPBackroundRendererAsset", menuName = "XR/LWRPBackroundRendererAsset")]
-    public class LWRPBackroundRendererAsset : ARBackgroundRendererAsset
+    [CreateAssetMenu(fileName = "LWRPBackgroundRendererAsset", menuName = "XR/LWRPBackgroundRendererAsset")]
+    public class LWRPBackgroundRendererAsset : ARBackgroundRendererAsset
     {
         /// <summary>
         /// we're going to reference all materials that we want to use so that they get built into the project
@@ -31,17 +29,6 @@ namespace UnityEngine.XR.ARFoundation.LWRPSupport
                 {
                     cameraGameObject.AddComponent<LWRPBeforeCameraRender>();
                 }
-
-                var lightweightAdditionalCameraData = cameraGameObject.GetComponent<LightweightAdditionalCameraData>();
-                if (lightweightAdditionalCameraData == null)
-                {
-                    lightweightAdditionalCameraData = cameraGameObject.AddComponent<LightweightAdditionalCameraData>();
-                }
-
-                lightweightAdditionalCameraData.renderShadows = false;
-                lightweightAdditionalCameraData.requiresColorTexture = false;
-                lightweightAdditionalCameraData.requiresDepthTexture = false;
-
             }
         }
 
