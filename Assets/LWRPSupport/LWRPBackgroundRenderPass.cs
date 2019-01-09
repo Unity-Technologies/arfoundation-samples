@@ -54,7 +54,7 @@ namespace UnityEngine.XR.ARFoundation.LWRPSupport
 
             SetRenderTarget(cmd, m_TargetIdentifier, colorLoadOp, colorStoreOp,
                 m_DepthIdentifier, depthLoadOp, depthStoreOp, ClearFlag.All, Color.clear, m_Descriptor.dimension);
-
+            
             cmd.Blit(null, m_TargetIdentifier, m_BlitMaterial);
             context.ExecuteCommandBuffer(cmd);
             CommandBufferPool.Release(cmd);
