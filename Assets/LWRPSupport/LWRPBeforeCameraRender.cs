@@ -21,7 +21,7 @@ namespace UnityEngine.XR.ARFoundation.LWRPSupport
 		public ScriptableRenderPass GetPassToEnqueue(RenderTextureDescriptor baseDescriptor, RenderTargetHandle colorHandle,
 			RenderTargetHandle depthHandle, ClearFlag clearFlag)
 		{
-			LWRPBackgroundRenderPass lwrpBackgroundRenderPass = new LWRPBackgroundRenderPass();
+			var lwrpBackgroundRenderPass = new LWRPBackgroundRenderPass();
 			lwrpBackgroundRenderPass.Setup(blitMaterial, colorHandle.Identifier(), depthHandle.Identifier(),
 				baseDescriptor);
 			return lwrpBackgroundRenderPass;
