@@ -2,7 +2,7 @@
 using System;
 using UnityEngine.Rendering;
 
-namespace UnityEngine.XR.ARFoundation.LWRPSupport
+namespace UnityEngine.XR.ARFoundation
 {
     [CreateAssetMenu(fileName = "LWRPBackgroundRendererAsset", menuName = "XR/LWRPBackgroundRendererAsset")]
     public class LWRPBackgroundRendererAsset : ARBackgroundRendererAsset

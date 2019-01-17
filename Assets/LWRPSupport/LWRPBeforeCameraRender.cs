@@ -1,7 +1,7 @@
 ﻿using UnityEngine.Experimental.Rendering;
 using UnityEngine.Experimental.Rendering.LightweightPipeline;
 
-namespace UnityEngine.XR.ARFoundation.LWRPSupport
+namespace UnityEngine.XR.ARFoundation
 {
 	public class LWRPBeforeCameraRender : MonoBehaviour, IBeforeRender
 	{

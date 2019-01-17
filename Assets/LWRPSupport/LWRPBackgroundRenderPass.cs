@@ -3,7 +3,7 @@ using UnityEngine.Experimental.Rendering;
 using UnityEngine.Experimental.Rendering.LightweightPipeline;
 using UnityEngine.Rendering;
 
-namespace UnityEngine.XR.ARFoundation.LWRPSupport
+namespace UnityEngine.XR.ARFoundation
 {
     public class LWRPBackgroundRenderPass : ScriptableRenderPass
     {
