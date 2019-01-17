@@ -1,49 +1,70 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// A simple UI controller to display light estimation information.
+/// </summary>
 [RequireComponent(typeof(LightEstimation))]
 public class LightEstimationUI : MonoBehaviour
 {
-	[SerializeField]
-	Text m_BrightnessVal;
-	
-	[SerializeField]
-	Text m_ColorTempVal;
-	
-	[SerializeField]
-	Text m_ColorCorrectVal;
+    [Tooltip("The UI Text element used to display the estimated brightness in the physical environment.")]
+    [SerializeField]
+    Text m_BrightnessText;
 
-	LightEstimation m_LightEstimation;
+    /// <summary>
+    /// The UI Text element used to display the estimated brightness value.
+    /// </summary>
+    public Text brightnessText
+    {
+        get { return m_BrightnessText; }
+        set { m_BrightnessText = brightnessText; }
+    }
 
-	const string k_UnavailableText = "Unavailable";
+    [Tooltip("The UI Text element used to display the estimated color temperature in the physical environment.")]
+    [SerializeField]
+    Text m_ColorTemperatureText;
 
-	void Awake()
-	{
-		m_LightEstimation = GetComponent<LightEstimation>();
-	}
+    /// <summary>
+    /// The UI Text element used to display the estimated color temperature in the scene.
+    /// </summary>
+    public Text colorTemperatureText
+    {
+        get { return m_ColorTemperatureText; }
+        set { m_ColorTemperatureText = value; }
+    }
 
-	void Update()
-	{
-		SetUIValue(m_LightEstimation.brightness.HasValue, m_BrightnessVal, m_LightEstimation.brightness.Value.ToString());
-		SetUIValue(m_LightEstimation.colorTemperature.HasValue, m_ColorTempVal, m_LightEstimation.colorTemperature.Value.ToString());
-		SetUIValue(m_LightEstimation.colorCorrection.HasValue, m_ColorCorrectVal, m_LightEstimation.colorTemperature.Value.ToString());
-	}
+    [Tooltip("The UI Text element used to display the estimated color correction value for the physical environment.")]
+    [SerializeField]
+    Text m_ColorCorrectionText;
 
-	void SetUIValue(bool ContainsValue, Text UIText, string DisplayValue)
-	{
-		if (UIText)
-		{
-			if (ContainsValue)
-			{
-				UIText.text = DisplayValue;
-			}
-			else
-			{
-				UIText.text = k_UnavailableText;
-			}
-		}
-	}
-	
+    /// <summary>
+    /// The UI Text element used to display the estimated color correction value for the scene.
+    /// </summary>
+    public Text colorCorrectionText
+    {
+        get { return m_ColorCorrectionText; }
+        set { m_ColorCorrectionText = value; }
+    }
+
+    void Awake()
+    {
+        m_LightEstimation = GetComponent<LightEstimation>();
+    }
+
+    void Update()
+    {
+        SetUIValue(m_LightEstimation.brightness, brightnessText);
+        SetUIValue(m_LightEstimation.colorTemperature, colorTemperatureText);
+        SetUIValue(m_LightEstimation.colorCorrection, colorCorrectionText);
+    }
+
+    void SetUIValue<T>(T? displayValue, Text text) where T : struct
+    {
+        if (text != null)
+            text.text = displayValue.HasValue ? displayValue.Value.ToString(): k_UnavailableText;
+    }
+
+    const string k_UnavailableText = "Unavailable";
+
+    LightEstimation m_LightEstimation;
 }

@@ -1,6 +1,5 @@
 ﻿using UnityEngine.Experimental.Rendering;
 using UnityEngine.Experimental.Rendering.LightweightPipeline;
-using UnityEngine.Experimental.Rendering.LWRP;
 
 namespace UnityEngine.XR.ARFoundation.LWRPSupport
 {
