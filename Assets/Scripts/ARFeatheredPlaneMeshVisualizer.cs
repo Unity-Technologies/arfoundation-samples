@@ -1,24 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.XR;
 using UnityEngine.XR.ARFoundation;
 
+/// <summary>
+/// This plane visualizer demonstrates the use of a feathering effect
+/// at the edge of the detected plane, which reduces the visual impression
+/// of a hard edge.
+/// </summary>
 [RequireComponent(typeof(ARPlaneMeshVisualizer), typeof(MeshRenderer), typeof(ARPlane))]
 public class ARFeatheredPlaneMeshVisualizer : MonoBehaviour
 {
-    float featheringWidth
-    { 
-        get { return m_FeatheringWidth; }
-        set { m_FeatheringWidth = value; } 
-    }
-
     [Tooltip("The width of the texture feathering (in world units).")]
     [SerializeField]
     float m_FeatheringWidth = 0.2f;
 
-    ARPlaneMeshVisualizer m_PlaneMeshVisualizer;
-    Material m_FeatheredPlaneMaterial;
+    /// <summary>
+    /// The width of the texture feathering (in world units).
+    /// </summary>
+    public float featheringWidth
+    { 
+        get { return m_FeatheringWidth; }
+        set { m_FeatheringWidth = value; } 
+    }
 
     void Awake()
     {
@@ -95,5 +98,10 @@ public class ARFeatheredPlaneMeshVisualizer : MonoBehaviour
     }
 
     static List<Vector3> s_FeatheringUVs = new List<Vector3>();
+
     static List<Vector3> s_Vertices = new List<Vector3>();
+
+    ARPlaneMeshVisualizer m_PlaneMeshVisualizer;
+
+    Material m_FeatheredPlaneMaterial;
 }

@@ -1,5 +1,5 @@
 ﻿
-namespace UnityEngine.XR.ARFoundation.LWRPSupport
+namespace UnityEngine.XR.ARFoundation
 {
 
     public class LWRPBackgroundRenderer : ARFoundationBackgroundRenderer
