@@ -10,6 +10,31 @@ using UnityEngine.XR.ARFoundation;
 [RequireComponent(typeof(Light))]
 public class LightEstimation : MonoBehaviour
 {
+    [SerializeField]
+    [Tooltip("The ARCameraManager which will produce frame events containing light estimation information.")]
+    ARCameraManager m_CameraManager;
+
+    /// <summary>
+    /// Get or set the <c>ARCameraManager</c>.
+    /// </summary>
+    public ARCameraManager cameraManager
+    {
+        get { return m_CameraManager; }
+        set
+        {
+            if (m_CameraManager == value)
+                return;
+
+            if (m_CameraManager != null)
+                m_CameraManager.frameReceived -= FrameChanged;
+
+            m_CameraManager = value;
+
+            if (m_CameraManager != null & enabled)
+                m_CameraManager.frameReceived += FrameChanged;
+        }
+    }
+
     /// <summary>
     /// The estimated brightness of the physical environment, if available.
     /// </summary>
@@ -32,12 +57,14 @@ public class LightEstimation : MonoBehaviour
 
     void OnEnable()
     {
-        ARSubsystemManager.cameraFrameReceived += FrameChanged;
+        if (m_CameraManager != null)
+            m_CameraManager.frameReceived += FrameChanged;
     }
 
     void OnDisable()
     {
-        ARSubsystemManager.cameraFrameReceived -= FrameChanged;
+        if (m_CameraManager != null)
+            m_CameraManager.frameReceived -= FrameChanged;
     }
 
     void FrameChanged(ARCameraFrameEventArgs args)
