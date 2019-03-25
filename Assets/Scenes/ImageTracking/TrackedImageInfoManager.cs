@@ -5,10 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.XR.ARFoundation;
 
-#if UNITY_IOS && !UNITY_EDITOR
-using UnityEngine.XR.ARKit;
-#endif
-
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.Build;
@@ -208,16 +204,5 @@ public class TrackedImageInfoManager : MonoBehaviour
 
         foreach (var trackedImage in eventArgs.updated)
             UpdateInfo(trackedImage);
-    }
-
-    void Update()
-    {
-#if UNITY_IOS && !UNITY_EDITOR
-        var subsystem = m_TrackedImageManager.subsystem as ARKitImageTrackingSubsystem;
-        if (subsystem != null)
-        {
-            subsystem.maximumNumberOfTrackedImages = m_TrackedImageManager.referenceLibrary.count;
-        }
-#endif
     }
 }
