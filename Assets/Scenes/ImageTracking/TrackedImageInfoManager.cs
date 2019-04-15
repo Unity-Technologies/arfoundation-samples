@@ -5,35 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.XR.ARFoundation;
 
-#if UNITY_EDITOR
-using UnityEditor;
-using UnityEditor.Build;
-using UnityEditor.Build.Reporting;
-
-/// <summary>
-/// Each XRReferenceImage only stores a Guid, not a Texture2D.
-/// At build time, generate a list of source Texture2Ds and store references
-/// so that we will have them at runtime.
-/// </summary>
-class TrackedImageInfoManagerBuildProcessor : IPreprocessBuildWithReport
-{
-    public int callbackOrder { get { return 0; } }
-
-    public void OnPreprocessBuild(BuildReport report)
-    {
-        var infoManagers = UnityEngine.Object.FindObjectsOfType<TrackedImageInfoManager>();
-        if (infoManagers == null)
-            return;
-
-        foreach (var infoManager in infoManagers)
-            infoManager.RebuildDictionary();
-
-        AssetDatabase.Refresh();
-    }
-}
-#endif
-
-/// <summary>
 /// This component listens for images detected by the <c>XRImageTrackingSubsystem</c>
 /// and overlays some information as well as the source Texture2D on top of the
 /// detected image.
@@ -69,74 +40,12 @@ public class TrackedImageInfoManager : MonoBehaviour
         set { m_DefaultTexture = value; }
     }
 
-    /// <summary>
-    /// A serializable container for Texture2D and XRReferenceImage pairs.
-    /// This is used to associate a reference image with the source texture.
-    /// </summary>
-    [Serializable]
-    struct TextureReferenceImagePair
-    {
-        [SerializeField]
-        public Texture2D texture;
-
-        [SerializeField]
-        public XRReferenceImage referenceImage;
-
-        public TextureReferenceImagePair(Texture2D texture, XRReferenceImage referenceImage)
-        {
-            this.texture = texture;
-            this.referenceImage = referenceImage;
-        }
-    }
-
-    /// <summary>
-    /// A serializable list of Texture2D-ReferenceImage pairs used to lookup
-    /// a reference image's source Texture2D at runtime.
-    /// </summary>
-    [SerializeField, HideInInspector]
-    List<TextureReferenceImagePair> m_TextureReferenceImagePairs = new List<TextureReferenceImagePair>();
-
     ARTrackedImageManager m_TrackedImageManager;
-
-    Dictionary<Guid, Texture2D> m_Textures;
 
     void Awake()
     {
         m_TrackedImageManager = GetComponent<ARTrackedImageManager>();
-
-        // Build a dictionary of Guid to Texture2D
-        m_Textures = new Dictionary<Guid, Texture2D>();
-        foreach (var pair in m_TextureReferenceImagePairs)
-            m_Textures[pair.referenceImage.guid] = pair.texture;
     }
-
-#if UNITY_EDITOR
-    /// <summary>
-    /// Rebuilds a serializable list of Texture2D-XRReferenceImage pairs.
-    /// At runtime, this List is used to populate a dictionary.
-    /// </summary>
-    internal void RebuildDictionary()
-    {
-        m_TextureReferenceImagePairs = new List<TextureReferenceImagePair>();
-        var trackedImageManager = GetComponent<ARTrackedImageManager>();
-        if (trackedImageManager != null && trackedImageManager.referenceLibrary != null)
-        {
-            foreach (var referenceImage in trackedImageManager.referenceLibrary)
-            {
-                var guid = referenceImage.guid;
-                var texturePath = AssetDatabase.GUIDToAssetPath(guid.ToString("N"));
-                if (string.IsNullOrEmpty(texturePath))
-                {
-                    Debug.LogWarningFormat("Null or empty texturePath for image {0}", guid);
-                    continue;
-                }
-
-                var texture = AssetDatabase.LoadAssetAtPath<Texture2D>(texturePath);
-                m_TextureReferenceImagePairs.Add(new TextureReferenceImagePair(texture, referenceImage));
-            }
-        }
-    }
-#endif
 
     void OnEnable()
     {
@@ -177,14 +86,8 @@ public class TrackedImageInfoManager : MonoBehaviour
             trackedImage.transform.localScale = new Vector3(trackedImage.size.x, 1f, trackedImage.size.y);
 
             // Set the texture
-            var meshRenderer = planeGo.GetComponentInChildren<MeshRenderer>();
-
-            // Look up the texture by Guid
-            Texture2D texture;
-            if (!m_Textures.TryGetValue(trackedImage.referenceImage.guid, out texture))
-                texture = defaultTexture;
-
-            meshRenderer.material.mainTexture = texture;
+            var material = planeGo.GetComponentInChildren<MeshRenderer>().material;
+            material.mainTexture = (trackedImage.referenceImage.texture == null) ? defaultTexture : trackedImage.referenceImage.texture;
         }
         else
         {
