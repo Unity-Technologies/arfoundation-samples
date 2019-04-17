@@ -66,8 +66,8 @@ public class TrackedImageInfoManager : MonoBehaviour
         // Update information about the tracked image
         var text = canvas.GetComponentInChildren<Text>();
         text.text = string.Format(
-            "trackableId\n{0}\ntrackingState: {1}\nGUID: {2}\nReference size: {3} cm\nDetected size: {4} cm",
-            trackedImage.trackableId,
+            "{0}\ntrackingState: {1}\nGUID: {2}\nReference size: {3} cm\nDetected size: {4} cm",
+            trackedImage.referenceImage.name,
             trackedImage.trackingState,
             trackedImage.referenceImage.guid,
             trackedImage.referenceImage.size * 100f,
