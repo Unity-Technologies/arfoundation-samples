@@ -3,7 +3,7 @@
 --- !u!129 &1
 PlayerSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 17
+  serializedVersion: 16
   productGUID: 35066d27dbe774136afcdffb68d5427d
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
@@ -65,7 +65,6 @@ PlayerSettings:
   disableDepthAndStencilBuffers: 0
   androidStartInFullscreen: 1
   androidRenderOutsideSafeArea: 0
-  androidUseSwappy: 0
   androidBlitType: 0
   defaultIsNativeResolution: 1
   macRetinaSupport: 1
@@ -149,7 +148,6 @@ PlayerSettings:
     oculus:
       sharedDepthBuffer: 0
       dashSupport: 0
-      lowOverheadMode: 0
     enable360StereoCapture: 0
   isWsaHolographicRemotingEnabled: 0
   protectGraphicsMemory: 0
@@ -162,6 +160,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.unity.arfoundation.samples
+    Standalone: com.unity.arfoundation.samples
     iPhone: com.unity.arfoundation.samples
   buildNumber: {}
   AndroidBundleVersionCode: 1
@@ -271,8 +270,6 @@ PlayerSettings:
     height: 180
     banner: {fileID: 0}
   androidGamepadSupportLevel: 0
-  AndroidValidateAppBundleSize: 1
-  AndroidAppBundleSizeToValidate: 100
   resolutionDialogBanner: {fileID: 0}
   m_BuildTargetIcons: []
   m_BuildTargetPlatformIcons:
@@ -600,7 +597,6 @@ PlayerSettings:
   monoEnv: 
   splashScreenBackgroundSourceLandscape: {fileID: 0}
   splashScreenBackgroundSourcePortrait: {fileID: 0}
-  blurSplashScreenBackground: 1
   spritePackerPolicy: 
   webGLMemorySize: 256
   webGLExceptionSupport: 1
