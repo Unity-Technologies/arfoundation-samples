@@ -1,26 +1,26 @@
-﻿using System;
+using System;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.XR.ARExtensions;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 
 /// <summary>
 /// This component tests getting the latest camera image
 /// and converting it to RGBA format. If successful,
 /// it displays the image on the screen as a RawImage
 /// and also displays information about the image.
-/// 
+///
 /// This is useful for computer vision applications where
 /// you need to access the raw pixels from camera image
 /// on the CPU.
-/// 
+///
 /// This is different from the ARCameraBackground component, which
 /// efficiently displays the camera image on the screen. If you
 /// just want to blit the camera texture to the screen, use
 /// the ARCameraBackground, or use Graphics.Blit to create
 /// a GPU-friendly RenderTexture.
-/// 
+///
 /// In this example, we get the camera image data on the CPU,
 /// convert it to an RGBA format, then display it on the screen
 /// as a RawImage texture to demonstrate it is working.
@@ -29,6 +29,19 @@ using UnityEngine.XR.ARFoundation;
 /// </summary>
 public class TestCameraImage : MonoBehaviour
 {
+    [SerializeField]
+    [Tooltip("The ARCameraManager which will produce frame events.")]
+    ARCameraManager m_CameraManager;
+
+     /// <summary>
+    /// Get or set the <c>ARCameraManager</c>.
+    /// </summary>
+    public ARCameraManager cameraManager
+    {
+        get { return m_CameraManager; }
+        set { m_CameraManager = value; }
+    }
+
     [SerializeField]
     RawImage m_RawImage;
 
@@ -55,43 +68,53 @@ public class TestCameraImage : MonoBehaviour
 
     void OnEnable()
     {
-        ARSubsystemManager.cameraFrameReceived += OnCameraFrameReceived;
+        if (m_CameraManager != null)
+        {
+            m_CameraManager.frameReceived += OnCameraFrameReceived;
+        }
     }
 
     void OnDisable()
     {
-        ARSubsystemManager.cameraFrameReceived -= OnCameraFrameReceived;
+        if (m_CameraManager != null)
+        {
+            m_CameraManager.frameReceived -= OnCameraFrameReceived;
+        }
     }
 
     unsafe void OnCameraFrameReceived(ARCameraFrameEventArgs eventArgs)
     {
         // Attempt to get the latest camera image. If this method succeeds,
         // it acquires a native resource that must be disposed (see below).
-        CameraImage image;
-        if (!ARSubsystemManager.cameraSubsystem.TryGetLatestImage(out image))
+        XRCameraImage image;
+        if (!cameraManager.TryGetLatestImage(out image))
+        {
             return;
+        }
 
         // Display some information about the camera image
         m_ImageInfo.text = string.Format(
             "Image info:\n\twidth: {0}\n\theight: {1}\n\tplaneCount: {2}\n\ttimestamp: {3}\n\tformat: {4}",
             image.width, image.height, image.planeCount, image.timestamp, image.format);
 
-        // Once we have a valid CameraImage, we can access the individual image "planes"
-        // (the separate channels in the image). CameraImage.GetPlane provides
+        // Once we have a valid XRCameraImage, we can access the individual image "planes"
+        // (the separate channels in the image). XRCameraImage.GetPlane provides
         // low-overhead access to this data. This could then be passed to a
         // computer vision algorithm. Here, we will convert the camera image
         // to an RGBA texture and draw it on the screen.
 
         // Choose an RGBA format.
-        // See CameraImage.FormatSupported for a complete list of supported formats.
+        // See XRCameraImage.FormatSupported for a complete list of supported formats.
         var format = TextureFormat.RGBA32;
 
         if (m_Texture == null || m_Texture.width != image.width || m_Texture.height != image.height)
+        {
             m_Texture = new Texture2D(image.width, image.height, format, false);
+        }
 
         // Convert the image to format, flipping the image across the Y axis.
         // We can also get a sub rectangle, but we'll get the full image here.
-        var conversionParams = new CameraImageConversionParams(image, format, CameraImageTransformation.MirrorY);
+        var conversionParams = new XRCameraImageConversionParams(image, format, CameraImageTransformation.MirrorY);
 
         // Texture2D allows us write directly to the raw texture data
         // This allows us to do the conversion in-place without making any copies.
@@ -102,7 +125,7 @@ public class TestCameraImage : MonoBehaviour
         }
         finally
         {
-            // We must dispose of the CameraImage after we're finished
+            // We must dispose of the XRCameraImage after we're finished
             // with it to avoid leaking native resources.
             image.Dispose();
         }

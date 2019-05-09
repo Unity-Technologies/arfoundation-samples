@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using UnityEngine.Experimental.XR;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 
 /// <summary>
 /// This example demonstrates disabling vertical planes as they are
@@ -25,27 +25,31 @@ public class DisableVerticalPlanes : MonoBehaviour
 
     void OnEnable()
     {
-        GetComponent<ARPlaneManager>().planeAdded += OnPlaneAdded;
+        GetComponent<ARPlaneManager>().planesChanged += OnPlaneAdded;
     }
 
     void OnDisable()
     {
-        GetComponent<ARPlaneManager>().planeAdded -= OnPlaneAdded;
+        GetComponent<ARPlaneManager>().planesChanged -= OnPlaneAdded;
     }
 
-    void OnPlaneAdded(ARPlaneAddedEventArgs eventArgs)
+    void OnPlaneAdded(ARPlanesChangedEventArgs eventArgs)
     {
-        var plane = eventArgs.plane;
+        foreach (var plane in eventArgs.added)
+            DisableIfVertical(plane);
+    }
 
+    void DisableIfVertical(ARPlane plane)
+    {
         // Check whether the plane is a vertical plane.
-        if (plane.boundedPlane.Alignment == PlaneAlignment.Vertical)
+        if (plane.alignment == PlaneAlignment.Vertical)
         {
             // Disable the entire GameObject.
             plane.gameObject.SetActive(false);
 
             // Add to our log so the user knows something happened.
             if (logText != null)
-                logText.text = string.Format("\n{0}", plane.boundedPlane.Id);
+                logText.text = string.Format("\n{0}", plane.trackableId);
         }
     }
 }

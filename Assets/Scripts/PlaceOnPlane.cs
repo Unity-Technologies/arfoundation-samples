@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.XR;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 
 /// <summary>
 /// Listens for touch events and performs an AR raycast from the screen touch point.
@@ -10,7 +10,7 @@ using UnityEngine.XR.ARFoundation;
 /// If a raycast hits a trackable, the <see cref="placedPrefab"/> is instantiated
 /// and moved to the hit position.
 /// </summary>
-[RequireComponent(typeof(ARSessionOrigin))]
+[RequireComponent(typeof(ARRaycastManager))]
 public class PlaceOnPlane : MonoBehaviour
 {
     [SerializeField]
@@ -33,7 +33,7 @@ public class PlaceOnPlane : MonoBehaviour
 
     void Awake()
     {
-        m_SessionOrigin = GetComponent<ARSessionOrigin>();
+        m_RaycastManager = GetComponent<ARRaycastManager>();
     }
 
     void Update()
@@ -43,7 +43,7 @@ public class PlaceOnPlane : MonoBehaviour
 
         var touch = Input.GetTouch(0);
 
-        if (m_SessionOrigin.Raycast(touch.position, s_Hits, TrackableType.PlaneWithinPolygon))
+        if (m_RaycastManager.Raycast(touch.position, s_Hits, TrackableType.PlaneWithinPolygon))
         {
             // Raycast hits are sorted by distance, so the first one
             // will be the closest hit.
@@ -62,5 +62,5 @@ public class PlaceOnPlane : MonoBehaviour
 
     static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
 
-    ARSessionOrigin m_SessionOrigin;
+    ARRaycastManager m_RaycastManager;
 }

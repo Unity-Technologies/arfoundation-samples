@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.49641287, b: 0.5748173, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -79,7 +79,7 @@ LightmapSettings:
     m_PVRFilterTypeDirect: 0
     m_PVRFilterTypeIndirect: 0
     m_PVRFilterTypeAO: 0
-    m_PVRFilteringMode: 1
+    m_PVRFilteringMode: 2
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 282840811}
   - component: {fileID: 282840815}
   - component: {fileID: 282840812}
-  - component: {fileID: 282840816}
+  - component: {fileID: 282840817}
   m_Layer: 0
   m_Name: AR Camera
   m_TagString: MainCamera
@@ -222,7 +222,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 282840810}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1742909100, guid: 3a84de5cd0624681b6b6dcd8921d912a, type: 3}
+  m_Script: {fileID: 1742909100, guid: ed7343f30e3843b3afda8f8b02669cea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Device: 0
@@ -231,7 +231,7 @@ MonoBehaviour:
   m_TrackingType: 0
   m_UpdateType: 0
   m_UseRelativeTransform: 1
---- !u!114 &282840816
+--- !u!114 &282840817
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -240,11 +240,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 282840810}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d82be673b768eb448ade8552ecbc1662, type: 3}
+  m_Script: {fileID: 11500000, guid: 4966719baa26e4b0e8231a24d9bd491a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_FocusMode: 1
-  m_LightEstimation: 1
+  m_LightEstimationMode: 1
 --- !u!1 &360676797
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,6 +413,7 @@ GameObject:
   m_Component:
   - component: {fileID: 427002220}
   - component: {fileID: 427002219}
+  - component: {fileID: 427002222}
   - component: {fileID: 427002221}
   m_Layer: 0
   m_Name: AR Session
@@ -461,6 +462,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TargetFrameRate: 60
+--- !u!114 &427002222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427002218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa850fbd5b8aded44846f96e35f1a9f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &606503167
 GameObject:
   m_ObjectHideFlags: 0
@@ -806,6 +819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50c11494e9ace475f9dc92e2f907b42c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_CameraManager: {fileID: 282840817}
 --- !u!114 &1015722069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -818,9 +832,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 079fa7fb0f02c4bd28860dd22bf8f5a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BrightnessText: {fileID: 0}
-  m_ColorTemperatureText: {fileID: 0}
-  m_ColorCorrectionText: {fileID: 0}
+  m_BrightnessText: {fileID: 1779915677}
+  m_ColorTemperatureText: {fileID: 652819438}
+  m_ColorCorrectionText: {fileID: 390549478}
 --- !u!1 &1335839533
 GameObject:
   m_ObjectHideFlags: 0
@@ -831,6 +845,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1335839535}
   - component: {fileID: 1335839534}
+  - component: {fileID: 1335839536}
   - component: {fileID: 1335839538}
   m_Layer: 0
   m_Name: AR Session Origin
@@ -867,6 +882,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1335839536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335839533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa17d122634046b4a8e23048891fafc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1335839538
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using Unity.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 #if UNITY_IOS
 using UnityEngine.XR.ARKit;
 #endif
@@ -131,7 +132,7 @@ public class ARWorldMapController : MonoBehaviour
 #if UNITY_IOS
     IEnumerator Save()
     {
-        var sessionSubsystem = ARSubsystemManager.sessionSubsystem;
+        var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
         if (sessionSubsystem == null)
         {
             Log("No session subsystem available. Could not save.");
@@ -157,7 +158,7 @@ public class ARWorldMapController : MonoBehaviour
 
     IEnumerator Load()
     {
-        var sessionSubsystem = ARSubsystemManager.sessionSubsystem;
+        var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
         if (sessionSubsystem == null)
         {
             Log("No session subsystem available. Could not load.");
@@ -236,9 +237,9 @@ public class ARWorldMapController : MonoBehaviour
         get
         {
 #if UNITY_IOS
-            var sessionSubsystem = ARSubsystemManager.sessionSubsystem;
+            var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
             if (sessionSubsystem != null)
-                return sessionSubsystem.WorldMapSupported();
+                return sessionSubsystem.worldMapSupported;
 #endif
             return false;
         }
@@ -289,7 +290,11 @@ public class ARWorldMapController : MonoBehaviour
             SetActive(mappingStatusText, false);
         }
 
-        var sessionSubsystem = ARSubsystemManager.sessionSubsystem;
+#if UNITY_IOS
+        var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
+#else
+        XRSessionSubsystem sessionSubsystem = null;
+#endif
         if (sessionSubsystem == null)
             return;
 
@@ -303,7 +308,7 @@ public class ARWorldMapController : MonoBehaviour
         SetText(logText, msg);
 
 #if UNITY_IOS
-        SetText(mappingStatusText, string.Format("Mapping Status: {0}", sessionSubsystem.GetWorldMappingStatus()));
+        SetText(mappingStatusText, string.Format("Mapping Status: {0}", sessionSubsystem.worldMappingStatus));
 #endif
     }
 
