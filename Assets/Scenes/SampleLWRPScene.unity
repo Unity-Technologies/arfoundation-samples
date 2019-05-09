@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.496413, b: 0.5748175, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.49641287, b: 0.5748173, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 282840811}
   - component: {fileID: 282840815}
   - component: {fileID: 282840812}
+  - component: {fileID: 282840817}
   - component: {fileID: 282840816}
   m_Layer: 0
   m_Name: AR Camera
@@ -154,7 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UseCustomMaterial: 0
-  m_CustomMaterial: {fileID: 2100000, guid: e77eba92b3f8949a8ba25b8d98a8f694, type: 2}
+  m_CustomMaterial: {fileID: 0}
   m_UseCustomRendererAsset: 1
   m_CustomRendererAsset: {fileID: 11400000, guid: 2310b94e2d8f5463ab592fa99eefbe6f,
     type: 2}
@@ -250,6 +251,20 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &282840817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282840810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4966719baa26e4b0e8231a24d9bd491a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FocusMode: 1
+  m_LightEstimationMode: 0
 --- !u!1 &427002218
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,6 +275,8 @@ GameObject:
   m_Component:
   - component: {fileID: 427002220}
   - component: {fileID: 427002219}
+  - component: {fileID: 427002222}
+  - component: {fileID: 427002221}
   m_Layer: 0
   m_Name: AR Session
   m_TagString: Untagged
@@ -279,7 +296,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3859a92a05d4f5d418cb6ca605290e74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LightEstimation: 0
   m_AttemptUpdate: 1
 --- !u!4 &427002220
 Transform:
@@ -295,6 +311,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &427002221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427002218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eb9777efa8174381b01d319232f7df5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TargetFrameRate: 60
+--- !u!114 &427002222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427002218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa850fbd5b8aded44846f96e35f1a9f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1015722065
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,6 +481,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PlanePrefab: {fileID: 1568414836858200, guid: b588636d005074635b1c79eb606780fa,
     type: 3}
+  m_DetectionMode: -1
 --- !u!114 &1335839538
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
-﻿
 using System;
 using UnityEngine.Rendering;
+using UnityEngine.XR.ARFoundation;
 
 namespace UnityEngine.XR.ARFoundation
 {
@@ -13,8 +13,11 @@ namespace UnityEngine.XR.ARFoundation
         [SerializeField]
         Material[] m_MaterialsUsed;
 
+        [SerializeField]
+        ARCameraManager m_CameraManager;
+
         static bool useRenderPipeline {  get { return GraphicsSettings.renderPipelineAsset != null; } }
-        
+
         public override ARFoundationBackgroundRenderer CreateARBackgroundRenderer()
         {
             return useRenderPipeline ? new LWRPBackgroundRenderer() : new ARFoundationBackgroundRenderer();
@@ -22,6 +25,9 @@ namespace UnityEngine.XR.ARFoundation
 
         public override void CreateHelperComponents(GameObject cameraGameObject)
         {
+            m_CameraManager = cameraGameObject.GetComponent<ARCameraManager>();
+            Debug.Assert(m_CameraManager != null, "camera manager must be non-null");
+
             if (useRenderPipeline)
             {
                 var lwrpBeforeCameraRender = cameraGameObject.GetComponent<LWRPBeforeCameraRender>();
@@ -34,28 +40,27 @@ namespace UnityEngine.XR.ARFoundation
 
         public override Material CreateCustomMaterial()
         {
-            var cameraSubsystem = ARSubsystemManager.cameraSubsystem;
-            if (cameraSubsystem == null)
+            if (m_CameraManager == null)
+            {
+                Debug.Log("camera manager is null");
                 return null;
+            }
 
             // Try to create a material from the plugin's provided shader.
-            var shaderName = "";
-            if (!cameraSubsystem.TryGetShaderName(ref shaderName))
-                return null;
+            var shaderName = m_CameraManager.shaderName + "LWRP";
+            Debug.LogFormat("Creating material for shader '{0}'", shaderName);
 
-            shaderName = shaderName + "LWRP";
-            
             var shader = Shader.Find(shaderName);
             if (shader == null)
             {
                  throw new InvalidOperationException(string.Format(
                     "Could not find shader named \"{0}\" required for LWRP video overlay on camera subsystem named \"{1}\".",
                     shaderName,
-                    cameraSubsystem.SubsystemDescriptor.id));
+                    m_CameraManager.descriptor.id));
             }
 
             return new Material(shader);
         }
     }
-    
-}    
+
+}

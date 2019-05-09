@@ -44,7 +44,7 @@
             void main()
             {
 #ifdef SHADER_API_GLES3
-                gl_FragColor = texture(_MainTex, textureCoord);
+                gl_FragColor = vec4(texture(_MainTex, textureCoord).xyz, 1);
 #endif
             }
 
