@@ -1,7 +1,7 @@
-﻿using System;
-using UnityEngine.Experimental.Rendering;
-using UnityEngine.Experimental.Rendering.LightweightPipeline;
+using System;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.LWRP;
+using UnityEngine.Experimental.Rendering.LWRP;
 
 namespace UnityEngine.XR.ARFoundation
 {
@@ -30,7 +30,7 @@ namespace UnityEngine.XR.ARFoundation
             m_Descriptor = descript;
             return m_BlitMaterial != null;
         }
-        
+
         /// <summary>
         /// Custom rendering for clearing the background with the pass-thru video for AR happens here.  We use the parameters passed in via setup
         /// to create command buffer that clears the render target and blits to it using the clear material.
@@ -54,7 +54,7 @@ namespace UnityEngine.XR.ARFoundation
 
             SetRenderTarget(cmd, m_TargetIdentifier, colorLoadOp, colorStoreOp,
                 m_DepthIdentifier, depthLoadOp, depthStoreOp, ClearFlag.All, Color.clear, m_Descriptor.dimension);
-            
+
             cmd.Blit(null, m_TargetIdentifier, m_BlitMaterial);
             context.ExecuteCommandBuffer(cmd);
             CommandBufferPool.Release(cmd);
