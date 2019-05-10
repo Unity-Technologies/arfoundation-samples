@@ -38,7 +38,7 @@ public class CameraConfigController : MonoBehaviour
     /// the selection in the UI.
     /// </summary>
     /// <param name="dropdown">The <c>Dropdown</c> which changed.</param>
-    public void OnValueChanged(Dropdown dropdown)
+    void OnDropdownValueChanged(Dropdown dropdown)
     {
         if ((cameraManager == null) || (cameraManager.subsystem == null) || !cameraManager.subsystem.running)
         {
@@ -67,6 +67,7 @@ public class CameraConfigController : MonoBehaviour
     {
         m_Dropdown = GetComponent<Dropdown>();
         m_Dropdown.ClearOptions();
+        m_Dropdown.onValueChanged.AddListener(delegate { OnDropdownValueChanged(m_Dropdown); });
         m_ConfigurationNames = new List<string>();
     }
 
