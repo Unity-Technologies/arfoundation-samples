@@ -11,4 +11,4 @@ Compatible with Unity 2019.1 and later.
 
 3. Open your choice of sample scene.
 
-4. See the [AR Foundation Documentation](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@1.0) for usage instructions and more information.
+4. See the [AR Foundation Documentation](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@2.0) for usage instructions and more information.
