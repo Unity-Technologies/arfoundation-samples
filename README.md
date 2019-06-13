@@ -15,7 +15,7 @@ The `mater` branch is compatible with Unity 2019.1 and later. For 2018.4, see th
 ## :warning: ARKit 3 Support
 The `master` branch includes support for ARKit 3, which is still in beta. While ARFoundation and ARSubsystems 2.2 _support_ ARKit 3, only Unity's ARKit XR Plugin 2.2 package contains _support_ for these features and _requires_ Xcode 11 beta and iOS 13 beta. Unity's ARKit XR Plugin 2.2 is not backwards compatible with previous versions of Xcode or iOS.
 
-This table shows the latest version of the ARKit plugin and their Xcode and iOS compatibility:
+This table shows the latest version of Unity's ARKit XR Plugin and its Xcode and iOS compatibility:
 
 |ARKit XR Plugin|Xcode Version|iOS Version|
 |---------------|-----|---|
