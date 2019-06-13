@@ -4,8 +4,8 @@ Example projects that use *AR Foundation 2.2* and demonstrate its functionality 
 This set of samples relies on four Unity packages:
 
 * ARSubsystems
-* ARCore
-* ARKit
+* ARCore XR Plugin
+* ARKit XR Plugin
 * ARFoundation
 
 ARSubsystems defines an interface, and the platform-specific implementations are in the ARCore and ARKit packages. ARFoundation turns the AR data provided by ARSubsystems into Unity `GameObject`s and `MonoBehavour`s.
@@ -13,7 +13,7 @@ ARSubsystems defines an interface, and the platform-specific implementations are
 The `mater` branch is compatible with Unity 2019.1 and later. For 2018.4, see the [1.5-preview branch](https://github.com/Unity-Technologies/arfoundation-samples/tree/1.5-preview). ARFoundation 1.5 is functionality equivalent to 2.2. The only difference is the version of Unity on which it depends.
 
 ## :warning: ARKit 3 Support
-The `master` branch includes support for ARKit 3, which is still in beta. While ARFoundation and ARSubsystems 2.2 _support_ ARKit 3, only the ARKit 2.2 package contains _support_ for these features and _requires_ Xcode 11 beta and iOS 13 beta. ARKit 2.2 is not backwards compatible with previous versions of Xcode or iOS.
+The `master` branch includes support for ARKit 3, which is still in beta. While ARFoundation and ARSubsystems 2.2 _support_ ARKit 3, only Unity's ARKit XR Plugin 2.2 package contains _support_ for these features and _requires_ Xcode 11 beta and iOS 13 beta. Unity's ARKit XR Plugin 2.2 is not backwards compatible with previous versions of Xcode or iOS.
 
 This table shows the latest version of the ARKit plugin and their Xcode and iOS compatibility:
 
