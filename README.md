@@ -24,6 +24,10 @@ This table shows the latest version of the ARKit plugin and their Xcode and iOS 
 
 This distinciton is temporary. Once iOS 13 is no longer in beta, the ARKit package is expected to work with all versions of Xcode 9+ and iOS 11+.
 
+#### Which branch should I use?
+
+If you want to checkout the latest and greatest features from Apple, use this `master` branch, Xcode 11 beta, and a device running iOS 13 beta. Otherwise, see the [2.1 branch](https://github.com/Unity-Technologies/arfoundation-samples/tree/2.1), which only lacks support for the new ARKit 3 features.
+
 ## Instructions for installing AR Foundation
 
 1. Download the latest version of Unity 2019.1 or later.
