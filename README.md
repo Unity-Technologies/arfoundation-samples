@@ -20,9 +20,9 @@ The same is also true for Unity's ARKit Face Tracking package 1.1: it _requires_
 This table shows the latest version of Unity's ARKit XR Plugin and its Xcode and iOS compatibility:
 
 |Unity ARKit XR Plugin|Unity ARKit Face Tracking|Xcode Version|iOS Version|
-|---------------|-----|---|
-|2.2            |1.1  |11 beta |13 beta|
-|2.1            |1.0  |9 or 10| 11 or 12|
+|---------------------|-------------------------|-------------|-----------|
+|2.2                  |1.1                      |11 beta      |13 beta    |
+|2.1                  |1.0                      |9 or 10      | 11 or 12  |
 
 This distinciton is temporary. Once iOS 13 is no longer in beta, the ARKit package is expected to work with all versions of Xcode 9+ and iOS 11+.
 
