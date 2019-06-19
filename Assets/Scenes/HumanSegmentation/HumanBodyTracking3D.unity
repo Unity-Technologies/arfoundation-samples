@@ -286,6 +286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AttemptUpdate: 1
+  m_MatchFrameRate: 1
 --- !u!4 &427002220
 Transform:
   m_ObjectHideFlags: 0
@@ -540,7 +541,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e5861fe4d817477986290fde61dbc8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HumanBodyPoseEstimationEnabled: 1
+  m_HumanBodyPose2DEstimationEnabled: 0
+  m_HumanBodyPose3DEstimationEnabled: 1
   m_HumanSegmentationStencilMode: 0
   m_HumanSegmentationDepthMode: 0
   m_HumanBodyPrefab: {fileID: 1934569588295450, guid: b34b6c8f1206a6844b983e23b9da0441,
