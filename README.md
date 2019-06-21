@@ -13,7 +13,29 @@ ARSubsystems defines an interface, and the platform-specific implementations are
 The `mater` branch is compatible with Unity 2019.1 and later. For 2018.4, see the [1.5-preview branch](https://github.com/Unity-Technologies/arfoundation-samples/tree/1.5-preview). ARFoundation 1.5 is functionality equivalent to 2.2. The only difference is the version of Unity on which it depends.
 
 ## :warning: ARKit 3 Support
-The `master` branch includes support for ARKit 3, which is still in beta. While ARFoundation and ARSubsystems 2.2 provide interfaces for ARKit 3 features, only Unity's ARKit XR Plugin 2.2 package contains _support_ for these features and _requires_ Xcode 11 beta and iOS 13 beta. Unity's ARKit XR Plugin 2.2 is not backwards compatible with previous versions of Xcode or iOS.
+
+**TL;DR:** If you want to checkout the latest and greatest features in ARKit 3, use this `master` branch, Xcode 11 beta, and a device running iOS 13 beta. Otherwise, see the [2.1 branch](https://github.com/Unity-Technologies/arfoundation-samples/tree/2.1), which only lacks support for the new ARKit 3 features.
+
+The `master` branch includes support for ARKit 3, which is still in beta and requires Xcode 11 beta and iOS 13 beta. If you try to build the `master` branch with Xcode 10, you will get these linker errors:
+```
+Undefined symbol: OBJC_CLASS$_ARCollaborationData
+Undefined symbol: OBJC_CLASS$_ARSkeletonDefinition
+Undefined symbol: OBJC_CLASS$_ARBodyAnchor
+Undefined symbol: OBJC_CLASS$_ARBodyTrackingConfiguration
+Undefined symbol: OBJC_CLASS$_ARMatteGenerator
+```
+
+If you run these samples on a pre-iOS 13 device, your app will crash on startup with this message:
+
+```
+dyld: Symbol not found: _OBJC_CLASS_$_ARMatteGenerator
+```
+
+The [2.1 branch](https://github.com/Unity-Technologies/arfoundation-samples/tree/2.1) is compatible with Xcode 9 and 10 and only lacks the new ARKit 3 features.
+
+ARFoundation 2.2 provides interfaces for ARKit 3 features, but only Unity's ARKit XR Plugin 2.2 package contains _support_ for these features and _requires_ Xcode 11 beta and iOS 13 beta. Unity's ARKit XR Plugin 2.2 is not backwards compatible with previous versions of Xcode or iOS. Unity's ARKit XR Plugin 2.1 will work with the latest ARFoundation (it just doesn't implement the ARKit 3 features).
+
+While Xcode 11 & iOS 13 are in beta, we will continue to maintain *both* the 2.2 and 2.1 versions of the packages.
 
 The same is also true for Unity's ARKit Face Tracking package 1.1: it _requires_ Xcode 11 beta and iOS 13 beta.
 
@@ -25,10 +47,6 @@ This table shows the latest version of Unity's ARKit XR Plugin and its Xcode and
 |2.1                  |1.0                      |9 or 10      | 11 or 12  |
 
 This distinciton is temporary. Once iOS 13 is no longer in beta, the ARKit package is expected to work with all versions of Xcode 9+ and iOS 11+.
-
-#### Which branch should I use?
-
-If you want to checkout the latest and greatest features from Apple, use this `master` branch, Xcode 11 beta, and a device running iOS 13 beta. Otherwise, see the [2.1 branch](https://github.com/Unity-Technologies/arfoundation-samples/tree/2.1), which only lacks support for the new ARKit 3 features.
 
 ## Instructions for installing AR Foundation
 
