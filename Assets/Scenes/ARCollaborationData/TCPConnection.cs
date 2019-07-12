@@ -282,10 +282,7 @@ public abstract class TCPConnection : MonoBehaviour
             stream.Write(byteArray, 0, byteArray.Length);
             CollaborationNetworkingIndicator.NotifyOutgoingDataSent();
 
-            if (byteArray.Length > 1024)
-            {
-                Logger.Log($"Sent {byteArray.Length} bytes to remote.");
-            }
+            Logger.Log($"Sent {byteArray.Length} bytes to remote.");
         }
         catch (SocketException socketException)
         {
