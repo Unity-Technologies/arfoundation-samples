@@ -153,7 +153,7 @@ public abstract class TCPConnection : MonoBehaviour
             if (collaborationData.valid)
             {
                 using (collaborationData)
-                using (var bytes = collaborationData.ToNativeArray(Allocator.Temp))
+                using (var bytes = collaborationData.ToNativeArray(Allocator.TempJob))
                 {
                     SendData(stream, bytes);
                 }
