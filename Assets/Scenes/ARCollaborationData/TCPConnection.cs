@@ -153,11 +153,9 @@ public abstract class TCPConnection : MonoBehaviour
             if (collaborationData.valid)
             {
                 using (collaborationData)
-                using (var bytes = collaborationData.ToNativeArray(Allocator.Persistent))
+                using (var serializedData = collaborationData.ToSerialized())
                 {
-                    // We use Allocator.Persistent above because sending data
-                    // can take several frames, so TempJob cannot be used.
-                    SendData(stream, bytes);
+                    SendData(stream, serializedData);
                 }
             }
 
