@@ -153,8 +153,9 @@ public abstract class TCPConnection : MonoBehaviour
             if (collaborationData.valid)
             {
                 using (collaborationData)
+                using (var bytes = collaborationData.ToNativeArray(Allocator.Temp))
                 {
-                    SendData(stream, collaborationData.bytes);
+                    SendData(stream, bytes);
                 }
             }
 
@@ -193,6 +194,12 @@ public abstract class TCPConnection : MonoBehaviour
                         {
                             m_CollaborationDataReadQueue.Enqueue(collaborationData);
                         }
+
+                        // Only log critical data updates; optional updates can come every frame.
+                        if (collaborationData.priority == ARCollaborationDataPriority.Critical)
+                        {
+                            Logger.Log($"Received {expectedLength} bytes from remote host.");
+                        }
                     }
                     else
                     {
@@ -215,12 +222,17 @@ public abstract class TCPConnection : MonoBehaviour
             {
                 while (subsystem.collaborationDataCount > 0)
                 {
-                    m_CollaborationDataSendQueue.Enqueue(subsystem.DequeueCollaborationData());
+                    var collaborationData = subsystem.DequeueCollaborationData();
+
+                    // As all data in this sample is sent over TCP, only send critical data
+                    if (collaborationData.priority == ARCollaborationDataPriority.Critical)
+                    {
+                        m_CollaborationDataSendQueue.Enqueue(collaborationData);
+                    }
                 }
             }
         }
     }
-
 
     unsafe void ProcessRemoteCollaborationData(ARKitSessionSubsystem subsystem)
     {
@@ -231,12 +243,6 @@ public abstract class TCPConnection : MonoBehaviour
             {
                 using (var collaborationData = m_CollaborationDataReadQueue.Dequeue())
                 {
-                    // Only notify user concerning large data sizes
-                    if (collaborationData.bytes.Length > 1024)
-                    {
-                        Logger.Log($"Received {collaborationData.bytes.Length} bytes from remote host. Updating session.");
-                    }
-
                     CollaborationNetworkingIndicator.NotifyIncomingDataReceived();
 
                     // Assume we only put in valid collaboration data into the queue.
