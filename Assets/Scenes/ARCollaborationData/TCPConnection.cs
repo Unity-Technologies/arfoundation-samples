@@ -155,7 +155,7 @@ public abstract class TCPConnection : MonoBehaviour
                 using (collaborationData)
                 using (var serializedData = collaborationData.ToSerialized())
                 {
-                    SendData(stream, serializedData);
+                    SendData(stream, serializedData.bytes);
                 }
             }
 
