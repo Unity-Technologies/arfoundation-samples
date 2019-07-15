@@ -31,7 +31,7 @@ public struct NetworkBuffer
         int bytesRemaining = size;
         while (bytesRemaining > 0)
         {
-            int bytesRead = stream.Read(m_Buffer, offset, size);
+            int bytesRead = stream.Read(m_Buffer, offset, bytesRemaining);
             CollaborationNetworkingIndicator.NotifyIncomingDataReceived();
             offset += bytesRead;
             bytesRemaining -= bytesRead;
