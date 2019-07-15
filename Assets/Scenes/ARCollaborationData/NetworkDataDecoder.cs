@@ -34,6 +34,8 @@ public struct NetworkDataDecoder
         return *(double*)&value;
     }
 
+    public ushort DecodeUShort() => (ushort)DecodeShort();
+
     public uint DecodeUInt() => (uint)DecodeInt();
 
     public ulong DecodeULong() => (ulong)DecodeLong();

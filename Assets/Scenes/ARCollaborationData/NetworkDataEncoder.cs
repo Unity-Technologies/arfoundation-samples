@@ -22,6 +22,8 @@ public struct NetworkDataEncoder
 
     public unsafe void Encode(double value) => Encode(*(long*)&value);
 
+    public void Encode(ushort value) => Encode((short)value);
+
     public void Encode(uint value) => Encode((int)value);
 
     public void Encode(ulong value) => Encode((long)value);
