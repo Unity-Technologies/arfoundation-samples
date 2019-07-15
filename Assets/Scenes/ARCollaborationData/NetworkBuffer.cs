@@ -8,9 +8,9 @@ public struct NetworkBuffer
 {
     byte[] m_Buffer;
 
-    public NetworkBuffer(int size)
+    public NetworkBuffer(int bufferSize)
     {
-        m_Buffer = new byte[size];
+        m_Buffer = new byte[bufferSize];
     }
 
     public byte[] buffer => m_Buffer;
