@@ -299,7 +299,7 @@ public abstract class TCPConnection : MonoBehaviour
             int bytesRemaining = size;
             while (bytesRemaining > 0)
             {
-                int bytesRead = m_ReadBuffer.Read(stream, 0, Mathf.Min(bytesRemaining, m_ReadBuffer.buffer.Length));
+                int bytesRead = m_ReadBuffer.Read(stream, 0, Mathf.Min(bytesRemaining, m_ReadBuffer.bufferSize));
                 builder.Append(m_ReadBuffer.buffer, 0, bytesRead);
                 bytesRemaining -= bytesRead;
             }
