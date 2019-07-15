@@ -15,6 +15,8 @@ public struct NetworkBuffer
 
     public byte[] buffer => m_Buffer;
 
+    public int bufferSize => (m_Buffer == null) ? 0 : m_Buffer.Length;
+
     public int Read(NetworkStream stream, int offset, int size)
     {
         ValidateAndThrow(stream);
