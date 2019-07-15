@@ -114,8 +114,6 @@ public abstract class TCPConnection : MonoBehaviour
     }
 
 #if UNITY_IOS
-    static readonly byte[] m_Buffer = new Byte[1024];
-
     Queue<ARCollaborationData> m_CollaborationDataSendQueue;
 
     Queue<ARCollaborationData> m_CollaborationDataReadQueue;
@@ -152,9 +150,30 @@ public abstract class TCPConnection : MonoBehaviour
 
             if (collaborationData.valid)
             {
+                // Serialize the collaboration data to a byte array
+                SerializedARCollaborationData serializedData;
                 using (collaborationData)
                 {
-                    SendData(stream, collaborationData.bytes);
+                    // ARCollaborationData can be diposed after being serialized to bytes.
+                    serializedData = collaborationData.ToSerialized();
+                }
+
+                using (serializedData)
+                {
+                    // Get the raw data as a NativeSlice
+                    var collaborationBytes = serializedData.bytes;
+
+                    // Construct the message header
+                    var header = new MessageHeader
+                    {
+                        messageSize = collaborationBytes.Length,
+                        messageType = MessageType.CollaborationData
+                    };
+
+                    // Send the header followed by the ARCollaborationData bytes
+                    m_WriteBuffer.Send(stream, header);
+                    m_WriteBuffer.Send(stream, collaborationBytes);
+                    Logger.Log($"Sent {collaborationBytes.Length} bytes of collaboration data.");
                 }
             }
 
@@ -173,54 +192,76 @@ public abstract class TCPConnection : MonoBehaviour
         var stream = m_TcpClient.GetStream();
         while (!m_ExitRequested)
         {
-            if (stream.DataAvailable)
+            // Loop until there is data available
+            if (!stream.DataAvailable)
             {
-                var lengthBytes = ReadBytes(stream, sizeof(int));
-                int expectedLength = IPAddress.NetworkToHostOrder(BitConverter.ToInt32(lengthBytes, 0));
+                Thread.Sleep(1);
+                continue;
+            }
 
-                if (expectedLength <= 0)
-                {
-                    Logger.Log($"Warning: received data of length {expectedLength}. Ignoring.");
-                }
-                else
-                {
-                    // Read incomming stream into byte arrary.
-                    var collaborationBytes = ReadBytes(stream, expectedLength);
-                    var collaborationData = new ARCollaborationData(collaborationBytes);
+            // Read the header
+            var messageHeader = ReadMessageHeader(stream);
+
+            // Handle the message
+            switch (messageHeader.messageType)
+            {
+                case MessageType.CollaborationData:
+                    var collaborationData = ReadCollaborationData(stream, messageHeader.messageSize);
                     if (collaborationData.valid)
                     {
-                        lock (m_CollaborationDataReadQueue)
+                        // Only store critical data updates; optional updates can come every frame.
+                        if (collaborationData.priority == ARCollaborationDataPriority.Critical)
                         {
-                            m_CollaborationDataReadQueue.Enqueue(collaborationData);
+                            lock (m_CollaborationDataReadQueue)
+                            {
+                                m_CollaborationDataReadQueue.Enqueue(collaborationData);
+                            }
+                            Logger.Log($"Received {messageHeader.messageSize} bytes of collaboration data.");
                         }
                     }
                     else
                     {
-                        Logger.Log($"Received {expectedLength} bytes from remote host, but the collaboration data was not valid.");
+                        Logger.Log($"Received {messageHeader.messageSize} bytes from remote, but the collaboration data was not valid.");
                     }
-                }
-            }
+                    break;
 
-            Thread.Sleep(1);
+                default:
+                    Logger.Log($"Unhandled message type '{messageHeader.messageType}'. Ignoring.");
+
+                    // We don't understand this message, but read it out anyway
+                    // so we can process the next message
+                    int bytesRemaining = messageHeader.messageSize;
+                    while (bytesRemaining > 0)
+                    {
+                        bytesRemaining -= m_ReadBuffer.Read(stream, 0, Mathf.Min(bytesRemaining, m_ReadBuffer.bufferSize));
+                    }
+                    break;
+            }
         }
     }
 
     void CheckForLocalCollaborationData(ARKitSessionSubsystem subsystem)
     {
-        // Check for new data and queue it
-        if (subsystem.collaborationDataCount > 0)
+        // Exit if no new data is available
+        if (subsystem.collaborationDataCount == 0)
+            return;
+
+        lock (m_CollaborationDataSendQueue)
         {
-            CollaborationNetworkingIndicator.NotifyHasCollaborationData();
-            lock (m_CollaborationDataSendQueue)
+            // Enqueue all new collaboration data with critical priority
+            while (subsystem.collaborationDataCount > 0)
             {
-                while (subsystem.collaborationDataCount > 0)
+                var collaborationData = subsystem.DequeueCollaborationData();
+
+                // As all data in this sample is sent over TCP, only send critical data
+                if (collaborationData.priority == ARCollaborationDataPriority.Critical)
                 {
-                    m_CollaborationDataSendQueue.Enqueue(subsystem.DequeueCollaborationData());
+                    m_CollaborationDataSendQueue.Enqueue(collaborationData);
+                    CollaborationNetworkingIndicator.NotifyHasCollaborationData();
                 }
             }
         }
     }
-
 
     unsafe void ProcessRemoteCollaborationData(ARKitSessionSubsystem subsystem)
     {
@@ -231,14 +272,6 @@ public abstract class TCPConnection : MonoBehaviour
             {
                 using (var collaborationData = m_CollaborationDataReadQueue.Dequeue())
                 {
-                    // Only notify user concerning large data sizes
-                    if (collaborationData.bytes.Length > 1024)
-                    {
-                        Logger.Log($"Received {collaborationData.bytes.Length} bytes from remote host. Updating session.");
-                    }
-
-                    CollaborationNetworkingIndicator.NotifyIncomingDataReceived();
-
                     // Assume we only put in valid collaboration data into the queue.
                     subsystem.UpdateWithCollaborationData(collaborationData);
                 }
@@ -246,44 +279,36 @@ public abstract class TCPConnection : MonoBehaviour
         }
     }
 
-    static byte[] ReadBytes(NetworkStream stream, int count)
+    const int k_BufferSize = 10240;
+
+    NetworkBuffer m_ReadBuffer = new NetworkBuffer(k_BufferSize);
+
+    NetworkBuffer m_WriteBuffer = new NetworkBuffer(k_BufferSize);
+
+    MessageHeader ReadMessageHeader(NetworkStream stream)
     {
-        var bytes = new byte[count];
-        int bytesRemaining = count;
-        int offset = 0;
-
-        while (bytesRemaining > 0)
-        {
-            int bytesRead = stream.Read(bytes, offset, bytesRemaining);
-            offset += bytesRead;
-            bytesRemaining -= bytesRead;
-        }
-
-        return bytes;
+        int bytesRead = m_ReadBuffer.Read(stream, 0, MessageHeader.k_EncodedSize);
+        return new MessageHeader(m_ReadBuffer.buffer, bytesRead);
     }
 
-    /// <summary>
-    /// Send message to other device using socket connection.
-    /// </summary>
-    static void SendData(NetworkStream stream, NativeArray<byte> bytes)
+    ARCollaborationData ReadCollaborationData(NetworkStream stream, int size)
     {
+        var builder = new ARCollaborationDataBuilder();
         try
         {
-            var byteArray = bytes.ToArray();
-            int length = IPAddress.HostToNetworkOrder(byteArray.Length);
-            var lengthBytes = BitConverter.GetBytes(length);
-            stream.Write(lengthBytes, 0, lengthBytes.Length);
-            stream.Write(byteArray, 0, byteArray.Length);
-            CollaborationNetworkingIndicator.NotifyOutgoingDataSent();
-
-            if (byteArray.Length > 1024)
+            int bytesRemaining = size;
+            while (bytesRemaining > 0)
             {
-                Logger.Log($"Sent {byteArray.Length} bytes to remote.");
+                int bytesRead = m_ReadBuffer.Read(stream, 0, Mathf.Min(bytesRemaining, m_ReadBuffer.bufferSize));
+                builder.Append(m_ReadBuffer.buffer, 0, bytesRead);
+                bytesRemaining -= bytesRead;
             }
+
+            return builder.ToCollaborationData();
         }
-        catch (SocketException socketException)
+        finally
         {
-            Logger.Log("Socket exception: " + socketException);
+            builder.Dispose();
         }
     }
 #endif
