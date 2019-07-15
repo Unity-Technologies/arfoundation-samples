@@ -4,6 +4,10 @@ using UnityEngine;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 
+/// <summary>
+/// Sends and receives data using a fixed size byte[] buffer. Because the
+/// buffer is reused, no additional GC allocations are made after construction.
+/// </summary>
 public struct NetworkBuffer
 {
     byte[] m_Buffer;
