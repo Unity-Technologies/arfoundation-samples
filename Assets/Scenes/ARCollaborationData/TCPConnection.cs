@@ -216,17 +216,17 @@ public abstract class TCPConnection : MonoBehaviour
                             {
                                 m_CollaborationDataReadQueue.Enqueue(collaborationData);
                             }
-                            Logger.Log($"Received {messageHeader.messageSize} bytes from remote host.");
+                            Logger.Log($"Received {messageHeader.messageSize} bytes of collaboration data.");
                         }
                     }
                     else
                     {
-                        Logger.Log($"Received {messageHeader.messageSize} bytes from remote host, but the collaboration data was not valid.");
+                        Logger.Log($"Received {messageHeader.messageSize} bytes from remote, but the collaboration data was not valid.");
                     }
                     break;
 
                 default:
-                    Logger.Log($"Unhandled message type {messageHeader.messageType}");
+                    Logger.Log($"Unhandled message type '{messageHeader.messageType}'. Ignoring.");
 
                     // We don't understand this message, but read it out anyway
                     // so we can process the next message
