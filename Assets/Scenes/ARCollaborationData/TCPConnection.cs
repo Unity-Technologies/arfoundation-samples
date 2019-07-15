@@ -114,8 +114,6 @@ public abstract class TCPConnection : MonoBehaviour
     }
 
 #if UNITY_IOS
-    static readonly byte[] m_Buffer = new Byte[1024];
-
     Queue<ARCollaborationData> m_CollaborationDataSendQueue;
 
     Queue<ARCollaborationData> m_CollaborationDataReadQueue;
