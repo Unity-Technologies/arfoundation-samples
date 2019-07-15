@@ -173,6 +173,7 @@ public abstract class TCPConnection : MonoBehaviour
                     // Send the header followed by the ARCollaborationData bytes
                     m_WriteBuffer.Send(stream, header);
                     m_WriteBuffer.Send(stream, collaborationBytes);
+                    Logger.Log($"Sent {collaborationBytes.Length} bytes of collaboration data.");
                 }
             }
 
