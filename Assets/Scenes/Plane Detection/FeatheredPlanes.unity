@@ -265,7 +265,6 @@ GameObject:
   - component: {fileID: 427002220}
   - component: {fileID: 427002219}
   - component: {fileID: 427002222}
-  - component: {fileID: 427002221}
   m_Layer: 0
   m_Name: AR Session
   m_TagString: Untagged
@@ -286,6 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AttemptUpdate: 1
+  m_MatchFrameRate: 1
 --- !u!4 &427002220
 Transform:
   m_ObjectHideFlags: 0
@@ -300,19 +300,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &427002221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 427002218}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1eb9777efa8174381b01d319232f7df5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TargetFrameRate: 60
 --- !u!114 &427002222
 MonoBehaviour:
   m_ObjectHideFlags: 0
