@@ -78,7 +78,7 @@ public class ClientServerSelector : MonoBehaviour
             }
             else
             {
-                Logger.Log($"No IP address tored at {GetIPAddressPath()}");
+                Logger.Log($"No IP address stored at {GetIPAddressPath()}");
             }
         }
 
