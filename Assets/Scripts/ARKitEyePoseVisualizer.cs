@@ -7,7 +7,12 @@ using UnityEngine.XR.ARSubsystems;
 using UnityEngine.XR.ARKit;
 #endif
 
-// TODO Add summary
+/// <summary>
+/// Visualizes the eye poses for an <see cref="ARFace"/>.
+/// </summary>
+/// <remarks>
+/// Face space is the space where the origin is the transform of an <see cref="ARFace">.
+/// </remarks>
 [RequireComponent(typeof(ARFace))]
 public class ARKitEyePoseVisualizer : MonoBehaviour
 {
@@ -28,7 +33,6 @@ public class ARKitEyePoseVisualizer : MonoBehaviour
     XRFaceSubsystem m_FaceSubsystem;
 #endif
 
-    // Start is called before the first frame update
     void Awake()
     {
         m_Face = GetComponent<ARFace>();
@@ -63,7 +67,7 @@ public class ARKitEyePoseVisualizer : MonoBehaviour
         SetVisible(visible);
     }
 
-    private void OnEnable()
+    void OnEnable()
     {
 #if UNITY_IOS && !UNITY_EDITOR
         var faceManager = FindObjectOfType<ARFaceManager>();
