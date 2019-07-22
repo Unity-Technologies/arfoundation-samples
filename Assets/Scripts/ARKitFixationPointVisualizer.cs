@@ -8,21 +8,21 @@ using UnityEngine.XR.ARSubsystems;
 /// Visualizes the eye gaze position in face space for an <see cref="ARFace"/>.
 /// </summary>
 /// <remarks>
-/// Face space is the space where the origin is the transform of an <see cref="ARFace">.
+/// Face space is the space where the origin is the transform of an <see cref="ARFace"/>.
 /// </remarks>
 [RequireComponent(typeof(ARFace))]
-public class ARKitEyeGazePositionVisualizer : MonoBehaviour
+public class ARKitFixationPointVisualizer : MonoBehaviour
 {
 	[SerializeField]
-	GameObject m_GazePositionPrefab;
+	GameObject m_FixationPointPrefab;
 
-	public GameObject gazePositionPrefab
+	public GameObject fixationPointPrefab
 	{
-		get => m_GazePositionPrefab;
-		set => m_GazePositionPrefab = value;
+		get => m_FixationPointPrefab;
+		set => m_FixationPointPrefab = value;
 	}
 
-	GameObject m_GazePositionGameObject;
+	GameObject m_FixationPointGameObject;
 
 	ARFace m_Face;
 #if UNITY_IOS && !UNITY_EDITOR
@@ -37,13 +37,13 @@ public class ARKitEyeGazePositionVisualizer : MonoBehaviour
 
 	void CreateEyeGameObjects()
 	{
-		m_GazePositionGameObject = Instantiate(m_GazePositionPrefab, m_Face.transform);
-		m_GazePositionGameObject.SetActive(false);
+		m_FixationPointGameObject = Instantiate(m_FixationPointPrefab, m_Face.transform);
+		m_FixationPointGameObject.SetActive(false);
 	}
 
 	void SetVisible(bool visible)
 	{
-		m_GazePositionGameObject.SetActive(visible);
+		m_FixationPointGameObject.SetActive(visible);
 	}
 
     void UpdateVisibility()
@@ -52,7 +52,7 @@ public class ARKitEyeGazePositionVisualizer : MonoBehaviour
 			enabled &&
 			(m_Face.trackingState == TrackingState.Tracking) &&
 #if UNITY_IOS && !UNITY_EDITOR
-            m_FaceSubsystem.supportedEyeGazeTracking &&
+            m_FaceSubsystem.supportedEyeTracking &&
 #endif
 			(ARSession.state > ARSessionState.Ready);
 
@@ -75,25 +75,25 @@ public class ARKitEyeGazePositionVisualizer : MonoBehaviour
     void OnUpdated(ARFaceUpdatedEventArgs eventArgs)
 	{
 		UpdateVisibility();
-		UpdateEyeGazePosition();
+		UpdateFixationPoint();
 	}
 
-    void UpdateEyeGazePosition()
+    void UpdateFixationPoint()
 	{
 #if UNITY_IOS && !UNITY_EDITOR
-        var gazePosition = new Vector3();
+        var fixationPoint = new Vector3();
 
-        if (m_FaceSubsystem.supportedEyeGazeTracking)
+        if (m_FaceSubsystem.supportedEyeTracking)
         {
-            if (m_FaceSubsystem.TryGetEyeGazePosition(m_Face.trackableId, ref gazePosition))
+            if (m_FaceSubsystem.TryGetFixationPoint(m_Face.trackableId, ref fixationPoint))
             {
                 // The vector that represents the gaze offset from the face is not normalized and therefore could be behind the camera.
                 // So set the offset to be 1/10th of meter in the direction of the offset
-				m_GazePositionGameObject.transform.localPosition = Vector3.Normalize(gazePosition) / 10;
+				m_FixationPointGameObject.transform.localPosition = Vector3.Normalize(fixationPoint) / 10;
             }
             else
             {
-                Debug.Log("Failed to get the face's eye poses.");
+                Debug.Log("Failed to get the face's fixation point.");
             }
         }
 #endif

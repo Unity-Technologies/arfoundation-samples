@@ -11,7 +11,7 @@ using UnityEngine.XR.ARKit;
 /// Visualizes the eye poses for an <see cref="ARFace"/>.
 /// </summary>
 /// <remarks>
-/// Face space is the space where the origin is the transform of an <see cref="ARFace">.
+/// Face space is the space where the origin is the transform of an <see cref="ARFace"/>.
 /// </remarks>
 [RequireComponent(typeof(ARFace))]
 public class ARKitEyePoseVisualizer : MonoBehaviour
@@ -60,7 +60,7 @@ public class ARKitEyePoseVisualizer : MonoBehaviour
             enabled &&
             (m_Face.trackingState == TrackingState.Tracking) &&
 #if UNITY_IOS && !UNITY_EDITOR
-            m_FaceSubsystem.supportedEyeGazeTracking &&
+            m_FaceSubsystem.supportedEyeTracking &&
 #endif
             (ARSession.state > ARSessionState.Ready);
 
@@ -92,9 +92,9 @@ public class ARKitEyePoseVisualizer : MonoBehaviour
         var leftEyePose = new Pose();
         var rightEyePose = new Pose();
 
-        if (m_FaceSubsystem.supportedEyeGazeTracking)
+        if (m_FaceSubsystem.supportedEyeTracking)
         {
-            if (m_FaceSubsystem.TryGetEyePoses(m_Face.trackableId, ref leftEyePose, ref rightEyePose))
+            if (m_FaceSubsystem.TryGetLeftEyePose(m_Face.trackableId, ref leftEyePose) && m_FaceSubsystem.TryGetRightEyePose(m_Face.trackableId, ref rightEyePose))
             {
                 m_LeftEyeGameObject.transform.localPosition = leftEyePose.position;
                 m_LeftEyeGameObject.transform.localRotation = leftEyePose.rotation;
