@@ -11,7 +11,7 @@ using UnityEngine.XR.ARSubsystems;
 /// Face space is the space where the origin is the transform of an <see cref="ARFace"/>.
 /// </remarks>
 [RequireComponent(typeof(ARFace))]
-public class ARKitFixationPointVisualizer : MonoBehaviour
+public class FixationPointVisualizer : MonoBehaviour
 {
 	[SerializeField]
 	GameObject m_FixationPointPrefab;
@@ -25,9 +25,7 @@ public class ARKitFixationPointVisualizer : MonoBehaviour
 	GameObject m_FixationPointGameObject;
 
 	ARFace m_Face;
-#if UNITY_IOS && !UNITY_EDITOR
     XRFaceSubsystem m_FaceSubsystem;
-#endif
 
 	void Awake()
 	{
@@ -51,9 +49,7 @@ public class ARKitFixationPointVisualizer : MonoBehaviour
 		var visible =
 			enabled &&
 			(m_Face.trackingState == TrackingState.Tracking) &&
-#if UNITY_IOS && !UNITY_EDITOR
-            m_FaceSubsystem.supportedEyeTracking &&
-#endif
+            m_FaceSubsystem.SubsystemDescriptor.supportsEyeTracking &&
 			(ARSession.state > ARSessionState.Ready);
 
 		SetVisible(visible);
@@ -61,13 +57,11 @@ public class ARKitFixationPointVisualizer : MonoBehaviour
 
     void OnEnable()
 	{
-#if UNITY_IOS && !UNITY_EDITOR
         var faceManager = FindObjectOfType<ARFaceManager>();
         if (faceManager != null)
         {
             m_FaceSubsystem = (XRFaceSubsystem)faceManager.subsystem;
         }
-#endif
 		UpdateVisibility();
 		m_Face.updated += OnUpdated;
 	}
@@ -80,23 +74,16 @@ public class ARKitFixationPointVisualizer : MonoBehaviour
 
     void UpdateFixationPoint()
 	{
-#if UNITY_IOS && !UNITY_EDITOR
-        var fixationPoint = new Vector3();
-
-        if (m_FaceSubsystem.supportedEyeTracking)
+        if (m_Face.fixationPoint != null)
         {
-            if (m_FaceSubsystem.TryGetFixationPoint(m_Face.trackableId, ref fixationPoint))
-            {
-                // The vector that represents the gaze offset from the face is not normalized and therefore could be behind the camera.
-                // So set the offset to be 1/10th of meter in the direction of the offset
-				m_FixationPointGameObject.transform.localPosition = Vector3.Normalize(fixationPoint) / 10;
-            }
-            else
-            {
-                Debug.Log("Failed to get the face's fixation point.");
-            }
+            // Often the gaze point will be the device (origin) or past the device so for demonstration
+            // sake, we scale back the position to be closer (approx. 10cm) to the face and therefore visible.
+            m_FixationPointGameObject.transform.localPosition = Vector3.Normalize(m_Face.fixationPoint.Value) / 10;
         }
-#endif
+        else
+        {
+            // Update onscreen text to show that eye tracking isn't supported
+        }
 	}
 
 }
