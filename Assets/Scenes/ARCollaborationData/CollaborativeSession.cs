@@ -1,19 +1,14 @@
 ﻿using UnityEngine;
-using Unity.iOS.Multipeer;
 using UnityEngine.XR.ARFoundation;
-using UnityEngine.XR.ARKit;
 
+#if UNITY_IOS && !UNITY_EDITOR
+using Unity.iOS.Multipeer;
+using UnityEngine.XR.ARKit;
+#endif
+
+[RequireComponent(typeof(ARSession))]
 public class CollaborativeSession : MonoBehaviour
 {
-    [SerializeField]
-    ARSession m_ARSession;
-
-    public ARSession arSession
-    {
-        get { return m_ARSession; }
-        set { m_ARSession = value; }
-    }
-
     [SerializeField]
     string m_SessionName;
 
@@ -23,6 +18,15 @@ public class CollaborativeSession : MonoBehaviour
         set { m_SessionName = value; }
     }
 
+    ARSession m_ARSession;
+
+    void Start()
+    {
+        // Unconditionally compiled Start method so that
+        // we get the enabled checkbox in the Editor
+    }
+
+#if UNITY_IOS && !UNITY_EDITOR
     MCSession m_MCSession;
 
     ARKitSessionSubsystem GetSubsystem()
@@ -35,6 +39,7 @@ public class CollaborativeSession : MonoBehaviour
 
     void Awake()
     {
+        m_ARSession = GetComponent<ARSession>();
         m_MCSession = new MCSession(SystemInfo.deviceName, m_SessionName);
     }
 
@@ -113,4 +118,5 @@ public class CollaborativeSession : MonoBehaviour
     {
         m_MCSession.Dispose();
     }
+#endif
 }
