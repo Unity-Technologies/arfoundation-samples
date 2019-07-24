@@ -10,12 +10,18 @@ using UnityEngine.XR.ARKit;
 public class CollaborativeSession : MonoBehaviour
 {
     [SerializeField]
-    string m_SessionName;
+    [Tooltip("The name for this network service. It should be 15 characters or less and can contain ASCII, lowercase letters, numbers, and hyphens.")]
+    string m_ServiceType;
 
-    public string sessionName
+    /// <summary>
+    /// The name for this network service.
+    /// See <a href="https://developer.apple.com/documentation/multipeerconnectivity/mcnearbyserviceadvertiser">MCNearbyServiceAdvertiser</a>
+    /// for the purpose of and restrictions on this name.
+    /// </summary>
+    public string serviceType
     {
-        get { return m_SessionName; }
-        set { m_SessionName = value; }
+        get { return m_ServiceType; }
+        set { m_ServiceType = value; }
     }
 
     ARSession m_ARSession;
@@ -40,7 +46,7 @@ public class CollaborativeSession : MonoBehaviour
     void Awake()
     {
         m_ARSession = GetComponent<ARSession>();
-        m_MCSession = new MCSession(SystemInfo.deviceName, m_SessionName);
+        m_MCSession = new MCSession(SystemInfo.deviceName, m_ServiceType);
     }
 
     void OnEnable()
