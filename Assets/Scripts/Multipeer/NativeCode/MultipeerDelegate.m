@@ -50,9 +50,12 @@ BOOL m_Enabled;
     {
         [m_ServiceAdvertiser stopAdvertisingPeer];
         [m_ServiceBrowser stopBrowsingForPeers];
-        [m_Queue removeAllObjects];
+        @synchronized (m_Queue)
+        {
+            [m_Queue removeAllObjects];
+        }
     }
-    
+
     m_Enabled = enabled;
 }
 
@@ -60,7 +63,7 @@ BOOL m_Enabled;
 {
     if (m_Session.connectedPeers.count == 0)
         return nil;
-    
+
     NSError* error = nil;
     [m_Session sendData:data
                 toPeers:m_Session.connectedPeers
@@ -72,14 +75,20 @@ BOOL m_Enabled;
 
 - (NSUInteger)queueSize
 {
-    return m_Queue.count;
+    @synchronized (m_Queue)
+    {
+        return m_Queue.count;
+    }
 }
 
 - (nonnull NSData*)dequeue
 {
-    NSData* data = [m_Queue objectAtIndex:0];
-    [m_Queue removeObjectAtIndex:0];
-    return data;
+    @synchronized (m_Queue)
+    {
+        NSData* data = [m_Queue objectAtIndex:0];
+        [m_Queue removeObjectAtIndex:0];
+        return data;
+    }
 }
 
 - (NSUInteger)connectedPeerCount
@@ -93,9 +102,10 @@ BOOL m_Enabled;
 
 - (void)session:(nonnull MCSession *)session didReceiveData:(nonnull NSData *)data fromPeer:(nonnull MCPeerID *)peerID
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
+    @synchronized (m_Queue)
+    {
         [m_Queue addObject:data];
-    });
+    }
 }
 
 - (void)session:(nonnull MCSession *)session didReceiveStream:(nonnull NSInputStream *)stream withName:(nonnull NSString *)streamName fromPeer:(nonnull MCPeerID *)peerID {
