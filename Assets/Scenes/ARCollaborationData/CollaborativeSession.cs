@@ -94,7 +94,7 @@ public class CollaborativeSession : MonoBehaviour
                         continue;
 
                     using (var serializedData = collaborationData.ToSerialized())
-                    using (var data = new NSData(serializedData.bytes, false))
+                    using (var data = NSData.CreateWithBytesNoCopy(serializedData.bytes))
                     {
                         m_MCSession.SendToAllPeers(data, MCSessionSendDataMode.Reliable);
                         Logger.Log($"Sent {data.Length} bytes of collaboration data.");
