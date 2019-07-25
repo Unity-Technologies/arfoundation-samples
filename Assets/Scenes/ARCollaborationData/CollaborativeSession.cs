@@ -26,10 +26,27 @@ public class CollaborativeSession : MonoBehaviour
 
     ARSession m_ARSession;
 
-    void Start()
+    void DisableNotSupported(string reason)
     {
-        // Unconditionally compiled Start method so that
-        // we get the enabled checkbox in the Editor
+        enabled = false;
+        Logger.Log(reason);
+    }
+
+    void OnEnable()
+    {
+#if UNITY_IOS && !UNITY_EDITOR
+        var subsystem = GetSubsystem();
+        if (!ARKitSessionSubsystem.supportsCollaboration || subsystem == null)
+        {
+            DisableNotSupported("Collaborative sessions require iOS 13.");
+            return;
+        }
+
+        subsystem.collaborationEnabled = true;
+        m_MCSession.Enabled = true;
+#else
+        DisableNotSupported("Collaborative sessions are an ARKit 3 feature; This platform does not support them.");
+#endif
     }
 
 #if UNITY_IOS && !UNITY_EDITOR
@@ -47,19 +64,6 @@ public class CollaborativeSession : MonoBehaviour
     {
         m_ARSession = GetComponent<ARSession>();
         m_MCSession = new MCSession(SystemInfo.deviceName, m_ServiceType);
-    }
-
-    void OnEnable()
-    {
-        var subsystem = GetSubsystem();
-        if (!ARKitSessionSubsystem.supportsCollaboration || subsystem == null)
-        {
-            enabled = false;
-            return;
-        }
-
-        subsystem.collaborationEnabled = true;
-        m_MCSession.Enabled = true;
     }
 
     void OnDisable()
