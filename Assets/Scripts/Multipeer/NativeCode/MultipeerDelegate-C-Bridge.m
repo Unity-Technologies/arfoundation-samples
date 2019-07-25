@@ -3,11 +3,10 @@
 typedef void* ManagedMultipeerDelegate;
 typedef void* ManagedNSError;
 
-ManagedMultipeerDelegate UnityMC_Delegate_initWithName(void* name_nsstring, void* serviceType_nsstring)
+ManagedMultipeerDelegate UnityMC_Delegate_initWithName(void* name, void* serviceType)
 {
-    NSString* name = (__bridge NSString*)name_nsstring;
-    MultipeerDelegate* delegate = [[MultipeerDelegate alloc] initWithName:name
-                                                              serviceType:(__bridge NSString*)serviceType_nsstring];
+    MultipeerDelegate* delegate = [[MultipeerDelegate alloc] initWithName:(__bridge NSString*)name
+                                                              serviceType:(__bridge NSString*)serviceType];
     return (__bridge_retained void*)delegate;
 }
 
