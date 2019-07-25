@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-int UnityMultipeer_NSString_lengthOfBytesUsingEncoding(void* self)
+int UnityMC_NSString_lengthOfBytesUsingEncoding(void* self)
 {
     if (self == NULL)
         return 0;
@@ -9,7 +9,7 @@ int UnityMultipeer_NSString_lengthOfBytesUsingEncoding(void* self)
     return (int)[string lengthOfBytesUsingEncoding:NSUTF16LittleEndianStringEncoding];
 }
 
-bool UnityMultipeer_NSString_getBytes(void* self, void* buffer, int length)
+bool UnityMC_NSString_getBytes(void* self, void* buffer, int length)
 {
     NSString* string = (__bridge NSString*)self;
     const NSRange range = NSMakeRange(0, string.length);
@@ -22,13 +22,13 @@ bool UnityMultipeer_NSString_getBytes(void* self, void* buffer, int length)
              remainingRange:NULL];
 }
 
-int UnityMultipeer_NSString_getLength(void* self)
+int UnityMC_NSString_getLength(void* self)
 {
     NSString* string = (__bridge NSString*)self;
     return (int)string.length;
 }
 
-void* UnityMultipeer_NSString_createWithString(void* bytes, int length)
+void* UnityMC_NSString_createWithString(void* bytes, int length)
 {
     NSString* string = [[NSString alloc] initWithBytes: bytes
                                                 length: 2 * length

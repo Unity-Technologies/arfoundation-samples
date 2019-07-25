@@ -58,16 +58,16 @@ namespace Unity.iOS.Multipeer
         public static bool operator==(NSString lhs, NSString rhs) => lhs.Equals(rhs);
         public static bool operator!=(NSString lhs, NSString rhs) => !lhs.Equals(rhs);
 
-        [DllImport("__Internal", EntryPoint="UnityMultipeer_NSString_createWithString")]
+        [DllImport("__Internal", EntryPoint="UnityMC_NSString_createWithString")]
         static extern IntPtr CreateWithString([MarshalAs(UnmanagedType.LPWStr)] string text, int length);
 
-        [DllImport("__Internal", EntryPoint="UnityMultipeer_NSString_lengthOfBytesUsingEncoding")]
+        [DllImport("__Internal", EntryPoint="UnityMC_NSString_lengthOfBytesUsingEncoding")]
         static extern int GetLengthOfBytes(NSString self);
 
-        [DllImport("__Internal", EntryPoint="UnityMultipeer_NSString_getLength")]
+        [DllImport("__Internal", EntryPoint="UnityMC_NSString_getLength")]
         static extern int GetLength(NSString self);
 
-        [DllImport("__Internal", EntryPoint="UnityMultipeer_NSString_getBytes")]
+        [DllImport("__Internal", EntryPoint="UnityMC_NSString_getBytes")]
         static extern unsafe bool GetBytes(NSString self, void* buffer, int length);
 
         [DllImport("__Internal", EntryPoint="UnityMC_NSString_serialize")]

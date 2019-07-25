@@ -82,19 +82,19 @@ namespace Unity.iOS.Multipeer
         [DllImport("__Internal", EntryPoint="UnityMC_Delegate_initWithName")]
         static extern IntPtr InitWithName(NSString name, NSString serviceType);
 
-        [DllImport("__Internal", EntryPoint="UnityMC_Delegate_ReceivedDataQueueSize")]
+        [DllImport("__Internal", EntryPoint="UnityMC_Delegate_receivedDataQueueSize")]
         static extern int GetReceivedDataQueueSize(MCSession self);
 
-        [DllImport("__Internal", EntryPoint="UnityMC_Delegate_DequeueReceivedData")]
+        [DllImport("__Internal", EntryPoint="UnityMC_Delegate_dequeueReceivedData")]
         static extern NSData DequeueReceivedData(MCSession self);
 
-        [DllImport("__Internal", EntryPoint="UnityMC_Delegate_ConnectedPeerCount")]
+        [DllImport("__Internal", EntryPoint="UnityMC_Delegate_connectedPeerCount")]
         static extern int GetConnectedPeerCount(MCSession self);
 
-        [DllImport("__Internal", EntryPoint="UnityMC_Delegate_SetEnabled")]
+        [DllImport("__Internal", EntryPoint="UnityMC_Delegate_setEnabled")]
         static extern void SetEnabled(MCSession self, bool enabled);
 
-        [DllImport("__Internal", EntryPoint="UnityMC_Delegate_GetEnabled")]
+        [DllImport("__Internal", EntryPoint="UnityMC_Delegate_getEnabled")]
         static extern bool GetEnabled(MCSession self);
     }
 }

@@ -19,44 +19,43 @@ ManagedNSError UnityMC_Delegate_sendToAllPeers(void* self, void* nsdata, int len
     return (__bridge_retained void*)error;
 }
 
-int UnityMC_Delegate_ReceivedDataQueueSize(void* self)
+int UnityMC_Delegate_receivedDataQueueSize(void* self)
 {
     if (self == NULL)
         return 0;
-    
+
     MultipeerDelegate* delegate = (__bridge MultipeerDelegate*)self;
     return (int)delegate.queueSize;
 }
 
-void* UnityMC_Delegate_DequeueReceivedData(void* self)
+void* UnityMC_Delegate_dequeueReceivedData(void* self)
 {
     MultipeerDelegate* delegate = (__bridge MultipeerDelegate*)self;
     return (__bridge_retained void*)delegate.dequeue;
 }
 
-int UnityMC_Delegate_ConnectedPeerCount(void* self)
+int UnityMC_Delegate_connectedPeerCount(void* self)
 {
     MultipeerDelegate* delegate = (__bridge MultipeerDelegate*)self;
     return (int)delegate.connectedPeerCount;
 }
 
-void UnityMC_Delegate_SetEnabled(void* self, bool enabled)
+void UnityMC_Delegate_setEnabled(void* self, bool enabled)
 {
     MultipeerDelegate* delegate = (__bridge MultipeerDelegate*)self;
     delegate.enabled = enabled;
 }
 
-bool UnityMC_Delegate_GetEnabled(void* self)
+bool UnityMC_Delegate_getEnabled(void* self)
 {
     MultipeerDelegate* delegate = (__bridge MultipeerDelegate*)self;
     return delegate.enabled;
 }
 
-void UnityMultipeer_CFRelease(void* ptr)
+void UnityMC_CFRelease(void* ptr)
 {
     if (ptr)
     {
         CFRelease(ptr);
     }
 }
-
