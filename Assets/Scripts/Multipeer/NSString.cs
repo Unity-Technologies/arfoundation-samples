@@ -5,6 +5,7 @@ using Unity.Collections.LowLevel.Unsafe;
 
 namespace Unity.iOS.Multipeer
 {
+    [StructLayout(LayoutKind.Sequential)]
     public struct NSString : IDisposable, IEquatable<NSString>
     {
         IntPtr m_Ptr;
