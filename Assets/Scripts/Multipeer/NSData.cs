@@ -16,16 +16,22 @@ namespace Unity.iOS.Multipeer
 
         public int Length => Created ? GetLength(this) : 0;
 
-        public unsafe NSData(NativeSlice<byte> bytes, bool copy)
+        public static unsafe NSData CreateWithBytes(NativeSlice<byte> bytes)
         {
-            if (copy)
-            {
-                m_Ptr = CreateWithBytes(bytes.GetUnsafePtr(), bytes.Length);
-            }
-            else
-            {
-                m_Ptr = CreateWithBytesNoCopy(bytes.GetUnsafePtr(), bytes.Length, false);
-            }
+            var ptr = bytes.GetUnsafePtr();
+            if (ptr == null)
+                throw new ArgumentException($"The {typeof(NativeSlice<byte>).Name} is not valid.", nameof(bytes));
+
+            return new NSData(CreateWithBytes(ptr, bytes.Length));
+        }
+
+        public static unsafe NSData CreateWithBytesNoCopy(NativeSlice<byte> bytes)
+        {
+            var ptr = bytes.GetUnsafePtr();
+            if (ptr == null)
+                throw new ArgumentException($"The {typeof(NativeSlice<byte>).Name} is not valid.", nameof(bytes));
+
+            return new NSData(CreateWithBytesNoCopy(ptr, bytes.Length, false));
         }
 
         public unsafe NativeSlice<byte> Bytes
