@@ -34,22 +34,27 @@ public class EyePoseVisualizer : MonoBehaviour
     void Awake()
     {
         m_Face = GetComponent<ARFace>();
-        CreateEyeGameObjects();
     }
 
-    void CreateEyeGameObjects()
+    void GetOrCreateEyeGameObjects()
     {
-        m_LeftEyeGameObject = Instantiate(m_EyePrefab, m_Face.transform);
-        m_RightEyeGameObject = Instantiate(m_EyePrefab, m_Face.transform);
-
-        m_LeftEyeGameObject.SetActive(false);
-        m_RightEyeGameObject.SetActive(false);
+        if (m_Face.leftEyeTransform != null && m_Face.rightEyeTransform != null &&
+            m_LeftEyeGameObject == null && m_RightEyeGameObject == null)
+        {
+            m_LeftEyeGameObject = Instantiate(m_EyePrefab, m_Face.leftEyeTransform);
+            m_RightEyeGameObject = Instantiate(m_EyePrefab, m_Face.rightEyeTransform);
+            m_LeftEyeGameObject.SetActive(false);
+            m_RightEyeGameObject.SetActive(false);
+        }
     }
 
     void SetVisible(bool visible)
     {
-        m_LeftEyeGameObject.SetActive(visible);
-        m_RightEyeGameObject.SetActive(visible);
+        if (m_LeftEyeGameObject != null && m_RightEyeGameObject != null)
+        {
+            m_LeftEyeGameObject.SetActive(visible);
+            m_RightEyeGameObject.SetActive(visible);
+        }
     }
 
     void UpdateVisibility()
@@ -76,22 +81,7 @@ public class EyePoseVisualizer : MonoBehaviour
 
     void OnUpdated(ARFaceUpdatedEventArgs eventArgs)
     {
+        GetOrCreateEyeGameObjects();
         UpdateVisibility();
-        UpdateEyeGazeFeatures();
-    }
-
-    void UpdateEyeGazeFeatures()
-    {
-        if (m_FaceSubsystem.SubsystemDescriptor.supportsEyeTracking)
-        {
-            m_LeftEyeGameObject.transform.localPosition = m_Face.leftEyePose.Value.position;
-            m_LeftEyeGameObject.transform.localRotation = m_Face.leftEyePose.Value.rotation;
-            m_RightEyeGameObject.transform.localPosition = m_Face.rightEyePose.Value.position;
-            m_RightEyeGameObject.transform.localRotation = m_Face.rightEyePose.Value.rotation;
-        }
-        else
-        {
-            Debug.Log("This subsystem does not support eye tracking.");
-        }
     }
 }

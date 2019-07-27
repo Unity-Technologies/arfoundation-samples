@@ -13,77 +13,111 @@ using UnityEngine.XR.ARSubsystems;
 [RequireComponent(typeof(ARFace))]
 public class FixationPointVisualizer : MonoBehaviour
 {
-	[SerializeField]
-	GameObject m_FixationPointPrefab;
+    [SerializeField]
+    GameObject m_FixationPointPrefab;
 
-	public GameObject fixationPointPrefab
-	{
-		get => m_FixationPointPrefab;
-		set => m_FixationPointPrefab = value;
-	}
+    [SerializeField]
+    GameObject m_GUIFixationReticlePrefab;
 
-	GameObject m_FixationPointGameObject;
+    public GameObject fixationPointPrefab
+    {
+        get => m_FixationPointPrefab;
+        set => m_FixationPointPrefab = value;
+    }
 
-	ARFace m_Face;
+    public GameObject fixationReticlePrefab
+    {
+        get => m_GUIFixationReticlePrefab;
+        set => m_GUIFixationReticlePrefab = value;
+    }
+
+    GameObject m_FixationPointGameObject;
+    GameObject m_FixationReticleGameObject;
+
+    Canvas m_Canvas;
+    ARFace m_Face;
     XRFaceSubsystem m_FaceSubsystem;
 
-	void Awake()
-	{
-		m_Face = GetComponent<ARFace>();
-		CreateEyeGameObjects();
-	}
+    void Awake()
+    {
+        m_Face = GetComponent<ARFace>();
+    }
 
-	void CreateEyeGameObjects()
-	{
-		m_FixationPointGameObject = Instantiate(m_FixationPointPrefab, m_Face.transform);
-		m_FixationPointGameObject.SetActive(false);
-	}
+    void GetOrCreateEyeGameObjects()
+    {
+        if (m_FixationPointGameObject == null && m_Face.fixationPointTransform != null)
+        {
+            m_FixationPointGameObject = Instantiate(m_FixationPointPrefab, m_Face.fixationPointTransform);
+            m_FixationPointGameObject.SetActive(false);
 
-	void SetVisible(bool visible)
-	{
-		m_FixationPointGameObject.SetActive(visible);
-	}
+            if (FindObjectOfType<Canvas>() != null && m_FixationReticleGameObject == null)
+            {
+                var canvas = FindObjectOfType<Canvas>();
+                Debug.Log("Found a canvas");
+                m_FixationReticleGameObject = Instantiate(m_GUIFixationReticlePrefab, canvas.transform);
+            }
+        }
+    }
+
+    void SetVisible(bool visible)
+    {
+        if (m_FixationPointGameObject != null)
+            m_FixationPointGameObject.SetActive(visible);
+        
+        if (m_FixationReticleGameObject != null)
+            m_FixationReticleGameObject.SetActive(visible);
+    }
 
     void UpdateVisibility()
-	{
-		var visible =
-			enabled &&
-			(m_Face.trackingState == TrackingState.Tracking) &&
+    {
+        var visible =
+            enabled &&
+            (m_Face.trackingState == TrackingState.Tracking) &&
             m_FaceSubsystem.SubsystemDescriptor.supportsEyeTracking &&
-			(ARSession.state > ARSessionState.Ready);
+            (ARSession.state > ARSessionState.Ready);
 
-		SetVisible(visible);
-	}
+        SetVisible(visible);
+    }
 
     void OnEnable()
-	{
+    {
         var faceManager = FindObjectOfType<ARFaceManager>();
         if (faceManager != null)
         {
             m_FaceSubsystem = (XRFaceSubsystem)faceManager.subsystem;
         }
-		UpdateVisibility();
-		m_Face.updated += OnUpdated;
-	}
+        UpdateVisibility();
+        m_Face.updated += OnUpdated;
+    }
 
     void OnUpdated(ARFaceUpdatedEventArgs eventArgs)
-	{
-		UpdateVisibility();
-		UpdateFixationPoint();
-	}
+    {
+        GetOrCreateEyeGameObjects();
+        UpdateVisibility();
+        UpdateFixationPoint();
+        UpdateScreenReticle();
+    }
 
     void UpdateFixationPoint()
-	{
-        if (m_Face.fixationPoint != null)
+    {
+        if (m_FixationPointGameObject != null)
         {
-            // Often the gaze point will be the device (origin) or past the device so for demonstration
-            // sake, we scale back the position to be closer (approx. 10cm) to the face and therefore visible.
-            m_FixationPointGameObject.transform.localPosition = Vector3.Normalize(m_Face.fixationPoint.Value) / 10;
+            // This is needed to update the rotation to better match the where of the fixation point
+            // Debug.Log("");
         }
-        else
+    }
+
+    void UpdateScreenReticle()
+    {
+        var mainCamera = Camera.main;
+
+        var fixationInViewSpace = mainCamera.WorldToViewportPoint(m_Face.fixationPointTransform.position);
+        var mirrorFixationInView = new Vector3(1 - fixationInViewSpace.x, 1 - fixationInViewSpace.y, fixationInViewSpace.z);
+
+        if (m_FixationReticleGameObject != null)
         {
-            // Update onscreen text to show that eye tracking isn't supported
+            m_FixationReticleGameObject.GetComponent<RectTransform>().anchoredPosition3D = mainCamera.ViewportToScreenPoint(mirrorFixationInView);
         }
-	}
+    }
 
 }
