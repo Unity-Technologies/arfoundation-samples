@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8461084496272763974}
   - component: {fileID: 4599500522131540127}
   - component: {fileID: 2802146367459927232}
+  - component: {fileID: 5426074507876991005}
   m_Layer: 0
   m_Name: AR Fixation Point Visualizer
   m_TagString: Untagged
@@ -57,7 +58,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84e9e36f641444746b0c94dcd4bb4518, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FixationPointPrefab: {fileID: 1956726250845337899, guid: 643bb4f9636444efebc65bc5ec614d1b,
+  m_FixationPointPrefab: {fileID: 1529176408204727125, guid: 8339cb70cc6014347bd14cfea9e60601,
     type: 3}
+--- !u!114 &5426074507876991005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5590809483239930861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c15242b4b6e064d8ead61c1e4c1b8be7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_GUIFixationReticlePrefab: {fileID: 5180915313586242672, guid: a14db57d4a388438285ebba933990962,
     type: 3}
