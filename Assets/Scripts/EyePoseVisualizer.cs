@@ -36,14 +36,16 @@ public class EyePoseVisualizer : MonoBehaviour
         m_Face = GetComponent<ARFace>();
     }
 
-    void GetOrCreateEyeGameObjects()
+    void CreateEyeGameObjectsIfNecessary()
     {
-        if (m_Face.leftEyeTransform != null && m_Face.rightEyeTransform != null &&
-            m_LeftEyeGameObject == null && m_RightEyeGameObject == null)
+        if (m_Face.leftEyeTransform != null && m_LeftEyeGameObject == null )
         {
             m_LeftEyeGameObject = Instantiate(m_EyePrefab, m_Face.leftEyeTransform);
-            m_RightEyeGameObject = Instantiate(m_EyePrefab, m_Face.rightEyeTransform);
             m_LeftEyeGameObject.SetActive(false);
+        }
+        if (m_Face.rightEyeTransform != null && m_RightEyeGameObject == null)
+        {
+            m_RightEyeGameObject = Instantiate(m_EyePrefab, m_Face.rightEyeTransform);
             m_RightEyeGameObject.SetActive(false);
         }
     }
@@ -81,7 +83,7 @@ public class EyePoseVisualizer : MonoBehaviour
 
     void OnUpdated(ARFaceUpdatedEventArgs eventArgs)
     {
-        GetOrCreateEyeGameObjects();
+        CreateEyeGameObjectsIfNecessary();
         UpdateVisibility();
     }
 }

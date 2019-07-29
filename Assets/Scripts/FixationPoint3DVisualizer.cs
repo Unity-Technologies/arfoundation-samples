@@ -14,15 +14,15 @@ using UnityEngine.XR.ARSubsystems;
 public class FixationPoint3DVisualizer : MonoBehaviour
 {
     [SerializeField]
-    GameObject m_FixationPointPrefab;
+    GameObject m_FixationRayPrefab;
 
-    public GameObject fixationPointPrefab
+    public GameObject fixationRayPrefab
     {
-        get => m_FixationPointPrefab;
-        set => m_FixationPointPrefab = value;
+        get => m_FixationRayPrefab;
+        set => m_FixationRayPrefab = value;
     }
 
-    GameObject m_FixationPointGameObject;
+    GameObject m_FixationRayGameObject;
 
     ARFace m_Face;
     XRFaceSubsystem m_FaceSubsystem;
@@ -32,19 +32,19 @@ public class FixationPoint3DVisualizer : MonoBehaviour
         m_Face = GetComponent<ARFace>();
     }
 
-    void GetOrCreateEyeGameObjects()
+    void CreateEyeGameObjectsIfNecessary()
     {
-        if (m_FixationPointGameObject == null && m_Face.fixationPointTransform != null)
+        if (m_FixationRayGameObject == null && m_Face.fixationPointTransform != null)
         {
-            m_FixationPointGameObject = Instantiate(m_FixationPointPrefab, m_Face.transform);
-            m_FixationPointGameObject.SetActive(false);
+            m_FixationRayGameObject = Instantiate(m_FixationRayPrefab, m_Face.transform);
+            m_FixationRayGameObject.SetActive(false);
         }
     }
 
     void SetVisible(bool visible)
     {
-        if (m_FixationPointGameObject != null)
-            m_FixationPointGameObject.SetActive(visible);
+        if (m_FixationRayGameObject != null)
+            m_FixationRayGameObject.SetActive(visible);
     }
 
     void UpdateVisibility()
@@ -71,16 +71,16 @@ public class FixationPoint3DVisualizer : MonoBehaviour
 
     void OnUpdated(ARFaceUpdatedEventArgs eventArgs)
     {
-        GetOrCreateEyeGameObjects();
+        CreateEyeGameObjectsIfNecessary();
         UpdateVisibility();
         UpdateFixationPoint();
     }
 
     void UpdateFixationPoint()
     {
-        if (m_FixationPointGameObject != null)
+        if (m_FixationRayGameObject != null)
         {
-            m_FixationPointGameObject.transform.LookAt(m_Face.fixationPointTransform.position);
+            m_FixationRayGameObject.transform.LookAt(m_Face.fixationPointTransform.position);
         }
     }
 

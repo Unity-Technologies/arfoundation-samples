@@ -32,7 +32,7 @@ public class FixationPoint2DVisualizer : MonoBehaviour
         m_Face = GetComponent<ARFace>();
     }
 
-    void GetOrCreateEyeGameObjects()
+    void CreateEyeGameObjectsIfNecessary()
     {
         var canvas = FindObjectOfType<Canvas>();
         if (m_Face.fixationPointTransform != null && canvas != null && m_FixationReticleGameObject == null)
@@ -71,7 +71,7 @@ public class FixationPoint2DVisualizer : MonoBehaviour
 
     void OnUpdated(ARFaceUpdatedEventArgs eventArgs)
     {
-        GetOrCreateEyeGameObjects();
+        CreateEyeGameObjectsIfNecessary();
         UpdateVisibility();
         UpdateScreenReticle();
     }
