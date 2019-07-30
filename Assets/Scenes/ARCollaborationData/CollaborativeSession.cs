@@ -86,17 +86,23 @@ public class CollaborativeSession : MonoBehaviour
         {
             using (var collaborationData = subsystem.DequeueCollaborationData())
             {
-                if (collaborationData.priority == ARCollaborationDataPriority.Critical)
+                CollaborationNetworkingIndicator.NotifyHasCollaborationData();
+
+                if (m_MCSession.ConnectedPeerCount == 0)
+                    continue;
+
+                using (var serializedData = collaborationData.ToSerialized())
+                using (var data = NSData.CreateWithBytesNoCopy(serializedData.bytes))
                 {
-                    CollaborationNetworkingIndicator.NotifyHasCollaborationData();
+                    m_MCSession.SendToAllPeers(data, collaborationData.priority == ARCollaborationDataPriority.Critical
+                        ? MCSessionSendDataMode.Reliable
+                        : MCSessionSendDataMode.Unreliable);
 
-                    if (m_MCSession.ConnectedPeerCount == 0)
-                        continue;
+                    CollaborationNetworkingIndicator.NotifyOutgoingDataSent();
 
-                    using (var serializedData = collaborationData.ToSerialized())
-                    using (var data = NSData.CreateWithBytesNoCopy(serializedData.bytes))
+                    // Only log 'critical' data as 'optional' data tends to come every frame
+                    if (collaborationData.priority == ARCollaborationDataPriority.Critical)
                     {
-                        m_MCSession.SendToAllPeers(data, MCSessionSendDataMode.Reliable);
                         Logger.Log($"Sent {data.Length} bytes of collaboration data.");
                     }
                 }
@@ -114,7 +120,10 @@ public class CollaborativeSession : MonoBehaviour
                 if (collaborationData.valid)
                 {
                     subsystem.UpdateWithCollaborationData(collaborationData);
-                    Logger.Log($"Received {data.Bytes.Length} bytes of collaboration data.");
+                    if (collaborationData.priority == ARCollaborationDataPriority.Critical)
+                    {
+                        Logger.Log($"Received {data.Bytes.Length} bytes of collaboration data.");
+                    }
                 }
                 else
                 {
