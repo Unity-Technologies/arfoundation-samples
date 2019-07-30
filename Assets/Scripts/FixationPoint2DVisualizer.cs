@@ -35,7 +35,7 @@ public class FixationPoint2DVisualizer : MonoBehaviour
     void CreateEyeGameObjectsIfNecessary()
     {
         var canvas = FindObjectOfType<Canvas>();
-        if (m_Face.fixationPointTransform != null && canvas != null && m_FixationReticleGameObject == null)
+        if (m_Face.fixationPoint != null && canvas != null && m_FixationReticleGameObject == null)
         {
             m_FixationReticleGameObject = Instantiate(m_GUIFixationReticlePrefab, canvas.transform);
         }
@@ -80,7 +80,7 @@ public class FixationPoint2DVisualizer : MonoBehaviour
     {
         var mainCamera = Camera.main;
 
-        var fixationInViewSpace = mainCamera.WorldToViewportPoint(m_Face.fixationPointTransform.position);
+        var fixationInViewSpace = mainCamera.WorldToViewportPoint(m_Face.fixationPoint.position);
         // The camera is mirrored so x and y must be changed to match where the fixation point is in relation to the face.
         var mirrorFixationInView = new Vector3(1 - fixationInViewSpace.x, 1 - fixationInViewSpace.y, fixationInViewSpace.z);
 

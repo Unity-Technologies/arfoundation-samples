@@ -38,14 +38,14 @@ public class EyePoseVisualizer : MonoBehaviour
 
     void CreateEyeGameObjectsIfNecessary()
     {
-        if (m_Face.leftEyeTransform != null && m_LeftEyeGameObject == null )
+        if (m_Face.leftEye != null && m_LeftEyeGameObject == null )
         {
-            m_LeftEyeGameObject = Instantiate(m_EyePrefab, m_Face.leftEyeTransform);
+            m_LeftEyeGameObject = Instantiate(m_EyePrefab, m_Face.leftEye);
             m_LeftEyeGameObject.SetActive(false);
         }
-        if (m_Face.rightEyeTransform != null && m_RightEyeGameObject == null)
+        if (m_Face.rightEye != null && m_RightEyeGameObject == null)
         {
-            m_RightEyeGameObject = Instantiate(m_EyePrefab, m_Face.rightEyeTransform);
+            m_RightEyeGameObject = Instantiate(m_EyePrefab, m_Face.rightEye);
             m_RightEyeGameObject.SetActive(false);
         }
     }

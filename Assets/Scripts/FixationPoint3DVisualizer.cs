@@ -34,7 +34,7 @@ public class FixationPoint3DVisualizer : MonoBehaviour
 
     void CreateEyeGameObjectsIfNecessary()
     {
-        if (m_FixationRayGameObject == null && m_Face.fixationPointTransform != null)
+        if (m_FixationRayGameObject == null && m_Face.fixationPoint != null)
         {
             m_FixationRayGameObject = Instantiate(m_FixationRayPrefab, m_Face.transform);
             m_FixationRayGameObject.SetActive(false);
@@ -80,7 +80,7 @@ public class FixationPoint3DVisualizer : MonoBehaviour
     {
         if (m_FixationRayGameObject != null)
         {
-            m_FixationRayGameObject.transform.LookAt(m_Face.fixationPointTransform.position);
+            m_FixationRayGameObject.transform.LookAt(m_Face.fixationPoint.position);
         }
     }
 
