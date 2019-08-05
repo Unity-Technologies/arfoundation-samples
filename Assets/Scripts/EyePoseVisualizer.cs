@@ -77,7 +77,6 @@ public class EyePoseVisualizer : MonoBehaviour
     void OnDisable()
     {
         m_Face.updated -= OnUpdated;
-        m_Face.removed -= OnRemoved;
         SetVisible(false);
     }
 
