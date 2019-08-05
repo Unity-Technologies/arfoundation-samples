@@ -67,7 +67,6 @@ public class EyePoseVisualizer : MonoBehaviour
             m_FaceSubsystem = (XRFaceSubsystem)faceManager.subsystem;
             SetVisible((m_Face.trackingState == TrackingState.Tracking) && (ARSession.state > ARSessionState.Ready));
             m_Face.updated += OnUpdated;
-            m_Face.removed += OnRemoved;
         }
         else
         {
@@ -86,10 +85,5 @@ public class EyePoseVisualizer : MonoBehaviour
     {
         CreateEyeGameObjectsIfNecessary();
         SetVisible((m_Face.trackingState == TrackingState.Tracking) && (ARSession.state > ARSessionState.Ready));
-    }
-
-    void OnRemoved()
-    {
-        Debug.Log("Face was removed;");
     }
 }
