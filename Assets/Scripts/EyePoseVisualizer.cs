@@ -59,31 +59,37 @@ public class EyePoseVisualizer : MonoBehaviour
         }
     }
 
-    void UpdateVisibility()
-    {
-        var visible =
-            enabled &&
-            (m_Face.trackingState == TrackingState.Tracking) &&
-            m_FaceSubsystem.SubsystemDescriptor.supportsEyeTracking &&
-            (ARSession.state > ARSessionState.Ready);
-
-        SetVisible(visible);
-    }
-
     void OnEnable()
     {
         var faceManager = FindObjectOfType<ARFaceManager>();
-        if (faceManager != null)
+        if (faceManager != null && faceManager.subsystem != null && faceManager.subsystem.SubsystemDescriptor.supportsEyeTracking)
         {
             m_FaceSubsystem = (XRFaceSubsystem)faceManager.subsystem;
+            SetVisible((m_Face.trackingState == TrackingState.Tracking) && (ARSession.state > ARSessionState.Ready));
+            m_Face.updated += OnUpdated;
+            m_Face.removed += OnRemoved;
         }
-        UpdateVisibility();
-        m_Face.updated += OnUpdated;
+        else
+        {
+            enabled = false;
+        }
+    }
+
+    void OnDisable()
+    {
+        m_Face.updated -= OnUpdated;
+        m_Face.removed -= OnRemoved;
+        SetVisible(false);
     }
 
     void OnUpdated(ARFaceUpdatedEventArgs eventArgs)
     {
         CreateEyeGameObjectsIfNecessary();
-        UpdateVisibility();
+        SetVisible((m_Face.trackingState == TrackingState.Tracking) && (ARSession.state > ARSessionState.Ready));
+    }
+
+    void OnRemoved()
+    {
+        Debug.Log("Face was removed;");
     }
 }
