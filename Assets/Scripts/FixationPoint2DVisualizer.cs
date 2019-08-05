@@ -81,7 +81,8 @@ public class FixationPoint2DVisualizer : MonoBehaviour
         var mainCamera = Camera.main;
 
         var fixationInViewSpace = mainCamera.WorldToViewportPoint(m_Face.fixationPoint.position);
-        // The camera is mirrored so x and y must be changed to match where the fixation point is in relation to the face.
+        
+        // The camera texture is mirrored so x and y must be changed to match where the fixation point is in relation to the face.
         var mirrorFixationInView = new Vector3(1 - fixationInViewSpace.x, 1 - fixationInViewSpace.y, fixationInViewSpace.z);
 
         if (m_FixationReticleGameObject != null)
