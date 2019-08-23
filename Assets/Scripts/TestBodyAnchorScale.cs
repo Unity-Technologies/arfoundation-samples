@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
@@ -31,7 +32,7 @@ public class TestBodyAnchorScale : MonoBehaviour
 
     void OnEnable()
     {
-        Debug.Assert(m_ImageInfo != null, "need a text field");
+        Debug.Assert(m_ImageInfo != null, "text field is required");
         m_ImageInfo.enabled = true;
 
         Debug.Assert(m_HumanBodyManager != null, "Human body manager is required.");
@@ -40,7 +41,7 @@ public class TestBodyAnchorScale : MonoBehaviour
 
     void OnDisable()
     {
-        Debug.Assert(m_ImageInfo != null, "need a text field");
+        Debug.Assert(m_ImageInfo != null, "text field is required");
         m_ImageInfo.enabled = false;
 
         Debug.Assert(m_HumanBodyManager != null, "Human body manager is required.");
@@ -49,28 +50,12 @@ public class TestBodyAnchorScale : MonoBehaviour
 
     void OnHumanBodiesChanged(ARHumanBodiesChangedEventArgs eventArgs)
     {
-        bool hasScale = false;
-        float scale = 0.0f;
+        // Currently, the ARKit provider only ever produces one body anchor, so just reference the first
+        float scale = ((eventArgs.added.Count > 0) ? eventArgs.added[0].estimatedHeightScaleFactor
+                       : ((eventArgs.updated.Count > 0) ? eventArgs.updated[0].estimatedHeightScaleFactor
+                          : Single.NaN));
 
-        foreach (var humanBody in eventArgs.added)
-        {
-            if (!hasScale)
-            {
-                scale = humanBody.estimatedHeightScaleFactor;
-                hasScale = true;
-            }
-        }
-
-        foreach (var humanBody in eventArgs.updated)
-        {
-            if (!hasScale)
-            {
-                scale = humanBody.estimatedHeightScaleFactor;
-                hasScale = true;
-            }
-        }
-
-        Debug.Assert(m_ImageInfo != null, "need a text field");
-        m_ImageInfo.text = hasScale ? scale.ToString("F10") : "<no scale>";
+        Debug.Assert(m_ImageInfo != null, "text field is required");
+        m_ImageInfo.text = scale.ToString("F10");
     }
 }
