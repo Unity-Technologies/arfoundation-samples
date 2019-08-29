@@ -1,5 +1,5 @@
 # AR Foundation Samples
-Example projects that use *AR Foundation 3.0* and demonstrate its functionality with sample assets and components.
+Example projects that use [*AR Foundation 3.0*](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@3.0/manual/index.html) and demonstrate its functionality with sample assets and components.
 
 This set of samples relies on five Unity packages:
 
