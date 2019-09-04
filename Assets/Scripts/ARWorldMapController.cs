@@ -237,11 +237,10 @@ public class ARWorldMapController : MonoBehaviour
         get
         {
 #if UNITY_IOS
-            var sessionSubsystem = (ARKitSessionSubsystem)m_ARSession.subsystem;
-            if (sessionSubsystem != null)
-                return sessionSubsystem.worldMapSupported;
-#endif
+            return m_ARSession.subsystem is ARKitSessionSubsystem && ARKitSessionSubsystem.worldMapSupported;
+#else
             return false;
+#endif
         }
     }
 
