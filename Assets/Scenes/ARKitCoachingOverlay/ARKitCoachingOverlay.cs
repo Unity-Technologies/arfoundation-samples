@@ -22,7 +22,13 @@ public class ARKitCoachingOverlay : MonoBehaviour
 
     [SerializeField]
     [Tooltip("The coaching goal associated with the coaching overlay.")]
+#if !UNITY_IOS
+    #pragma warning disable CS0414
+#endif
     CoachingGoal m_Goal = CoachingGoal.Tracking;
+#if !UNITY_IOS
+    #pragma warning restore CS0414
+#endif
 
 #if UNITY_IOS
     /// <summary>
