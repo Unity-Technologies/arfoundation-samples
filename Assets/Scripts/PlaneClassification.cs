@@ -14,21 +14,24 @@ public class PlaneClassification : MonoBehaviour
 
     void OnEnable()
     {
-        m_ARPlaneManager.planesChanged += OnPlanesAdded;
-        m_ARPlaneManager.planesChanged += OnPlanesUpdated;
-        m_ARPlaneManager.planesChanged += OnPlanesRemoved;
+        m_ARPlaneManager.planesChanged += OnPlanesChanged;
     }
 
     void OnDisable()
     {
-        m_ARPlaneManager.planesChanged -= OnPlanesAdded;
-        m_ARPlaneManager.planesChanged -= OnPlanesUpdated;
-        m_ARPlaneManager.planesChanged -= OnPlanesRemoved;
+        m_ARPlaneManager.planesChanged -= OnPlanesChanged;
     }
 
-    void OnPlanesAdded(ARPlanesChangedEventArgs eventArgs)
+    void OnPlanesChanged(ARPlanesChangedEventArgs eventArgs)
     {
-        foreach (var plane in eventArgs.added)
+        OnPlanesAdded(eventArgs.added);
+        OnPlanesUpdated(eventArgs.updated);
+        OnPlanesRemoved(eventArgs.removed);
+    }
+
+    void OnPlanesAdded(List<ARPlane> addedPlanes)
+    {
+        foreach (var plane in addedPlanes)
         {
             GameObject textObj = new GameObject();
             textObj.transform.SetParent(plane.gameObject.transform, false);
@@ -43,9 +46,9 @@ public class PlaneClassification : MonoBehaviour
         }
     }
 
-    void OnPlanesUpdated(ARPlanesChangedEventArgs eventArgs)
+    void OnPlanesUpdated(List<ARPlane> updatedPlanes)
     {
-        foreach (var plane in eventArgs.updated)
+        foreach (var plane in updatedPlanes)
         {
             TextMesh planeText = plane.GetComponentInChildren<TextMesh>();
             if (planeText)
@@ -55,9 +58,9 @@ public class PlaneClassification : MonoBehaviour
         }
     }
 
-    void OnPlanesRemoved(ARPlanesChangedEventArgs eventArgs)
+    void OnPlanesRemoved(List<ARPlane> removedPlanes)
     {
-        foreach (var plane in eventArgs.removed)
+        foreach (var plane in removedPlanes)
         {
             Component[] textMeshes;
 
