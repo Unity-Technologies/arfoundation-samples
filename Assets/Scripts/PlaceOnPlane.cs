@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.XR;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 
 /// <summary>
 /// Listens for touch events and performs an AR raycast from the screen touch point.
 /// AR raycasts will only hit detected trackables like feature points and planes.
-/// 
+///
 /// If a raycast hits a trackable, the <see cref="placedPrefab"/> is instantiated
 /// and moved to the hit position.
 /// </summary>
-[RequireComponent(typeof(ARSessionOrigin))]
+[RequireComponent(typeof(ARRaycastManager))]
 public class PlaceOnPlane : MonoBehaviour
 {
     [SerializeField]
@@ -25,7 +25,7 @@ public class PlaceOnPlane : MonoBehaviour
         get { return m_PlacedPrefab; }
         set { m_PlacedPrefab = value; }
     }
-    
+
     /// <summary>
     /// The object instantiated as a result of a successful raycast intersection with a plane.
     /// </summary>
@@ -33,17 +33,36 @@ public class PlaceOnPlane : MonoBehaviour
 
     void Awake()
     {
-        m_SessionOrigin = GetComponent<ARSessionOrigin>();
+        m_RaycastManager = GetComponent<ARRaycastManager>();
+    }
+
+    bool TryGetTouchPosition(out Vector2 touchPosition)
+    {
+#if UNITY_EDITOR
+        if (Input.GetMouseButton(0))
+        {
+            var mousePosition = Input.mousePosition;
+            touchPosition = new Vector2(mousePosition.x, mousePosition.y);
+            return true;
+        }
+#else
+        if (Input.touchCount > 0)
+        {
+            touchPosition = Input.GetTouch(0).position;
+            return true;
+        }
+#endif
+
+        touchPosition = default;
+        return false;
     }
 
     void Update()
     {
-        if (Input.touchCount == 0)
+        if (!TryGetTouchPosition(out Vector2 touchPosition))
             return;
 
-        var touch = Input.GetTouch(0);
-
-        if (m_SessionOrigin.Raycast(touch.position, s_Hits, TrackableType.PlaneWithinPolygon))
+        if (m_RaycastManager.Raycast(touchPosition, s_Hits, TrackableType.PlaneWithinPolygon))
         {
             // Raycast hits are sorted by distance, so the first one
             // will be the closest hit.
@@ -62,5 +81,5 @@ public class PlaceOnPlane : MonoBehaviour
 
     static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
 
-    ARSessionOrigin m_SessionOrigin;
+    ARRaycastManager m_RaycastManager;
 }

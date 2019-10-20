@@ -53,8 +53,7 @@ public class PlaneDetectionController : MonoBehaviour
     /// <param name="value">Each planes' GameObject is SetActive with this value.</param>
     void SetAllPlanesActive(bool value)
     {
-        m_ARPlaneManager.GetAllPlanes(s_Planes);
-        foreach (var plane in s_Planes)
+        foreach (var plane in m_ARPlaneManager.trackables)
             plane.gameObject.SetActive(value);
     }
 
@@ -64,6 +63,4 @@ public class PlaneDetectionController : MonoBehaviour
     }
 
     ARPlaneManager m_ARPlaneManager;
-
-    static List<ARPlane> s_Planes = new List<ARPlane>();
 }

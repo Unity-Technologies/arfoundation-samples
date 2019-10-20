@@ -4,6 +4,31 @@ using UnityEngine.XR.ARFoundation;
 
 public class UIManager : MonoBehaviour
 {
+    [SerializeField]
+    [Tooltip("The ARCameraManager which will produce frame events.")]
+    ARCameraManager m_CameraManager;
+
+    /// <summary>
+    /// Get or set the <c>ARCameraManager</c>.
+    /// </summary>
+    public ARCameraManager cameraManager
+    {
+        get { return m_CameraManager; }
+        set
+        {
+            if (m_CameraManager == value)
+                return;
+
+            if (m_CameraManager != null)
+                m_CameraManager.frameReceived -= FrameChanged;
+
+            m_CameraManager = value;
+
+            if (m_CameraManager != null & enabled)
+                m_CameraManager.frameReceived += FrameChanged;
+        }
+    }
+
     const string k_FadeOffAnim = "FadeOff";
     const string k_FadeOnAnim = "FadeOn";
 
@@ -42,13 +67,17 @@ public class UIManager : MonoBehaviour
 
     void OnEnable()
     {
-        ARSubsystemManager.cameraFrameReceived += FrameChanged;
+        if (m_CameraManager != null)
+            m_CameraManager.frameReceived += FrameChanged;
+
         PlaceMultipleObjectsOnPlane.onPlacedObject += PlacedObject;
     }
 
     void OnDisable()
     {
-        ARSubsystemManager.cameraFrameReceived -= FrameChanged;
+        if (m_CameraManager != null)
+            m_CameraManager.frameReceived -= FrameChanged;
+
         PlaceMultipleObjectsOnPlane.onPlacedObject -= PlacedObject;
     }
 
@@ -72,8 +101,7 @@ public class UIManager : MonoBehaviour
         if (planeManager == null)
             return false;
 
-        planeManager.GetAllPlanes(s_Planes);
-        return s_Planes.Count > 0;
+        return planeManager.trackables.count > 0;
     }
 
     void PlacedObject()
