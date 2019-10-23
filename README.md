@@ -187,7 +187,7 @@ This sample uses the front-facing (i.e., selfie) camera.
 
 These samples demonstrate eye and fixation point tracking. Eye tracking produces a pose (position and rotation) for each eye in the detected face, and the "fixation point" is the point the face is looking at (i.e., fixated upon). `EyeLasers` uses the eye pose to draw laser beams emitted from the detected face.
 
-This sample uses the front-facing (i.e., selfie) camera.
+This sample uses the front-facing (i.e., selfie) camera and requires an iOS device with a TrueDepth camera.
 
 ### RearCameraWithFrontCameraFaceMesh
 
