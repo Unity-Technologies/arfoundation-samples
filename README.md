@@ -93,7 +93,7 @@ This sample demonstrates basic plane detection, but uses a better looking prefab
 
 ## PlaneOcclusion
 
-This sample demonstrates basic plane detection, but uses an occlusion shader for the plane's material. This makes the plane appear invisible, but virtual objects behind the plane are culled. This provides an additional level of realism when, for example, when placing objects on a table.
+This sample demonstrates basic plane detection, but uses an occlusion shader for the plane's material. This makes the plane appear invisible, but virtual objects behind the plane are culled. This provides an additional level of realism when, for example, placing objects on a table.
 
 Move the device around until a plane is detected (its edges are still drawn) and then tap on the plane to place/move content.
 
