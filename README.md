@@ -208,3 +208,7 @@ This sample requires a device with an A12 bionic chip running iOS 13.
 This sample demonstrates "people occlusion", which can produce stencil and depth textures for detected persons. This sample is very primitive and simply displays the raw texture on the screen. We are currently working on a better sample.
 
 This sample requires a device with an A12 bionic chip running iOS 13.
+
+## AllPointCloudPoints
+
+This sample shows all feature points over time, not just the current frame's feature points as the "AR Default Point Cloud" prefab does. It does this by using a slightly modified version of the `ARPointCloudParticleVisualzier` component that stores all the feature points in a Dictionary. Since each feature point has a unique identifier, it can look up the stored point and update its position in the dictionary if it already exists. This can be a useful starting point for custom solutions that require the entire map of point cloud points, e.g., for custom mesh reconstruction techniques.
