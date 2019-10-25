@@ -127,11 +127,7 @@ namespace UnityEngine.XR.ARFoundation
 
         void UpdateVisibility()
         {
-            var visible =
-                enabled &&
-                (m_PointCloud.trackingState != TrackingState.None);
-
-            SetVisible(visible);
+            SetVisible(visiblenabled && (m_PointCloud.trackingState != TrackingState.None));
         }
 
         void SetVisible(bool visible)
