@@ -31,10 +31,19 @@ namespace UnityEngine.XR.ARFoundation
         public Mode mode
         {
             get => m_Mode;
-            set => m_Mode = value;
+            set
+            {
+                m_Mode = value;
+                RenderPoints();
+            }
         }
 
         public int totalPointCount => m_Points.Count;
+
+        void OnPointCloudChanged(ARPointCloudUpdatedEventArgs eventArgs)
+        {
+            RenderPoints();
+        }
 
         void SetParticlePosition(int index, Vector3 position)
         {
@@ -44,7 +53,7 @@ namespace UnityEngine.XR.ARFoundation
             m_Particles[index].remainingLifetime = 1f;
         }
 
-        void OnPointCloudChanged(ARPointCloudUpdatedEventArgs eventArgs)
+        void RenderPoints()
         {
             if (!m_PointCloud.positions.HasValue)
                 return;
