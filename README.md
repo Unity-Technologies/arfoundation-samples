@@ -4,15 +4,19 @@ Example projects that use [*AR Foundation 3.0*](https://docs.unity3d.com/Package
 
 This set of samples relies on five Unity packages:
 
-* ARSubsystems
-* ARCore XR Plugin
-* ARKit XR Plugin
-* ARKit Face Tracking
-* ARFoundation
+* ARSubsystems ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@3.0/manual/index.html))
+* ARCore XR Plugin ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arcore@3.0/manual/index.html))
+* ARKit XR Plugin ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arkit@3.0/manual/index.html))
+* ARKit Face Tracking ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arkit-face-tracking@3.0/manual/index.html))
+* ARFoundation ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@3.0/manual/index.html))
 
 ARSubsystems defines an interface, and the platform-specific implementations are in the ARCore and ARKit packages. ARFoundation turns the AR data provided by ARSubsystems into Unity `GameObject`s and `MonoBehavour`s.
 
 The `master` branch is compatible with Unity 2019.2 and later. For 2018.4, see the [1.5-preview branch](https://github.com/Unity-Technologies/arfoundation-samples/tree/1.5-preview).
+
+## Why is ARKit Face Tracking a separate package?
+
+For privacy reasons, use of ARKit's face tracking feature requires additional validation in order to publish your app on the App Store. If your application binary contains certain face tracking related symbols, your app may fail validation. For this reason, we provide this feature as a separate package which must be explicitly included.
 
 ## ARKit 3 Support
 
@@ -89,7 +93,7 @@ This sample demonstrates basic plane detection, but uses a better looking prefab
 
 ## PlaneOcclusion
 
-This sample demonstrates basic plane detection, but uses an occlusion shader for the plane's material. This makes the plane appear invisible, but virtual objects behind the plane are culled. This provides an additional level of realism when, for example, when placing objects on a table.
+This sample demonstrates basic plane detection, but uses an occlusion shader for the plane's material. This makes the plane appear invisible, but virtual objects behind the plane are culled. This provides an additional level of realism when, for example, placing objects on a table.
 
 Move the device around until a plane is detected (its edges are still drawn) and then tap on the plane to place/move content.
 
@@ -139,7 +143,7 @@ This sample demonstrates image tracking. Image tracking is supported on ARCore a
 
 At runtime, ARFoundation will generate an `ARTrackedImage` for each detected reference image. This sample uses the [`TrackedImageInfoManager.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ImageTracking/TrackedImageInfoManager.cs) script to overlay the original image on top of the detected image, along with some meta data.
 
-Run the sample on an ARCore or ARKit-capable device and point your device at one of the images in [`Assets/Scenes/ImageTracking/Images`](https://github.com/Unity-Technologies/arfoundation-samples/tree/master/Assets/Scenes/ImageTracking/Images). They can be displayed on a computere monitor; they do not need to be printed out.
+Run the sample on an ARCore or ARKit-capable device and point your device at one of the images in [`Assets/Scenes/ImageTracking/Images`](https://github.com/Unity-Technologies/arfoundation-samples/tree/master/Assets/Scenes/ImageTracking/Images). They can be displayed on a computer monitor; they do not need to be printed out.
 
 ## ObjectTracking
 
@@ -183,7 +187,7 @@ This sample uses the front-facing (i.e., selfie) camera.
 
 These samples demonstrate eye and fixation point tracking. Eye tracking produces a pose (position and rotation) for each eye in the detected face, and the "fixation point" is the point the face is looking at (i.e., fixated upon). `EyeLasers` uses the eye pose to draw laser beams emitted from the detected face.
 
-This sample uses the front-facing (i.e., selfie) camera.
+This sample uses the front-facing (i.e., selfie) camera and requires an iOS device with a TrueDepth camera.
 
 ### RearCameraWithFrontCameraFaceMesh
 
