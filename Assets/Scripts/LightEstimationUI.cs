@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Text;
 
 using SphericalHarmonicsL2 = UnityEngine.Rendering.SphericalHarmonicsL2;
 
@@ -74,6 +75,7 @@ public class LightEstimationUI : MonoBehaviour
         get => m_SphericalHarmonicsText;
         set => m_SphericalHarmonicsText = value;
     }
+    StringBuilder m_SphericalHarmonicsStringBuilder = new StringBuilder("");
 
     /// <summary>
     /// The UI Text element used to display the estimated color correction value for the scene.
@@ -106,25 +108,22 @@ public class LightEstimationUI : MonoBehaviour
         {
             if (maybeAmbientSphericalHarmonics.HasValue)
             {
-                string sphericalHarmonicsCoefficientsStr = "";
-                if (m_LightEstimation.sphericalHarmonics.HasValue)
+                m_SphericalHarmonicsStringBuilder.Clear();
+                for (int i = 0; i < 3; ++i)
                 {
-                    for (int i = 0; i < 3; ++i)
+                    if (i == 0)
+                        m_SphericalHarmonicsStringBuilder.Append("R:[");
+                    else if (i == 1)
+                        m_SphericalHarmonicsStringBuilder.Append("G:[");
+                    else
+                        m_SphericalHarmonicsStringBuilder.Append("B:[");
+
+                    for (int j = 0; j < 9; ++j)
                     {
-                        if (i == 0)
-                            sphericalHarmonicsCoefficientsStr += $"R: [";
-                        else if (i == 1)
-                            sphericalHarmonicsCoefficientsStr += $"G: [";
-                        else
-                            sphericalHarmonicsCoefficientsStr += $"B: [";
-                        
-                        for (int j = 0; j < 9; ++j)
-                        {
-                            sphericalHarmonicsCoefficientsStr += $"{m_LightEstimation.sphericalHarmonics.Value[i,j].ToString("0.000")}{(j != 8 ? ", " : "]\n")}";
-                        }
+                        m_SphericalHarmonicsStringBuilder.Append(j != 8 ? $"{maybeAmbientSphericalHarmonics.Value[i, j]}, " : $"{maybeAmbientSphericalHarmonics.Value[i, j]}]\n");
                     }
                 }
-                text.text = sphericalHarmonicsCoefficientsStr;
+                text.text = m_SphericalHarmonicsStringBuilder.ToString();
             }
             else
             {
