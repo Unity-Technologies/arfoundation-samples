@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Text;
 
-using SphericalHarmonicsL2 = UnityEngine.Rendering.SphericalHarmonicsL2;
+using UnityEngine.Rendering;
 
 /// <summary>
 /// A simple UI controller to display light estimation information.
