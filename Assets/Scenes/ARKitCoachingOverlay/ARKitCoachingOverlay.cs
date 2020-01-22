@@ -40,7 +40,7 @@ public class ARKitCoachingOverlay : MonoBehaviour
         {
             if (GetComponent<ARSession>().subsystem is ARKitSessionSubsystem sessionSubsystem)
             {
-                return sessionSubsystem.coachingGoal;
+                return sessionSubsystem.requestedCoachingGoal;
             }
             else
             {
@@ -53,7 +53,7 @@ public class ARKitCoachingOverlay : MonoBehaviour
             m_Goal = (CoachingGoal)value;
             if (supported && GetComponent<ARSession>().subsystem is ARKitSessionSubsystem sessionSubsystem)
             {
-                sessionSubsystem.coachingGoal = value;
+                sessionSubsystem.requestedCoachingGoal = value;
             }
         }
     }
@@ -112,7 +112,7 @@ public class ARKitCoachingOverlay : MonoBehaviour
 #if UNITY_IOS
         if (supported && GetComponent<ARSession>().subsystem is ARKitSessionSubsystem sessionSubsystem)
         {
-            sessionSubsystem.coachingGoal = (ARCoachingGoal)m_Goal;
+            sessionSubsystem.requestedCoachingGoal = (ARCoachingGoal)m_Goal;
             sessionSubsystem.coachingActivatesAutomatically = m_ActivatesAutomatically;
         }
         else
