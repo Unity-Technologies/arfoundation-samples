@@ -28,7 +28,7 @@ public class ToggleCameraFacingDirection : MonoBehaviour
 
         if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
         {
-            if (m_CameraManager.currentFacingDirection == CameraFacingDirection.User)
+            if (m_CameraManager.requestedFacingDirection == CameraFacingDirection.User)
             {
                 m_CameraManager.requestedFacingDirection = CameraFacingDirection.World;
                 m_Session.requestedTrackingMode = TrackingMode.PositionAndRotation;
