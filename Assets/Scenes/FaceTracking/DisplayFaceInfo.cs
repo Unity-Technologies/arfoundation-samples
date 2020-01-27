@@ -60,12 +60,12 @@ public class DisplayFaceInfo : MonoBehaviour
                 {
                     foreach (var config in configs)
                     {
-                        if (config.capabilities.All(Feature.FaceDetection))
+                        if (config.capabilities.All(Feature.FaceTracking))
                         {
                             m_FaceTrackingSupported = true;
                         }
 
-                        if (config.capabilities.All(Feature.WorldFacingCamera | Feature.FaceDetection))
+                        if (config.capabilities.All(Feature.WorldFacingCamera | Feature.FaceTracking))
                         {
                             m_FaceTrackingWithWorldCameraSupported = true;
                         }
