@@ -31,12 +31,10 @@ public class ToggleCameraFacingDirection : MonoBehaviour
             if (m_CameraManager.requestedFacingDirection == CameraFacingDirection.User)
             {
                 m_CameraManager.requestedFacingDirection = CameraFacingDirection.World;
-                m_Session.requestedTrackingMode = TrackingMode.PositionAndRotation;
             }
             else
             {
                 m_CameraManager.requestedFacingDirection = CameraFacingDirection.User;
-                m_Session.requestedTrackingMode = TrackingMode.RotationOnly;
             }
         }
     }

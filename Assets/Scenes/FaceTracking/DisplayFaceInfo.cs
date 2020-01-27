@@ -28,6 +28,25 @@ public class DisplayFaceInfo : MonoBehaviour
         set => m_InstructionsText = value;
     }
 
+    [SerializeField]
+    GameObject m_NotSupportedElement;
+
+    public GameObject notSupportedElement
+    {
+        get => m_NotSupportedElement;
+        set => m_NotSupportedElement = value;
+    }
+
+    [SerializeField]
+    [Tooltip("An object whose rotation will be set according to the tracked face.")]
+    Transform m_FaceControlledObject;
+
+    public Transform faceControlledObject
+    {
+        get => m_FaceControlledObject;
+        set => m_FaceControlledObject = value;
+    }
+
     ARSession m_Session;
 
     ARFaceManager m_FaceManager;
@@ -49,6 +68,8 @@ public class DisplayFaceInfo : MonoBehaviour
 
     void OnEnable()
     {
+        Application.onBeforeRender += OnBeforeRender;
+
         // Detect face tracking with world-facing camera support
         var subsystem = m_Session?.subsystem;
         if (subsystem != null)
@@ -75,6 +96,24 @@ public class DisplayFaceInfo : MonoBehaviour
         }
     }
 
+    void OnDisable()
+    {
+        Application.onBeforeRender -= OnBeforeRender;
+    }
+
+    void OnBeforeRender()
+    {
+        foreach (var face in m_FaceManager.trackables)
+        {
+            if (face.trackingState == TrackingState.Tracking)
+            {
+                m_FaceControlledObject.transform.rotation = face.transform.rotation;
+                var camera = m_CameraManager.GetComponent<Camera>();
+                m_FaceControlledObject.transform.position = camera.transform.position + camera.transform.forward * 0.7f;
+            }
+        }
+    }
+
     void Update()
     {
         m_Info.Clear();
@@ -92,20 +131,28 @@ public class DisplayFaceInfo : MonoBehaviour
             m_Info.Append($"Current camera facing direction: {m_CameraManager.currentFacingDirection}\n");
         }
 
+        m_Info.Append($"Requested tracking mode: {m_Session.requestedTrackingMode}\n");
+        m_Info.Append($"Current tracking mode: {m_Session.currentTrackingMode}\n");
+
         if (!m_FaceTrackingSupported)
         {
             if (m_InstructionsText)
             {
-                m_InstructionsText.text = "Face tracking is not supported.";
+                m_InstructionsText.text = "Face tracking is not supported.\n";
             }
             else
             {
-                m_Info.Append("Face tracking is not supported.");
+                m_Info.Append("Face tracking is not supported.\n");
             }
         }
         else if (m_CameraManager.requestedFacingDirection == CameraFacingDirection.World && !m_FaceTrackingWithWorldCameraSupported)
         {
-            m_Info.Append("Face tracking in world facing camera mode is not supported.");
+            m_Info.Append("Face tracking in world facing camera mode is not supported.\n");
+        }
+
+        if (m_NotSupportedElement)
+        {
+            m_NotSupportedElement.SetActive(m_CameraManager.requestedFacingDirection == CameraFacingDirection.World && !m_FaceTrackingWithWorldCameraSupported);
         }
 
         if (m_FaceInfoText)
