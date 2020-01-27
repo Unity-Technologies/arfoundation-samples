@@ -109,7 +109,7 @@ public class DisplayFaceInfo : MonoBehaviour
             {
                 m_FaceControlledObject.transform.rotation = face.transform.rotation;
                 var camera = m_CameraManager.GetComponent<Camera>();
-                m_FaceControlledObject.transform.position = camera.transform.position + camera.transform.forward * 0.7f;
+                m_FaceControlledObject.transform.position = camera.transform.position + camera.transform.forward * 0.5f;
             }
         }
     }
