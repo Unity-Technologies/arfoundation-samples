@@ -150,6 +150,11 @@ public class DisplayFaceInfo : MonoBehaviour
             m_Info.Append("Face tracking in world facing camera mode is not supported.\n");
         }
 
+        if (m_FaceControlledObject)
+        {
+            m_FaceControlledObject.gameObject.SetActive(m_CameraManager.currentFacingDirection == CameraFacingDirection.World);
+        }
+
         if (m_NotSupportedElement)
         {
             m_NotSupportedElement.SetActive(m_CameraManager.requestedFacingDirection == CameraFacingDirection.World && !m_FaceTrackingWithWorldCameraSupported);
