@@ -103,6 +103,9 @@ public class DisplayFaceInfo : MonoBehaviour
 
     void OnBeforeRender()
     {
+        if (m_FaceControlledObject == null)
+            return;
+
         foreach (var face in m_FaceManager.trackables)
         {
             if (face.trackingState == TrackingState.Tracking)
