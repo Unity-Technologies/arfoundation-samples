@@ -189,9 +189,13 @@ These samples demonstrate eye and fixation point tracking. Eye tracking produces
 
 This sample uses the front-facing (i.e., selfie) camera and requires an iOS device with a TrueDepth camera.
 
-### RearCameraWithFrontCameraFaceMesh
+### WorldCameraWithUserFacingFaceTracking
 
-iOS 13 adds support for face tracking while the rear camera is active. This sample does not show much other than number of currently tracked faces. To enable this mode in ARFoundation, you must enable both an `ARFaceManager` and at least one other manager which requires the rear camera. This sample enables both the `ARFaceManager` and `ARPlaneManager` to achieve this.
+iOS 13 adds support for face tracking while the world-facing (i.e., rear) camera is active. This means the user-facing (i.e., front) camera is used for face tracking, but the pass through video uses the world-facing camera. To enable this mode in ARFoundation, you must enable an `ARFaceManager`, set the `ARSession` tracking mode to "Position and Rotation" or "Don't Care", and set the `ARCameraManager`'s facing direction to "World". Tap the screen to toggle between the user-facing and world-facing cameras.
+
+The sample code in `DisplayFaceInfo.OnEnable` shows how to detect support for these face tracking features.
+
+When using the world-facing camera, a cube is displayed in front of the camera whose orientation is driven by the face in front of the user-facing camera.
 
 This feature requires a device with a TrueDepth camera and an A12 bionic chip running iOS 13.
 
