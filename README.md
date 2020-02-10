@@ -59,9 +59,9 @@ Demonstrates light estimation information from the camera frame. You should see 
 
 The relevant scripts are on the "Directional Light" GameObject.
 
-## ReferencePoints
+## Anchors
 
-This sample shows how to create reference points as the result of a raycast hit. The "Clear Reference Points" button removes all created reference points. See the [`ReferencePointCreator.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/ReferencePointCreator.cs) script.
+This sample shows how to create anchors as the result of a raycast hit. The "Clear Anchors" button removes all created anchors. See the [`AnchorCreator.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/AnchorCreator.cs) script.
 
 ## Scale
 
