@@ -90,6 +90,8 @@ public class LightEstimation : MonoBehaviour
         if (m_CameraManager != null)
             m_CameraManager.frameReceived += FrameChanged;
 
+        // Disable the arrow to start; enable it later if we get directional light info
+        arrow?.gameObject.SetActive(false);
         Application.onBeforeRender += OnBeforeRender;
     }
 
@@ -136,8 +138,13 @@ public class LightEstimation : MonoBehaviour
             m_Light.transform.rotation = Quaternion.LookRotation(mainLightDirection.Value);
             if (arrow)
             {
+                arrow.gameObject.SetActive(true);
                 arrow.rotation = Quaternion.LookRotation(mainLightDirection.Value);
             }
+        }
+        else
+        {
+            arrow?.gameObject.SetActive(false);
         }
 
         if (args.lightEstimation.mainLightColor.HasValue)
