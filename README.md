@@ -57,6 +57,8 @@ Demonstrates checking for AR support and logs the results to the screen. The rel
 
 Demonstrates light estimation information from the camera frame. You should see values for "Brightness", "Color Temp", and "Color Correct" on screen. Most devices only support a subset of these 3, so some will be listed as "unavailable."
 
+This sample also attempts to read HDR lighting information. On iOS, this is only available when face tracking is enabled and requires a device with a TrueDepth camera (such as an iPhone X, XS or 11). When available, a virtual arrow appears in front of the camera which indicates the estimated main light direction. The virtual light direction is also updated, so that virtual content appears to be lit from the direction of the real light source.
+
 The relevant scripts are on the "Directional Light" GameObject.
 
 ## Anchors
