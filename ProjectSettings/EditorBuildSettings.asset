@@ -9,8 +9,14 @@ EditorBuildSettings:
     path: Assets/Scenes/ARCollaborationData/ARCollaborationDataExample.unity
     guid: 900e7bfe6122645fba71b90941afb9c5
   - enabled: 0
+    path: Assets/Scenes/ARKitCoachingOverlay/ARKitCoachingOverlay.unity
+    guid: 98afc3855ff0b426f81ac1d7c646b6c1
+  - enabled: 0
     path: Assets/Scenes/ARWorldMap.unity
     guid: 8d8902fd0b55449dcbf3572b49d6b1b1
+  - enabled: 0
+    path: Assets/Scenes/Anchors.unity
+    guid: 5cba9114a192a46a7aef31da62316e39
   - enabled: 0
     path: Assets/Scenes/CameraImage.unity
     guid: e769916924fd3814ab1d9474de816b22
@@ -27,13 +33,22 @@ EditorBuildSettings:
     path: Assets/Scenes/FaceTracking/ARKitFaceBlendShapes.unity
     guid: e9280441e79e84bdbbf6b724880ae2d9
   - enabled: 0
+    path: Assets/Scenes/FaceTracking/EyeLasers.unity
+    guid: c8ca2b95503fe4a7194f37bfbe5e4688
+  - enabled: 0
+    path: Assets/Scenes/FaceTracking/EyePoses.unity
+    guid: 19344822e252a420e94db72338383cbc
+  - enabled: 0
     path: Assets/Scenes/FaceTracking/FaceMesh.unity
     guid: 047514b96a5d44d6bb0acbfa06ace943
   - enabled: 0
     path: Assets/Scenes/FaceTracking/FacePose.unity
     guid: d8b65509a10894e1dbb93c799ececfd9
   - enabled: 0
-    path: Assets/Scenes/FaceTracking/RearCameraWithFrontCameraFaceMesh.unity
+    path: Assets/Scenes/FaceTracking/FixationPoint.unity
+    guid: b0bf27dc892684a049959459ba5e6f8f
+  - enabled: 0
+    path: Assets/Scenes/FaceTracking/WorldCameraWithUserFacingFaceTracking.unity
     guid: ecea31d2ea5464e52bedb91fa1fcb6bb
   - enabled: 0
     path: Assets/Scenes/HumanSegmentation/HumanBodyTracking2D.unity
@@ -48,7 +63,7 @@ EditorBuildSettings:
     path: Assets/Scenes/ImageTracking/ImageTracking.unity
     guid: e0b018a3c3b5cfd4c8e316706ec0a18c
   - enabled: 0
-    path: Assets/Scenes/LightEstimation.unity
+    path: Assets/Scenes/LightEstimation/LightEstimation.unity
     guid: 2f0cbc82480584c258f99f0d9e4ba302
   - enabled: 0
     path: Assets/Scenes/Object Tracking/ObjectTracking.unity
@@ -57,20 +72,26 @@ EditorBuildSettings:
     path: Assets/Scenes/Plane Detection/FeatheredPlanes.unity
     guid: 8252358a1e2ba7549a94df43aacec984
   - enabled: 0
+    path: Assets/Scenes/Plane Detection/PlaneClassification.unity
+    guid: ea35aff45ed534fb9b030b82a5d980f4
+  - enabled: 0
     path: Assets/Scenes/Plane Detection/TogglePlaneDetection.unity
     guid: eb4bbb3a5e81acc41a903b1c5f1c827b
+  - enabled: 0
+    path: Assets/Scenes/PlaneOcclusion/PlaneOcclusion.unity
+    guid: 82d84156010e4481498cad3bf12744bd
+  - enabled: 0
+    path: Assets/Scenes/PointCloud/AllPointCloudPoints.unity
+    guid: a84b70115cd154cf59b84651a828ac60
   - enabled: 0
     path: Assets/Scenes/Scale.unity
     guid: 13ac91f677dc22f4ca320ef8ae727b68
   - enabled: 0
-    path: Assets/Scenes/SimpleAR.unity
+    path: Assets/Scenes/SimpleAR/SimpleAR.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 0
     path: Assets/Scenes/UX/SampleUXScene.unity
     guid: 3b42d67a72bbc4004bf713db0e312326
-  - enabled: 0
-    path: Assets/Scenes/ReferencePoints.unity
-    guid: 5cba9114a192a46a7aef31da62316e39
   m_configObjects:
     com.unity.xr.arkit.PlayerSettings: {fileID: 11400000, guid: 2d5fb8e61571b4e3897f221189089fd6,
       type: 2}

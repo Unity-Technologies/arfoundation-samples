@@ -31,16 +31,16 @@ using UnityEngine.XR.ARSubsystems;
 public class TestDepthImage : MonoBehaviour
 {
     [SerializeField]
-    [Tooltip("The ARHumanBodyManager which will produce frame events.")]
-    ARHumanBodyManager m_HumanBodyManager;
+    [Tooltip("The AROcclusionManager which will produce frame events.")]
+    AROcclusionManager m_OcclusionManager;
 
      /// <summary>
-    /// Get or set the <c>ARHumanBodyManager</c>.
+    /// Get or set the <c>AROcclusionManager</c>.
     /// </summary>
-    public ARHumanBodyManager humanBodyManager
+    public AROcclusionManager occlusionManager
     {
-        get { return m_HumanBodyManager; }
-        set { m_HumanBodyManager = value; }
+        get { return m_OcclusionManager; }
+        set { m_OcclusionManager = value; }
     }
 
     [SerializeField]
@@ -85,7 +85,8 @@ public class TestDepthImage : MonoBehaviour
 
     void Update()
     {
-        var subsystem = m_HumanBodyManager.subsystem;
+        Debug.Assert(m_OcclusionManager != null, "no occlusion manager");
+        var subsystem = m_OcclusionManager.subsystem;
         if (subsystem == null)
         {
             if (m_ImageInfo != null)
@@ -96,8 +97,8 @@ public class TestDepthImage : MonoBehaviour
         }
 
         StringBuilder sb = new StringBuilder();
-        Texture2D humanStencil = m_HumanBodyManager.humanStencilTexture;
-        Texture2D humanDepth = m_HumanBodyManager.humanDepthTexture;
+        Texture2D humanStencil = m_OcclusionManager.humanStencilTexture;
+        Texture2D humanDepth = m_OcclusionManager.humanDepthTexture;
         LogTextureInfo(sb, "stencil", humanStencil);
         LogTextureInfo(sb, "depth", humanDepth);
 
@@ -110,11 +111,11 @@ public class TestDepthImage : MonoBehaviour
             Debug.Log(sb.ToString());
         }
 
-        // To use the stencil, be sure the HumanSegmentationStencilMode property on the ARHumanBodyManager is set to a
+        // To use the stencil, be sure the HumanSegmentationStencilMode property on the AROcclusionManager is set to a
         // non-disabled value.
         m_RawImage.texture = humanStencil;
 
-        // To use the depth, be sure the HumanSegmentationDepthMode property on the ARHumanBodyManager is set to a
+        // To use the depth, be sure the HumanSegmentationDepthMode property on the AROcclusionManager is set to a
         /// non-disabled value.
         // m_RawImage.texture = eventArgs.humanDepth;
     }

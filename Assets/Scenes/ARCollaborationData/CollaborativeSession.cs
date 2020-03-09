@@ -42,7 +42,7 @@ public class CollaborativeSession : MonoBehaviour
             return;
         }
 
-        subsystem.collaborationEnabled = true;
+        subsystem.collaborationRequested = true;
         m_MCSession.Enabled = true;
 #else
         DisableNotSupported("Collaborative sessions are an ARKit 3 feature; This platform does not support them.");
@@ -72,7 +72,7 @@ public class CollaborativeSession : MonoBehaviour
 
         var subsystem = GetSubsystem();
         if (subsystem != null)
-            subsystem.collaborationEnabled = false;
+            subsystem.collaborationRequested = false;
     }
 
     void Update()
