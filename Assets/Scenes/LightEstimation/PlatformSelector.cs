@@ -21,20 +21,15 @@ public class PlatformSelector : MonoBehaviour
         set => m_WorldSpaceObject = value;
     }
 
-#if UNITY_IOS
-    const bool k_PlatformIsIOS = true;
-#else
-    const bool k_PlatformIsIOS = false;
-#endif
-
     void OnEnable()
     {
-        GetComponent<ARFaceManager>().enabled = k_PlatformIsIOS;
-        if (!k_PlatformIsIOS)
-        {
-            worldSpaceObject?.SetActive(true);
-            Application.onBeforeRender += OnBeforeRender;
-        }
+#if UNITY_IOS
+        GetComponent<ARFaceManager>().enabled = true;
+#else
+        GetComponent<ARFaceManager>().enabled = false;
+        worldSpaceObject?.SetActive(true);
+        Application.onBeforeRender += OnBeforeRender;
+#endif
     }
 
     void OnDisable()
