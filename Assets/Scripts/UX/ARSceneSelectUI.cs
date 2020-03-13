@@ -11,15 +11,29 @@ public class ARSceneSelectUI : MonoBehaviour
     public GameObject humanSegmentationMenu;
     public GameObject lightEstimationMenu;
     public GameObject planeDetectionMenu;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
 
-    // Update is called once per frame
-    void Update()
+     void Start()
     {
+        if(ActiveMenu.currentMenu == MenuType.FaceTracking)
+        {
+            faceTrackingMenu.SetActive(true);
+            allMenu.SetActive(false);
+        }
+        else if(ActiveMenu.currentMenu == MenuType.PlaneDetection)
+        {
+            planeDetectionMenu.SetActive(true);
+            allMenu.SetActive(false);
+        }
+        else if(ActiveMenu.currentMenu == MenuType.HumanSegmentation)
+        {
+            humanSegmentationMenu.SetActive(true);
+            allMenu.SetActive(false);
+        }
+        else if(ActiveMenu.currentMenu == MenuType.LightEstimation)
+        {
+            lightEstimationMenu.SetActive(true);
+            allMenu.SetActive(false);
+        }
     }
 
     public void SimpleARButtonPressed()
@@ -92,12 +106,9 @@ public class ARSceneSelectUI : MonoBehaviour
         SceneManager.LoadScene("SampleUXScene", LoadSceneMode.Single);
     }
 
-
-    //TODO: Face Tracking, Body Segementation, Light Estimation, Plane Detection, Stuff...
-
-    //Face Tracking
     public void FaceTrackingMenuButtonPressed()
     {
+        ActiveMenu.currentMenu = MenuType.FaceTracking;
         faceTrackingMenu.SetActive(true);
         allMenu.SetActive(false);
     }
@@ -130,7 +141,7 @@ public class ARSceneSelectUI : MonoBehaviour
 
     public void FixationPointButtonPressed()
     {
-        SceneManager.LoadScene("FixationPoin", LoadSceneMode.Single);
+        SceneManager.LoadScene("FixationPoint", LoadSceneMode.Single);
     }
 
     public void RearCameraWithFrontCameraFaceMeshButtonPressed()
@@ -138,10 +149,9 @@ public class ARSceneSelectUI : MonoBehaviour
         SceneManager.LoadScene("RearCameraWithFrontCameraFaceMesh", LoadSceneMode.Single);
     }
 
-
-    //Body Segmentation
     public void HumanSegmentationMenuButtonPressed()
     {
+        ActiveMenu.currentMenu = MenuType.HumanSegmentation;
         humanSegmentationMenu.SetActive(true);
         allMenu.SetActive(false);
     }
@@ -149,7 +159,7 @@ public class ARSceneSelectUI : MonoBehaviour
     {
         SceneManager.LoadScene("HumanBodyTracking2D", LoadSceneMode.Single);
     }
-    public void HumanBodyTracking3DButtonPressed()
+    public void HumanSegmentation3DButtonPressed()
     {
         SceneManager.LoadScene("HumanBodyTracking3D", LoadSceneMode.Single);
     }
@@ -158,9 +168,9 @@ public class ARSceneSelectUI : MonoBehaviour
         SceneManager.LoadScene("HumanSegmentationImages", LoadSceneMode.Single);
     }
 
-    //Light Estimation
     public void LightEstimationMenuButtonPressed()
     {
+        ActiveMenu.currentMenu = MenuType.LightEstimation;
         lightEstimationMenu.SetActive(true);
         allMenu.SetActive(false);
     }
@@ -175,9 +185,9 @@ public class ARSceneSelectUI : MonoBehaviour
         SceneManager.LoadScene("Light Estimation", LoadSceneMode.Single);
     }
 
-    //Plane Detection
     public void PlaneDetectionMenuButtonPressed()
     {
+        ActiveMenu.currentMenu = MenuType.PlaneDetection;
         planeDetectionMenu.SetActive(true);
         allMenu.SetActive(false);
     }
@@ -199,6 +209,7 @@ public class ARSceneSelectUI : MonoBehaviour
 
      public void BackButtonPressed()
     {
+        ActiveMenu.currentMenu = MenuType.Main;
         faceTrackingMenu.SetActive(false);
         planeDetectionMenu.SetActive(false);
         humanSegmentationMenu.SetActive(false);

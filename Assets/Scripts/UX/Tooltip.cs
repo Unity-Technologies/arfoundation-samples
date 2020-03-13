@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -26,7 +27,10 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void OnPointerEnter(PointerEventData eventData)
     {
         _enteredButton = true;
-        toolTip.SetActive(true);
+        if(!gameObject.GetComponent<Button>().interactable)
+        {
+             toolTip.SetActive(true);
+        }
     }
 
 
