@@ -20,6 +20,7 @@ public class CheckAvailableFeatures : MonoBehaviour
     public Button planeOcclusion;
     public Button pointCloud;
     public Button faceTracking;
+    public Button faceBlendShapes;
     public Button humanSegmentation;
     public Button lightEstimation;
     public Button planeDetection;
@@ -72,6 +73,10 @@ public class CheckAvailableFeatures : MonoBehaviour
         if(faceDescriptors.Count > 0)
         {
             faceTracking.interactable = true;
+#if UNITY_IOS
+            faceBlendShapes.interactable = true;
+#endif
+
         }
         if(occlusionDescriptors.Count > 0)
         {
@@ -88,9 +93,10 @@ public class CheckAvailableFeatures : MonoBehaviour
         {
             foreach(XRCameraSubsystemDescriptor cameraDescriptor in cameraDescriptors)
             {
-                if(cameraDescriptor.supportsAverageBrightness && cameraDescriptor.supportsAverageColorTemperature && 
-                    cameraDescriptor.supportsAverageIntensityInLumens && cameraDescriptor.supportsCameraConfigurations && 
-                    cameraDescriptor.supportsCameraImage && cameraDescriptor.supportsDisplayMatrix)
+                //TODO: Change face blend to blendshapes (Only for ios)
+                if((cameraDescriptor.supportsAverageBrightness || cameraDescriptor.supportsAverageIntensityInLumens) && 
+                    cameraDescriptor.supportsAverageColorTemperature && cameraDescriptor.supportsCameraConfigurations && 
+                    cameraDescriptor.supportsCameraImage)
                 {
                     lightEstimation.interactable = true;
                 }
