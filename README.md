@@ -1,38 +1,47 @@
 # AR Foundation Samples
 
-Example projects that use [*AR Foundation 3.1*](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@3.1/manual/index.html) and demonstrate its functionality with sample assets and components.
+Example projects that use [*AR Foundation 4.0*](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@3.0/manual/index.html) and demonstrate its functionality with sample assets and components.
 
 This set of samples relies on five Unity packages:
 
-* ARSubsystems ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@3.1/manual/index.html))
-* ARCore XR Plugin ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arcore@3.1/manual/index.html))
-* ARKit XR Plugin ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arkit@3.1/manual/index.html))
-* ARKit Face Tracking ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arkit-face-tracking@3.1/manual/index.html))
-* ARFoundation ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@3.1/manual/index.html))
+* ARSubsystems ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@4.0/manual/index.html))
+* ARCore XR Plugin ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arcore@4.0/manual/index.html))
+* ARKit XR Plugin ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arkit@4.0/manual/index.html))
+* ARKit Face Tracking ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arkit-face-tracking@4.0/manual/index.html))
+* ARFoundation ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@4.0/manual/index.html))
 
-ARSubsystems defines an interface, and the platform-specific implementations are in the ARCore and ARKit packages. ARFoundation turns the AR data provided by ARSubsystems into Unity `GameObject`s and `MonoBehavour`s.
+## Why version should I use?
 
-The `master` branch is compatible with Unity 2019.2 and later. For 2018.4, see the [1.5-preview branch](https://github.com/Unity-Technologies/arfoundation-samples/tree/1.5-preview).
+A Unity package is either "Preview" or "Verified". The latest version of ARFoundation is usually marked as preview and may include experimental or unstable features. A "verified" package is developed targeting a specific version of Unity (though it may work with earlier version as well). All packages verified for the same version of Unity are known to work well together.
+
+In ARFoundation, this means:
+
+| Unity Version | ARFoundation Version |
+| ------------- | -------------------- |
+|    2018.4     | [1.5 (preview)](https://github.com/Unity-Technologies/arfoundation-samples/tree/1.5-preview)  |
+|    2019.3     | [2.1 (verified)](https://github.com/Unity-Technologies/arfoundation-samples/tree/2.1)         |
+|    2020.1     | 3.0 (verified)                                                                                |
+|    2020.2     | 4.0 (preview)                                                                                 |
+
+## ARSubsystems
+
+ARFoundation is built on "[subsystems](https://docs.unity3d.com/2019.3/Documentation/ScriptReference/Subsystem.html)" and depends on a separate package called [ARSubsystems](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@4.0/manual/index.html). ARSubsystems defines an interface, and the platform-specific implementations are in the [ARCore](https://docs.unity3d.com/Packages/com.unity.xr.arcore@4.0/manual/index.html) and [ARKit](https://docs.unity3d.com/Packages/com.unity.xr.arkit@4.0/manual/index.html) packages. ARFoundation turns the AR data provided by ARSubsystems into Unity `GameObject`s and `MonoBehavour`s.
+
+The `master` branch is compatible with Unity 2019.3 and later. For 2018.4, see the [1.5-preview branch](https://github.com/Unity-Technologies/arfoundation-samples/tree/1.5-preview).
 
 ## Why is ARKit Face Tracking a separate package?
 
 For privacy reasons, use of ARKit's face tracking feature requires additional validation in order to publish your app on the App Store. If your application binary contains certain face tracking related symbols, your app may fail validation. For this reason, we provide this feature as a separate package which must be explicitly included.
 
-## ARKit 3 Support
-
-The ARKit XR Plugin and ARKit Face Tacking packages support both ARKit 2 and ARKit 3 simultaneously. We supply separate libraries and select the appropriate one based on the version of Xcode selected in your Build Settings. This should eliminate the confusion over which package version is compatible with which Xcode version.
-
-The ARKit 3 features require Xcode 11 and iOS/iPadOS 13.
-
 ## Instructions for installing AR Foundation
 
-1. Download the latest version of Unity 2019.2 or later.
+1. Download the latest version of Unity 2019.3 or later.
 
 2. Open Unity, and load the project at the root of the *arfoundation-samples* repository.
 
 3. Open your choice of sample scene.
 
-4. See the [AR Foundation Documentation](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@latest?preview=1) for usage instructions and more information.
+4. See the [AR Foundation Documentation](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@4.0/manual/index.html) for usage instructions and more information.
 
 # Samples
 
@@ -141,7 +150,7 @@ This sample requires iOS 13.
 
 ## ImageTracking
 
-This sample demonstrates image tracking. Image tracking is supported on ARCore and ARKit. To enable image tracking, you must first create an `XRReferenceImageLibrary`. This is the set of images to look for in the environment. [Click here](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@3.1/manual/image-tracking.html) for instructions on creating one.
+This sample demonstrates image tracking. Image tracking is supported on ARCore and ARKit. To enable image tracking, you must first create an `XRReferenceImageLibrary`. This is the set of images to look for in the environment. [Click here](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@4.0/manual/image-tracking.html) for instructions on creating one.
 
 At runtime, ARFoundation will generate an `ARTrackedImage` for each detected reference image. This sample uses the [`TrackedImageInfoManager.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ImageTracking/TrackedImageInfoManager.cs) script to overlay the original image on top of the detected image, along with some meta data.
 
@@ -149,7 +158,7 @@ Run the sample on an ARCore or ARKit-capable device and point your device at one
 
 ## ObjectTracking
 
-Similar to the image tracking sample, this sample detects a 3D object from a set of reference objects in an `XRReferenceObjectLibrary`. [Click here](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@3.1/manual/object-tracking.html) for instructions on creating one.
+Similar to the image tracking sample, this sample detects a 3D object from a set of reference objects in an `XRReferenceObjectLibrary`. [Click here](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@4.0/manual/object-tracking.html) for instructions on creating one.
 
 To use this sample, you must have a physical object the device can recognize. The sample's reference object library is built using two reference objects. The sample includes [printable templates](https://github.com/Unity-Technologies/arfoundation-samples/tree/master/Assets/Scenes/Object%20Tracking/Printable%20Templates) which can be printed on 8.5x11 inch paper and folded into a cube and cylinder.
 
@@ -191,9 +200,13 @@ These samples demonstrate eye and fixation point tracking. Eye tracking produces
 
 This sample uses the front-facing (i.e., selfie) camera and requires an iOS device with a TrueDepth camera.
 
-### RearCameraWithFrontCameraFaceMesh
+### WorldCameraWithUserFacingFaceTracking
 
-iOS 13 adds support for face tracking while the rear camera is active. This sample does not show much other than number of currently tracked faces. To enable this mode in ARFoundation, you must enable both an `ARFaceManager` and at least one other manager which requires the rear camera. This sample enables both the `ARFaceManager` and `ARPlaneManager` to achieve this.
+iOS 13 adds support for face tracking while the world-facing (i.e., rear) camera is active. This means the user-facing (i.e., front) camera is used for face tracking, but the pass through video uses the world-facing camera. To enable this mode in ARFoundation, you must enable an `ARFaceManager`, set the `ARSession` tracking mode to "Position and Rotation" or "Don't Care", and set the `ARCameraManager`'s facing direction to "World". Tap the screen to toggle between the user-facing and world-facing cameras.
+
+The sample code in `DisplayFaceInfo.OnEnable` shows how to detect support for these face tracking features.
+
+When using the world-facing camera, a cube is displayed in front of the camera whose orientation is driven by the face in front of the user-facing camera.
 
 This feature requires a device with a TrueDepth camera and an A12 bionic chip running iOS 13.
 
