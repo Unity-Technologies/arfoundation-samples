@@ -171,9 +171,4 @@ public class CheckAvailableFeatures : MonoBehaviour
 #endif
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -12,7 +12,7 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     // Start is called before the first frame update
     void Start()
     {
-        _toolTipOffset = new Vector3(-50,0,0);
+        _toolTipOffset = new Vector3(-50,100,0);
     }
 
     // Update is called once per frame
