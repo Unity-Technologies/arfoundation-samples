@@ -93,7 +93,7 @@ public class LightEstimation : MonoBehaviour
         // Disable the arrow to start; enable it later if we get directional light info
         if (arrow)
         {
-            arrow?.gameObject.SetActive(false);
+            arrow.gameObject.SetActive(false);
         }
         Application.onBeforeRender += OnBeforeRender;
     }
