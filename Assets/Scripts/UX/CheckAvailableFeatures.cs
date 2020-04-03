@@ -114,7 +114,7 @@ public class CheckAvailableFeatures : MonoBehaviour
 
         if(planeDescriptors.Count > 0){
             planeDetection.interactable = true;
-            foreach(XRPlaneSubsystemDescriptor planeDescriptor in planeDescriptors)
+            foreach(var planeDescriptor in planeDescriptors)
             {
                 if(planeDescriptor.supportsClassification)
                 {
