@@ -12,7 +12,7 @@ public class ARSceneSelectUI : MonoBehaviour
     public GameObject lightEstimationMenu;
     public GameObject planeDetectionMenu;
 
-     void Start()
+    void Start()
     {
         if(ActiveMenu.currentMenu == MenuType.FaceTracking)
         {
