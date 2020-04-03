@@ -133,7 +133,7 @@ public class CheckAvailableFeatures : MonoBehaviour
         }
         if(cameraDescriptors.Count > 0)
         {
-            foreach(XRCameraSubsystemDescriptor cameraDescriptor in cameraDescriptors)
+            foreach(var cameraDescriptor in cameraDescriptors)
             {
                 if(cameraDescriptor.supportsCameraImage)
                 {
