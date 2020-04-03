@@ -14,6 +14,6 @@ public enum MenuType
 
 public static class ActiveMenu
 {
-    public static MenuType currentMenu;
+    public static MenuType currentMenu { get; set; }
 
 }
