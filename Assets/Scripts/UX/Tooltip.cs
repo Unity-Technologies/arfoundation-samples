@@ -8,7 +8,7 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public GameObject toolTip;
     bool m_EnteredButton;
-    Vector3 _toolTipOffset;
+    Vector3 m_ToolTipOffset;
     // Start is called before the first frame update
     void Start()
     {
