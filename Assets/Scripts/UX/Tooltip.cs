@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public GameObject toolTip;
-    bool _enteredButton;
+    bool m_EnteredButton;
     Vector3 _toolTipOffset;
     // Start is called before the first frame update
     void Start()
