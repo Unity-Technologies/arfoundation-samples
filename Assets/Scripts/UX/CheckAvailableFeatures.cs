@@ -91,7 +91,7 @@ public class CheckAvailableFeatures : MonoBehaviour
         }
         if(cameraDescriptors.Count > 0)
         {
-            foreach(XRCameraSubsystemDescriptor cameraDescriptor in cameraDescriptors)
+            foreach(var cameraDescriptor in cameraDescriptors)
             {
                 //TODO: Change face blend to blendshapes (Only for ios)
                 if((cameraDescriptor.supportsAverageBrightness || cameraDescriptor.supportsAverageIntensityInLumens) && 
