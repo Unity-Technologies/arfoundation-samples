@@ -211,10 +211,6 @@ public class ARSceneSelectUI : MonoBehaviour
         m_AllMenu.SetActive(false);
     }
 
-    public void ARKitHDRLightEstimationButtonPressed()
-    {
-        SceneManager.LoadScene("ARKitHDRLightEstimation", LoadSceneMode.Single);
-    }
 
      public void LightEstimationButtonPressed()
     {
