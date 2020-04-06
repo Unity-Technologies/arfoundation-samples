@@ -7,24 +7,150 @@ using UnityEngine.XR.ARSubsystems;
 
 public class CheckAvailableFeatures : MonoBehaviour
 {
-    public Button simpleAR;
-    public Button imageTracking;
-    public Button anchors;
-    public Button ARWorldMap;
-    public Button cameraImage;
-    public Button environmentProbes;
-    public Button ARCollaborationData;
-    public Button ARKitCoachingOverlay;
-    public Button scale;
-    public Button objectTracking;
-    public Button planeOcclusion;
-    public Button pointCloud;
-    public Button faceTracking;
-    public Button faceBlendShapes;
-    public Button humanSegmentation;
-    public Button lightEstimation;
-    public Button planeDetection;
-    public Button planeClassification;
+    [SerializeField]
+    Button m_SimpleAR;
+    public Button simpleAR
+    {
+        get { return m_SimpleAR; }
+        set { m_SimpleAR = value; }
+    }
+
+    [SerializeField]
+    Button m_ImageTracking;
+    public Button imageTracking
+    {
+        get { return m_ImageTracking; }
+        set { m_ImageTracking = value; }
+    }
+
+    [SerializeField]
+    Button m_Anchors;
+    public Button anchors
+    {
+        get { return m_Anchors; }
+        set { m_Anchors = value; }
+    }
+
+    [SerializeField]
+    Button m_ARWorldMap;
+    public Button ARWorldMap
+    {
+        get { return m_ARWorldMap; }
+        set { m_ARWorldMap = value; }
+    }
+    
+
+    [SerializeField]
+    Button m_CameraImage;
+    public Button cameraImage
+    {
+        get { return m_CameraImage; }
+        set { m_CameraImage = value; }
+    }
+
+    [SerializeField]
+    Button m_EnvironmentProbes;
+    public Button environmentProbes
+    {
+        get { return m_EnvironmentProbes; }
+        set { m_EnvironmentProbes = value; }
+    }
+
+    [SerializeField]
+    Button m_ARCollaborationData;
+    public Button ARCollaborationData
+    {
+        get { return m_ARCollaborationData; }
+        set { m_ARCollaborationData = value; }
+    }
+
+    [SerializeField]
+    Button m_ARKitCoachingOverlay;
+    public Button ARKitCoachingOverlay
+    {
+        get { return m_ARKitCoachingOverlay; }
+        set { m_ARKitCoachingOverlay = value; }
+    }
+
+    [SerializeField]
+    Button m_Scale;
+    public Button scale
+    {
+        get { return m_Scale; }
+        set { m_Scale = value; }
+    }
+
+    [SerializeField]
+    Button m_ObjectTracking;
+    public Button objectTracking
+    {
+        get { return m_ObjectTracking; }
+        set { m_ObjectTracking = value; }
+    }
+
+    [SerializeField]
+    Button m_PlaneOcclusion;
+    public Button planeOcclusion
+    {
+        get { return m_PlaneOcclusion; }
+        set { m_PlaneOcclusion = value; }
+    }
+
+    [SerializeField]
+    Button m_PointCloud;
+    public Button pointCloud
+    {
+        get { return m_PointCloud; }
+        set { m_PointCloud = value; }
+    }
+
+    [SerializeField]
+    Button m_FaceTracking;
+    public Button faceTracking
+    {
+        get { return m_FaceTracking; }
+        set { m_FaceTracking = value; }
+    }
+    
+    [SerializeField]
+    Button m_FaceBlendShapes;
+    public Button faceBlendShapes
+    {
+        get { return m_FaceBlendShapes; }
+        set { m_FaceBlendShapes = value; }
+    }
+
+    [SerializeField]
+    Button m_HumanSegmentation;
+    public Button humanSegmentation
+    {
+        get { return m_HumanSegmentation; }
+        set { m_HumanSegmentation = value; }
+    }
+
+    [SerializeField]
+    Button m_LightEstimation;
+    public Button lightEstimation
+    {
+        get { return m_LightEstimation; }
+        set { m_LightEstimation = value; }
+    }
+
+    [SerializeField]
+    Button m_PlaneDetection;
+    public Button planeDetection
+    {
+        get { return m_PlaneDetection; }
+        set { m_PlaneDetection = value; }
+    }
+
+    [SerializeField]
+    Button m_PlaneClassification;
+    public Button planeClassification
+    {
+        get { return m_PlaneClassification; }
+        set { m_PlaneClassification = value; }
+    }
 
 #if UNITY_IOS
     OperatingSystem os = Environment.OSVersion;
@@ -65,16 +191,19 @@ public class CheckAvailableFeatures : MonoBehaviour
         List<XRCameraSubsystemDescriptor> cameraDescriptors = new List<XRCameraSubsystemDescriptor>();
         SubsystemManager.GetSubsystemDescriptors<XRCameraSubsystemDescriptor>(cameraDescriptors);
 
+        List<XRSessionSubsystemDescriptor> sessionDescriptors = new List<XRSessionSubsystemDescriptor>();
+        SubsystemManager.GetSubsystemDescriptors<XRSessionSubsystemDescriptor>(sessionDescriptors);
+
         if(planeDescriptors.Count > 0 && rayCastDescriptors.Count > 0)
         {
-            simpleAR.interactable = true;
-            scale.interactable = true;
+            m_SimpleAR.interactable = true;
+            m_Scale.interactable = true;
         }  
         if(faceDescriptors.Count > 0)
         {
-            faceTracking.interactable = true;
+            m_FaceTracking.interactable = true;
 #if UNITY_IOS
-            faceBlendShapes.interactable = true;
+            m_FaceBlendShapes.interactable = true;
 #endif
 
         }
@@ -84,7 +213,7 @@ public class CheckAvailableFeatures : MonoBehaviour
             {
                 if(occlusionDescriptor.supportsHumanSegmentationDepthImage && occlusionDescriptor.supportsHumanSegmentationStencilImage)
                 {
-                    humanSegmentation.interactable = true;
+                    m_HumanSegmentation.interactable = true;
                     break;
                 }
             }
@@ -93,43 +222,43 @@ public class CheckAvailableFeatures : MonoBehaviour
         {
             foreach(XRCameraSubsystemDescriptor cameraDescriptor in cameraDescriptors)
             {
-                //TODO: Change face blend to blendshapes (Only for ios)
                 if((cameraDescriptor.supportsAverageBrightness || cameraDescriptor.supportsAverageIntensityInLumens) && 
                     cameraDescriptor.supportsAverageColorTemperature && cameraDescriptor.supportsCameraConfigurations && 
                     cameraDescriptor.supportsCameraImage)
                 {
-                    lightEstimation.interactable = true;
+                    m_LightEstimation.interactable = true;
                 }
                   
             }
         }
         if(imageDescriptors.Count > 0)
         {
-            imageTracking.interactable = true;
+            m_ImageTracking.interactable = true;
         }
         if(envDescriptors.Count > 0)
         {
-            environmentProbes.interactable = true;
+            m_EnvironmentProbes.interactable = true;
         }
 
-        if(planeDescriptors.Count > 0){
-            planeDetection.interactable = true;
+        if(planeDescriptors.Count > 0)
+        {
+            m_PlaneDetection.interactable = true;
             foreach(XRPlaneSubsystemDescriptor planeDescriptor in planeDescriptors)
             {
                 if(planeDescriptor.supportsClassification)
                 {
-                    planeClassification.interactable = true;
+                    m_PlaneClassification.interactable = true;
                     break;
                 }
             } 
         }
         if(anchorDescriptors.Count > 0)
         {
-            anchors.interactable = true;
+            m_Anchors.interactable = true;
         }
         if(objectDescriptors.Count > 0)
         {
-            objectTracking.interactable = true;
+            m_ObjectTracking.interactable = true;
         }
         if(cameraDescriptors.Count > 0)
         {
@@ -137,36 +266,36 @@ public class CheckAvailableFeatures : MonoBehaviour
             {
                 if(cameraDescriptor.supportsCameraImage)
                 {
-                    cameraImage.interactable = true;
+                    m_CameraImage.interactable = true;
                     break;
                 }
             }
 
         }
 #if UNITY_IOS
-        if(os.Version.Major >= 12)
+        if(sessionDescriptors.Count > 0 && ARKitSessionSubsystem.worldMapSupported)
         {
-            ARWorldMap.interactable = true;
+            m_ARWorldMap.interactable = true;
         }
 #endif
         if(planeDescriptors.Count > 0 && rayCastDescriptors.Count > 0 && participantDescriptors.Count > 0)
         {
-            ARCollaborationData.interactable = true;
+            m_ARCollaborationData.interactable = true;
         }
 
         if(depthDescriptors.Count > 0)
         {
-            pointCloud.interactable = true;
+            m_PointCloud.interactable = true;
         }
 
         if(planeDescriptors.Count > 0)
         {
-            planeOcclusion.interactable  = true;
+            m_PlaneOcclusion.interactable  = true;
         }    
 #if UNITY_IOS
-        if(os.Version.Major >= 13)
+        if(sessionDescriptors.Count > 0 && ARKitSessionSubsystem.coachingOverlaySupported)
         {
-            ARKitCoachingOverlay.interactable = true;
+            m_ARKitCoachingOverlay.interactable = true;
         }      
 #endif
     }

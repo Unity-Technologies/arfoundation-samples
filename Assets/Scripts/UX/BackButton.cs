@@ -5,13 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class BackButton : MonoBehaviour
 {
-    public GameObject backButton;
+    [SerializeField]
+    GameObject m_BackButton;
+    public GameObject backButton
+    {
+        get { return m_BackButton; }
+        set { m_BackButton = value; }
+    }
     
     void Start()
     {
          if (Application.CanStreamedLevelBeLoaded("Menu"))
          {
-            backButton.SetActive(true);
+            m_BackButton.SetActive(true);
          }
     }
 

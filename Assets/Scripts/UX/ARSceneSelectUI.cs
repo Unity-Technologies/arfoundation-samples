@@ -6,33 +6,69 @@ using UnityEngine.SceneManagement;
 
 public class ARSceneSelectUI : MonoBehaviour
 {
-    public GameObject allMenu;
-    public GameObject faceTrackingMenu;
-    public GameObject humanSegmentationMenu;
-    public GameObject lightEstimationMenu;
-    public GameObject planeDetectionMenu;
+    [SerializeField]
+    GameObject m_AllMenu;
+    public GameObject allMenu
+    {
+        get { return m_AllMenu; }
+        set { m_AllMenu = value; }
+    }
+
+    [SerializeField]
+    GameObject m_FaceTrackingMenu;
+    public GameObject faceTrackingMenu
+    {
+        get { return m_FaceTrackingMenu; }
+        set { m_FaceTrackingMenu = value; }
+    }
+
+    [SerializeField]
+    GameObject m_HumanSegmentationMenu;
+    public GameObject humanSegmentationMenu
+    {
+        get { return m_HumanSegmentationMenu; }
+        set { m_HumanSegmentationMenu = value; }
+    }
+
+
+    [SerializeField]
+    GameObject m_LightEstimationMenu;
+    public GameObject lightEstimationMenu
+    {
+        get { return m_LightEstimationMenu; }
+        set { m_LightEstimationMenu = value; }
+    }
+
+    [SerializeField]
+    GameObject m_PlaneDetectionMenu;
+    public GameObject planeDetectionMenu
+    {
+        get { return m_PlaneDetectionMenu; }
+        set { m_PlaneDetectionMenu = value; }
+    }
+
 
      void Start()
     {
         if(ActiveMenu.currentMenu == MenuType.FaceTracking)
         {
-            faceTrackingMenu.SetActive(true);
-            allMenu.SetActive(false);
+            m_FaceTrackingMenu.SetActive(true);
+            m_AllMenu.SetActive(false);
         }
         else if(ActiveMenu.currentMenu == MenuType.PlaneDetection)
         {
-            planeDetectionMenu.SetActive(true);
-            allMenu.SetActive(false);
+            m_PlaneDetectionMenu.SetActive(true);
+            m_AllMenu.SetActive(false);
         }
         else if(ActiveMenu.currentMenu == MenuType.HumanSegmentation)
         {
-            humanSegmentationMenu.SetActive(true);
-            allMenu.SetActive(false);
+            m_HumanSegmentationMenu.SetActive(true);
+            m_AllMenu.SetActive(false);
         }
         else if(ActiveMenu.currentMenu == MenuType.LightEstimation)
         {
-            lightEstimationMenu.SetActive(true);
-            allMenu.SetActive(false);
+            m_LightEstimationMenu.SetActive(true);
+            m_AllMenu.SetActive(false);
         }
     }
 
@@ -109,8 +145,8 @@ public class ARSceneSelectUI : MonoBehaviour
     public void FaceTrackingMenuButtonPressed()
     {
         ActiveMenu.currentMenu = MenuType.FaceTracking;
-        faceTrackingMenu.SetActive(true);
-        allMenu.SetActive(false);
+        m_FaceTrackingMenu.SetActive(true);
+        m_AllMenu.SetActive(false);
     }
     public void ARCoreFaceRegionsButtonPressed()
     {
@@ -152,8 +188,8 @@ public class ARSceneSelectUI : MonoBehaviour
     public void HumanSegmentationMenuButtonPressed()
     {
         ActiveMenu.currentMenu = MenuType.HumanSegmentation;
-        humanSegmentationMenu.SetActive(true);
-        allMenu.SetActive(false);
+        m_HumanSegmentationMenu.SetActive(true);
+        m_AllMenu.SetActive(false);
     }
     public void HumanSegmentation2DButtonPressed()
     {
@@ -171,8 +207,8 @@ public class ARSceneSelectUI : MonoBehaviour
     public void LightEstimationMenuButtonPressed()
     {
         ActiveMenu.currentMenu = MenuType.LightEstimation;
-        lightEstimationMenu.SetActive(true);
-        allMenu.SetActive(false);
+        m_LightEstimationMenu.SetActive(true);
+        m_AllMenu.SetActive(false);
     }
 
     public void ARKitHDRLightEstimationButtonPressed()
@@ -188,8 +224,8 @@ public class ARSceneSelectUI : MonoBehaviour
     public void PlaneDetectionMenuButtonPressed()
     {
         ActiveMenu.currentMenu = MenuType.PlaneDetection;
-        planeDetectionMenu.SetActive(true);
-        allMenu.SetActive(false);
+        m_PlaneDetectionMenu.SetActive(true);
+        m_AllMenu.SetActive(false);
     }
     public void FeatheredPlanesButtonPressed()
     {
@@ -210,10 +246,10 @@ public class ARSceneSelectUI : MonoBehaviour
      public void BackButtonPressed()
     {
         ActiveMenu.currentMenu = MenuType.Main;
-        faceTrackingMenu.SetActive(false);
-        planeDetectionMenu.SetActive(false);
-        humanSegmentationMenu.SetActive(false);
-        lightEstimationMenu.SetActive(false);
-        allMenu.SetActive(true);
+        m_FaceTrackingMenu.SetActive(false);
+        m_PlaneDetectionMenu.SetActive(false);
+        m_HumanSegmentationMenu.SetActive(false);
+        m_LightEstimationMenu.SetActive(false);
+        m_AllMenu.SetActive(true);
     }
 }

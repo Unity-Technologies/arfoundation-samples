@@ -6,7 +6,14 @@ using UnityEngine.UI;
 
 public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public GameObject toolTip;
+    
+    [SerializeField]
+    GameObject m_Tooltip;
+    public GameObject toolTip
+    {
+         get { return m_Tooltip; }
+        set { m_Tooltip = value; }
+    }
     bool _enteredButton;
     Vector3 _toolTipOffset;
     // Start is called before the first frame update
@@ -19,7 +26,7 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     void Update()
     {
         if(_enteredButton){
-              toolTip.transform.position = Input.mousePosition + _toolTipOffset;
+              m_Tooltip.transform.position = Input.mousePosition + _toolTipOffset;
         }
     }
 
@@ -29,7 +36,7 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         _enteredButton = true;
         if(!gameObject.GetComponent<Button>().interactable)
         {
-             toolTip.SetActive(true);
+             m_Tooltip.SetActive(true);
         }
     }
 
@@ -37,6 +44,6 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void OnPointerExit(PointerEventData eventData)
     {
         _enteredButton = false;
-        toolTip.SetActive(false);
+        m_Tooltip.SetActive(false);
     }
 }

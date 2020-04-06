@@ -40,7 +40,7 @@ public class ARKitCoachingOverlay : MonoBehaviour
         {
             if (GetComponent<ARSession>().subsystem is ARKitSessionSubsystem sessionSubsystem)
             {
-                return sessionSubsystem.coachingGoal;
+                return sessionSubsystem.requestedCoachingGoal;
             }
             else
             {
@@ -53,7 +53,7 @@ public class ARKitCoachingOverlay : MonoBehaviour
             m_Goal = (CoachingGoal)value;
             if (supported && GetComponent<ARSession>().subsystem is ARKitSessionSubsystem sessionSubsystem)
             {
-                sessionSubsystem.coachingGoal = value;
+                sessionSubsystem.requestedCoachingGoal = value;
             }
         }
     }
@@ -112,7 +112,7 @@ public class ARKitCoachingOverlay : MonoBehaviour
 #if UNITY_IOS
         if (supported && GetComponent<ARSession>().subsystem is ARKitSessionSubsystem sessionSubsystem)
         {
-            sessionSubsystem.coachingGoal = (ARCoachingGoal)m_Goal;
+            sessionSubsystem.requestedCoachingGoal = (ARCoachingGoal)m_Goal;
             sessionSubsystem.coachingActivatesAutomatically = m_ActivatesAutomatically;
         }
         else
@@ -132,6 +132,24 @@ public class ARKitCoachingOverlay : MonoBehaviour
         if (supported && GetComponent<ARSession>().subsystem is ARKitSessionSubsystem sessionSubsystem)
         {
             sessionSubsystem.SetCoachingActive(true, animated ? ARCoachingOverlayTransition.Animated : ARCoachingOverlayTransition.Instant);
+        }
+        else
+#endif
+        {
+            throw new NotSupportedException("ARCoachingOverlay is not supported");
+        }
+    }
+    
+    /// <summary>
+    /// Disables the [ARCoachingGoal](https://developer.apple.com/documentation/arkit/arcoachinggoal)
+    /// </summary>
+    /// <param name="animated">If <c>true</c>, the coaching overlay is animated, e.g. fades out. If <c>false</c>, the coaching overlay disappears instantly, without any transition.</param>
+    public void DisableCoaching(bool animated) 
+    {
+#if UNITY_IOS
+        if (supported && GetComponent<ARSession>().subsystem is ARKitSessionSubsystem sessionSubsystem)
+        {
+            sessionSubsystem.SetCoachingActive(false, animated ? ARCoachingOverlayTransition.Animated : ARCoachingOverlayTransition.Instant);
         }
         else
 #endif

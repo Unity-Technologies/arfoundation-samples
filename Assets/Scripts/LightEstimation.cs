@@ -15,6 +15,15 @@ public class LightEstimation : MonoBehaviour
     [Tooltip("The ARCameraManager which will produce frame events containing light estimation information.")]
     ARCameraManager m_CameraManager;
 
+    [SerializeField]
+    Transform m_Arrow;
+
+    public Transform arrow
+    {
+        get => m_Arrow;
+        set => m_Arrow = value;
+    }
+
     /// <summary>
     /// Get or set the <c>ARCameraManager</c>.
     /// </summary>
@@ -80,12 +89,27 @@ public class LightEstimation : MonoBehaviour
     {
         if (m_CameraManager != null)
             m_CameraManager.frameReceived += FrameChanged;
+
+        // Disable the arrow to start; enable it later if we get directional light info
+        arrow?.gameObject.SetActive(false);
+        Application.onBeforeRender += OnBeforeRender;
     }
 
     void OnDisable()
     {
+        Application.onBeforeRender -= OnBeforeRender;
+
         if (m_CameraManager != null)
             m_CameraManager.frameReceived -= FrameChanged;
+    }
+
+    void OnBeforeRender()
+    {
+        if (arrow && m_CameraManager)
+        {
+            var cameraTransform = m_CameraManager.GetComponent<Camera>().transform;
+            arrow.position = cameraTransform.position + cameraTransform.forward * .25f;
+        }
     }
 
     void FrameChanged(ARCameraFrameEventArgs args)
@@ -101,7 +125,7 @@ public class LightEstimation : MonoBehaviour
             colorTemperature = args.lightEstimation.averageColorTemperature.Value;
             m_Light.colorTemperature = colorTemperature.Value;
         }
-        
+
         if (args.lightEstimation.colorCorrection.HasValue)
         {
             colorCorrection = args.lightEstimation.colorCorrection.Value;
@@ -112,24 +136,21 @@ public class LightEstimation : MonoBehaviour
         {
             mainLightDirection = args.lightEstimation.mainLightDirection;
             m_Light.transform.rotation = Quaternion.LookRotation(mainLightDirection.Value);
+            if (arrow)
+            {
+                arrow.gameObject.SetActive(true);
+                arrow.rotation = Quaternion.LookRotation(mainLightDirection.Value);
+            }
+        }
+        else
+        {
+            arrow?.gameObject.SetActive(false);
         }
 
         if (args.lightEstimation.mainLightColor.HasValue)
         {
             mainLightColor = args.lightEstimation.mainLightColor;
-            
-#if PLATFORM_ANDROID
-            // ARCore needs to apply energy conservation term (1 / PI) and be placed in gamma
-            m_Light.color = mainLightColor.Value / Mathf.PI;
-            m_Light.color = m_Light.color.gamma;
-            
-            // ARCore returns color in HDR format (can be represented as FP16 and have values above 1.0)
-            var camera = m_CameraManager.GetComponentInParent<Camera>();
-            if (camera == null || !camera.allowHDR)
-            {
-                Debug.LogWarning($"HDR Rendering is not allowed.  Color values returned could be above the maximum representable value.");
-            }
-#endif
+            m_Light.color = mainLightColor.Value;
         }
 
         if (args.lightEstimation.mainLightIntensityLumens.HasValue)
