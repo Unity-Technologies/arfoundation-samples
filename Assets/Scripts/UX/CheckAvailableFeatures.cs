@@ -220,7 +220,7 @@ public class CheckAvailableFeatures : MonoBehaviour
         }
         if(cameraDescriptors.Count > 0)
         {
-            foreach(XRCameraSubsystemDescriptor cameraDescriptor in cameraDescriptors)
+            foreach(var cameraDescriptor in cameraDescriptors)
             {
                 if((cameraDescriptor.supportsAverageBrightness || cameraDescriptor.supportsAverageIntensityInLumens) && 
                     cameraDescriptor.supportsAverageColorTemperature && cameraDescriptor.supportsCameraConfigurations && 
@@ -243,7 +243,7 @@ public class CheckAvailableFeatures : MonoBehaviour
         if(planeDescriptors.Count > 0)
         {
             m_PlaneDetection.interactable = true;
-            foreach(XRPlaneSubsystemDescriptor planeDescriptor in planeDescriptors)
+             foreach(var planeDescriptor in planeDescriptors)
             {
                 if(planeDescriptor.supportsClassification)
                 {
@@ -262,7 +262,7 @@ public class CheckAvailableFeatures : MonoBehaviour
         }
         if(cameraDescriptors.Count > 0)
         {
-            foreach(XRCameraSubsystemDescriptor cameraDescriptor in cameraDescriptors)
+            foreach(var cameraDescriptor in cameraDescriptors)
             {
                 if(cameraDescriptor.supportsCameraImage)
                 {

@@ -48,7 +48,7 @@ public class ARSceneSelectUI : MonoBehaviour
     }
 
 
-     void Start()
+    void Start()
     {
         if(ActiveMenu.currentMenu == MenuType.FaceTracking)
         {

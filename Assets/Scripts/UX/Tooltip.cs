@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    
     [SerializeField]
     GameObject m_Tooltip;
     public GameObject toolTip
@@ -14,8 +13,8 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
          get { return m_Tooltip; }
         set { m_Tooltip = value; }
     }
-    bool _enteredButton;
-    Vector3 _toolTipOffset;
+    bool m_EnteredButton;
+    Vector3 m_ToolTipOffset;
     // Start is called before the first frame update
     void Start()
     {
