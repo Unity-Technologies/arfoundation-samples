@@ -18,21 +18,21 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     // Start is called before the first frame update
     void Start()
     {
-        _toolTipOffset = new Vector3(-50,100,0);
+        m_ToolTipOffset = new Vector3(-50,100,0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(_enteredButton){
-              m_Tooltip.transform.position = Input.mousePosition + _toolTipOffset;
+        if(m_EnteredButton){
+              m_Tooltip.transform.position = Input.mousePosition + m_ToolTipOffset;
         }
     }
 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _enteredButton = true;
+        m_EnteredButton = true;
         if(!gameObject.GetComponent<Button>().interactable)
         {
              m_Tooltip.SetActive(true);
@@ -42,7 +42,7 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _enteredButton = false;
+        m_EnteredButton = false;
         m_Tooltip.SetActive(false);
     }
 }
