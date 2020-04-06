@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARSubsystems;
+#if UNITY_IOS
+using UnityEngine.XR.ARKit;
+#endif
 
 public class CheckAvailableFeatures : MonoBehaviour
 {
@@ -273,15 +276,22 @@ public class CheckAvailableFeatures : MonoBehaviour
 
         }
 #if UNITY_IOS
-        if(sessionDescriptors.Count > 0 /*&& ARKitSessionSubsystem.worldMapSupported*/)
+        if(sessionDescriptors.Count > 0 && ARKitSessionSubsystem.worldMapSupported)
         {
             m_ARWorldMap.interactable = true;
         }
-#endif
-        if(planeDescriptors.Count > 0 && rayCastDescriptors.Count > 0 && participantDescriptors.Count > 0)
+
+        if(planeDescriptors.Count > 0 && rayCastDescriptors.Count > 0 && participantDescriptors.Count > 0 && ARKitSessionSubsystem.supportsCollaboration)
         {
             m_ARCollaborationData.interactable = true;
         }
+
+        if(sessionDescriptors.Count > 0 && ARKitSessionSubsystem.coachingOverlaySupported)
+        {
+            m_ARKitCoachingOverlay.interactable = true;
+        }      
+
+#endif
 
         if(depthDescriptors.Count > 0)
         {
@@ -292,12 +302,7 @@ public class CheckAvailableFeatures : MonoBehaviour
         {
             m_PlaneOcclusion.interactable  = true;
         }    
-#if UNITY_IOS
-        if(sessionDescriptors.Count > 0 /*&& ARKitSessionSubsystem.coachingOverlaySupported*/)
-        {
-            m_ARKitCoachingOverlay.interactable = true;
-        }      
-#endif
+
     }
 
 }
