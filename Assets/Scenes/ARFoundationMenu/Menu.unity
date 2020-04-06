@@ -263,7 +263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolTip: {fileID: 2094799242}
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &41778014
 GameObject:
   m_ObjectHideFlags: 0
@@ -768,7 +768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolTip: {fileID: 2094799242}
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &346867435
 GameObject:
   m_ObjectHideFlags: 0
@@ -781,7 +781,6 @@ GameObject:
   - component: {fileID: 346867439}
   - component: {fileID: 346867438}
   - component: {fileID: 346867437}
-  - component: {fileID: 346867436}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -789,18 +788,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &346867436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 346867435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cf71f89a7f3c4c22824beb11bfd78c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &346867437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1390,6 +1377,7 @@ GameObject:
   - component: {fileID: 507951180}
   - component: {fileID: 507951179}
   - component: {fileID: 507951178}
+  - component: {fileID: 507951181}
   m_Layer: 5
   m_Name: ARKitFaceBlendShapes
   m_TagString: Untagged
@@ -1507,6 +1495,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 507951176}
   m_CullTransparentMesh: 0
+--- !u!114 &507951181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507951176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &510114237
 GameObject:
   m_ObjectHideFlags: 0
@@ -2493,7 +2494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolTip: {fileID: 2094799242}
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &732965207
 GameObject:
   m_ObjectHideFlags: 0
@@ -2888,11 +2889,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e8573f1575524f7d8e181506ba7db35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allMenu: {fileID: 1569808630}
-  faceTrackingMenu: {fileID: 881193863}
-  humanSegmentationMenu: {fileID: 1468820548}
-  lightEstimationMenu: {fileID: 1534119098}
-  planeDetectionMenu: {fileID: 881169046}
+  m_AllMenu: {fileID: 1569808630}
+  m_FaceTrackingMenu: {fileID: 881193863}
+  m_HumanSegmentationMenu: {fileID: 1468820548}
+  m_LightEstimationMenu: {fileID: 1534119098}
+  m_PlaneDetectionMenu: {fileID: 881169046}
 --- !u!4 &774532499
 Transform:
   m_ObjectHideFlags: 0
@@ -2919,24 +2920,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46a8d53764d764891a6f7e044ccb61bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  simpleAR: {fileID: 1790425529}
-  imageTracking: {fileID: 1311724826}
-  anchors: {fileID: 1905833466}
-  ARWorldMap: {fileID: 1817576787}
-  cameraImage: {fileID: 340560480}
-  environmentProbes: {fileID: 1761617832}
-  ARCollaborationData: {fileID: 1385680569}
-  ARKitCoachingOverlay: {fileID: 1091803571}
-  scale: {fileID: 1298916929}
-  objectTracking: {fileID: 1206894271}
-  planeOcclusion: {fileID: 724437755}
-  pointCloud: {fileID: 786358437}
-  faceTracking: {fileID: 1116959538}
-  faceBlendShapes: {fileID: 507951178}
-  humanSegmentation: {fileID: 2111581279}
-  lightEstimation: {fileID: 11739801}
-  planeDetection: {fileID: 1172329691}
-  planeClassification: {fileID: 988159692}
+  m_SimpleAR: {fileID: 1790425529}
+  m_ImageTracking: {fileID: 1311724826}
+  m_Anchors: {fileID: 1905833466}
+  m_ARWorldMap: {fileID: 1817576787}
+  m_CameraImage: {fileID: 340560480}
+  m_EnvironmentProbes: {fileID: 1761617832}
+  m_ARCollaborationData: {fileID: 1385680569}
+  m_ARKitCoachingOverlay: {fileID: 1091803571}
+  m_Scale: {fileID: 1298916929}
+  m_ObjectTracking: {fileID: 1206894271}
+  m_PlaneOcclusion: {fileID: 724437755}
+  m_PointCloud: {fileID: 786358437}
+  m_FaceTracking: {fileID: 1116959538}
+  m_FaceBlendShapes: {fileID: 507951178}
+  m_HumanSegmentation: {fileID: 2111581279}
+  m_LightEstimation: {fileID: 11739801}
+  m_PlaneDetection: {fileID: 1172329691}
+  m_PlaneClassification: {fileID: 988159692}
 --- !u!1 &786358435
 GameObject:
   m_ObjectHideFlags: 0
@@ -3079,7 +3080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolTip: {fileID: 2094799242}
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &855858568
 GameObject:
   m_ObjectHideFlags: 0
@@ -3744,7 +3745,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolTip: {fileID: 2094799242}
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &1024207029
 GameObject:
   m_ObjectHideFlags: 0
@@ -4108,7 +4109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolTip: {fileID: 2094799242}
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &1092580883
 GameObject:
   m_ObjectHideFlags: 0
@@ -4328,7 +4329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolTip: {fileID: 2094799242}
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &1126496614
 GameObject:
   m_ObjectHideFlags: 0
@@ -4677,7 +4678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolTip: {fileID: 2094799242}
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &1206894269
 GameObject:
   m_ObjectHideFlags: 0
@@ -4820,7 +4821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolTip: {fileID: 2094799242}
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &1271628505
 GameObject:
   m_ObjectHideFlags: 0
@@ -5196,7 +5197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolTip: {fileID: 2094799242}
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &1311724824
 GameObject:
   m_ObjectHideFlags: 0
@@ -5339,7 +5340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolTip: {fileID: 2094799242}
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &1334242981
 GameObject:
   m_ObjectHideFlags: 0
@@ -5817,7 +5818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolTip: {fileID: 2094799242}
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &1389518004
 GameObject:
   m_ObjectHideFlags: 0
@@ -5983,7 +5984,6 @@ GameObject:
   - component: {fileID: 1416737523}
   - component: {fileID: 1416737522}
   - component: {fileID: 1416737521}
-  - component: {fileID: 1416737524}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -6056,18 +6056,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1416737524
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1416737520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1441317955
 GameObject:
   m_ObjectHideFlags: 0
@@ -7108,7 +7096,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolTip: {fileID: 2094799242}
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &1765440890
 GameObject:
   m_ObjectHideFlags: 0
@@ -7405,7 +7393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolTip: {fileID: 2094799242}
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &1817576785
 GameObject:
   m_ObjectHideFlags: 0
@@ -7548,7 +7536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolTip: {fileID: 2094799242}
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &1859156593
 GameObject:
   m_ObjectHideFlags: 0
@@ -7897,7 +7885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolTip: {fileID: 2094799242}
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &1909022300
 GameObject:
   m_ObjectHideFlags: 0
@@ -8656,4 +8644,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolTip: {fileID: 2094799242}
+  m_Tooltip: {fileID: 2094799242}
