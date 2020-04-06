@@ -182,7 +182,7 @@ public class ARSceneSelectUI : MonoBehaviour
 
     public void RearCameraWithFrontCameraFaceMeshButtonPressed()
     {
-        SceneManager.LoadScene("RearCameraWithFrontCameraFaceMesh", LoadSceneMode.Single);
+        SceneManager.LoadScene("WorldCameraWithUserFacingFaceTracking", LoadSceneMode.Single);
     }
 
     public void HumanSegmentationMenuButtonPressed()
@@ -218,7 +218,7 @@ public class ARSceneSelectUI : MonoBehaviour
 
      public void LightEstimationButtonPressed()
     {
-        SceneManager.LoadScene("Light Estimation", LoadSceneMode.Single);
+        SceneManager.LoadScene("LightEstimation", LoadSceneMode.Single);
     }
 
     public void PlaneDetectionMenuButtonPressed()

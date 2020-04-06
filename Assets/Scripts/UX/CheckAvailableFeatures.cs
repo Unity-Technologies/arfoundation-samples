@@ -273,7 +273,7 @@ public class CheckAvailableFeatures : MonoBehaviour
 
         }
 #if UNITY_IOS
-        if(sessionDescriptors.Count > 0 && ARKitSessionSubsystem.worldMapSupported)
+        if(sessionDescriptors.Count > 0 /*&& ARKitSessionSubsystem.worldMapSupported*/)
         {
             m_ARWorldMap.interactable = true;
         }
@@ -293,7 +293,7 @@ public class CheckAvailableFeatures : MonoBehaviour
             m_PlaneOcclusion.interactable  = true;
         }    
 #if UNITY_IOS
-        if(sessionDescriptors.Count > 0 && ARKitSessionSubsystem.coachingOverlaySupported)
+        if(sessionDescriptors.Count > 0 /*&& ARKitSessionSubsystem.coachingOverlaySupported*/)
         {
             m_ARKitCoachingOverlay.interactable = true;
         }      
