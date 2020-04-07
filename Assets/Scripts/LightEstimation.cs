@@ -91,7 +91,10 @@ public class LightEstimation : MonoBehaviour
             m_CameraManager.frameReceived += FrameChanged;
 
         // Disable the arrow to start; enable it later if we get directional light info
-        arrow?.gameObject.SetActive(false);
+        if (arrow)
+        {
+            arrow.gameObject.SetActive(false);
+        }
         Application.onBeforeRender += OnBeforeRender;
     }
 
