@@ -10,7 +10,7 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     GameObject m_Tooltip;
     public GameObject toolTip
     {
-         get { return m_Tooltip; }
+        get { return m_Tooltip; }
         set { m_Tooltip = value; }
     }
     bool m_EnteredButton;
