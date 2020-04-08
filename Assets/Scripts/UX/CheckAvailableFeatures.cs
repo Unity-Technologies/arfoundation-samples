@@ -155,9 +155,6 @@ public class CheckAvailableFeatures : MonoBehaviour
         set { m_PlaneClassification = value; }
     }
 
-#if UNITY_IOS
-    OperatingSystem os = Environment.OSVersion;
-#endif
     // Start is called before the first frame update
     void Start()
     {

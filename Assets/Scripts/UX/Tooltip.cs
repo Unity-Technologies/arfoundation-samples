@@ -10,21 +10,21 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     GameObject m_Tooltip;
     public GameObject toolTip
     {
-         get { return m_Tooltip; }
+        get { return m_Tooltip; }
         set { m_Tooltip = value; }
     }
     bool m_EnteredButton;
     Vector3 m_ToolTipOffset;
-    // Start is called before the first frame update
+
     void Start()
     {
         m_ToolTipOffset = new Vector3(-50,100,0);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(m_EnteredButton){
+        if(m_EnteredButton)
+        {
               m_Tooltip.transform.position = Input.mousePosition + m_ToolTipOffset;
         }
     }
