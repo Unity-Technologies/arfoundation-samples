@@ -239,7 +239,7 @@ public class ARSceneSelectUI : MonoBehaviour
     }
 
 
-     public void BackButtonPressed()
+    public void BackButtonPressed()
     {
         ActiveMenu.currentMenu = MenuType.Main;
         m_FaceTrackingMenu.SetActive(false);
