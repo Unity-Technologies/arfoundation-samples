@@ -17,7 +17,12 @@ public class EyeTrackingUI : MonoBehaviour
         {
             m_Manager = FindObjectOfType<ARFaceManager>();
         }
-        if (m_Manager != null && m_Manager.subsystem != null && m_Manager.subsystem.SubsystemDescriptor.supportsEyeTracking)
+        if (m_Manager != null && m_Manager.subsystem != null &&
+#if UNITY_2020_2_OR_NEWER
+            m_Manager.subsystem.subsystemDescriptor.supportsEyeTracking)
+#else
+            m_Manager.subsystem.SubsystemDescriptor.supportsEyeTracking)
+#endif
         {
             var infoGO = GetComponent<Text>();
             infoGO.text = "This device supports eye tracking.";
