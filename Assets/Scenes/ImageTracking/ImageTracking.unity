@@ -199,6 +199,7 @@ GameObject:
   - component: {fileID: 857573723}
   - component: {fileID: 857573725}
   - component: {fileID: 857573726}
+  - component: {fileID: 857573727}
   m_Layer: 0
   m_Name: AR Session Origin
   m_TagString: Untagged
@@ -265,6 +266,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_WorldSpaceCanvasCamera: {fileID: 1247506530}
   m_DefaultTexture: {fileID: 10305, guid: 0000000000000000f000000000000000, type: 0}
+--- !u!114 &857573727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 857573722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92dfcdbbdd0754f9fb947d3639ad91c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Images:
+  - m_Texture: {fileID: 2800000, guid: d1879707d69d24adfb421bde69c92c94, type: 3}
+    m_Name: One
+    m_Width: 0.1
+  - m_Texture: {fileID: 2800000, guid: 038b8a7b4862745aaadfd7c9f14e7bbd, type: 3}
+    m_Name: Two
+    m_Width: 0.1
 --- !u!1 &1247506529
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,8 +406,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4966719baa26e4b0e8231a24d9bd491a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FocusMode: 1
-  m_LightEstimationMode: 0
+  m_FocusMode: -1
+  m_LightEstimationMode: -1
+  m_AutoFocus: 1
+  m_LightEstimation: 0
+  m_FacingDirection: 1
 --- !u!1 &1338354114
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,6 +443,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AttemptUpdate: 1
   m_MatchFrameRate: 1
+  m_TrackingMode: 2
 --- !u!4 &1338354117
 Transform:
   m_ObjectHideFlags: 0
