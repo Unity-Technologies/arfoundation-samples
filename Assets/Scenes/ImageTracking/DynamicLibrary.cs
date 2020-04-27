@@ -74,9 +74,13 @@ public class DynamicLibrary : MonoBehaviour
     
     void OnGUI()
     {
-        var fontSize = 30;
+        var fontSize = 50;
         GUI.skin.button.fontSize = fontSize;
         GUI.skin.label.fontSize = fontSize;
+
+        float margin = 50;
+        
+        GUILayout.BeginArea(new Rect(margin, margin, Screen.width - margin * 2, Screen.height - margin * 2));
         
         switch (m_State)
         {
@@ -111,6 +115,8 @@ public class DynamicLibrary : MonoBehaviour
                 break;
             }
         }
+        
+        GUILayout.EndArea();
     }
 
     void SetError(string errorMessage)
