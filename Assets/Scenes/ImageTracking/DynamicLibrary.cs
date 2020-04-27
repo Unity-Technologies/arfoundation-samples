@@ -156,7 +156,7 @@ public class DynamicLibrary : MonoBehaviour
                     }
                 }
 
-                if (manager.referenceLibrary is MutableRuntimeReferenceImageLibrary dynamicLibrary)
+                if (manager.referenceLibrary is MutableRuntimeReferenceImageLibrary mutableLibrary)
                 {
                     try
                     {
@@ -165,7 +165,7 @@ public class DynamicLibrary : MonoBehaviour
                             // Note: You do not need to do anything with the returned JobHandle, but it can be
                             // useful if you want to know when the image has been added to the library since it may
                             // take several frames.
-                            image.jobHandle = dynamicLibrary.ScheduleAddImageJob(image.texture, image.name, image.width);
+                            image.jobHandle = mutableLibrary.ScheduleAddImageJob(image.texture, image.name, image.width);
                         }
 
                         m_State = State.AddingImages;
