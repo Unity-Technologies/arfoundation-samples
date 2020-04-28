@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
@@ -62,11 +63,38 @@ public class MeshClassificationFracking : MonoBehaviour
     /// </summary>
     public MeshFilter m_DoorMeshPrefab;
 
+#if UNITY_IOS && !UNITY_EDITOR
+
     /// <summary>
     /// A mapping from tracking ID to instantiated mesh filters.
+    /// </summary>
     readonly Dictionary<TrackableId, MeshFilter[]> m_MeshFrackingMap = new Dictionary<TrackableId, MeshFilter[]>();
 
-#if UNITY_IOS && !UNITY_EDITOR
+    /// <summary>
+    /// The delegate to call to breakup a mesh.
+    /// </summary>
+    Action<MeshFilter> m_BreakupMeshAction;
+
+    /// <summary>
+    /// The delegate to call to update a mesh.
+    /// </summary>
+    Action<MeshFilter> m_UpdateMeshAction;
+
+    /// <summary>
+    /// The delegate to call to remove a mesh.
+    /// </summary>
+    Action<MeshFilter> m_RemoveMeshAction;
+
+    /// <summary>
+    /// On awake, set up the mesh filter delegates.
+    /// </summary>
+    void Awake()
+    {
+        m_BreakupMeshAction = new Action<MeshFilter>(BreakupMesh);
+        m_UpdateMeshAction = new Action<MeshFilter>(UpdateMesh);
+        m_RemoveMeshAction = new Action<MeshFilter>(RemoveMesh);
+    }
+
     /// <summary>
     /// On enable, subscribe to the meshes changed event.
     /// </summary>
@@ -92,17 +120,17 @@ public class MeshClassificationFracking : MonoBehaviour
     {
         if (args.added != null)
         {
-            args.added.ForEach(meshFilter => BreakupMesh(meshFilter));
+            args.added.ForEach(m_BreakupMeshAction);
         }
 
         if (args.updated != null)
         {
-            args.updated.ForEach(meshFilter => UpdateMesh(meshFilter));
+            args.updated.ForEach(m_UpdateMeshAction);
         }
 
         if (args.removed != null)
         {
-            args.removed.ForEach(meshFilter => RemoveMesh(meshFilter));
+            args.removed.ForEach(m_RemoveMeshAction);
         }
     }
 
