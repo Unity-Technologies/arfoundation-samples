@@ -86,6 +86,16 @@ public class MeshClassificationFracking : MonoBehaviour
     Action<MeshFilter> m_RemoveMeshAction;
 
     /// <summary>
+    /// An array to store the triangle vertices of the base mesh.
+    /// </summary>
+    readonly List<int> m_BaseTriangles = new List<int>();
+
+    /// <summary>
+    /// An array to store the triangle vertices of the classified mesh.
+    /// </summary>
+    readonly List<int> m_ClassifiedTriangles = new List<int>();
+
+    /// <summary>
     /// On awake, set up the mesh filter delegates.
     /// </summary>
     void Awake()
@@ -175,29 +185,28 @@ public class MeshClassificationFracking : MonoBehaviour
         // If there were matching face classifications, build a new mesh from the base mesh.
         if (classifiedFaceCount > 0)
         {
-            int[] baseTriangles = baseMesh.triangles;
-            Debug.Assert(baseTriangles.Length == (faceClassifications.Length * 3),
+            baseMesh.GetTriangles(m_BaseTriangles, 0);
+            Debug.Assert(m_BaseTriangles.Count == (faceClassifications.Length * 3),
                          "unexpected mismatch between triangle count and face classification count");
 
-            int[] classifiedTriangles = new int[classifiedFaceCount * 3];
+            m_ClassifiedTriangles.Clear();
+            m_ClassifiedTriangles.Capacity = classifiedFaceCount * 3;
 
-            int classifiedTriangleIndex = 0;
             for (int i = 0; i < faceClassifications.Length; ++i)
             {
                 if (faceClassifications[i] == selectedMeshClassification)
                 {
                     int baseTriangleIndex = i * 3;
 
-                    classifiedTriangles[classifiedTriangleIndex + 0] = baseTriangles[baseTriangleIndex + 0];
-                    classifiedTriangles[classifiedTriangleIndex + 1] = baseTriangles[baseTriangleIndex + 1];
-                    classifiedTriangles[classifiedTriangleIndex + 2] = baseTriangles[baseTriangleIndex + 2];
-                    classifiedTriangleIndex += 3;
+                    m_ClassifiedTriangles.Add(m_BaseTriangles[baseTriangleIndex + 0]);
+                    m_ClassifiedTriangles.Add(m_BaseTriangles[baseTriangleIndex + 1]);
+                    m_ClassifiedTriangles.Add(m_BaseTriangles[baseTriangleIndex + 2]);
                 }
             }
 
             classifiedMesh.vertices = baseMesh.vertices;
             classifiedMesh.normals = baseMesh.normals;
-            classifiedMesh.triangles = classifiedTriangles;
+            classifiedMesh.SetTriangles(m_ClassifiedTriangles, 0);
         }
 
     }
