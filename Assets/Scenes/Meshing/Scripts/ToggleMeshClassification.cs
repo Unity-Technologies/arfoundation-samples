@@ -52,13 +52,9 @@ public class ToggleMeshClassification : MonoBehaviour
     {
 #if UNITY_IOS && !UNITY_EDITOR
         Debug.Assert(m_MeshManager != null, "mesh manager cannot be null");
-        if (m_MeshManager != null)
+        if ((m_MeshManager != null) && (m_MeshManager.subsystem is XRMeshSubsystem meshSubsystem))
         {
-            XRMeshSubsystem meshSubsystem = m_MeshManager.subsystem as XRMeshSubsystem;
-            if (meshSubsystem != null)
-            {
-                meshSubsystem.SetClassificationEnabled(m_ClassificationEnabled);
-            }
+            meshSubsystem.SetClassificationEnabled(m_ClassificationEnabled);
         }
 #endif // UNITY_IOS && !UNITY_EDITOR
     }
