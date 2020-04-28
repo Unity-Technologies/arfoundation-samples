@@ -235,3 +235,23 @@ This sample shows all feature points over time, not just the current frame's fea
 This sample has two UI components:
 * A button in the lower left which allows you to switch between visualizing "All" the points and just those in the "Current Frame".
 * Text in the upper right which displays the number of points in each point cloud (ARCore & ARKit will only ever have one).
+
+## Meshing
+
+These meshing scenes use features of some devices to construct meshes from scanned data of real world surfaces.
+
+For ARKit, this functionality requires at least iPadOS 13.4 running on a device with a LiDAR scanner.
+
+### ClassificationMeshes
+
+This scene demonstrates mesh classification functionality. With mesh classification enabled, each triangle in the mesh surface is identified as one of several surface types. This sample scene creates submeshes for each classification type and renders each mesh type with a different color.
+
+This scene only works on ARKit.
+
+### NormalMeshes
+
+This scene renders an overlay on top of the real world scanned geometry illustrating the normal of the surface.
+
+### OcclusionMeshes
+
+This scene renders an occlusion mesh allowing for virtual content to be occluded by real world objects.
