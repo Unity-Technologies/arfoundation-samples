@@ -238,7 +238,7 @@ This sample has two UI components:
 
 ## Meshing
 
-These meshing scenes use features of some devices to construct meshes from scanned data of real world surfaces.
+These meshing scenes use features of some devices to construct meshes from scanned data of real world surfaces. These meshing scenes will not work on all devices.
 
 For ARKit, this functionality requires at least iPadOS 13.4 running on a device with a LiDAR scanner.
 
@@ -254,4 +254,4 @@ This scene renders an overlay on top of the real world scanned geometry illustra
 
 ### OcclusionMeshes
 
-This scene renders an occlusion mesh allowing for virtual content to be occluded by real world objects.
+At first, this scene may appear to be doing nothing. However, it is rendering a depth texture on top of the scene based on the real world geometry. This allows for the real world to occlude virtual content. The scene has a script on it that fires a red ball into the scene when you tap. You will see the occlusion working by firing the red balls into a space which you can then move the iPad camera behind some other real world object to see that the virtual red balls are occluded by the real world object.
