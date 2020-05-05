@@ -10,7 +10,7 @@ This set of samples relies on five Unity packages:
 * ARKit Face Tracking ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arkit-face-tracking@4.0/manual/index.html))
 * ARFoundation ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@4.0/manual/index.html))
 
-## Why version should I use?
+## What version should I use?
 
 A Unity package is either "Preview" or "Verified". The latest version of ARFoundation is usually marked as preview and may include experimental or unstable features. A "verified" package is developed targeting a specific version of Unity (though it may work with earlier version as well). All packages verified for the same version of Unity are known to work well together.
 
@@ -230,8 +230,14 @@ This sample requires a device with an A12 bionic chip running iOS 13.
 
 ## AllPointCloudPoints
 
-This sample shows all feature points over time, not just the current frame's feature points as the "AR Default Point Cloud" prefab does. It does this by using a slightly modified version of the `ARPointCloudParticleVisualzier` component that stores all the feature points in a Dictionary. Since each feature point has a unique identifier, it can look up the stored point and update its position in the dictionary if it already exists. This can be a useful starting point for custom solutions that require the entire map of point cloud points, e.g., for custom mesh reconstruction techniques.
+This sample shows all feature points over time, not just the current frame's feature points as the "AR Default Point Cloud" prefab does. It does this by using a slightly modified version of the `ARPointCloudParticleVisualizer` component that stores all the feature points in a Dictionary. Since each feature point has a unique identifier, it can look up the stored point and update its position in the dictionary if it already exists. This can be a useful starting point for custom solutions that require the entire map of point cloud points, e.g., for custom mesh reconstruction techniques.
 
 This sample has two UI components:
 * A button in the lower left which allows you to switch between visualizing "All" the points and just those in the "Current Frame".
 * Text in the upper right which displays the number of points in each point cloud (ARCore & ARKit will only ever have one).
+
+## CameraGrain
+
+This sample demonstrates the camera grain effect. Once a plane is deteced, you can place a cube on it with a material that simulates the camera grain noise in the camera feed. See the `CameraGrain.cs` script.
+
+This sample requires iOS 13 and is not supported on Android. It also is only supported on Unity 2020.2 and above.
