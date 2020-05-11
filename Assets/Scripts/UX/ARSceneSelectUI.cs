@@ -30,15 +30,6 @@ public class ARSceneSelectUI : MonoBehaviour
         set { m_HumanSegmentationMenu = value; }
     }
 
-
-    [SerializeField]
-    GameObject m_LightEstimationMenu;
-    public GameObject lightEstimationMenu
-    {
-        get { return m_LightEstimationMenu; }
-        set { m_LightEstimationMenu = value; }
-    }
-
     [SerializeField]
     GameObject m_PlaneDetectionMenu;
     public GameObject planeDetectionMenu
@@ -46,7 +37,6 @@ public class ARSceneSelectUI : MonoBehaviour
         get { return m_PlaneDetectionMenu; }
         set { m_PlaneDetectionMenu = value; }
     }
-
 
     void Start()
     {
@@ -63,11 +53,6 @@ public class ARSceneSelectUI : MonoBehaviour
         else if(ActiveMenu.currentMenu == MenuType.HumanSegmentation)
         {
             m_HumanSegmentationMenu.SetActive(true);
-            m_AllMenu.SetActive(false);
-        }
-        else if(ActiveMenu.currentMenu == MenuType.LightEstimation)
-        {
-            m_LightEstimationMenu.SetActive(true);
             m_AllMenu.SetActive(false);
         }
     }
@@ -204,14 +189,6 @@ public class ARSceneSelectUI : MonoBehaviour
         SceneManager.LoadScene("HumanSegmentationImages", LoadSceneMode.Single);
     }
 
-    public void LightEstimationMenuButtonPressed()
-    {
-        ActiveMenu.currentMenu = MenuType.LightEstimation;
-        m_LightEstimationMenu.SetActive(true);
-        m_AllMenu.SetActive(false);
-    }
-
-
      public void LightEstimationButtonPressed()
     {
         SceneManager.LoadScene("LightEstimation", LoadSceneMode.Single);
@@ -245,7 +222,6 @@ public class ARSceneSelectUI : MonoBehaviour
         m_FaceTrackingMenu.SetActive(false);
         m_PlaneDetectionMenu.SetActive(false);
         m_HumanSegmentationMenu.SetActive(false);
-        m_LightEstimationMenu.SetActive(false);
         m_AllMenu.SetActive(true);
     }
 }

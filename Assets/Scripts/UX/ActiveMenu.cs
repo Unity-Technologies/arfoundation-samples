@@ -9,7 +9,6 @@ public enum MenuType
     FaceTracking,
     PlaneDetection,
     HumanSegmentation,
-    LightEstimation
 }
 
 public static class ActiveMenu
