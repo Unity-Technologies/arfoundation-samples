@@ -10,7 +10,7 @@ This set of samples relies on five Unity packages:
 * ARKit Face Tracking ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arkit-face-tracking@4.0/manual/index.html))
 * ARFoundation ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@4.0/manual/index.html))
 
-## Why version should I use?
+## What version should I use?
 
 A Unity package is either "Preview" or "Verified". The latest version of ARFoundation is usually marked as preview and may include experimental or unstable features. A "verified" package is developed targeting a specific version of Unity (though it may work with earlier version as well). All packages verified for the same version of Unity are known to work well together.
 
@@ -152,6 +152,8 @@ This sample requires iOS 13.
 
 This sample demonstrates image tracking. Image tracking is supported on ARCore and ARKit. To enable image tracking, you must first create an `XRReferenceImageLibrary`. This is the set of images to look for in the environment. [Click here](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@4.0/manual/image-tracking.html) for instructions on creating one.
 
+You can also add images to the reference image library at runtime. This sample includes a button that adds the images `one.png` and `two.png` to the reference image library. See the script `DynamicLibrary.cs` for example code.
+
 At runtime, ARFoundation will generate an `ARTrackedImage` for each detected reference image. This sample uses the [`TrackedImageInfoManager.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ImageTracking/TrackedImageInfoManager.cs) script to overlay the original image on top of the detected image, along with some meta data.
 
 Run the sample on an ARCore or ARKit-capable device and point your device at one of the images in [`Assets/Scenes/ImageTracking/Images`](https://github.com/Unity-Technologies/arfoundation-samples/tree/master/Assets/Scenes/ImageTracking/Images). They can be displayed on a computer monitor; they do not need to be printed out.
@@ -235,3 +237,23 @@ This sample shows all feature points over time, not just the current frame's fea
 This sample has two UI components:
 * A button in the lower left which allows you to switch between visualizing "All" the points and just those in the "Current Frame".
 * Text in the upper right which displays the number of points in each point cloud (ARCore & ARKit will only ever have one).
+
+## Meshing
+
+These meshing scenes use features of some devices to construct meshes from scanned data of real world surfaces. These meshing scenes will not work on all devices.
+
+For ARKit, this functionality requires at least iPadOS 13.4 running on a device with a LiDAR scanner.
+
+### ClassificationMeshes
+
+This scene demonstrates mesh classification functionality. With mesh classification enabled, each triangle in the mesh surface is identified as one of several surface types. This sample scene creates submeshes for each classification type and renders each mesh type with a different color.
+
+This scene only works on ARKit.
+
+### NormalMeshes
+
+This scene renders an overlay on top of the real world scanned geometry illustrating the normal of the surface.
+
+### OcclusionMeshes
+
+At first, this scene may appear to be doing nothing. However, it is rendering a depth texture on top of the scene based on the real world geometry. This allows for the real world to occlude virtual content. The scene has a script on it that fires a red ball into the scene when you tap. You will see the occlusion working by firing the red balls into a space which you can then move the iPad camera behind some other real world object to see that the virtual red balls are occluded by the real world object.
