@@ -232,11 +232,17 @@ This sample requires a device with an A12 bionic chip running iOS 13.
 
 ## AllPointCloudPoints
 
-This sample shows all feature points over time, not just the current frame's feature points as the "AR Default Point Cloud" prefab does. It does this by using a slightly modified version of the `ARPointCloudParticleVisualzier` component that stores all the feature points in a Dictionary. Since each feature point has a unique identifier, it can look up the stored point and update its position in the dictionary if it already exists. This can be a useful starting point for custom solutions that require the entire map of point cloud points, e.g., for custom mesh reconstruction techniques.
+This sample shows all feature points over time, not just the current frame's feature points as the "AR Default Point Cloud" prefab does. It does this by using a slightly modified version of the `ARPointCloudParticleVisualizer` component that stores all the feature points in a Dictionary. Since each feature point has a unique identifier, it can look up the stored point and update its position in the dictionary if it already exists. This can be a useful starting point for custom solutions that require the entire map of point cloud points, e.g., for custom mesh reconstruction techniques.
 
 This sample has two UI components:
 * A button in the lower left which allows you to switch between visualizing "All" the points and just those in the "Current Frame".
 * Text in the upper right which displays the number of points in each point cloud (ARCore & ARKit will only ever have one).
+
+## CameraGrain
+
+This sample demonstrates the camera grain effect. Once a plane is deteced, you can place a cube on it with a material that simulates the camera grain noise in the camera feed. See the `CameraGrain.cs` script. Also see  `CameraGrain.shader` which animates and applies the camera grain texture (through linear interpolation) in screenspace.
+
+This sample requires a device running iOS 13 and Unity 2020.2 or later.
 
 ## Meshing
 
@@ -257,3 +263,4 @@ This scene renders an overlay on top of the real world scanned geometry illustra
 ### OcclusionMeshes
 
 At first, this scene may appear to be doing nothing. However, it is rendering a depth texture on top of the scene based on the real world geometry. This allows for the real world to occlude virtual content. The scene has a script on it that fires a red ball into the scene when you tap. You will see the occlusion working by firing the red balls into a space which you can then move the iPad camera behind some other real world object to see that the virtual red balls are occluded by the real world object.
+
