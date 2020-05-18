@@ -33,7 +33,7 @@ public class TestCameraImage : MonoBehaviour
     [Tooltip("The ARCameraManager which will produce frame events.")]
     ARCameraManager m_CameraManager;
 
-     /// <summary>
+    /// <summary>
     /// Get or set the <c>ARCameraManager</c>.
     /// </summary>
     public ARCameraManager cameraManager
@@ -43,16 +43,50 @@ public class TestCameraImage : MonoBehaviour
     }
 
     [SerializeField]
-    RawImage m_RawImage;
+    RawImage m_RawCameraImage;
 
     /// <summary>
     /// The UI RawImage used to display the image on screen.
     /// </summary>
-    public RawImage rawImage
+    public RawImage rawCameraImage
     {
-        get { return m_RawImage; }
-        set { m_RawImage = value; }
+        get { return m_RawCameraImage; }
+        set { m_RawCameraImage = value; }
     }
+
+     [SerializeField]
+     [Tooltip("The AROcclusionManager which will produce human depth and stencil textures.")]
+     AROcclusionManager m_OcclusionManager;
+
+     public AROcclusionManager occlusionManager
+     {
+         get => m_OcclusionManager;
+         set => m_OcclusionManager = value;
+     }
+
+     [SerializeField]
+     RawImage m_RawHumanDepthImage;
+
+     /// <summary>
+     /// The UI RawImage used to display the image on screen.
+     /// </summary>
+     public RawImage rawHumanDepthImage
+     {
+         get { return m_RawHumanDepthImage; }
+         set { m_RawHumanDepthImage = value; }
+     }
+
+     [SerializeField]
+     RawImage m_RawHumanStencilImage;
+
+     /// <summary>
+     /// The UI RawImage used to display the image on screen.
+     /// </summary>
+     public RawImage rawHumanStencilImage
+     {
+         get { return m_RawHumanStencilImage; }
+         set { m_RawHumanStencilImage = value; }
+     }
 
     [SerializeField]
     Text m_ImageInfo;
@@ -82,12 +116,11 @@ public class TestCameraImage : MonoBehaviour
         }
     }
 
-    unsafe void OnCameraFrameReceived(ARCameraFrameEventArgs eventArgs)
+    unsafe void UpdateCameraImage()
     {
         // Attempt to get the latest camera image. If this method succeeds,
         // it acquires a native resource that must be disposed (see below).
-        XRCameraImage image;
-        if (!cameraManager.TryGetLatestImage(out image))
+        if (!cameraManager.TryGetLatestImage(out XRCpuImage image))
         {
             return;
         }
@@ -97,45 +130,126 @@ public class TestCameraImage : MonoBehaviour
             "Image info:\n\twidth: {0}\n\theight: {1}\n\tplaneCount: {2}\n\ttimestamp: {3}\n\tformat: {4}",
             image.width, image.height, image.planeCount, image.timestamp, image.format);
 
-        // Once we have a valid XRCameraImage, we can access the individual image "planes"
-        // (the separate channels in the image). XRCameraImage.GetPlane provides
+        // Once we have a valid XRCpuImage, we can access the individual image "planes"
+        // (the separate channels in the image). XRCpuImage.GetPlane provides
         // low-overhead access to this data. This could then be passed to a
         // computer vision algorithm. Here, we will convert the camera image
         // to an RGBA texture and draw it on the screen.
 
         // Choose an RGBA format.
-        // See XRCameraImage.FormatSupported for a complete list of supported formats.
+        // See XRCpuImage.FormatSupported for a complete list of supported formats.
         var format = TextureFormat.RGBA32;
 
-        if (m_Texture == null || m_Texture.width != image.width || m_Texture.height != image.height)
+        if (m_CameraTexture == null || m_CameraTexture.width != image.width || m_CameraTexture.height != image.height)
         {
-            m_Texture = new Texture2D(image.width, image.height, format, false);
+            m_CameraTexture = new Texture2D(image.width, image.height, format, false);
         }
 
         // Convert the image to format, flipping the image across the Y axis.
         // We can also get a sub rectangle, but we'll get the full image here.
-        var conversionParams = new XRCameraImageConversionParams(image, format, CameraImageTransformation.MirrorY);
+        var conversionParams = new XRCpuImage.ConversionParams(image, format, XRCpuImage.Transformation.MirrorY);
 
         // Texture2D allows us write directly to the raw texture data
         // This allows us to do the conversion in-place without making any copies.
-        var rawTextureData = m_Texture.GetRawTextureData<byte>();
+        var rawTextureData = m_CameraTexture.GetRawTextureData<byte>();
         try
         {
             image.Convert(conversionParams, new IntPtr(rawTextureData.GetUnsafePtr()), rawTextureData.Length);
         }
         finally
         {
-            // We must dispose of the XRCameraImage after we're finished
+            // We must dispose of the XRCpuImage after we're finished
             // with it to avoid leaking native resources.
             image.Dispose();
         }
 
         // Apply the updated texture data to our texture
-        m_Texture.Apply();
+        m_CameraTexture.Apply();
 
         // Set the RawImage's texture so we can visualize it.
-        m_RawImage.texture = m_Texture;
+        m_RawCameraImage.texture = m_CameraTexture;
     }
 
-    Texture2D m_Texture;
+    void UpdateHumanDepthImage()
+    {
+        if (occlusionManager == null)
+            return;
+
+        // Attempt to get the latest human depth image. If this method succeeds,
+        // it acquires a native resource that must be disposed (see below).
+        if (!occlusionManager.TryAcquireHumanDepthCpuImage(out XRCpuImage image))
+            return;
+
+        using (image)
+        {
+            if (m_HumanDepthTexture == null || m_HumanDepthTexture.width != image.width || m_HumanDepthTexture.height != image.height)
+            {
+                m_HumanDepthTexture = new Texture2D(image.width, image.height, TextureFormat.R8, false);
+            }
+
+            var rawData = m_HumanDepthTexture.GetRawTextureData<byte>();
+
+            rawData.CopyFrom(image.GetPlane(0).data);
+
+            m_HumanDepthTexture.Apply();
+
+            m_RawHumanDepthImage.texture = m_HumanDepthTexture;
+        }
+    }
+
+    void UpdateRawImage(RawImage rawImage, XRCpuImage cpuImage)
+    {
+        var texture = rawImage.texture as Texture2D;
+        if (texture == null || texture.width != cpuImage.width || texture.height != cpuImage.height)
+        {
+            texture = new Texture2D(cpuImage.width, cpuImage.height, cpuImage.format.AsTextureFormat(), false);
+            rawImage.texture = texture;
+            Debug.Log($"Texture2D has {texture.GetRawTextureData<byte>().Length} bytes.");
+        }
+
+        Debug.Log($"Plane 0 has {cpuImage.GetPlane(0).data.Length} bytes");
+        texture.GetRawTextureData<byte>().CopyFrom(cpuImage.GetPlane(0).data);
+        texture.Apply();
+    }
+
+    void UpdateHumanStencilImage()
+    {
+        if (occlusionManager == null)
+            return;
+
+        if (m_RawHumanStencilImage == null)
+            return;
+
+        // Attempt to get the latest human stencil image. If this method succeeds,
+        // it acquires a native resource that must be disposed (see below).
+        if (!occlusionManager.TryAcquireHumanStencilCpuImage(out XRCpuImage image))
+            return;
+
+        using (image)
+        {
+            var texture = m_RawHumanStencilImage.texture as Texture2D;
+            if (texture == null || texture.width != image.width || texture.height != image.height)
+            {
+                texture = new Texture2D(image.width, image.height, TextureFormat.RFloat, false);
+                m_RawHumanStencilImage.texture = texture;
+                Debug.Log($"Texture2D has {texture.GetRawTextureData<byte>().Length} bytes.");
+            }
+
+            Debug.Log($"Plane 0 has {image.GetPlane(0).data.Length} bytes");
+            texture.GetRawTextureData<byte>().CopyFrom(image.GetPlane(0).data);
+
+            texture.Apply();
+        }
+    }
+
+    void OnCameraFrameReceived(ARCameraFrameEventArgs eventArgs)
+    {
+        UpdateCameraImage();
+        UpdateHumanDepthImage();
+        UpdateHumanStencilImage();
+    }
+
+    Texture2D m_CameraTexture;
+
+    Texture2D m_HumanDepthTexture;
 }
