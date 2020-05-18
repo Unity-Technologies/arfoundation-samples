@@ -152,6 +152,8 @@ This sample requires iOS 13.
 
 This sample demonstrates image tracking. Image tracking is supported on ARCore and ARKit. To enable image tracking, you must first create an `XRReferenceImageLibrary`. This is the set of images to look for in the environment. [Click here](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@4.0/manual/image-tracking.html) for instructions on creating one.
 
+You can also add images to the reference image library at runtime. This sample includes a button that adds the images `one.png` and `two.png` to the reference image library. See the script `DynamicLibrary.cs` for example code.
+
 At runtime, ARFoundation will generate an `ARTrackedImage` for each detected reference image. This sample uses the [`TrackedImageInfoManager.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ImageTracking/TrackedImageInfoManager.cs) script to overlay the original image on top of the detected image, along with some meta data.
 
 Run the sample on an ARCore or ARKit-capable device and point your device at one of the images in [`Assets/Scenes/ImageTracking/Images`](https://github.com/Unity-Technologies/arfoundation-samples/tree/master/Assets/Scenes/ImageTracking/Images). They can be displayed on a computer monitor; they do not need to be printed out.
@@ -241,3 +243,24 @@ This sample has two UI components:
 This sample demonstrates the camera grain effect. Once a plane is deteced, you can place a cube on it with a material that simulates the camera grain noise in the camera feed. See the `CameraGrain.cs` script. Also see  `CameraGrain.shader` which animates and applies the camera grain texture (through linear interpolation) in screenspace.
 
 This sample requires a device running iOS 13 and Unity 2020.2 or later.
+
+## Meshing
+
+These meshing scenes use features of some devices to construct meshes from scanned data of real world surfaces. These meshing scenes will not work on all devices.
+
+For ARKit, this functionality requires at least iPadOS 13.4 running on a device with a LiDAR scanner.
+
+### ClassificationMeshes
+
+This scene demonstrates mesh classification functionality. With mesh classification enabled, each triangle in the mesh surface is identified as one of several surface types. This sample scene creates submeshes for each classification type and renders each mesh type with a different color.
+
+This scene only works on ARKit.
+
+### NormalMeshes
+
+This scene renders an overlay on top of the real world scanned geometry illustrating the normal of the surface.
+
+### OcclusionMeshes
+
+At first, this scene may appear to be doing nothing. However, it is rendering a depth texture on top of the scene based on the real world geometry. This allows for the real world to occlude virtual content. The scene has a script on it that fires a red ball into the scene when you tap. You will see the occlusion working by firing the red balls into a space which you can then move the iPad camera behind some other real world object to see that the virtual red balls are occluded by the real world object.
+
