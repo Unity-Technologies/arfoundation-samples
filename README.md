@@ -82,13 +82,15 @@ To use this sample, first move the device around until a plane is detected, then
 
 The relevant script is [`MakeAppearOnPlane.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/MakeAppearOnPlane.cs).
 
-## CameraImage
+## CpuImage
 
-This samples shows how to manipulate the camera textures on the CPU. The video feed for pass through cameras involves GPU-only textures, and manipulating them on the CPU (e.g., for computer vision algorithms) would require an expensive GPU read. Fortunately, ARFoundation provides an API for obtaining the camera image on the CPU for further processing.
+This samples shows how to acquire and manipulate textures obtained from ARFoundation on the CPU. Most textures in ARFoundation (e.g., the pass-through video supplied by the `ARCameraManager`, and the human depth and human stencil buffers provided by the `AROcclusionManager`) are GPU textures. Computer vision or other CPU-based applications often require the pixel buffers on the CPU, which would normally involve an expensive GPU readback. ARFoundation provides an API for obtaining these textures on the CPU for further processing, without incurring the costly GPU readback.
 
-The relevant script is [`TestCameraImage.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/TestCameraImage.cs).
+The relevant script is [`CpuImageSample.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/CpuImageSample.cs).
 
-The resolution of the CPU image is affected by the camera's configuration. The current configuration is indicated at the bottom left of the screen inside a dropdown box which lets you select one of the supported camera configurations. The [`CameraConfigController.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/CameraConfigController.cs) demonstrates enumerating and selecting a camera configuration. It is on the `CameraConfigs` GameObject.
+The resolution of the camera image is affected by the camera's configuration. The current configuration is indicated at the bottom left of the screen inside a dropdown box which lets you select one of the supported camera configurations. The [`CameraConfigController.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/CameraConfigController.cs) demonstrates enumerating and selecting a camera configuration. It is on the `CameraConfigs` GameObject.
+
+Where available (currently iOS 13+ only), the human depth and human stencil textures are also available on the CPU. These appear inside two additional boxes underneath the camera's image.
 
 ## TogglePlaneDetection
 
