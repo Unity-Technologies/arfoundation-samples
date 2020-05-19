@@ -120,7 +120,7 @@ public class TestCameraImage : MonoBehaviour
     {
         // Attempt to get the latest camera image. If this method succeeds,
         // it acquires a native resource that must be disposed (see below).
-        if (!cameraManager.TryGetLatestImage(out XRCpuImage image))
+        if (!cameraManager.TryAcquireLatestCpuImage(out XRCpuImage image))
         {
             return;
         }
