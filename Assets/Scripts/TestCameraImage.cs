@@ -182,34 +182,8 @@ public class TestCameraImage : MonoBehaviour
 
         using (image)
         {
-            if (m_HumanDepthTexture == null || m_HumanDepthTexture.width != image.width || m_HumanDepthTexture.height != image.height)
-            {
-                m_HumanDepthTexture = new Texture2D(image.width, image.height, TextureFormat.R8, false);
-            }
-
-            var rawData = m_HumanDepthTexture.GetRawTextureData<byte>();
-
-            rawData.CopyFrom(image.GetPlane(0).data);
-
-            m_HumanDepthTexture.Apply();
-
-            m_RawHumanDepthImage.texture = m_HumanDepthTexture;
+            UpdateRawImage(m_RawHumanDepthImage, image);
         }
-    }
-
-    void UpdateRawImage(RawImage rawImage, XRCpuImage cpuImage)
-    {
-        var texture = rawImage.texture as Texture2D;
-        if (texture == null || texture.width != cpuImage.width || texture.height != cpuImage.height)
-        {
-            texture = new Texture2D(cpuImage.width, cpuImage.height, cpuImage.format.AsTextureFormat(), false);
-            rawImage.texture = texture;
-            Debug.Log($"Texture2D has {texture.GetRawTextureData<byte>().Length} bytes.");
-        }
-
-        Debug.Log($"Plane 0 has {cpuImage.GetPlane(0).data.Length} bytes");
-        texture.GetRawTextureData<byte>().CopyFrom(cpuImage.GetPlane(0).data);
-        texture.Apply();
     }
 
     void UpdateHumanStencilImage()
@@ -227,19 +201,28 @@ public class TestCameraImage : MonoBehaviour
 
         using (image)
         {
-            var texture = m_RawHumanStencilImage.texture as Texture2D;
-            if (texture == null || texture.width != image.width || texture.height != image.height)
-            {
-                texture = new Texture2D(image.width, image.height, TextureFormat.RFloat, false);
-                m_RawHumanStencilImage.texture = texture;
-                Debug.Log($"Texture2D has {texture.GetRawTextureData<byte>().Length} bytes.");
-            }
-
-            Debug.Log($"Plane 0 has {image.GetPlane(0).data.Length} bytes");
-            texture.GetRawTextureData<byte>().CopyFrom(image.GetPlane(0).data);
-
-            texture.Apply();
+            UpdateRawImage(m_RawHumanStencilImage, image);
         }
+    }
+
+    static void UpdateRawImage(RawImage rawImage, XRCpuImage cpuImage)
+    {
+        var texture = rawImage.texture as Texture2D;
+        if (texture == null || texture.width != cpuImage.width || texture.height != cpuImage.height)
+        {
+            texture = new Texture2D(cpuImage.width, cpuImage.height, cpuImage.format.AsTextureFormat(), false);
+            rawImage.texture = texture;
+        }
+
+        var conversionParams = new XRCpuImage.ConversionParams(cpuImage, cpuImage.format.AsTextureFormat(), XRCpuImage.Transformation.MirrorY);
+        var rawTextureData = texture.GetRawTextureData<byte>();
+
+        unsafe
+        {
+            cpuImage.Convert(conversionParams, new IntPtr(rawTextureData.GetUnsafePtr()), rawTextureData.Length);
+        }
+
+        texture.Apply();
     }
 
     void OnCameraFrameReceived(ARCameraFrameEventArgs eventArgs)
@@ -250,6 +233,4 @@ public class TestCameraImage : MonoBehaviour
     }
 
     Texture2D m_CameraTexture;
-
-    Texture2D m_HumanDepthTexture;
 }
