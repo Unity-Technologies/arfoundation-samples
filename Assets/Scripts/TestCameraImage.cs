@@ -38,8 +38,8 @@ public class TestCameraImage : MonoBehaviour
     /// </summary>
     public ARCameraManager cameraManager
     {
-        get { return m_CameraManager; }
-        set { m_CameraManager = value; }
+        get => m_CameraManager;
+        set => m_CameraManager = value;
     }
 
     [SerializeField]
@@ -50,8 +50,8 @@ public class TestCameraImage : MonoBehaviour
     /// </summary>
     public RawImage rawCameraImage
     {
-        get { return m_RawCameraImage; }
-        set { m_RawCameraImage = value; }
+        get => m_RawCameraImage;
+        set => m_RawCameraImage = value;
     }
 
      [SerializeField]
@@ -72,8 +72,8 @@ public class TestCameraImage : MonoBehaviour
      /// </summary>
      public RawImage rawHumanDepthImage
      {
-         get { return m_RawHumanDepthImage; }
-         set { m_RawHumanDepthImage = value; }
+         get => m_RawHumanDepthImage;
+         set => m_RawHumanDepthImage = value;
      }
 
      [SerializeField]
@@ -84,8 +84,8 @@ public class TestCameraImage : MonoBehaviour
      /// </summary>
      public RawImage rawHumanStencilImage
      {
-         get { return m_RawHumanStencilImage; }
-         set { m_RawHumanStencilImage = value; }
+         get => m_RawHumanStencilImage;
+         set => m_RawHumanStencilImage = value;
      }
 
     [SerializeField]
@@ -96,8 +96,8 @@ public class TestCameraImage : MonoBehaviour
     /// </summary>
     public Text imageInfo
     {
-        get { return m_ImageInfo; }
-        set { m_ImageInfo = value; }
+        get => m_ImageInfo;
+        set => m_ImageInfo = value;
     }
 
     void OnEnable()
