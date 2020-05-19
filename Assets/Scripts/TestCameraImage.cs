@@ -172,36 +172,41 @@ public class TestCameraImage : MonoBehaviour
 
     void UpdateHumanDepthImage()
     {
-        if (occlusionManager == null)
+        if (m_RawHumanDepthImage == null)
             return;
 
         // Attempt to get the latest human depth image. If this method succeeds,
         // it acquires a native resource that must be disposed (see below).
-        if (!occlusionManager.TryAcquireHumanDepthCpuImage(out XRCpuImage image))
-            return;
-
-        using (image)
+        if (occlusionManager && occlusionManager.TryAcquireHumanDepthCpuImage(out XRCpuImage image))
         {
-            UpdateRawImage(m_RawHumanDepthImage, image);
+            using (image)
+            {
+                UpdateRawImage(m_RawHumanDepthImage, image);
+            }
+        }
+        else
+        {
+            m_RawHumanDepthImage.enabled = false;
         }
     }
 
     void UpdateHumanStencilImage()
     {
-        if (occlusionManager == null)
-            return;
-
         if (m_RawHumanStencilImage == null)
             return;
 
         // Attempt to get the latest human stencil image. If this method succeeds,
         // it acquires a native resource that must be disposed (see below).
-        if (!occlusionManager.TryAcquireHumanStencilCpuImage(out XRCpuImage image))
-            return;
-
-        using (image)
+        if (occlusionManager && occlusionManager.TryAcquireHumanStencilCpuImage(out XRCpuImage image))
         {
-            UpdateRawImage(m_RawHumanStencilImage, image);
+            using (image)
+            {
+                UpdateRawImage(m_RawHumanStencilImage, image);
+            }
+        }
+        else
+        {
+            m_RawHumanStencilImage.enabled = false;
         }
     }
 
@@ -235,6 +240,9 @@ public class TestCameraImage : MonoBehaviour
 
         // "Apply" the new pixel data to the Texture2D.
         texture.Apply();
+
+        // Make sure it's enabled.
+        rawImage.enabled = true;
     }
 
     void OnCameraFrameReceived(ARCameraFrameEventArgs eventArgs)
