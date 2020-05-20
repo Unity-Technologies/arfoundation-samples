@@ -10,7 +10,7 @@ This set of samples relies on five Unity packages:
 * ARKit Face Tracking ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arkit-face-tracking@4.0/manual/index.html))
 * ARFoundation ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@4.0/manual/index.html))
 
-## Why version should I use?
+## What version should I use?
 
 A Unity package is either "Preview" or "Verified". The latest version of ARFoundation is usually marked as preview and may include experimental or unstable features. A "verified" package is developed targeting a specific version of Unity (though it may work with earlier version as well). All packages verified for the same version of Unity are known to work well together.
 
@@ -82,13 +82,15 @@ To use this sample, first move the device around until a plane is detected, then
 
 The relevant script is [`MakeAppearOnPlane.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/MakeAppearOnPlane.cs).
 
-## CameraImage
+## CpuImages
 
-This samples shows how to manipulate the camera textures on the CPU. The video feed for pass through cameras involves GPU-only textures, and manipulating them on the CPU (e.g., for computer vision algorithms) would require an expensive GPU read. Fortunately, ARFoundation provides an API for obtaining the camera image on the CPU for further processing.
+This samples shows how to acquire and manipulate textures obtained from ARFoundation on the CPU. Most textures in ARFoundation (e.g., the pass-through video supplied by the `ARCameraManager`, and the human depth and human stencil buffers provided by the `AROcclusionManager`) are GPU textures. Computer vision or other CPU-based applications often require the pixel buffers on the CPU, which would normally involve an expensive GPU readback. ARFoundation provides an API for obtaining these textures on the CPU for further processing, without incurring the costly GPU readback.
 
-The relevant script is [`TestCameraImage.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/TestCameraImage.cs).
+The relevant script is [`CpuImageSample.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/CpuImageSample.cs).
 
-The resolution of the CPU image is affected by the camera's configuration. The current configuration is indicated at the bottom left of the screen inside a dropdown box which lets you select one of the supported camera configurations. The [`CameraConfigController.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/CameraConfigController.cs) demonstrates enumerating and selecting a camera configuration. It is on the `CameraConfigs` GameObject.
+The resolution of the camera image is affected by the camera's configuration. The current configuration is indicated at the bottom left of the screen inside a dropdown box which lets you select one of the supported camera configurations. The [`CameraConfigController.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/CameraConfigController.cs) demonstrates enumerating and selecting a camera configuration. It is on the `CameraConfigs` GameObject.
+
+Where available (currently iOS 13+ only), the human depth and human stencil textures are also available on the CPU. These appear inside two additional boxes underneath the camera's image.
 
 ## TogglePlaneDetection
 
@@ -151,6 +153,8 @@ This sample requires iOS 13.
 ## ImageTracking
 
 This sample demonstrates image tracking. Image tracking is supported on ARCore and ARKit. To enable image tracking, you must first create an `XRReferenceImageLibrary`. This is the set of images to look for in the environment. [Click here](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@4.0/manual/image-tracking.html) for instructions on creating one.
+
+You can also add images to the reference image library at runtime. This sample includes a button that adds the images `one.png` and `two.png` to the reference image library. See the script `DynamicLibrary.cs` for example code.
 
 At runtime, ARFoundation will generate an `ARTrackedImage` for each detected reference image. This sample uses the [`TrackedImageInfoManager.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ImageTracking/TrackedImageInfoManager.cs) script to overlay the original image on top of the detected image, along with some meta data.
 
@@ -230,8 +234,35 @@ This sample requires a device with an A12 bionic chip running iOS 13.
 
 ## AllPointCloudPoints
 
-This sample shows all feature points over time, not just the current frame's feature points as the "AR Default Point Cloud" prefab does. It does this by using a slightly modified version of the `ARPointCloudParticleVisualzier` component that stores all the feature points in a Dictionary. Since each feature point has a unique identifier, it can look up the stored point and update its position in the dictionary if it already exists. This can be a useful starting point for custom solutions that require the entire map of point cloud points, e.g., for custom mesh reconstruction techniques.
+This sample shows all feature points over time, not just the current frame's feature points as the "AR Default Point Cloud" prefab does. It does this by using a slightly modified version of the `ARPointCloudParticleVisualizer` component that stores all the feature points in a Dictionary. Since each feature point has a unique identifier, it can look up the stored point and update its position in the dictionary if it already exists. This can be a useful starting point for custom solutions that require the entire map of point cloud points, e.g., for custom mesh reconstruction techniques.
 
 This sample has two UI components:
 * A button in the lower left which allows you to switch between visualizing "All" the points and just those in the "Current Frame".
 * Text in the upper right which displays the number of points in each point cloud (ARCore & ARKit will only ever have one).
+
+## CameraGrain
+
+This sample demonstrates the camera grain effect. Once a plane is deteced, you can place a cube on it with a material that simulates the camera grain noise in the camera feed. See the `CameraGrain.cs` script. Also see  `CameraGrain.shader` which animates and applies the camera grain texture (through linear interpolation) in screenspace.
+
+This sample requires a device running iOS 13 and Unity 2020.2 or later.
+
+## Meshing
+
+These meshing scenes use features of some devices to construct meshes from scanned data of real world surfaces. These meshing scenes will not work on all devices.
+
+For ARKit, this functionality requires at least iPadOS 13.4 running on a device with a LiDAR scanner.
+
+### ClassificationMeshes
+
+This scene demonstrates mesh classification functionality. With mesh classification enabled, each triangle in the mesh surface is identified as one of several surface types. This sample scene creates submeshes for each classification type and renders each mesh type with a different color.
+
+This scene only works on ARKit.
+
+### NormalMeshes
+
+This scene renders an overlay on top of the real world scanned geometry illustrating the normal of the surface.
+
+### OcclusionMeshes
+
+At first, this scene may appear to be doing nothing. However, it is rendering a depth texture on top of the scene based on the real world geometry. This allows for the real world to occlude virtual content. The scene has a script on it that fires a red ball into the scene when you tap. You will see the occlusion working by firing the red balls into a space which you can then move the iPad camera behind some other real world object to see that the virtual red balls are occluded by the real world object.
+
