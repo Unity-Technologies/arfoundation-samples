@@ -82,7 +82,7 @@ To use this sample, first move the device around until a plane is detected, then
 
 The relevant script is [`MakeAppearOnPlane.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/MakeAppearOnPlane.cs).
 
-## CpuImage
+## CpuImages
 
 This samples shows how to acquire and manipulate textures obtained from ARFoundation on the CPU. Most textures in ARFoundation (e.g., the pass-through video supplied by the `ARCameraManager`, and the human depth and human stencil buffers provided by the `AROcclusionManager`) are GPU textures. Computer vision or other CPU-based applications often require the pixel buffers on the CPU, which would normally involve an expensive GPU readback. ARFoundation provides an API for obtaining these textures on the CPU for further processing, without incurring the costly GPU readback.
 
