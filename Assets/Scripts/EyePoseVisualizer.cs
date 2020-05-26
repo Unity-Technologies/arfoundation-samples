@@ -7,82 +7,85 @@ using UnityEngine.XR.ARSubsystems;
 using UnityEngine.XR.ARKit;
 #endif
 
-/// <summary>
-/// Visualizes the eye poses for an <see cref="ARFace"/>.
-/// </summary>
-/// <remarks>
-/// Face space is the space where the origin is the transform of an <see cref="ARFace"/>.
-/// </remarks>
-[RequireComponent(typeof(ARFace))]
-public class EyePoseVisualizer : MonoBehaviour
+namespace UnityEngine.XR.ARFoundation.Samples
 {
-    [SerializeField]
-    GameObject m_EyePrefab;
-
-    public GameObject eyePrefab
+    /// <summary>
+    /// Visualizes the eye poses for an <see cref="ARFace"/>.
+    /// </summary>
+    /// <remarks>
+    /// Face space is the space where the origin is the transform of an <see cref="ARFace"/>.
+    /// </remarks>
+    [RequireComponent(typeof(ARFace))]
+    public class EyePoseVisualizer : MonoBehaviour
     {
-        get => m_EyePrefab;
-        set => m_EyePrefab = value;
-    }
+        [SerializeField]
+        GameObject m_EyePrefab;
 
-    GameObject m_LeftEyeGameObject;
-    GameObject m_RightEyeGameObject;
-
-    ARFace m_Face;
-    XRFaceSubsystem m_FaceSubsystem;
-
-    void Awake()
-    {
-        m_Face = GetComponent<ARFace>();
-    }
-
-    void CreateEyeGameObjectsIfNecessary()
-    {
-        if (m_Face.leftEye != null && m_LeftEyeGameObject == null )
+        public GameObject eyePrefab
         {
-            m_LeftEyeGameObject = Instantiate(m_EyePrefab, m_Face.leftEye);
-            m_LeftEyeGameObject.SetActive(false);
+            get => m_EyePrefab;
+            set => m_EyePrefab = value;
         }
-        if (m_Face.rightEye != null && m_RightEyeGameObject == null)
-        {
-            m_RightEyeGameObject = Instantiate(m_EyePrefab, m_Face.rightEye);
-            m_RightEyeGameObject.SetActive(false);
-        }
-    }
 
-    void SetVisible(bool visible)
-    {
-        if (m_LeftEyeGameObject != null && m_RightEyeGameObject != null)
-        {
-            m_LeftEyeGameObject.SetActive(visible);
-            m_RightEyeGameObject.SetActive(visible);
-        }
-    }
+        GameObject m_LeftEyeGameObject;
+        GameObject m_RightEyeGameObject;
 
-    void OnEnable()
-    {
-        var faceManager = FindObjectOfType<ARFaceManager>();
-        if (faceManager != null && faceManager.subsystem != null && faceManager.subsystem.SubsystemDescriptor.supportsEyeTracking)
+        ARFace m_Face;
+        XRFaceSubsystem m_FaceSubsystem;
+
+        void Awake()
         {
-            m_FaceSubsystem = (XRFaceSubsystem)faceManager.subsystem;
+            m_Face = GetComponent<ARFace>();
+        }
+
+        void CreateEyeGameObjectsIfNecessary()
+        {
+            if (m_Face.leftEye != null && m_LeftEyeGameObject == null )
+            {
+                m_LeftEyeGameObject = Instantiate(m_EyePrefab, m_Face.leftEye);
+                m_LeftEyeGameObject.SetActive(false);
+            }
+            if (m_Face.rightEye != null && m_RightEyeGameObject == null)
+            {
+                m_RightEyeGameObject = Instantiate(m_EyePrefab, m_Face.rightEye);
+                m_RightEyeGameObject.SetActive(false);
+            }
+        }
+
+        void SetVisible(bool visible)
+        {
+            if (m_LeftEyeGameObject != null && m_RightEyeGameObject != null)
+            {
+                m_LeftEyeGameObject.SetActive(visible);
+                m_RightEyeGameObject.SetActive(visible);
+            }
+        }
+
+        void OnEnable()
+        {
+            var faceManager = FindObjectOfType<ARFaceManager>();
+            if (faceManager != null && faceManager.subsystem != null && faceManager.subsystem.SubsystemDescriptor.supportsEyeTracking)
+            {
+                m_FaceSubsystem = (XRFaceSubsystem)faceManager.subsystem;
+                SetVisible((m_Face.trackingState == TrackingState.Tracking) && (ARSession.state > ARSessionState.Ready));
+                m_Face.updated += OnUpdated;
+            }
+            else
+            {
+                enabled = false;
+            }
+        }
+
+        void OnDisable()
+        {
+            m_Face.updated -= OnUpdated;
+            SetVisible(false);
+        }
+
+        void OnUpdated(ARFaceUpdatedEventArgs eventArgs)
+        {
+            CreateEyeGameObjectsIfNecessary();
             SetVisible((m_Face.trackingState == TrackingState.Tracking) && (ARSession.state > ARSessionState.Ready));
-            m_Face.updated += OnUpdated;
         }
-        else
-        {
-            enabled = false;
-        }
-    }
-
-    void OnDisable()
-    {
-        m_Face.updated -= OnUpdated;
-        SetVisible(false);
-    }
-
-    void OnUpdated(ARFaceUpdatedEventArgs eventArgs)
-    {
-        CreateEyeGameObjectsIfNecessary();
-        SetVisible((m_Face.trackingState == TrackingState.Tracking) && (ARSession.state > ARSessionState.Ready));
     }
 }

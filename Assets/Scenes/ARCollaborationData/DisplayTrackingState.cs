@@ -4,38 +4,41 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 
-/// <summary>
-/// When relocalizing with ARCollaborationData or ARWorldMaps, the tracking state
-/// should change to TrackingState.Limited until the device has successfully
-/// relocalized to the new data. If it remains TrackingState.Tracking, then
-/// it is not working.
-/// </summary>
-[RequireComponent(typeof(ARSession))]
-public class DisplayTrackingState : MonoBehaviour
+namespace UnityEngine.XR.ARFoundation.Samples
 {
-    [SerializeField]
-    Text m_Text;
-
-    public Text text
+    /// <summary>
+    /// When relocalizing with ARCollaborationData or ARWorldMaps, the tracking state
+    /// should change to TrackingState.Limited until the device has successfully
+    /// relocalized to the new data. If it remains TrackingState.Tracking, then
+    /// it is not working.
+    /// </summary>
+    [RequireComponent(typeof(ARSession))]
+    public class DisplayTrackingState : MonoBehaviour
     {
-        get { return m_Text; }
-        set { m_Text = value; }
-    }
+        [SerializeField]
+        Text m_Text;
 
-    ARSession m_Session;
-
-    void Start()
-    {
-        m_Session = GetComponent<ARSession>();
-    }
-
-    void Update()
-    {
-        if (text != null)
+        public Text text
         {
-            text.text = $"Session ID = {m_Session.subsystem.sessionId}\n" +
-                        $"Session state = {ARSession.state.ToString()}\n" +
-                        $"Tracking state = {m_Session.subsystem.trackingState}";
+            get { return m_Text; }
+            set { m_Text = value; }
+        }
+
+        ARSession m_Session;
+
+        void Start()
+        {
+            m_Session = GetComponent<ARSession>();
+        }
+
+        void Update()
+        {
+            if (text != null)
+            {
+                text.text = $"Session ID = {m_Session.subsystem.sessionId}\n" +
+                            $"Session state = {ARSession.state.ToString()}\n" +
+                            $"Tracking state = {m_Session.subsystem.trackingState}";
+            }
         }
     }
 }

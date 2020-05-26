@@ -3,39 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 
-public class CameraGrain: MonoBehaviour
+namespace UnityEngine.XR.ARFoundation.Samples
 {
-    [SerializeField]
-    ARCameraManager m_CameraManager;
-    public ARCameraManager cameraManager
+    public class CameraGrain: MonoBehaviour
     {
-        get { return m_CameraManager; }
-        set { m_CameraManager = value; }
-    }
-
-    Renderer m_Renderer;
-
-    void Start()
-    {
-        if(m_CameraManager == null)
+        [SerializeField]
+        ARCameraManager m_CameraManager;
+        public ARCameraManager cameraManager
         {
-            m_CameraManager = FindObjectOfType (typeof(ARCameraManager)) as ARCameraManager;
+            get { return m_CameraManager; }
+            set { m_CameraManager = value; }
         }
 
-        m_Renderer = GetComponent<Renderer>();
-        m_CameraManager.frameReceived += OnReceivedFrame;
-    }
+        Renderer m_Renderer;
 
-    void OnDisable()
-    {
-        m_CameraManager.frameReceived -= OnReceivedFrame;
-    }
-
-    void OnReceivedFrame(ARCameraFrameEventArgs eventArgs){
-        if(m_Renderer != null && eventArgs.cameraGrainTexture != null)
+        void Start()
         {
-            m_Renderer.material.SetTexture("_NoiseTex", eventArgs.cameraGrainTexture);
-            m_Renderer.material.SetFloat("_NoiseIntensity", eventArgs.noiseIntensity);
+            if(m_CameraManager == null)
+            {
+                m_CameraManager = FindObjectOfType (typeof(ARCameraManager)) as ARCameraManager;
+            }
+
+            m_Renderer = GetComponent<Renderer>();
+            m_CameraManager.frameReceived += OnReceivedFrame;
+        }
+
+        void OnDisable()
+        {
+            m_CameraManager.frameReceived -= OnReceivedFrame;
+        }
+
+        void OnReceivedFrame(ARCameraFrameEventArgs eventArgs){
+            if(m_Renderer != null && eventArgs.cameraGrainTexture != null)
+            {
+                m_Renderer.material.SetTexture("_NoiseTex", eventArgs.cameraGrainTexture);
+                m_Renderer.material.SetFloat("_NoiseIntensity", eventArgs.noiseIntensity);
+            }
         }
     }
 }

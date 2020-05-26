@@ -5,64 +5,67 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CollaborationNetworkingIndicator : MonoBehaviour
+namespace UnityEngine.XR.ARFoundation.Samples
 {
-    [SerializeField]
-    Image m_IncomingDataImage;
-
-    public Image incomingDataImage
+    public class CollaborationNetworkingIndicator : MonoBehaviour
     {
-        get { return m_IncomingDataImage; }
-        set { m_IncomingDataImage = value; }
-    }
+        [SerializeField]
+        Image m_IncomingDataImage;
 
-    [SerializeField]
-    Image m_OutgoingDataImage;
+        public Image incomingDataImage
+        {
+            get { return m_IncomingDataImage; }
+            set { m_IncomingDataImage = value; }
+        }
 
-    public Image outgoingDataImage
-    {
-        get { return m_OutgoingDataImage; }
-        set { m_OutgoingDataImage = value; }
-    }
+        [SerializeField]
+        Image m_OutgoingDataImage;
 
-    [SerializeField]
-    Image m_HasCollaborationDataImage;
+        public Image outgoingDataImage
+        {
+            get { return m_OutgoingDataImage; }
+            set { m_OutgoingDataImage = value; }
+        }
 
-    public Image hasCollaborationDataImage
-    {
-        get { return m_HasCollaborationDataImage; }
-        set { m_HasCollaborationDataImage = value; }
-    }
+        [SerializeField]
+        Image m_HasCollaborationDataImage;
 
-    static bool s_IncomingDataReceived;
+        public Image hasCollaborationDataImage
+        {
+            get { return m_HasCollaborationDataImage; }
+            set { m_HasCollaborationDataImage = value; }
+        }
 
-    static bool s_OutgoingDataSent;
+        static bool s_IncomingDataReceived;
 
-    static bool s_HasCollaborationData;
+        static bool s_OutgoingDataSent;
 
-    void Update()
-    {
-        m_IncomingDataImage.color = s_IncomingDataReceived ? Color.green : Color.red;
-        m_OutgoingDataImage.color = s_OutgoingDataSent ? Color.green : Color.red;
-        m_HasCollaborationDataImage.color = s_HasCollaborationData ? Color.green : Color.red;
+        static bool s_HasCollaborationData;
 
-        s_IncomingDataReceived = false;
-        s_OutgoingDataSent = false;
-        s_HasCollaborationData = false;
-    }
+        void Update()
+        {
+            m_IncomingDataImage.color = s_IncomingDataReceived ? Color.green : Color.red;
+            m_OutgoingDataImage.color = s_OutgoingDataSent ? Color.green : Color.red;
+            m_HasCollaborationDataImage.color = s_HasCollaborationData ? Color.green : Color.red;
 
-    public static void NotifyIncomingDataReceived()
-    {
-        s_IncomingDataReceived = true;
-    }
+            s_IncomingDataReceived = false;
+            s_OutgoingDataSent = false;
+            s_HasCollaborationData = false;
+        }
 
-    public static void NotifyOutgoingDataSent()
-    {
-        s_OutgoingDataSent = true;
-    }
+        public static void NotifyIncomingDataReceived()
+        {
+            s_IncomingDataReceived = true;
+        }
 
-    public static void NotifyHasCollaborationData()
-    {
-        s_HasCollaborationData = true;
+        public static void NotifyOutgoingDataSent()
+        {
+            s_OutgoingDataSent = true;
+        }
+
+        public static void NotifyHasCollaborationData()
+        {
+            s_HasCollaborationData = true;
+        }
     }
 }

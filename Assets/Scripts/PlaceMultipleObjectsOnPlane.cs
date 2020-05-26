@@ -4,58 +4,61 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
-[RequireComponent(typeof(ARRaycastManager))]
-public class PlaceMultipleObjectsOnPlane : MonoBehaviour
+namespace UnityEngine.XR.ARFoundation.Samples
 {
-    [SerializeField]
-    [Tooltip("Instantiates this prefab on a plane at the touch location.")]
-    GameObject m_PlacedPrefab;
-
-    /// <summary>
-    /// The prefab to instantiate on touch.
-    /// </summary>
-    public GameObject placedPrefab
+    [RequireComponent(typeof(ARRaycastManager))]
+    public class PlaceMultipleObjectsOnPlane : MonoBehaviour
     {
-        get { return m_PlacedPrefab; }
-        set { m_PlacedPrefab = value; }
-    }
+        [SerializeField]
+        [Tooltip("Instantiates this prefab on a plane at the touch location.")]
+        GameObject m_PlacedPrefab;
 
-    /// <summary>
-    /// The object instantiated as a result of a successful raycast intersection with a plane.
-    /// </summary>
-    public GameObject spawnedObject { get; private set; }
-
-    /// <summary>
-    /// Invoked whenever an object is placed in on a plane.
-    /// </summary>
-    public static event Action onPlacedObject;
-
-    ARRaycastManager m_RaycastManager;
-
-    static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
-
-    void Awake()
-    {
-        m_RaycastManager = GetComponent<ARRaycastManager>();
-    }
-
-    void Update()
-    {
-        if (Input.touchCount > 0)
+        /// <summary>
+        /// The prefab to instantiate on touch.
+        /// </summary>
+        public GameObject placedPrefab
         {
-            Touch touch = Input.GetTouch(0);
+            get { return m_PlacedPrefab; }
+            set { m_PlacedPrefab = value; }
+        }
 
-            if (touch.phase == TouchPhase.Began)
+        /// <summary>
+        /// The object instantiated as a result of a successful raycast intersection with a plane.
+        /// </summary>
+        public GameObject spawnedObject { get; private set; }
+
+        /// <summary>
+        /// Invoked whenever an object is placed in on a plane.
+        /// </summary>
+        public static event Action onPlacedObject;
+
+        ARRaycastManager m_RaycastManager;
+
+        static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
+
+        void Awake()
+        {
+            m_RaycastManager = GetComponent<ARRaycastManager>();
+        }
+
+        void Update()
+        {
+            if (Input.touchCount > 0)
             {
-                if (m_RaycastManager.Raycast(touch.position, s_Hits, TrackableType.PlaneWithinPolygon))
+                Touch touch = Input.GetTouch(0);
+
+                if (touch.phase == TouchPhase.Began)
                 {
-                    Pose hitPose = s_Hits[0].pose;
-
-                    spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
-
-                    if (onPlacedObject != null)
+                    if (m_RaycastManager.Raycast(touch.position, s_Hits, TrackableType.PlaneWithinPolygon))
                     {
-                        onPlacedObject();
+                        Pose hitPose = s_Hits[0].pose;
+
+                        spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
+
+                        if (onPlacedObject != null)
+                        {
+                            onPlacedObject();
+                        }
                     }
                 }
             }

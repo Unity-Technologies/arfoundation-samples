@@ -1,40 +1,43 @@
 ﻿using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 
-public class ToggleCameraFacingDirection : MonoBehaviour
+namespace UnityEngine.XR.ARFoundation.Samples
 {
-    [SerializeField]
-    ARCameraManager m_CameraManager;
-
-    public ARCameraManager cameraManager
+    public class ToggleCameraFacingDirection : MonoBehaviour
     {
-        get => m_CameraManager;
-        set => m_CameraManager = value;
-    }
+        [SerializeField]
+        ARCameraManager m_CameraManager;
 
-    [SerializeField]
-    ARSession m_Session;
-
-    public ARSession session
-    {
-        get => m_Session;
-        set => m_Session = value;
-    }
-
-    void Update()
-    {
-        if (m_CameraManager == null || m_Session == null)
-            return;
-
-        if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
+        public ARCameraManager cameraManager
         {
-            if (m_CameraManager.requestedFacingDirection == CameraFacingDirection.User)
+            get => m_CameraManager;
+            set => m_CameraManager = value;
+        }
+
+        [SerializeField]
+        ARSession m_Session;
+
+        public ARSession session
+        {
+            get => m_Session;
+            set => m_Session = value;
+        }
+
+        void Update()
+        {
+            if (m_CameraManager == null || m_Session == null)
+                return;
+
+            if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
             {
-                m_CameraManager.requestedFacingDirection = CameraFacingDirection.World;
-            }
-            else
-            {
-                m_CameraManager.requestedFacingDirection = CameraFacingDirection.User;
+                if (m_CameraManager.requestedFacingDirection == CameraFacingDirection.User)
+                {
+                    m_CameraManager.requestedFacingDirection = CameraFacingDirection.World;
+                }
+                else
+                {
+                    m_CameraManager.requestedFacingDirection = CameraFacingDirection.User;
+                }
             }
         }
     }

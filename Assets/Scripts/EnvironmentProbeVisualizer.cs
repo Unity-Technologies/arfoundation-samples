@@ -1,33 +1,36 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(MeshRenderer))]
-public class EnvironmentProbeVisualizer : MonoBehaviour
+namespace UnityEngine.XR.ARFoundation.Samples
 {
-    [SerializeField]
-    ReflectionProbe m_ReflectionProbe;
-
-    public ReflectionProbe reflectionProbe
+    [RequireComponent(typeof(MeshRenderer))]
+    public class EnvironmentProbeVisualizer : MonoBehaviour
     {
-        get { return m_ReflectionProbe; }
-        set { m_ReflectionProbe = value; }
-    }
+        [SerializeField]
+        ReflectionProbe m_ReflectionProbe;
 
-    void Update()
-    {
-        if (m_ReflectionProbe == null)
+        public ReflectionProbe reflectionProbe
         {
-            GetComponent<MeshRenderer>().enabled = false;
+            get { return m_ReflectionProbe; }
+            set { m_ReflectionProbe = value; }
         }
-        else
+
+        void Update()
         {
-            GetComponent<MeshRenderer>().enabled = true;
+            if (m_ReflectionProbe == null)
+            {
+                GetComponent<MeshRenderer>().enabled = false;
+            }
+            else
+            {
+                GetComponent<MeshRenderer>().enabled = true;
 
-            transform.localPosition = m_ReflectionProbe.center;
-            transform.localScale = m_ReflectionProbe.size;
+                transform.localPosition = m_ReflectionProbe.center;
+                transform.localScale = m_ReflectionProbe.size;
 
-            // Unity doesn't yet support rotated reflection probes, so the visualizer
-            // needs to unrotate in order to display the box that will actually be used.
-            transform.localRotation = Quaternion.Inverse(m_ReflectionProbe.transform.rotation);
+                // Unity doesn't yet support rotated reflection probes, so the visualizer
+                // needs to unrotate in order to display the box that will actually be used.
+                transform.localRotation = Quaternion.Inverse(m_ReflectionProbe.transform.rotation);
+            }
         }
     }
 }
