@@ -62,8 +62,7 @@ public class EyePoseVisualizer : MonoBehaviour
     void OnEnable()
     {
         var faceManager = FindObjectOfType<ARFaceManager>();
-        if (faceManager != null && faceManager.subsystem != null &&
-            faceManager.descriptor.supportsEyeTracking)
+        if (faceManager != null && faceManager.subsystem != null && faceManager.descriptor.supportsEyeTracking)
         {
             m_FaceSubsystem = (XRFaceSubsystem)faceManager.subsystem;
             SetVisible((m_Face.trackingState == TrackingState.Tracking) && (ARSession.state > ARSessionState.Ready));
