@@ -50,12 +50,7 @@ public class FixationPoint3DVisualizer : MonoBehaviour
     void OnEnable()
     {
         var faceManager = FindObjectOfType<ARFaceManager>();
-        if (faceManager != null && faceManager.subsystem != null &&
-#if UNITY_2020_2_OR_NEWER
-            faceManager.subsystem.subsystemDescriptor.supportsEyeTracking)
-#else
-            faceManager.subsystem.SubsystemDescriptor.supportsEyeTracking)
-#endif
+        if (faceManager != null && faceManager.subsystem != null && faceManager.descriptor.supportsEyeTracking)
         {
             m_FaceSubsystem = (XRFaceSubsystem)faceManager.subsystem;
             m_Face.updated += OnUpdated;
