@@ -4,112 +4,115 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 
-/// <summary>
-/// Populates a drop down UI element with all the supported
-/// camera configurations and changes the active camera
-/// configuration when the user changes the selection in the dropdown.
-///
-/// The camera configuration affects the resolution (and possibly framerate)
-/// of the hardware camera during an AR session.
-/// </summary>
-[RequireComponent(typeof(Dropdown))]
-public class CameraConfigController : MonoBehaviour
+namespace UnityEngine.XR.ARFoundation.Samples
 {
-    List<string> m_ConfigurationNames;
-
-    Dropdown m_Dropdown;
-
-    [SerializeField]
-    [Tooltip("The ARCameraManager which will produce frame events.")]
-    ARCameraManager m_CameraManager;
-
-     /// <summary>
-    /// Get or set the <c>ARCameraManager</c>.
+    /// <summary>
+    /// Populates a drop down UI element with all the supported
+    /// camera configurations and changes the active camera
+    /// configuration when the user changes the selection in the dropdown.
+    ///
+    /// The camera configuration affects the resolution (and possibly framerate)
+    /// of the hardware camera during an AR session.
     /// </summary>
-    public ARCameraManager cameraManager
+    [RequireComponent(typeof(Dropdown))]
+    public class CameraConfigController : MonoBehaviour
     {
-        get { return m_CameraManager; }
-        set { m_CameraManager = value; }
-    }
+        List<string> m_ConfigurationNames;
 
-   /// <summary>
-    /// Callback invoked when <see cref="m_Dropdown"/> changes. This
-    /// lets us change the camera configuration when the user changes
-    /// the selection in the UI.
-    /// </summary>
-    /// <param name="dropdown">The <c>Dropdown</c> which changed.</param>
-    void OnDropdownValueChanged(Dropdown dropdown)
-    {
-        if ((cameraManager == null) || (cameraManager.subsystem == null) || !cameraManager.subsystem.running)
+        Dropdown m_Dropdown;
+
+        [SerializeField]
+        [Tooltip("The ARCameraManager which will produce frame events.")]
+        ARCameraManager m_CameraManager;
+
+        /// <summary>
+        /// Get or set the <c>ARCameraManager</c>.
+        /// </summary>
+        public ARCameraManager cameraManager
         {
-            return;
+            get { return m_CameraManager; }
+            set { m_CameraManager = value; }
         }
 
-        var configurationIndex = dropdown.value;
-
-        // Check that the value makes sense
-        using (var configurations = cameraManager.GetConfigurations(Allocator.Temp))
+    /// <summary>
+        /// Callback invoked when <see cref="m_Dropdown"/> changes. This
+        /// lets us change the camera configuration when the user changes
+        /// the selection in the UI.
+        /// </summary>
+        /// <param name="dropdown">The <c>Dropdown</c> which changed.</param>
+        void OnDropdownValueChanged(Dropdown dropdown)
         {
-            if (configurationIndex >= configurations.Length)
+            if ((cameraManager == null) || (cameraManager.subsystem == null) || !cameraManager.subsystem.running)
             {
                 return;
             }
 
-            // Get that configuration by index
-            var configuration = configurations[configurationIndex];
+            var configurationIndex = dropdown.value;
 
-            // Make it the active one
-            cameraManager.currentConfiguration = configuration;
-        }
-    }
-
-    void Awake()
-    {
-        m_Dropdown = GetComponent<Dropdown>();
-        m_Dropdown.ClearOptions();
-        m_Dropdown.onValueChanged.AddListener(delegate { OnDropdownValueChanged(m_Dropdown); });
-        m_ConfigurationNames = new List<string>();
-    }
-
-    void PopulateDropdown()
-    {
-        if ((cameraManager == null) || (cameraManager.subsystem == null) || !cameraManager.subsystem.running)
-            return;
-
-        // No configurations available probably means this feature
-        // isn't supported by the current device.
-        using (var configurations = cameraManager.GetConfigurations(Allocator.Temp))
-        {
-            if (!configurations.IsCreated || (configurations.Length <= 0))
+            // Check that the value makes sense
+            using (var configurations = cameraManager.GetConfigurations(Allocator.Temp))
             {
-                return;
-            }
-
-            // There are two ways to enumerate the camera configurations.
-
-            // 1. Use a foreach to iterate over all the available configurations
-            foreach (var config in configurations)
-            {
-                m_ConfigurationNames.Add(config.ToString());
-            }
-            m_Dropdown.AddOptions(m_ConfigurationNames);
-
-            // 2. Use a normal for...loop
-            var currentConfig = cameraManager.currentConfiguration;
-            for (int i = 0; i < configurations.Length; ++i)
-            {
-                // Find the current configuration and update the drop down value
-                if (currentConfig == configurations[i])
+                if (configurationIndex >= configurations.Length)
                 {
-                    m_Dropdown.value = i;
+                    return;
+                }
+
+                // Get that configuration by index
+                var configuration = configurations[configurationIndex];
+
+                // Make it the active one
+                cameraManager.currentConfiguration = configuration;
+            }
+        }
+
+        void Awake()
+        {
+            m_Dropdown = GetComponent<Dropdown>();
+            m_Dropdown.ClearOptions();
+            m_Dropdown.onValueChanged.AddListener(delegate { OnDropdownValueChanged(m_Dropdown); });
+            m_ConfigurationNames = new List<string>();
+        }
+
+        void PopulateDropdown()
+        {
+            if ((cameraManager == null) || (cameraManager.subsystem == null) || !cameraManager.subsystem.running)
+                return;
+
+            // No configurations available probably means this feature
+            // isn't supported by the current device.
+            using (var configurations = cameraManager.GetConfigurations(Allocator.Temp))
+            {
+                if (!configurations.IsCreated || (configurations.Length <= 0))
+                {
+                    return;
+                }
+
+                // There are two ways to enumerate the camera configurations.
+
+                // 1. Use a foreach to iterate over all the available configurations
+                foreach (var config in configurations)
+                {
+                    m_ConfigurationNames.Add(config.ToString());
+                }
+                m_Dropdown.AddOptions(m_ConfigurationNames);
+
+                // 2. Use a normal for...loop
+                var currentConfig = cameraManager.currentConfiguration;
+                for (int i = 0; i < configurations.Length; ++i)
+                {
+                    // Find the current configuration and update the drop down value
+                    if (currentConfig == configurations[i])
+                    {
+                        m_Dropdown.value = i;
+                    }
                 }
             }
         }
-    }
 
-    void Update()
-    {
-        if (m_ConfigurationNames.Count == 0)
-            PopulateDropdown();
+        void Update()
+        {
+            if (m_ConfigurationNames.Count == 0)
+                PopulateDropdown();
+        }
     }
 }
