@@ -266,3 +266,6 @@ This scene renders an overlay on top of the real world scanned geometry illustra
 
 At first, this scene may appear to be doing nothing. However, it is rendering a depth texture on top of the scene based on the real world geometry. This allows for the real world to occlude virtual content. The scene has a script on it that fires a red ball into the scene when you tap. You will see the occlusion working by firing the red balls into a space which you can then move the iPad camera behind some other real world object to see that the virtual red balls are occluded by the real world object.
 
+## Interaction
+
+This sample scene demonstrates the functionality of the `XR Interaction Toolkit` package. In the scene, you are able to place a cube on a plane which you can translate, rotate and scale with gestures.
