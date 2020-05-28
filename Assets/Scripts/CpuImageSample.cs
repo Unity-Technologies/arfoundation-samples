@@ -27,7 +27,7 @@ using UnityEngine.XR.ARSubsystems;
 /// This is done as an example; do not use this technique simply
 /// to render the camera image on screen.
 /// </summary>
-public class TestCameraImage : MonoBehaviour
+public class CpuImageSample : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("The ARCameraManager which will produce frame events.")]
