@@ -4,92 +4,95 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 
-/// <summary>
-/// Displays information about each reference point including
-/// whether or not the reference point is local or remote.
-/// The reference point prefab is assumed to include a GameObject
-/// which can be colored to indicate which session created it.
-/// </summary>
-[RequireComponent(typeof(ARSessionOrigin))]
-[RequireComponent(typeof(ARAnchorManager))]
-public class AnchorInfoManager : MonoBehaviour
+namespace UnityEngine.XR.ARFoundation.Samples
 {
-    [SerializeField]
-    ARSession m_Session;
-
-    public ARSession session
+    /// <summary>
+    /// Displays information about each reference point including
+    /// whether or not the reference point is local or remote.
+    /// The reference point prefab is assumed to include a GameObject
+    /// which can be colored to indicate which session created it.
+    /// </summary>
+    [RequireComponent(typeof(ARSessionOrigin))]
+    [RequireComponent(typeof(ARAnchorManager))]
+    public class AnchorInfoManager : MonoBehaviour
     {
-        get { return m_Session; }
-        set { m_Session = value; }
-    }
+        [SerializeField]
+        ARSession m_Session;
 
-    void OnEnable()
-    {
-        GetComponent<ARAnchorManager>().anchorsChanged += OnAnchorsChanged;
-    }
-
-    void OnDisable()
-    {
-        GetComponent<ARAnchorManager>().anchorsChanged -= OnAnchorsChanged;
-    }
-
-    void OnAnchorsChanged(ARAnchorsChangedEventArgs eventArgs)
-    {
-        foreach (var referencePoint in eventArgs.added)
+        public ARSession session
         {
-            UpdateAnchor(referencePoint);
+            get { return m_Session; }
+            set { m_Session = value; }
         }
 
-        foreach (var referencePoint in eventArgs.updated)
+        void OnEnable()
         {
-            UpdateAnchor(referencePoint);
-        }
-    }
-
-    unsafe struct byte128
-    {
-        public fixed byte data[16];
-    }
-
-    void UpdateAnchor(ARAnchor referencePoint)
-    {
-        var canvas = referencePoint.GetComponentInChildren<Canvas>();
-        if (canvas == null)
-            return;
-
-        canvas.worldCamera = GetComponent<ARSessionOrigin>().camera;
-
-        var text = canvas.GetComponentInChildren<Text>();
-        if (text == null)
-            return;
-
-        var sessionId = referencePoint.sessionId;
-        if (sessionId.Equals(session.subsystem.sessionId))
-        {
-            text.text = $"Local";
-        }
-        else
-        {
-            text.text = $"Remote";
+            GetComponent<ARAnchorManager>().anchorsChanged += OnAnchorsChanged;
         }
 
-        var cube = referencePoint.transform.Find("Scale/SessionId Indicator");
-        if (cube != null)
+        void OnDisable()
         {
-            var renderer = cube.GetComponent<Renderer>();
+            GetComponent<ARAnchorManager>().anchorsChanged -= OnAnchorsChanged;
+        }
+
+        void OnAnchorsChanged(ARAnchorsChangedEventArgs eventArgs)
+        {
+            foreach (var referencePoint in eventArgs.added)
             {
-                // Generate a color from the sessionId
-                Color color;
-                unsafe
+                UpdateAnchor(referencePoint);
+            }
+
+            foreach (var referencePoint in eventArgs.updated)
+            {
+                UpdateAnchor(referencePoint);
+            }
+        }
+
+        unsafe struct byte128
+        {
+            public fixed byte data[16];
+        }
+
+        void UpdateAnchor(ARAnchor referencePoint)
+        {
+            var canvas = referencePoint.GetComponentInChildren<Canvas>();
+            if (canvas == null)
+                return;
+
+            canvas.worldCamera = GetComponent<ARSessionOrigin>().camera;
+
+            var text = canvas.GetComponentInChildren<Text>();
+            if (text == null)
+                return;
+
+            var sessionId = referencePoint.sessionId;
+            if (sessionId.Equals(session.subsystem.sessionId))
+            {
+                text.text = $"Local";
+            }
+            else
+            {
+                text.text = $"Remote";
+            }
+
+            var cube = referencePoint.transform.Find("Scale/SessionId Indicator");
+            if (cube != null)
+            {
+                var renderer = cube.GetComponent<Renderer>();
                 {
-                    var bytes = *(byte128*)&sessionId;
-                    color = new Color(
-                        bytes.data[0] / 255f,
-                        bytes.data[4] / 255f,
-                        bytes.data[8] / 255f,
-                        bytes.data[12] / 255f);
+                    // Generate a color from the sessionId
+                    Color color;
+                    unsafe
+                    {
+                        var bytes = *(byte128*)&sessionId;
+                        color = new Color(
+                            bytes.data[0] / 255f,
+                            bytes.data[4] / 255f,
+                            bytes.data[8] / 255f,
+                            bytes.data[12] / 255f);
+                    }
+                    renderer.material.color = color;
                 }
-                renderer.material.color = color;
             }
         }
     }
