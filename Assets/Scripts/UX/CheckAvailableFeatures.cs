@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -41,14 +40,13 @@ public class CheckAvailableFeatures : MonoBehaviour
         get { return m_ARWorldMap; }
         set { m_ARWorldMap = value; }
     }
-    
 
     [SerializeField]
-    Button m_CameraImage;
-    public Button cameraImage
+    Button m_CpuImages;
+    public Button cpuImages
     {
-        get { return m_CameraImage; }
-        set { m_CameraImage = value; }
+        get { return m_CpuImages; }
+        set { m_CpuImages = value; }
     }
 
     [SerializeField]
@@ -114,7 +112,7 @@ public class CheckAvailableFeatures : MonoBehaviour
         get { return m_FaceTracking; }
         set { m_FaceTracking = value; }
     }
-    
+
     [SerializeField]
     Button m_FaceBlendShapes;
     public Button faceBlendShapes
@@ -155,61 +153,61 @@ public class CheckAvailableFeatures : MonoBehaviour
         set { m_PlaneClassification = value; }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        List<XRPlaneSubsystemDescriptor> planeDescriptors = new List<XRPlaneSubsystemDescriptor>();
+        var planeDescriptors = new List<XRPlaneSubsystemDescriptor>();
         SubsystemManager.GetSubsystemDescriptors<XRPlaneSubsystemDescriptor>(planeDescriptors);
 
-        List<XRRaycastSubsystemDescriptor> rayCastDescriptors = new List<XRRaycastSubsystemDescriptor>();
+        var rayCastDescriptors = new List<XRRaycastSubsystemDescriptor>();
         SubsystemManager.GetSubsystemDescriptors<XRRaycastSubsystemDescriptor>(rayCastDescriptors);
 
-        List<XRFaceSubsystemDescriptor> faceDescriptors = new List<XRFaceSubsystemDescriptor>();
+        var faceDescriptors = new List<XRFaceSubsystemDescriptor>();
         SubsystemManager.GetSubsystemDescriptors<XRFaceSubsystemDescriptor>(faceDescriptors);
 
-        List<XRImageTrackingSubsystemDescriptor> imageDescriptors = new List<XRImageTrackingSubsystemDescriptor>();
+        var imageDescriptors = new List<XRImageTrackingSubsystemDescriptor>();
         SubsystemManager.GetSubsystemDescriptors<XRImageTrackingSubsystemDescriptor>(imageDescriptors);
 
-        List<XREnvironmentProbeSubsystemDescriptor> envDescriptors = new List<XREnvironmentProbeSubsystemDescriptor>();
+        var envDescriptors = new List<XREnvironmentProbeSubsystemDescriptor>();
         SubsystemManager.GetSubsystemDescriptors<XREnvironmentProbeSubsystemDescriptor>(envDescriptors);
 
-        List<XRAnchorSubsystemDescriptor> anchorDescriptors = new List<XRAnchorSubsystemDescriptor>();
+        var anchorDescriptors = new List<XRAnchorSubsystemDescriptor>();
         SubsystemManager.GetSubsystemDescriptors<XRAnchorSubsystemDescriptor>(anchorDescriptors);
 
-        List<XRObjectTrackingSubsystemDescriptor> objectDescriptors = new List<XRObjectTrackingSubsystemDescriptor>();
+        var objectDescriptors = new List<XRObjectTrackingSubsystemDescriptor>();
         SubsystemManager.GetSubsystemDescriptors<XRObjectTrackingSubsystemDescriptor>(objectDescriptors);
 
-        List<XRParticipantSubsystemDescriptor> participantDescriptors = new List<XRParticipantSubsystemDescriptor>();
+        var participantDescriptors = new List<XRParticipantSubsystemDescriptor>();
         SubsystemManager.GetSubsystemDescriptors<XRParticipantSubsystemDescriptor>(participantDescriptors);
 
-        List<XRDepthSubsystemDescriptor> depthDescriptors = new List<XRDepthSubsystemDescriptor>();
+        var depthDescriptors = new List<XRDepthSubsystemDescriptor>();
         SubsystemManager.GetSubsystemDescriptors<XRDepthSubsystemDescriptor>(depthDescriptors);
 
-        List<XROcclusionSubsystemDescriptor> occlusionDescriptors = new List<XROcclusionSubsystemDescriptor>();
+        var occlusionDescriptors = new List<XROcclusionSubsystemDescriptor>();
         SubsystemManager.GetSubsystemDescriptors<XROcclusionSubsystemDescriptor>(occlusionDescriptors);
 
-        List<XRCameraSubsystemDescriptor> cameraDescriptors = new List<XRCameraSubsystemDescriptor>();
+        var cameraDescriptors = new List<XRCameraSubsystemDescriptor>();
         SubsystemManager.GetSubsystemDescriptors<XRCameraSubsystemDescriptor>(cameraDescriptors);
 
-        List<XRSessionSubsystemDescriptor> sessionDescriptors = new List<XRSessionSubsystemDescriptor>();
+        var sessionDescriptors = new List<XRSessionSubsystemDescriptor>();
         SubsystemManager.GetSubsystemDescriptors<XRSessionSubsystemDescriptor>(sessionDescriptors);
 
         if(planeDescriptors.Count > 0 && rayCastDescriptors.Count > 0)
         {
             m_SimpleAR.interactable = true;
             m_Scale.interactable = true;
-        }  
+        }
+
         if(faceDescriptors.Count > 0)
         {
             m_FaceTracking.interactable = true;
 #if UNITY_IOS
             m_FaceBlendShapes.interactable = true;
 #endif
-
         }
+
         if(occlusionDescriptors.Count > 0)
         {
-            foreach(XROcclusionSubsystemDescriptor occlusionDescriptor in occlusionDescriptors)
+            foreach(var occlusionDescriptor in occlusionDescriptors)
             {
                 if(occlusionDescriptor.supportsHumanSegmentationDepthImage && occlusionDescriptor.supportsHumanSegmentationStencilImage)
                 {
@@ -218,23 +216,26 @@ public class CheckAvailableFeatures : MonoBehaviour
                 }
             }
         }
+
         if(cameraDescriptors.Count > 0)
         {
             foreach(var cameraDescriptor in cameraDescriptors)
             {
-                if((cameraDescriptor.supportsAverageBrightness || cameraDescriptor.supportsAverageIntensityInLumens) && 
-                    cameraDescriptor.supportsAverageColorTemperature && cameraDescriptor.supportsCameraConfigurations && 
+                if((cameraDescriptor.supportsAverageBrightness || cameraDescriptor.supportsAverageIntensityInLumens) &&
+                    cameraDescriptor.supportsAverageColorTemperature && cameraDescriptor.supportsCameraConfigurations &&
                     cameraDescriptor.supportsCameraImage)
                 {
                     m_LightEstimation.interactable = true;
                 }
-                  
+
             }
         }
+
         if(imageDescriptors.Count > 0)
         {
             m_ImageTracking.interactable = true;
         }
+
         if(envDescriptors.Count > 0)
         {
             m_EnvironmentProbes.interactable = true;
@@ -243,35 +244,38 @@ public class CheckAvailableFeatures : MonoBehaviour
         if(planeDescriptors.Count > 0)
         {
             m_PlaneDetection.interactable = true;
-             foreach(var planeDescriptor in planeDescriptors)
+            foreach(var planeDescriptor in planeDescriptors)
             {
                 if(planeDescriptor.supportsClassification)
                 {
                     m_PlaneClassification.interactable = true;
                     break;
                 }
-            } 
+            }
         }
+
         if(anchorDescriptors.Count > 0)
         {
             m_Anchors.interactable = true;
         }
+
         if(objectDescriptors.Count > 0)
         {
             m_ObjectTracking.interactable = true;
         }
+
         if(cameraDescriptors.Count > 0)
         {
             foreach(var cameraDescriptor in cameraDescriptors)
             {
                 if(cameraDescriptor.supportsCameraImage)
                 {
-                    m_CameraImage.interactable = true;
+                    m_CpuImages.interactable = true;
                     break;
                 }
             }
-
         }
+
 #if UNITY_IOS
         if(sessionDescriptors.Count > 0 && ARKitSessionSubsystem.worldMapSupported)
         {
@@ -286,8 +290,7 @@ public class CheckAvailableFeatures : MonoBehaviour
         if(sessionDescriptors.Count > 0 && ARKitSessionSubsystem.coachingOverlaySupported)
         {
             m_ARKitCoachingOverlay.interactable = true;
-        }      
-
+        }
 #endif
 
         if(depthDescriptors.Count > 0)
@@ -298,8 +301,6 @@ public class CheckAvailableFeatures : MonoBehaviour
         if(planeDescriptors.Count > 0)
         {
             m_PlaneOcclusion.interactable  = true;
-        }    
-
+        }
     }
-
 }
