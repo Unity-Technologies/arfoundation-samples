@@ -41,14 +41,13 @@ public class CheckAvailableFeatures : MonoBehaviour
         get { return m_ARWorldMap; }
         set { m_ARWorldMap = value; }
     }
-    
 
     [SerializeField]
-    Button m_CameraImage;
-    public Button cameraImage
+    Button m_CpuImages;
+    public Button cpuImages
     {
-        get { return m_CameraImage; }
-        set { m_CameraImage = value; }
+        get { return m_CpuImages; }
+        set { m_CpuImages = value; }
     }
 
     [SerializeField]
