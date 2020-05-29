@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.Management;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -26,6 +28,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public void BackButtonPressed()
         {
             SceneManager.LoadScene("Menu", LoadSceneMode.Single);
+            LoaderUtility.Deinitialize();
         }
     }
 }

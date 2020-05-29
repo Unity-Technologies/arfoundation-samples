@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.ARFoundation;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -59,163 +60,169 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
-        public void SimpleARButtonPressed()
-        {
-            SceneManager.LoadScene("SimpleAR", LoadSceneMode.Single);
-        }
+    static void LoadScene(string sceneName)
+    {
+        LoaderUtility.Initialize();
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+    }
 
-        public void ImageTrackableButtonPressed()
-        {
-        SceneManager.LoadScene("ImageTracking", LoadSceneMode.Single);
-        }
+    public void SimpleARButtonPressed()
+    {
+        LoadScene("SimpleAR");
+    }
 
-        public void AnchorsButtonPressed()
-        {
-            SceneManager.LoadScene("Anchors", LoadSceneMode.Single);
-        }
+    public void ImageTrackableButtonPressed()
+    {
+       LoadScene("ImageTracking");
+    }
 
-        public void ARCollaborationDataButtonPressed()
-        {
-            SceneManager.LoadScene("ARCollaborationDataExample", LoadSceneMode.Single);
-        }
+    public void AnchorsButtonPressed()
+    {
+        LoadScene("Anchors");
+    }
 
-        public void ARKitCoachingOverlayButtonPressed()
-        {
-            SceneManager.LoadScene("ARKitCoachingOverlay", LoadSceneMode.Single);
-        }
+    public void ARCollaborationDataButtonPressed()
+    {
+        LoadScene("ARCollaborationDataExample");
+    }
 
-        public void ARWorldMapButtonPressed()
-        {
-            SceneManager.LoadScene("ARWorldMap", LoadSceneMode.Single);
-        }
+    public void ARKitCoachingOverlayButtonPressed()
+    {
+        LoadScene("ARKitCoachingOverlay");
+    }
 
-        public void CameraImageButtonPressed()
-        {
-            SceneManager.LoadScene("CameraImage", LoadSceneMode.Single);
-        }
+    public void ARWorldMapButtonPressed()
+    {
+        LoadScene("ARWorldMap");
+    }
 
-        public void CheckSupportButtonPressed()
-        {
-            SceneManager.LoadScene("Check Support", LoadSceneMode.Single);
-        }
+    public void CpuImagesButtonPressed()
+    {
+        LoadScene("CpuImages");
+    }
 
-        public void EnvironmentProbesButtonPressed()
-        {
-            SceneManager.LoadScene("EnvironmentProbes", LoadSceneMode.Single);
-        }
+    public void CheckSupportButtonPressed()
+    {
+        LoadScene("Check Support");
+    }
 
-        public void ObjectTrackingButtonPressed()
-        {
-            SceneManager.LoadScene("ObjectTracking", LoadSceneMode.Single);
-        }
+    public void EnvironmentProbesButtonPressed()
+    {
+        LoadScene("EnvironmentProbes");
+    }
 
-        public void PlaneOcclusionButtonPressed()
-        {
-            SceneManager.LoadScene("PlaneOcclusion", LoadSceneMode.Single);
-        }
+    public void ObjectTrackingButtonPressed()
+    {
+        LoadScene("ObjectTracking");
+    }
 
-        public void PointCloudButtonPressed()
-        {
-            SceneManager.LoadScene("AllPointCloudPoints", LoadSceneMode.Single);
-        }
+    public void PlaneOcclusionButtonPressed()
+    {
+        LoadScene("PlaneOcclusion");
+    }
 
-        public void ScaleButtonPressed()
-        {
-            SceneManager.LoadScene("Scale", LoadSceneMode.Single);
-        }
+    public void PointCloudButtonPressed()
+    {
+        LoadScene("AllPointCloudPoints");
+    }
 
-        public void SampleUXButtonPressed()
-        {
-            SceneManager.LoadScene("SampleUXScene", LoadSceneMode.Single);
-        }
+    public void ScaleButtonPressed()
+    {
+        LoadScene("Scale");
+    }
 
-        public void FaceTrackingMenuButtonPressed()
-        {
-            ActiveMenu.currentMenu = MenuType.FaceTracking;
-            m_FaceTrackingMenu.SetActive(true);
-            m_AllMenu.SetActive(false);
-        }
-        public void ARCoreFaceRegionsButtonPressed()
-        {
-            SceneManager.LoadScene("ARCoreFaceRegions", LoadSceneMode.Single);
-        }
-        public void ARKitFaceBlendShapesButtonPressed()
-        {
-            SceneManager.LoadScene("ARKitFaceBlendShapes", LoadSceneMode.Single);
-        }
-        public void EyeLasersButtonPressed()
-        {
-            SceneManager.LoadScene("EyeLasers", LoadSceneMode.Single);
-        }
-        public void EyePosesButtonPressed()
-        {
-            SceneManager.LoadScene("EyePoses", LoadSceneMode.Single);
-        }
+    public void SampleUXButtonPressed()
+    {
+        LoadScene("SampleUXScene");
+    }
 
-        public void FaceMeshButtonPressed()
-        {
-            SceneManager.LoadScene("FaceMesh", LoadSceneMode.Single);
-        }
+    public void FaceTrackingMenuButtonPressed()
+    {
+        ActiveMenu.currentMenu = MenuType.FaceTracking;
+        m_FaceTrackingMenu.SetActive(true);
+        m_AllMenu.SetActive(false);
+    }
+    public void ARCoreFaceRegionsButtonPressed()
+    {
+        LoadScene("ARCoreFaceRegions");
+    }
+    public void ARKitFaceBlendShapesButtonPressed()
+    {
+        LoadScene("ARKitFaceBlendShapes");
+    }
+    public void EyeLasersButtonPressed()
+    {
+        LoadScene("EyeLasers");
+    }
+    public void EyePosesButtonPressed()
+    {
+        LoadScene("EyePoses");
+    }
 
-        public void FacePoseButtonPressed()
-        {
-            SceneManager.LoadScene("FacePose", LoadSceneMode.Single);
-        }
+    public void FaceMeshButtonPressed()
+    {
+        LoadScene("FaceMesh");
+    }
 
-        public void FixationPointButtonPressed()
-        {
-            SceneManager.LoadScene("FixationPoint", LoadSceneMode.Single);
-        }
+    public void FacePoseButtonPressed()
+    {
+        LoadScene("FacePose");
+    }
 
-        public void RearCameraWithFrontCameraFaceMeshButtonPressed()
-        {
-            SceneManager.LoadScene("WorldCameraWithUserFacingFaceTracking", LoadSceneMode.Single);
-        }
+    public void FixationPointButtonPressed()
+    {
+        LoadScene("FixationPoint");
+    }
 
-        public void HumanSegmentationMenuButtonPressed()
-        {
-            ActiveMenu.currentMenu = MenuType.HumanSegmentation;
-            m_HumanSegmentationMenu.SetActive(true);
-            m_AllMenu.SetActive(false);
-        }
-        public void HumanSegmentation2DButtonPressed()
-        {
-            SceneManager.LoadScene("HumanBodyTracking2D", LoadSceneMode.Single);
-        }
-        public void HumanSegmentation3DButtonPressed()
-        {
-            SceneManager.LoadScene("HumanBodyTracking3D", LoadSceneMode.Single);
-        }
-        public void HumanSegmentationImagesButtonPressed()
-        {
-            SceneManager.LoadScene("HumanSegmentationImages", LoadSceneMode.Single);
-        }
+    public void RearCameraWithFrontCameraFaceMeshButtonPressed()
+    {
+        LoadScene("WorldCameraWithUserFacingFaceTracking");
+    }
 
-        public void LightEstimationButtonPressed()
-        {
-            SceneManager.LoadScene("LightEstimation", LoadSceneMode.Single);
-        }
+    public void HumanSegmentationMenuButtonPressed()
+    {
+        ActiveMenu.currentMenu = MenuType.HumanSegmentation;
+        m_HumanSegmentationMenu.SetActive(true);
+        m_AllMenu.SetActive(false);
+    }
+    public void HumanSegmentation2DButtonPressed()
+    {
+        LoadScene("HumanBodyTracking2D");
+    }
+    public void HumanSegmentation3DButtonPressed()
+    {
+        LoadScene("HumanBodyTracking3D");
+    }
+    public void HumanSegmentationImagesButtonPressed()
+    {
+        LoadScene("HumanSegmentationImages");
+    }
 
-        public void PlaneDetectionMenuButtonPressed()
-        {
-            ActiveMenu.currentMenu = MenuType.PlaneDetection;
-            m_PlaneDetectionMenu.SetActive(true);
-            m_AllMenu.SetActive(false);
-        }
-        public void FeatheredPlanesButtonPressed()
-        {
-            SceneManager.LoadScene("FeatheredPlanes", LoadSceneMode.Single);
-        }
+     public void LightEstimationButtonPressed()
+    {
+        LoadScene("LightEstimation");
+    }
 
-        public void PlaneClassificationButtonPressed()
-        {
-            SceneManager.LoadScene("PlaneClassification", LoadSceneMode.Single);
-        }
+    public void PlaneDetectionMenuButtonPressed()
+    {
+        ActiveMenu.currentMenu = MenuType.PlaneDetection;
+        m_PlaneDetectionMenu.SetActive(true);
+        m_AllMenu.SetActive(false);
+    }
+    public void FeatheredPlanesButtonPressed()
+    {
+        LoadScene("FeatheredPlanes");
+    }
 
-        public void TogglePlaneDetectionButtonPressed()
-        {
-            SceneManager.LoadScene("TogglePlaneDetection", LoadSceneMode.Single);
-        }
+    public void PlaneClassificationButtonPressed()
+    {
+        LoadScene("PlaneClassification");
+    }
+
+    public void TogglePlaneDetectionButtonPressed()
+    {
+        LoadScene("TogglePlaneDetection");
+    }
 
 
         public void BackButtonPressed()
