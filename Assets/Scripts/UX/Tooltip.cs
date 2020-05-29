@@ -4,45 +4,48 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+namespace UnityEngine.XR.ARFoundation.Samples
 {
-    [SerializeField]
-    GameObject m_Tooltip;
-    public GameObject toolTip
+    public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        get { return m_Tooltip; }
-        set { m_Tooltip = value; }
-    }
-    bool m_EnteredButton;
-    Vector3 m_ToolTipOffset;
-
-    void Start()
-    {
-        m_ToolTipOffset = new Vector3(-50,100,0);
-    }
-
-    void Update()
-    {
-        if(m_EnteredButton)
+        [SerializeField]
+        GameObject m_Tooltip;
+        public GameObject toolTip
         {
-              m_Tooltip.transform.position = Input.mousePosition + m_ToolTipOffset;
+            get { return m_Tooltip; }
+            set { m_Tooltip = value; }
         }
-    }
+        bool m_EnteredButton;
+        Vector3 m_ToolTipOffset;
 
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        m_EnteredButton = true;
-        if(!gameObject.GetComponent<Button>().interactable)
+        void Start()
         {
-             m_Tooltip.SetActive(true);
+            m_ToolTipOffset = new Vector3(-50,100,0);
         }
-    }
+
+        void Update()
+        {
+            if(m_EnteredButton)
+            {
+                m_Tooltip.transform.position = Input.mousePosition + m_ToolTipOffset;
+            }
+        }
 
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        m_EnteredButton = false;
-        m_Tooltip.SetActive(false);
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            m_EnteredButton = true;
+            if(!gameObject.GetComponent<Button>().interactable)
+            {
+                m_Tooltip.SetActive(true);
+            }
+        }
+
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            m_EnteredButton = false;
+            m_Tooltip.SetActive(false);
+        }
     }
 }
