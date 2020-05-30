@@ -203,24 +203,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if(faceDescriptors.Count > 0)
             {
                 m_FaceTracking.interactable = true;
-#if UNITY_IOS
+    #if UNITY_IOS
                 m_FaceBlendShapes.interactable = true;
-#endif
-            }
-
-            if(occlusionDescriptors.Count > 0)
-            {
-                foreach(var occlusionDescriptor in occlusionDescriptors)
-                {
-                    m_SimpleAR.interactable = true;
-                    m_Scale.interactable = true;
-                }
-                if(faceDescriptors.Count > 0)
-                {
-                    m_FaceTracking.interactable = true;
-#if UNITY_IOS
-                m_FaceBlendShapes.interactable = true;
-#endif
+    #endif
             }
 
             if(occlusionDescriptors.Count > 0)
@@ -234,7 +219,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     }
                 }
             }
-        }
 
             if(cameraDescriptors.Count > 0)
             {
@@ -244,14 +228,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         cameraDescriptor.supportsAverageColorTemperature && cameraDescriptor.supportsCameraConfigurations &&
                         cameraDescriptor.supportsCameraImage)
                     {
-                        if((cameraDescriptor.supportsAverageBrightness || cameraDescriptor.supportsAverageIntensityInLumens) &&
-                            cameraDescriptor.supportsAverageColorTemperature && cameraDescriptor.supportsCameraConfigurations &&
-                            cameraDescriptor.supportsCameraImage)
-                        {
-                            m_LightEstimation.interactable = true;
-                        }
-
+                        m_LightEstimation.interactable = true;
                     }
+
                 }
             }
 
@@ -270,14 +249,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_PlaneDetection.interactable = true;
                 foreach(var planeDescriptor in planeDescriptors)
                 {
-                    m_PlaneDetection.interactable = true;
-                    foreach(var planeDescriptor in planeDescriptors)
+                    if(planeDescriptor.supportsClassification)
                     {
-                        if(planeDescriptor.supportsClassification)
-                        {
-                            m_PlaneClassification.interactable = true;
-                            break;
-                        }
+                        m_PlaneClassification.interactable = true;
+                        break;
                     }
                 }
             }
@@ -296,39 +271,34 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 foreach(var cameraDescriptor in cameraDescriptors)
                 {
-                    foreach(var cameraDescriptor in cameraDescriptors)
+                    if(cameraDescriptor.supportsCameraImage)
                     {
                         m_CpuImages.interactable = true;
                         break;
                     }
                 }
-#if UNITY_IOS
-                if(sessionDescriptors.Count > 0 && ARKitSessionSubsystem.worldMapSupported)
-                {
-                    m_ARWorldMap.interactable = true;
-                }
             }
 
-#if UNITY_IOS
+    #if UNITY_IOS
             if(sessionDescriptors.Count > 0 && ARKitSessionSubsystem.worldMapSupported)
             {
                 m_ARWorldMap.interactable = true;
             }
 
-            if(sessionDescriptors.Count > 0 && ARKitSessionSubsystem.coachingOverlaySupported)
+            if(planeDescriptors.Count > 0 && rayCastDescriptors.Count > 0 && participantDescriptors.Count > 0 && ARKitSessionSubsystem.supportsCollaboration)
             {
-                m_ARKitCoachingOverlay.interactable = true;
+                m_ARCollaborationData.interactable = true;
             }
 
             if(sessionDescriptors.Count > 0 && ARKitSessionSubsystem.coachingOverlaySupported)
             {
                 m_ARKitCoachingOverlay.interactable = true;
             }
-#endif
+    #endif
 
-            if(planeDescriptors.Count > 0)
+            if(depthDescriptors.Count > 0)
             {
-                m_PlaneOcclusion.interactable  = true;
+                m_PointCloud.interactable = true;
             }
 
             if(planeDescriptors.Count > 0)
