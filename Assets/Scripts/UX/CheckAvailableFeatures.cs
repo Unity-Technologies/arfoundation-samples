@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -44,13 +43,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set { m_ARWorldMap = value; }
         }
 
-
         [SerializeField]
-        Button m_CameraImage;
-        public Button cameraImage
+        Button m_CpuImages;
+        public Button cpuImages
         {
-            get { return m_CameraImage; }
-            set { m_CameraImage = value; }
+            get { return m_CpuImages; }
+            set { m_CpuImages = value; }
         }
 
         [SerializeField]
@@ -160,40 +158,40 @@ namespace UnityEngine.XR.ARFoundation.Samples
         // Start is called before the first frame update
         void Start()
         {
-            List<XRPlaneSubsystemDescriptor> planeDescriptors = new List<XRPlaneSubsystemDescriptor>();
+            var planeDescriptors = new List<XRPlaneSubsystemDescriptor>();
             SubsystemManager.GetSubsystemDescriptors<XRPlaneSubsystemDescriptor>(planeDescriptors);
 
-            List<XRRaycastSubsystemDescriptor> rayCastDescriptors = new List<XRRaycastSubsystemDescriptor>();
+            var rayCastDescriptors = new List<XRRaycastSubsystemDescriptor>();
             SubsystemManager.GetSubsystemDescriptors<XRRaycastSubsystemDescriptor>(rayCastDescriptors);
 
-            List<XRFaceSubsystemDescriptor> faceDescriptors = new List<XRFaceSubsystemDescriptor>();
+            var faceDescriptors = new List<XRFaceSubsystemDescriptor>();
             SubsystemManager.GetSubsystemDescriptors<XRFaceSubsystemDescriptor>(faceDescriptors);
 
-            List<XRImageTrackingSubsystemDescriptor> imageDescriptors = new List<XRImageTrackingSubsystemDescriptor>();
+            var imageDescriptors = new List<XRImageTrackingSubsystemDescriptor>();
             SubsystemManager.GetSubsystemDescriptors<XRImageTrackingSubsystemDescriptor>(imageDescriptors);
 
-            List<XREnvironmentProbeSubsystemDescriptor> envDescriptors = new List<XREnvironmentProbeSubsystemDescriptor>();
+            var envDescriptors = new List<XREnvironmentProbeSubsystemDescriptor>();
             SubsystemManager.GetSubsystemDescriptors<XREnvironmentProbeSubsystemDescriptor>(envDescriptors);
 
-            List<XRAnchorSubsystemDescriptor> anchorDescriptors = new List<XRAnchorSubsystemDescriptor>();
+            var anchorDescriptors = new List<XRAnchorSubsystemDescriptor>();
             SubsystemManager.GetSubsystemDescriptors<XRAnchorSubsystemDescriptor>(anchorDescriptors);
 
-            List<XRObjectTrackingSubsystemDescriptor> objectDescriptors = new List<XRObjectTrackingSubsystemDescriptor>();
+            var objectDescriptors = new List<XRObjectTrackingSubsystemDescriptor>();
             SubsystemManager.GetSubsystemDescriptors<XRObjectTrackingSubsystemDescriptor>(objectDescriptors);
 
-            List<XRParticipantSubsystemDescriptor> participantDescriptors = new List<XRParticipantSubsystemDescriptor>();
+            var participantDescriptors = new List<XRParticipantSubsystemDescriptor>();
             SubsystemManager.GetSubsystemDescriptors<XRParticipantSubsystemDescriptor>(participantDescriptors);
 
-            List<XRDepthSubsystemDescriptor> depthDescriptors = new List<XRDepthSubsystemDescriptor>();
+            var depthDescriptors = new List<XRDepthSubsystemDescriptor>();
             SubsystemManager.GetSubsystemDescriptors<XRDepthSubsystemDescriptor>(depthDescriptors);
 
-            List<XROcclusionSubsystemDescriptor> occlusionDescriptors = new List<XROcclusionSubsystemDescriptor>();
+            var occlusionDescriptors = new List<XROcclusionSubsystemDescriptor>();
             SubsystemManager.GetSubsystemDescriptors<XROcclusionSubsystemDescriptor>(occlusionDescriptors);
 
-            List<XRCameraSubsystemDescriptor> cameraDescriptors = new List<XRCameraSubsystemDescriptor>();
+            var cameraDescriptors = new List<XRCameraSubsystemDescriptor>();
             SubsystemManager.GetSubsystemDescriptors<XRCameraSubsystemDescriptor>(cameraDescriptors);
 
-            List<XRSessionSubsystemDescriptor> sessionDescriptors = new List<XRSessionSubsystemDescriptor>();
+            var sessionDescriptors = new List<XRSessionSubsystemDescriptor>();
             SubsystemManager.GetSubsystemDescriptors<XRSessionSubsystemDescriptor>(sessionDescriptors);
 
             if(planeDescriptors.Count > 0 && rayCastDescriptors.Count > 0)
@@ -201,14 +199,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_SimpleAR.interactable = true;
                 m_Scale.interactable = true;
             }
+
             if(faceDescriptors.Count > 0)
             {
                 m_FaceTracking.interactable = true;
     #if UNITY_IOS
                 m_FaceBlendShapes.interactable = true;
     #endif
-
             }
+
             if(occlusionDescriptors.Count > 0)
             {
                 foreach(XROcclusionSubsystemDescriptor occlusionDescriptor in occlusionDescriptors)
@@ -220,6 +219,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     }
                 }
             }
+
             if(cameraDescriptors.Count > 0)
             {
                 foreach(var cameraDescriptor in cameraDescriptors)
@@ -233,10 +233,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 }
             }
+
             if(imageDescriptors.Count > 0)
             {
                 m_ImageTracking.interactable = true;
             }
+
             if(envDescriptors.Count > 0)
             {
                 m_EnvironmentProbes.interactable = true;
@@ -254,26 +256,29 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     }
                 }
             }
+
             if(anchorDescriptors.Count > 0)
             {
                 m_Anchors.interactable = true;
             }
+
             if(objectDescriptors.Count > 0)
             {
                 m_ObjectTracking.interactable = true;
             }
+
             if(cameraDescriptors.Count > 0)
             {
                 foreach(var cameraDescriptor in cameraDescriptors)
                 {
                     if(cameraDescriptor.supportsCameraImage)
                     {
-                        m_CameraImage.interactable = true;
+                        m_CpuImages.interactable = true;
                         break;
                     }
                 }
-
             }
+
     #if UNITY_IOS
             if(sessionDescriptors.Count > 0 && ARKitSessionSubsystem.worldMapSupported)
             {
@@ -289,7 +294,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 m_ARKitCoachingOverlay.interactable = true;
             }
-
     #endif
 
             if(depthDescriptors.Count > 0)
@@ -301,8 +305,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 m_PlaneOcclusion.interactable  = true;
             }
-
         }
-
     }
 }
