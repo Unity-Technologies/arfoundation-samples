@@ -10,6 +10,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         FaceTracking,
         PlaneDetection,
         HumanSegmentation,
+        Meshing
     }
 
     public static class ActiveMenu

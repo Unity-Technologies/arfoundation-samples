@@ -125,6 +125,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set { m_FaceBlendShapes = value; }
         }
 
+
+        [SerializeField]
+        Button m_FaceRegions;
+        public Button faceRegions
+        {
+            get { return m_FaceRegions; }
+            set { m_FaceRegions = value; }
+        }
+
         [SerializeField]
         Button m_HumanSegmentation;
         public Button humanSegmentation
@@ -155,6 +164,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             get { return m_PlaneClassification; }
             set { m_PlaneClassification = value; }
+        }
+
+        [SerializeField]
+        Button m_Meshing;
+        public Button meshing
+        {
+            get { return m_Meshing; }
+            set { m_Meshing = value; }
         }
 
         // Start is called before the first frame update
@@ -196,6 +213,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
             List<XRSessionSubsystemDescriptor> sessionDescriptors = new List<XRSessionSubsystemDescriptor>();
             SubsystemManager.GetSubsystemDescriptors<XRSessionSubsystemDescriptor>(sessionDescriptors);
 
+            var meshDescriptors = new List<XRMeshSubsystemDescriptor>();
+            SubsystemManager.GetSubsystemDescriptors<XRMeshSubsystemDescriptor>(meshDescriptors);
+
             if(planeDescriptors.Count > 0 && rayCastDescriptors.Count > 0)
             {
                 m_SimpleAR.interactable = true;
@@ -206,6 +226,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_FaceTracking.interactable = true;
     #if UNITY_IOS
                 m_FaceBlendShapes.interactable = true;
+    #endif
+    #if UNITY_ANDROID
+                m_FaceRegions.interactable = true;
     #endif
 
             }
@@ -300,6 +323,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if(planeDescriptors.Count > 0)
             {
                 m_PlaneOcclusion.interactable  = true;
+            }
+
+            if(meshDescriptors.Count > 0)
+            {
+                m_Meshing.interactable = true;
             }
 
         }
