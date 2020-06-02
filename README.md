@@ -268,4 +268,4 @@ At first, this scene may appear to be doing nothing. However, it is rendering a 
 
 ## Interaction
 
-This sample scene demonstrates the functionality of the `XR Interaction Toolkit` package. In the scene, you are able to place a cube on a plane which you can translate, rotate and scale with gestures.
+This sample scene demonstrates the functionality of the `XR Interaction Toolkit` package. In the scene, you are able to place a cube on a plane which you can translate, rotate and scale with gestures. See the [`XR Interaction Toolkit Documentation`](https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@0.9/manual/index.html) for more details.

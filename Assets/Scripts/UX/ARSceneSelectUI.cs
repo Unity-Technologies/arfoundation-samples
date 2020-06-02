@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.ARFoundation;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -73,69 +74,80 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
+        static void LoadScene(string sceneName)
+        {
+            LoaderUtility.Initialize();
+            SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+        }
+
         public void SimpleARButtonPressed()
         {
-            SceneManager.LoadScene("SimpleAR", LoadSceneMode.Single);
+            LoadScene("SimpleAR");
         }
 
         public void ImageTrackableButtonPressed()
         {
-        SceneManager.LoadScene("ImageTracking", LoadSceneMode.Single);
+            LoadScene("ImageTracking");
         }
 
         public void AnchorsButtonPressed()
         {
-            SceneManager.LoadScene("Anchors", LoadSceneMode.Single);
+            LoadScene("Anchors");
         }
 
         public void ARCollaborationDataButtonPressed()
         {
-            SceneManager.LoadScene("ARCollaborationDataExample", LoadSceneMode.Single);
+            LoadScene("ARCollaborationDataExample");
         }
 
         public void ARKitCoachingOverlayButtonPressed()
         {
-            SceneManager.LoadScene("ARKitCoachingOverlay", LoadSceneMode.Single);
+            LoadScene("ARKitCoachingOverlay");
         }
 
         public void ARWorldMapButtonPressed()
         {
-            SceneManager.LoadScene("ARWorldMap", LoadSceneMode.Single);
+            LoadScene("ARWorldMap");
+        }
+
+        public void CpuImagesButtonPressed()
+        {
+            LoadScene("CpuImages");
         }
 
         public void CheckSupportButtonPressed()
         {
-            SceneManager.LoadScene("Check Support", LoadSceneMode.Single);
+            LoadScene("Check Support");
         }
 
-        public void CameraImageButtonPressed()
+        public void EnvironmentProbeButtonPressed()
         {
-            SceneManager.LoadScene("CpuImages", LoadSceneMode.Single);
+            LoadScene("EnvironmentProbes");
         }
 
         public void ObjectTrackingButtonPressed()
         {
-            SceneManager.LoadScene("ObjectTracking", LoadSceneMode.Single);
+            LoadScene("ObjectTracking");
         }
 
         public void PlaneOcclusionButtonPressed()
         {
-            SceneManager.LoadScene("PlaneOcclusion", LoadSceneMode.Single);
+            LoadScene("PlaneOcclusion");
         }
 
         public void PointCloudButtonPressed()
         {
-            SceneManager.LoadScene("AllPointCloudPoints", LoadSceneMode.Single);
+            LoadScene("AllPointCloudPoints");
         }
 
         public void ScaleButtonPressed()
         {
-            SceneManager.LoadScene("Scale", LoadSceneMode.Single);
+            LoadScene("Scale");
         }
 
         public void SampleUXButtonPressed()
         {
-            SceneManager.LoadScene("SampleUXScene", LoadSceneMode.Single);
+            LoadScene("SampleUXScene");
         }
 
         public void FaceTrackingMenuButtonPressed()
@@ -144,41 +156,45 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_FaceTrackingMenu.SetActive(true);
             m_AllMenu.SetActive(false);
         }
+
         public void ARCoreFaceRegionsButtonPressed()
         {
-            SceneManager.LoadScene("ARCoreFaceRegions", LoadSceneMode.Single);
+            LoadScene("ARCoreFaceRegions");
         }
+
         public void ARKitFaceBlendShapesButtonPressed()
         {
-            SceneManager.LoadScene("ARKitFaceBlendShapes", LoadSceneMode.Single);
+            LoadScene("ARKitFaceBlendShapes");
         }
+
         public void EyeLasersButtonPressed()
         {
-            SceneManager.LoadScene("EyeLasers", LoadSceneMode.Single);
+            LoadScene("EyeLasers");
         }
+
         public void EyePosesButtonPressed()
         {
-            SceneManager.LoadScene("EyePoses", LoadSceneMode.Single);
+            LoadScene("EyePoses");
         }
 
         public void FaceMeshButtonPressed()
         {
-            SceneManager.LoadScene("FaceMesh", LoadSceneMode.Single);
+            LoadScene("FaceMesh");
         }
 
         public void FacePoseButtonPressed()
         {
-            SceneManager.LoadScene("FacePose", LoadSceneMode.Single);
+            LoadScene("FacePose");
         }
 
         public void FixationPointButtonPressed()
         {
-            SceneManager.LoadScene("FixationPoint", LoadSceneMode.Single);
+            LoadScene("FixationPoint");
         }
 
         public void RearCameraWithFrontCameraFaceMeshButtonPressed()
         {
-            SceneManager.LoadScene("WorldCameraWithUserFacingFaceTracking", LoadSceneMode.Single);
+            LoadScene("WorldCameraWithUserFacingFaceTracking");
         }
 
         public void HumanSegmentationMenuButtonPressed()
@@ -187,22 +203,25 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_HumanSegmentationMenu.SetActive(true);
             m_AllMenu.SetActive(false);
         }
+
         public void HumanSegmentation2DButtonPressed()
         {
-            SceneManager.LoadScene("HumanBodyTracking2D", LoadSceneMode.Single);
+            LoadScene("HumanBodyTracking2D");
         }
+
         public void HumanSegmentation3DButtonPressed()
         {
-            SceneManager.LoadScene("HumanBodyTracking3D", LoadSceneMode.Single);
+            LoadScene("HumanBodyTracking3D");
         }
+
         public void HumanSegmentationImagesButtonPressed()
         {
-            SceneManager.LoadScene("HumanSegmentationImages", LoadSceneMode.Single);
+            LoadScene("HumanSegmentationImages");
         }
 
         public void LightEstimationButtonPressed()
         {
-            SceneManager.LoadScene("LightEstimation", LoadSceneMode.Single);
+            LoadScene("LightEstimation");
         }
 
         public void PlaneDetectionMenuButtonPressed()
@@ -211,21 +230,21 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_PlaneDetectionMenu.SetActive(true);
             m_AllMenu.SetActive(false);
         }
+
         public void FeatheredPlanesButtonPressed()
         {
-            SceneManager.LoadScene("FeatheredPlanes", LoadSceneMode.Single);
+            LoadScene("FeatheredPlanes");
         }
 
         public void PlaneClassificationButtonPressed()
         {
-            SceneManager.LoadScene("PlaneClassification", LoadSceneMode.Single);
+            LoadScene("PlaneClassification");
         }
 
         public void TogglePlaneDetectionButtonPressed()
         {
-            SceneManager.LoadScene("TogglePlaneDetection", LoadSceneMode.Single);
+            LoadScene("TogglePlaneDetection");
         }
-
 
         public void BackButtonPressed()
         {
@@ -246,22 +265,22 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public void ClassificationMeshesButtonPressed()
         {
-           SceneManager.LoadScene("ClassificationMeshes", LoadSceneMode.Single);
+            LoadScene("ClassificationMeshes");
         }
 
         public void NormalMeshesButtonPressed()
         {
-           SceneManager.LoadScene("NormalMeshes", LoadSceneMode.Single);
+            LoadScene("NormalMeshes");
         }
 
         public void OcclusionMeshesButtonPressed()
         {
-           SceneManager.LoadScene("OcclusionMeshes", LoadSceneMode.Single);
+            LoadScene("OcclusionMeshes");
         }
 
         public void InteractionButtonPressed()
         {
-
+            LoadScene("Interaction");
         }
     }
 }

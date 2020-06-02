@@ -812,7 +812,7 @@ GameObject:
   - component: {fileID: 340560480}
   - component: {fileID: 340560483}
   m_Layer: 5
-  m_Name: CameraImage
+  m_Name: CpuImages
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -882,7 +882,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 774532498}
-        m_MethodName: CameraImageButtonPressed
+        m_MethodName: CpuImagesButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1151,7 +1151,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Camera Image
+  m_Text: CPU Images
 --- !u!222 &356847840
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3522,7 +3522,7 @@ MonoBehaviour:
   m_FaceTrackingMenu: {fileID: 881193863}
   m_HumanSegmentationMenu: {fileID: 1468820548}
   m_PlaneDetectionMenu: {fileID: 881169046}
-  m_MeshingMenu: {fileID: 0}
+  m_MeshingMenu: {fileID: 2008080040}
 --- !u!4 &774532499
 Transform:
   m_ObjectHideFlags: 0
@@ -3553,7 +3553,7 @@ MonoBehaviour:
   m_ImageTracking: {fileID: 1311724826}
   m_Anchors: {fileID: 1905833466}
   m_ARWorldMap: {fileID: 1817576787}
-  m_CameraImage: {fileID: 340560480}
+  m_CpuImages: {fileID: 340560480}
   m_EnvironmentProbes: {fileID: 1761617832}
   m_ARCollaborationData: {fileID: 1385680569}
   m_ARKitCoachingOverlay: {fileID: 1091803571}
@@ -3569,6 +3569,7 @@ MonoBehaviour:
   m_PlaneDetection: {fileID: 1172329691}
   m_PlaneClassification: {fileID: 988159692}
   m_Meshing: {fileID: 1466748459}
+  m_Interaction: {fileID: 1324254627}
 --- !u!1 &786358435
 GameObject:
   m_ObjectHideFlags: 0
@@ -6377,7 +6378,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 774532498}
-        m_MethodName: PlaneDetectionMenuButtonPressed
+        m_MethodName: InteractionButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7588,7 +7589,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 774532498}
-        m_MethodName: MeshingButtonPressed
+        m_MethodName: MeshingMenuButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8459,7 +8460,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 774532498}
-        m_MethodName: EnvironmentProbesButtonPressed
+        m_MethodName: EnvironmentProbeButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
