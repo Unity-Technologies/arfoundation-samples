@@ -123,7 +123,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set { m_FaceBlendShapes = value; }
         }
 
-
         [SerializeField]
         Button m_FaceRegions;
         public Button faceRegions

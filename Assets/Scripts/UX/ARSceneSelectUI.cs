@@ -41,7 +41,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set { m_PlaneDetectionMenu = value; }
         }
 
-
         [SerializeField]
         GameObject m_MeshingMenu;
         public GameObject meshingMenu
@@ -120,7 +119,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             LoadScene("Check Support");
         }
 
-        public void EnvironmentProbeButtonPressed()
+        public void EnvironmentProbesButtonPressed()
         {
             LoadScene("EnvironmentProbes");
         }
