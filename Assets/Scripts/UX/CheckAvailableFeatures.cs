@@ -263,15 +263,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_FaceRegions.interactable = true;
 #endif
                 foreach(var faceDescriptor in faceDescriptors)
+                {
+                    if(faceDescriptor.supportsEyeTracking)
                     {
-                        if(faceDescriptor.supportsEyeTracking)
-                        {
-                            m_EyePoses.interactable = true;
-                            m_FixationPoint.interactable = true;
-                            m_EyeLasers.interactable = true;
-                            break;
-                        }
+                        m_EyePoses.interactable = true;
+                        m_FixationPoint.interactable = true;
+                        m_EyeLasers.interactable = true;
+                        break;
                     }
+                }
             }
 
             if(occlusionDescriptors.Count > 0)
