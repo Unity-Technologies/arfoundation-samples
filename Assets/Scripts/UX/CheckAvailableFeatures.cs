@@ -179,6 +179,31 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set { m_Interaction = value; }
         }
 
+        [SerializeField]
+        Button m_FixationPoint;
+        public Button fixationPoint
+        {
+            get { return m_FixationPoint; }
+            set { m_FixationPoint = value; }
+        }
+
+        [SerializeField]
+        Button m_EyePoses;
+        public Button eyePoses
+        {
+            get { return m_EyePoses; }
+            set { m_EyePoses = value; }
+        }
+
+        [SerializeField]
+        Button m_EyeLasers;
+        public Button eyeLasers
+        {
+            get { return m_EyeLasers; }
+            set { m_EyeLasers = value; }
+        }
+
+
         // Start is called before the first frame update
         void Start()
         {
@@ -233,6 +258,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_FaceTracking.interactable = true;
 #if UNITY_IOS
                 m_FaceBlendShapes.interactable = true;
+                foreach(var faceDescriptor in faceDescriptors)
+                {
+                    if(faceDescriptor.supportsEyeTracking)
+                    {
+                        m_EyePoses.interactable = true;
+                        m_FixationPoint.interactable = true;
+                        m_EyeLasers.interactable = true;
+                        break;
+                    }
+                }
 #endif
 #if UNITY_ANDROID
                 m_FaceRegions.interactable = true;
@@ -241,7 +276,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if(occlusionDescriptors.Count > 0)
             {
-                foreach(XROcclusionSubsystemDescriptor occlusionDescriptor in occlusionDescriptors)
+                foreach(var occlusionDescriptor in occlusionDescriptors)
                 {
                     if(occlusionDescriptor.supportsHumanSegmentationDepthImage && occlusionDescriptor.supportsHumanSegmentationStencilImage)
                     {
