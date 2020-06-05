@@ -223,7 +223,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         // Start is called before the first frame update
         void Start()
         {
-            XRLoader activeLoader = LoaderUtility.GetActiveLoader();
+            var activeLoader = LoaderUtility.GetActiveLoader();
 
             var planeDescriptors = new List<XRPlaneSubsystemDescriptor>();
             SubsystemManager.GetSubsystemDescriptors<XRPlaneSubsystemDescriptor>(planeDescriptors);
