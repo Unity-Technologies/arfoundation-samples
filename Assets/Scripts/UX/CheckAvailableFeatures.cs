@@ -261,9 +261,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             var sessionDescriptors = new List<XRSessionSubsystemDescriptor>();
             SubsystemManager.GetSubsystemDescriptors<XRSessionSubsystemDescriptor>(sessionDescriptors);
 
-            var meshDescriptors = new List<XRMeshSubsystemDescriptor>();
-            SubsystemManager.GetSubsystemDescriptors<XRMeshSubsystemDescriptor>(meshDescriptors);
-
             if(planeDescriptors.Count > 0 && rayCastDescriptors.Count > 0)
             {
                 m_SimpleAR.interactable = true;
@@ -392,7 +389,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_PlaneOcclusion.interactable  = true;
             }
 
-            if(activeLoader is ARKitLoader && ((ARKitLoader)activeLoader).meshSubsystem !=null)
+            if(activeLoader.GetLoadedSubsystem<XRMeshSubsystem>() != null)
             {
                 m_Meshing.interactable = true;
             }
