@@ -6,6 +6,7 @@ using UnityEngine.XR.ARSubsystems;
 #if UNITY_IOS
 using UnityEngine.XR.ARKit;
 #endif
+using UnityEngine.XR.Management;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -124,6 +125,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
 
         [SerializeField]
+        Button m_FaceRegions;
+        public Button faceRegions
+        {
+            get { return m_FaceRegions; }
+            set { m_FaceRegions = value; }
+        }
+
+        [SerializeField]
         Button m_HumanSegmentation;
         public Button humanSegmentation
         {
@@ -155,9 +164,67 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set { m_PlaneClassification = value; }
         }
 
+        [SerializeField]
+        Button m_Meshing;
+        public Button meshing
+        {
+            get { return m_Meshing; }
+            set { m_Meshing = value; }
+        }
+
+        [SerializeField]
+        Button m_Interaction;
+        public Button interaction
+        {
+            get { return m_Interaction; }
+            set { m_Interaction = value; }
+        }
+
+        [SerializeField]
+        Button m_FixationPoint;
+        public Button fixationPoint
+        {
+            get { return m_FixationPoint; }
+            set { m_FixationPoint = value; }
+        }
+
+        [SerializeField]
+        Button m_EyePoses;
+        public Button eyePoses
+        {
+            get { return m_EyePoses; }
+            set { m_EyePoses = value; }
+        }
+
+        [SerializeField]
+        Button m_EyeLasers;
+        public Button eyeLasers
+        {
+            get { return m_EyeLasers; }
+            set { m_EyeLasers = value; }
+        }
+
+        [SerializeField]
+        Button m_SampleUX;
+        public Button sampleUX
+        {
+            get { return m_SampleUX; }
+            set { m_SampleUX = value; }
+        }
+
+        [SerializeField]
+        Button m_CheckSupport;
+        public Button checkSupport
+        {
+            get { return m_CheckSupport; }
+            set { m_CheckSupport = value; }
+        }
+
         // Start is called before the first frame update
         void Start()
         {
+            var activeLoader = LoaderUtility.GetActiveLoader();
+
             var planeDescriptors = new List<XRPlaneSubsystemDescriptor>();
             SubsystemManager.GetSubsystemDescriptors<XRPlaneSubsystemDescriptor>(planeDescriptors);
 
@@ -198,19 +265,35 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 m_SimpleAR.interactable = true;
                 m_Scale.interactable = true;
+                m_Interaction.interactable = true;
+                m_SampleUX.interactable = true;
+                m_CheckSupport.interactable = true;
             }
 
             if(faceDescriptors.Count > 0)
             {
                 m_FaceTracking.interactable = true;
-    #if UNITY_IOS
+#if UNITY_IOS
                 m_FaceBlendShapes.interactable = true;
-    #endif
+#endif
+#if UNITY_ANDROID
+                m_FaceRegions.interactable = true;
+#endif
+                foreach(var faceDescriptor in faceDescriptors)
+                {
+                    if(faceDescriptor.supportsEyeTracking)
+                    {
+                        m_EyePoses.interactable = true;
+                        m_FixationPoint.interactable = true;
+                        m_EyeLasers.interactable = true;
+                        break;
+                    }
+                }
             }
 
             if(occlusionDescriptors.Count > 0)
             {
-                foreach(XROcclusionSubsystemDescriptor occlusionDescriptor in occlusionDescriptors)
+                foreach(var occlusionDescriptor in occlusionDescriptors)
                 {
                     if(occlusionDescriptor.supportsHumanSegmentationDepthImage && occlusionDescriptor.supportsHumanSegmentationStencilImage)
                     {
@@ -304,6 +387,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if(planeDescriptors.Count > 0)
             {
                 m_PlaneOcclusion.interactable  = true;
+            }
+
+            if(activeLoader.GetLoadedSubsystem<XRMeshSubsystem>() != null)
+            {
+                m_Meshing.interactable = true;
             }
         }
     }

@@ -41,6 +41,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set { m_PlaneDetectionMenu = value; }
         }
 
+        [SerializeField]
+        GameObject m_MeshingMenu;
+        public GameObject meshingMenu
+        {
+            get { return m_MeshingMenu; }
+            set { m_MeshingMenu = value; }
+        }
+
         void Start()
         {
             if(ActiveMenu.currentMenu == MenuType.FaceTracking)
@@ -56,6 +64,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             else if(ActiveMenu.currentMenu == MenuType.HumanSegmentation)
             {
                 m_HumanSegmentationMenu.SetActive(true);
+                m_AllMenu.SetActive(false);
+            }
+            else if(ActiveMenu.currentMenu == MenuType.Meshing)
+            {
+                m_MeshingMenu.SetActive(true);
                 m_AllMenu.SetActive(false);
             }
         }
@@ -238,7 +251,35 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_FaceTrackingMenu.SetActive(false);
             m_PlaneDetectionMenu.SetActive(false);
             m_HumanSegmentationMenu.SetActive(false);
+            m_MeshingMenu.SetActive(false);
             m_AllMenu.SetActive(true);
+        }
+
+        public void MeshingMenuButtonPressed()
+        {
+            ActiveMenu.currentMenu = MenuType.Meshing;
+            m_MeshingMenu.SetActive(true);
+            m_AllMenu.SetActive(false);
+        }
+
+        public void ClassificationMeshesButtonPressed()
+        {
+            LoadScene("ClassificationMeshes");
+        }
+
+        public void NormalMeshesButtonPressed()
+        {
+            LoadScene("NormalMeshes");
+        }
+
+        public void OcclusionMeshesButtonPressed()
+        {
+            LoadScene("OcclusionMeshes");
+        }
+
+        public void InteractionButtonPressed()
+        {
+            LoadScene("Interaction");
         }
     }
 }
