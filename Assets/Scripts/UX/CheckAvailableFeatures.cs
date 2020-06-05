@@ -6,6 +6,7 @@ using UnityEngine.XR.ARSubsystems;
 #if UNITY_IOS
 using UnityEngine.XR.ARKit;
 #endif
+using UnityEngine.XR.Management;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -203,10 +204,27 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set { m_EyeLasers = value; }
         }
 
+        [SerializeField]
+        Button m_SampleUX;
+        public Button sampleUX
+        {
+            get { return m_SampleUX; }
+            set { m_SampleUX = value; }
+        }
+
+        [SerializeField]
+        Button m_CheckSupport;
+        public Button checkSupport
+        {
+            get { return m_CheckSupport; }
+            set { m_CheckSupport = value; }
+        }
 
         // Start is called before the first frame update
         void Start()
         {
+            XRLoader activeLoader = LoaderUtility.GetActiveLoader();
+
             var planeDescriptors = new List<XRPlaneSubsystemDescriptor>();
             SubsystemManager.GetSubsystemDescriptors<XRPlaneSubsystemDescriptor>(planeDescriptors);
 
@@ -251,6 +269,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_SimpleAR.interactable = true;
                 m_Scale.interactable = true;
                 m_Interaction.interactable = true;
+                m_SampleUX.interactable = true;
+                m_CheckSupport.interactable = true;
             }
 
             if(faceDescriptors.Count > 0)
@@ -372,7 +392,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_PlaneOcclusion.interactable  = true;
             }
 
-            if(meshDescriptors.Count > 0)
+            if(activeLoader is ARKitLoader && ((ARKitLoader)activeLoader).meshSubsystem !=null)
             {
                 m_Meshing.interactable = true;
             }
