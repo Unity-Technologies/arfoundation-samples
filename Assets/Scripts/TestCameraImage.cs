@@ -86,8 +86,8 @@ public class TestCameraImage : MonoBehaviour
     {
         // Attempt to get the latest camera image. If this method succeeds,
         // it acquires a native resource that must be disposed (see below).
-        XRCameraImage image;
-        if (!cameraManager.TryGetLatestImage(out image))
+        XRCpuImage image;
+        if (!cameraManager.TryAcquireLatestCpuImage(out image)) {
         {
             return;
         }
@@ -114,7 +114,7 @@ public class TestCameraImage : MonoBehaviour
 
         // Convert the image to format, flipping the image across the Y axis.
         // We can also get a sub rectangle, but we'll get the full image here.
-        var conversionParams = new XRCameraImageConversionParams(image, format, CameraImageTransformation.MirrorY);
+        var conversionParams = new XRCpuImage.ConversionParams(image, format, XRCpuImage.Transformation.MirrorY);
 
         // Texture2D allows us write directly to the raw texture data
         // This allows us to do the conversion in-place without making any copies.
