@@ -1,9 +1,20 @@
 {
+  "scopedRegistries": [
+    {
+      "name": "needle",
+      "url": "https://packages.needle.tools",
+      "scopes": [
+        "com.needle"
+      ]
+    }
+  ],
   "dependencies": {
+    "com.needle.xr.arsimulation": "file:../../../../pfc-ar-desktop-plugin/package",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
     "com.unity.analytics": "3.3.5",
     "com.unity.collab-proxy": "1.2.16",
+    "com.unity.device-simulator": "2.2.2-preview",
     "com.unity.ext.nunit": "1.0.0",
     "com.unity.ide.rider": "1.1.4",
     "com.unity.ide.vscode": "1.2.0",
