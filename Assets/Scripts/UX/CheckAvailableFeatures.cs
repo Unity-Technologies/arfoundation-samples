@@ -224,7 +224,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void Start()
         {
             var activeLoader = LoaderUtility.GetActiveLoader();
-
+            if(!activeLoader) return;
+            
             var planeDescriptors = new List<XRPlaneSubsystemDescriptor>();
             SubsystemManager.GetSubsystemDescriptors<XRPlaneSubsystemDescriptor>(planeDescriptors);
 
