@@ -49,6 +49,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set { m_MeshingMenu = value; }
         }
 
+        [SerializeField]
+        GameObject m_DepthMenu;
+        public GameObject depthMenu
+        {
+            get { return m_DepthMenu; }
+            set { m_DepthMenu = value; }
+        }
+
         void Start()
         {
             if(ActiveMenu.currentMenu == MenuType.FaceTracking)
@@ -69,6 +77,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             else if(ActiveMenu.currentMenu == MenuType.Meshing)
             {
                 m_MeshingMenu.SetActive(true);
+                m_AllMenu.SetActive(false);
+            }
+            else if(ActiveMenu.currentMenu == MenuType.Depth)
+            {
+                m_DepthMenu.SetActive(true);
                 m_AllMenu.SetActive(false);
             }
         }
@@ -252,6 +265,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_PlaneDetectionMenu.SetActive(false);
             m_HumanSegmentationMenu.SetActive(false);
             m_MeshingMenu.SetActive(false);
+            m_DepthMenu.SetActive(false);
             m_AllMenu.SetActive(true);
         }
 
@@ -259,6 +273,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             ActiveMenu.currentMenu = MenuType.Meshing;
             m_MeshingMenu.SetActive(true);
+            m_AllMenu.SetActive(false);
+        }
+
+        public void DepthMenuButtonPressed()
+        {
+            ActiveMenu.currentMenu = MenuType.Depth;
+            m_DepthMenu.SetActive(true);
             m_AllMenu.SetActive(false);
         }
 
@@ -280,6 +301,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public void InteractionButtonPressed()
         {
             LoadScene("Interaction");
+        }
+
+        public void SimpleOcclusionButtonPressed()
+        {
+            LoadScene("SimpleOcclusion");
+        }
+
+        public void DepthImagesButtonPressed()
+        {
+            LoadScene("DepthImages");
         }
     }
 }

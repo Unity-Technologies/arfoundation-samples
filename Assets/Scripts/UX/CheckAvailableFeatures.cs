@@ -220,6 +220,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set { m_CheckSupport = value; }
         }
 
+        [SerializeField]
+        Button m_Depth;
+        public Button depth
+        {
+            get { return m_Depth; }
+            set { m_Depth = value; }
+        }
+
         // Start is called before the first frame update
         void Start()
         {
@@ -298,7 +306,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     if(occlusionDescriptor.supportsHumanSegmentationDepthImage && occlusionDescriptor.supportsHumanSegmentationStencilImage)
                     {
                         m_HumanSegmentation.interactable = true;
-                        break;
+                    }
+                    if(occlusionDescriptor.supportsEnvironmentDepthImage)
+                    {
+                        m_Depth.interactable = true;
                     }
                 }
             }

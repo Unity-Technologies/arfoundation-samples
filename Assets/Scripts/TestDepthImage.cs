@@ -101,8 +101,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
             StringBuilder sb = new StringBuilder();
             Texture2D humanStencil = m_OcclusionManager.humanStencilTexture;
             Texture2D humanDepth = m_OcclusionManager.humanDepthTexture;
+            Texture2D envDepth = m_OcclusionManager.environmentDepthTexture;
             LogTextureInfo(sb, "stencil", humanStencil);
             LogTextureInfo(sb, "depth", humanDepth);
+            LogTextureInfo(sb, "env", envDepth);
 
             if (m_ImageInfo != null)
             {
@@ -115,7 +117,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             // To use the stencil, be sure the HumanSegmentationStencilMode property on the AROcclusionManager is set to a
             // non-disabled value.
-            m_RawImage.texture = humanStencil;
+            m_RawImage.texture = envDepth;
 
             // To use the depth, be sure the HumanSegmentationDepthMode property on the AROcclusionManager is set to a
             /// non-disabled value.
