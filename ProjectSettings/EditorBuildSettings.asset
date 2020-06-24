@@ -51,14 +51,17 @@ EditorBuildSettings:
     path: Assets/Scenes/FaceTracking/WorldCameraWithUserFacingFaceTracking.unity
     guid: ecea31d2ea5464e52bedb91fa1fcb6bb
   - enabled: 1
-    path: Assets/Scenes/HumanSegmentation/HumanBodyTracking2D.unity
+    path: Assets/Scenes/HumanTracking/HumanBodyTracking2D.unity
     guid: b2551dd1f69e7446e9093f0f38e03160
   - enabled: 1
-    path: Assets/Scenes/HumanSegmentation/HumanBodyTracking3D.unity
+    path: Assets/Scenes/HumanTracking/HumanBodyTracking3D.unity
     guid: 9fc1f5ed98d414310a8b9e659c295d7c
   - enabled: 1
-    path: Assets/Scenes/HumanSegmentation/HumanSegmentationImages.unity
+    path: Assets/Scenes/Depth/DepthImages.unity
     guid: ed5207d50697d40d688249cd6c59608b
+  - enabled: 1
+    path: Assets/Scenes/Depth/SimpleOcclusion.unity
+    guid: 50a69364b393d4ce8a8b3589422b67b7
   - enabled: 1
     path: Assets/Scenes/ImageTracking/ImageTracking.unity
     guid: e0b018a3c3b5cfd4c8e316706ec0a18c
@@ -108,6 +111,10 @@ EditorBuildSettings:
     path: Assets/Scenes/Interaction/Interaction.unity
     guid: ff9b6e62e970e432a9e8d51604b3bad8
   m_configObjects:
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: f8ce26fe3bc69499b9be4b2378e97a94,
+      type: 2}
+    UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 98c79e8cc22674a89a95a3a90e2b70cb,
+      type: 2}
     com.unity.xr.arkit.PlayerSettings: {fileID: 11400000, guid: 2d5fb8e61571b4e3897f221189089fd6,
       type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: e2f869774b12e400996eb546603602e3,

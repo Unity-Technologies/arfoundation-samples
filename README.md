@@ -226,11 +226,16 @@ This sample demonstrates 3D world space body tracking. A 3D skeleton is generate
 
 This sample requires a device with an A12 bionic chip running iOS 13.
 
-## HumanSegmentationImages
+## DepthImages
 
-This sample demonstrates "people occlusion", which can produce stencil and depth textures for detected persons. This sample is very primitive and simply displays the raw texture on the screen. We are currently working on a better sample.
+This sample demonstrates raw texture depth images from different methods.
+* Environment depth (certain Android devices)
+* Human stencil (Apple devices with an A12 bionic chip (or later) running iOS 13 or later)
+* Human depth (Apple devices with an A12 bionic chip (or later) running iOS 13 or later)
 
-This sample requires a device with an A12 bionic chip running iOS 13.
+## SimpleOcclusion
+
+This sample demonstrates occlusion of virtual content by real world content through the use of environment depth images on supported Android devices.
 
 ## AllPointCloudPoints
 
