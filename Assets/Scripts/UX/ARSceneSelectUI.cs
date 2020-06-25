@@ -26,11 +26,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
 
         [SerializeField]
-        GameObject m_HumanSegmentationMenu;
-        public GameObject humanSegmentationMenu
+        GameObject m_BodyTrackingMenu;
+        public GameObject bodyTrackingMenu
         {
-            get { return m_HumanSegmentationMenu; }
-            set { m_HumanSegmentationMenu = value; }
+            get { return m_BodyTrackingMenu; }
+            set { m_BodyTrackingMenu = value; }
         }
 
         [SerializeField]
@@ -69,9 +69,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_PlaneDetectionMenu.SetActive(true);
                 m_AllMenu.SetActive(false);
             }
-            else if(ActiveMenu.currentMenu == MenuType.HumanSegmentation)
+            else if(ActiveMenu.currentMenu == MenuType.BodyTracking)
             {
-                m_HumanSegmentationMenu.SetActive(true);
+                m_BodyTrackingMenu.SetActive(true);
                 m_AllMenu.SetActive(false);
             }
             else if(ActiveMenu.currentMenu == MenuType.Meshing)
@@ -209,26 +209,21 @@ namespace UnityEngine.XR.ARFoundation.Samples
             LoadScene("WorldCameraWithUserFacingFaceTracking");
         }
 
-        public void HumanSegmentationMenuButtonPressed()
+        public void BodyTrackingMenuButtonPressed()
         {
-            ActiveMenu.currentMenu = MenuType.HumanSegmentation;
-            m_HumanSegmentationMenu.SetActive(true);
+            ActiveMenu.currentMenu = MenuType.BodyTracking;
+            m_BodyTrackingMenu.SetActive(true);
             m_AllMenu.SetActive(false);
         }
 
-        public void HumanSegmentation2DButtonPressed()
+        public void BodyTracking2DButtonPressed()
         {
             LoadScene("HumanBodyTracking2D");
         }
 
-        public void HumanSegmentation3DButtonPressed()
+        public void BodyTracking3DButtonPressed()
         {
             LoadScene("HumanBodyTracking3D");
-        }
-
-        public void HumanSegmentationImagesButtonPressed()
-        {
-            LoadScene("HumanSegmentationImages");
         }
 
         public void LightEstimationButtonPressed()
@@ -263,7 +258,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             ActiveMenu.currentMenu = MenuType.Main;
             m_FaceTrackingMenu.SetActive(false);
             m_PlaneDetectionMenu.SetActive(false);
-            m_HumanSegmentationMenu.SetActive(false);
+            m_BodyTrackingMenu.SetActive(false);
             m_MeshingMenu.SetActive(false);
             m_DepthMenu.SetActive(false);
             m_AllMenu.SetActive(true);
