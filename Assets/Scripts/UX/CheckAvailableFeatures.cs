@@ -307,10 +307,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     {
                         m_HumanSegmentation.interactable = true;
                     }
+#if UNITY_IOS
                     if(occlusionDescriptor.supportsEnvironmentDepthImage)
                     {
                         m_Depth.interactable = true;
                     }
+#endif
+#if UNITY_ANDROID
+                    m_Depth.interactable = true;
+#endif
                 }
             }
 

@@ -88,12 +88,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void Update()
         {
             Debug.Assert(m_OcclusionManager != null, "no occlusion manager");
-            var subsystem = m_OcclusionManager.subsystem;
-            if (subsystem == null)
+            if ((m_OcclusionManager.descriptor?.supportsHumanSegmentationStencilImage == false)
+                && (m_OcclusionManager.descriptor?.supportsHumanSegmentationDepthImage == false)
+                && (m_OcclusionManager.descriptor?.supportsEnvironmentDepthImage == false))
             {
                 if (m_ImageInfo != null)
                 {
-                    m_ImageInfo.text = "Human Segmentation not supported.";
+                    m_ImageInfo.text = "Depth functionality is not supported on this device.";
                 }
                 return;
             }
