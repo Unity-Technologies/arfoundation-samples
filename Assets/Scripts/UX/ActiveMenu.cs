@@ -9,7 +9,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         Main,
         FaceTracking,
         PlaneDetection,
-        HumanSegmentation,
+        BodyTracking,
         Meshing,
         Depth
     }

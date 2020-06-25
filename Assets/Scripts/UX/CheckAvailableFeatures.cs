@@ -133,11 +133,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
 
         [SerializeField]
-        Button m_HumanSegmentation;
-        public Button humanSegmentation
+        Button m_BodyTracking;
+        public Button bodyTracking
         {
-            get { return m_HumanSegmentation; }
-            set { m_HumanSegmentation = value; }
+            get { return m_BodyTracking; }
+            set { m_BodyTracking = value; }
         }
 
         [SerializeField]
@@ -269,6 +269,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
             var sessionDescriptors = new List<XRSessionSubsystemDescriptor>();
             SubsystemManager.GetSubsystemDescriptors<XRSessionSubsystemDescriptor>(sessionDescriptors);
 
+            var bodyTrackingDescriptors = new List<XRHumanBodySubsystemDescriptor>();
+            SubsystemManager.GetSubsystemDescriptors<XRHumanBodySubsystemDescriptor>(bodyTrackingDescriptors);
+
             if(planeDescriptors.Count > 0 && rayCastDescriptors.Count > 0)
             {
                 m_SimpleAR.interactable = true;
@@ -303,13 +306,27 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 foreach(var occlusionDescriptor in occlusionDescriptors)
                 {
-                    if(occlusionDescriptor.supportsHumanSegmentationDepthImage && occlusionDescriptor.supportsHumanSegmentationStencilImage)
-                    {
-                        m_HumanSegmentation.interactable = true;
-                    }
-                    if(occlusionDescriptor.supportsEnvironmentDepthImage)
+#if UNITY_IOS
+                    if(occlusionDescriptor.supportsEnvironmentDepthImage
+                       || occlusionDescriptor.supportsHumanSegmentationDepthImage
+                       || occlusionDescriptor.supportsHumanSegmentationStencilImage)
                     {
                         m_Depth.interactable = true;
+                    }
+#endif
+#if UNITY_ANDROID
+                    m_Depth.interactable = true;
+#endif
+                }
+            }
+
+            if(bodyTrackingDescriptors.Count > 0)
+            {
+                foreach(var bodyTrackingDescriptor in bodyTrackingDescriptors)
+                {
+                    if(bodyTrackingDescriptor.supportsHumanBody2D || bodyTrackingDescriptor.supportsHumanBody3D)
+                    {
+                        m_BodyTracking.interactable = true;
                     }
                 }
             }
