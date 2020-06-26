@@ -231,8 +231,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
         // Start is called before the first frame update
         void Start()
         {
-            var activeLoader = LoaderUtility.GetActiveLoader();
-
             var planeDescriptors = new List<XRPlaneSubsystemDescriptor>();
             SubsystemManager.GetSubsystemDescriptors<XRPlaneSubsystemDescriptor>(planeDescriptors);
 
@@ -417,7 +415,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_PlaneOcclusion.interactable  = true;
             }
 
-            if(activeLoader.GetLoadedSubsystem<XRMeshSubsystem>() != null)
+            var activeLoader = LoaderUtility.GetActiveLoader();
+            if(activeLoader && activeLoader.GetLoadedSubsystem<XRMeshSubsystem>() != null)
             {
                 m_Meshing.interactable = true;
             }
