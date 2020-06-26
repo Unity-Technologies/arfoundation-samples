@@ -247,7 +247,7 @@ This sample has two UI components:
 
 ## CameraGrain
 
-This sample demonstrates the camera grain effect. Once a plane is deteced, you can place a cube on it with a material that simulates the camera grain noise in the camera feed. See the `CameraGrain.cs` script. Also see  `CameraGrain.shader` which animates and applies the camera grain texture (through linear interpolation) in screenspace.
+This sample demonstrates the camera grain effect. Once a plane is detected, you can place a cube on it with a material that simulates the camera grain noise in the camera feed. See the `CameraGrain.cs` script. Also see  `CameraGrain.shader` which animates and applies the camera grain texture (through linear interpolation) in screenspace.
 
 This sample requires a device running iOS 13 and Unity 2020.2 or later.
 
