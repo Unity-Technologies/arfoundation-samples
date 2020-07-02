@@ -277,8 +277,8 @@ This sample scene demonstrates the functionality of the `XR Interaction Toolkit`
 
 # Community and Feedback
 
-The intention of this reposititory is to provide a means for getting started with the features in ARFoundation. These are not showcase demos, and the content is intentionally simplistic with a focus on teaching basic scene setup and APIs. If you you have a question, find a bug, or would like to request a new feature concerning any of the ARFoundation packages or these samples please [submit a GitHub issue](https://github.com/Unity-Technologies/arfoundation-samples/issues).
+The intention of this reposititory is to provide a means for getting started with the features in ARFoundation. The samples are intentionally simplistic with a focus on teaching basic scene setup and APIs. If you you have a question, find a bug, or would like to request a new feature concerning any of the ARFoundation packages or these samples please [submit a GitHub issue](https://github.com/Unity-Technologies/arfoundation-samples/issues). New issues are reviewed daily.
 
 ## Contributions and Pull Requests
 
-We are not accepting pull requests at this time. If you find an issue with the samples, our would like to request a new sample, please [submit a GitHub issue](https://github.com/Unity-Technologies/arfoundation-samples/issues). New issues are reviewed daily.
+We are not accepting pull requests at this time. If you find an issue with the samples, our would like to request a new sample, please [submit a GitHub issue](https://github.com/Unity-Technologies/arfoundation-samples/issues).
