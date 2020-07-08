@@ -176,8 +176,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     }
                     break;
 
-                //  case "Logo":
-
                 case "QRCode":
 
                     // Set canvas camera
