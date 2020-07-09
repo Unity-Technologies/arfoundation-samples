@@ -52,14 +52,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public struct NamedPrefab
         {
             [SerializeField]
-            string m_PrefabName;
+            string m_ImageName;
             [SerializeField]
             GameObject m_Prefab;
             
-            public string prefabName
+            public string imageName
             {
-                get => m_PrefabName; 
-                set => m_PrefabName = value; 
+                get => m_ImageName; 
+                set => m_ImageName = value; 
             }
 
             public GameObject prefab
@@ -68,9 +68,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 set => m_Prefab = value;
             }
 
-            public NamedPrefab(string prefabName, GameObject prefab)
+            public NamedPrefab(string imageName, GameObject prefab)
             {
-                m_PrefabName = prefabName;
+                m_ImageName = imageName;
                 m_Prefab = prefab;
             }
         }
@@ -110,7 +110,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             
             for (int i = 0; i < prefabList.Count; i++)
             {                
-                m_PrefabsDictionary.Add(prefabList[i].prefabName, prefabList[i].prefab);
+                m_PrefabsDictionary.Add(prefabList[i].imageName, prefabList[i].prefab);
             }
         }
 
@@ -138,7 +138,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     for (int i = 0; i < m_PrefabList.Count; i++)
                     {
                         var pref = m_PrefabList[i];
-                        pref.prefabName = m_ImageLibrary[i].name;
+                        pref.imageName = m_ImageLibrary[i].name;
                         m_PrefabList[i] = pref;
                     }
                 }
