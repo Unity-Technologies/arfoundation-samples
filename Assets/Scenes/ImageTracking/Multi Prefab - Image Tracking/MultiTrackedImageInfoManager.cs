@@ -27,8 +27,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public Camera worldSpaceCanvasCamera
         {
-            get { return m_WorldSpaceCanvasCamera; }
-            set { m_WorldSpaceCanvasCamera = value; }
+            get => m_WorldSpaceCanvasCamera; 
+            set => m_WorldSpaceCanvasCamera = value; 
         }
 
         [SerializeField]
@@ -41,8 +41,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public Texture2D defaultTexture
         {
-            get { return m_DefaultTexture; }
-            set { m_DefaultTexture = value; }
+            get => m_DefaultTexture; 
+            set => m_DefaultTexture = value; 
         }
 
         [Serializable]
@@ -58,14 +58,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
             
             public string prefabName
             {
-                get { return m_PrefabName; }
-                set { m_PrefabName = value; }
+                get => m_PrefabName; 
+                set => m_PrefabName = value; 
             }
 
             public GameObject prefab
             {
-                get { return m_Prefab; }
-                set { m_Prefab = value; }
+                get => m_Prefab; 
+                set => m_Prefab = value;
             }
 
             public NamedPrefab(string prefabName, GameObject prefab)
@@ -77,15 +77,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         [SerializeField]
         [Tooltip("Each prefab corresponds to each image in the Image Library.")]
-        List<NamedPrefab> m_PrefabList;
+        List<NamedPrefab> m_PrefabList = new List<NamedPrefab>();
 
         /// <summary>
         /// Each prefab corresponds to the each image in the Image Library in the same order.
         /// </summary>
         public List<NamedPrefab> prefabList
         {
-            get { return m_PrefabList; }
-            set { m_PrefabList = value; }
+            get => m_PrefabList;
+            set => m_PrefabList = value;
         }
 
         Dictionary<string, GameObject> m_PrefabsDictionary = new Dictionary<string, GameObject>();
@@ -126,37 +126,37 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         internal void OnLibraryChanged(XRReferenceImageLibrary library)
         {
-            Debug.Log("OnLibraryChanged");
             UpdatePrefabList();
         }
 
         void UpdatePrefabList()
         {
-            if (m_PrefabList.Count == m_ImageLibrary.count)
+            if (m_ImageLibrary != null)
             {
-                for (int i = 0; i < m_PrefabList.Count; i++)
+                if (m_PrefabList.Count == m_ImageLibrary.count)
                 {
-                    var pref = m_PrefabList[i];
-                    pref.prefabName = m_ImageLibrary[i].name;
-                    m_PrefabList[i] = pref;
+                    for (int i = 0; i < m_PrefabList.Count; i++)
+                    {
+                        var pref = m_PrefabList[i];
+                        pref.prefabName = m_ImageLibrary[i].name;
+                        m_PrefabList[i] = pref;
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < m_ImageLibrary.count; i++)
+                    {
+                        var pref = new NamedPrefab(m_ImageLibrary[i].name, null);
+                        m_PrefabList.Add(pref);
+                    }
                 }
             }
-            else
-            {
-                m_PrefabList = new List<NamedPrefab>();
-
-                for (int i = 0; i < m_ImageLibrary.count; i++)
-                {
-                    NamedPrefab pref = new NamedPrefab(m_ImageLibrary[i].name, null);
-                    m_PrefabList.Add(pref);
-                }
-            }
+            
         }
 
         void AssignPrefab(ARTrackedImage trackedImage)
         {
-            GameObject prefab;
-            if (m_PrefabsDictionary.TryGetValue(trackedImage.referenceImage.name, out prefab)){
+            if (m_PrefabsDictionary.TryGetValue(trackedImage.referenceImage.name, out GameObject prefab)){
                 Instantiate(prefab, trackedImage.transform);
             }
         }
@@ -227,7 +227,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             foreach (var trackedImage in eventArgs.updated)
+            {
                 UpdateInfo(trackedImage);
+            }
+                
 
         }
 
@@ -264,16 +267,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 EditorGUI.BeginChangeCheck();
                 EditorGUI.PropertyField(position, property);
+
                 if (EditorGUI.EndChangeCheck())
-                {
-                    Debug.Log($"Library field changed");
                     behaviour.OnLibraryChanged(library);
-                }
                 else if (HasLibraryChanged(library))
-                {
-                    Debug.Log("Library changed (items added or removed)");
                     behaviour.OnLibraryChanged(library);
-                }
 
                 // Update current
                 m_ReferenceImages.Clear();
