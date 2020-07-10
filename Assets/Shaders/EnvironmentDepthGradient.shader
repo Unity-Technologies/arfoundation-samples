@@ -72,7 +72,7 @@ Shader "Unlit/EnvironmentDepthGradient"
                 float cosrot = cos(angle);
                 float sinrot = sin(angle);
 
-                float2 tmp = float2(0.5f - v.texcoord.x, v.texcoord.y - 0.5f);
+                float2 tmp = float2(v.texcoord.x - 0.5f, 0.5f - v.texcoord.y);
 
                 v2f o;
                 o.position = TransformObjectToHClip(v.position);

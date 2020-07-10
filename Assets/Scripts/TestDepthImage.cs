@@ -175,20 +175,20 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 case ScreenOrientation.LandscapeRight:
                     rectSize = new Vector2(maxDimension, minDimension);
-                    rotation = 0.0f;
+                    rotation = 180.0f;
                     break;
                 case ScreenOrientation.LandscapeLeft:
                     rectSize = new Vector2(maxDimension, minDimension);
-                    rotation = 180.0f;
+                    rotation = 0.0f;
                     break;
                 case ScreenOrientation.PortraitUpsideDown:
                     rectSize = new Vector2(minDimension, maxDimension);
-                    rotation = 270.0f;
+                    rotation = 90.0f;
                     break;
                 case ScreenOrientation.Portrait:
                 default:
                     rectSize = new Vector2(minDimension, maxDimension);
-                    rotation = 90.0f;
+                    rotation = 270.0f;
                     break;
             }
             m_RawImage.rectTransform.sizeDelta = rectSize;
