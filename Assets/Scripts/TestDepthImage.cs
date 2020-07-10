@@ -32,6 +32,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
     /// </summary>
     public class TestDepthImage : MonoBehaviour
     {
+        /// <summary>
+        /// Name of the texture rotation property in the shader.
+        /// </summary>
+        const string k_TextureRotationName = "_TextureRotation";
+
+        /// <summary>
+        /// ID of the texture rotation property in the shader.
+        /// </summary>
+        static readonly int k_TextureRotationId = Shader.PropertyToID(k_TextureRotationName);
+
         [SerializeField]
         [Tooltip("The AROcclusionManager which will produce frame events.")]
         AROcclusionManager m_OcclusionManager;
@@ -69,20 +79,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set { m_ImageInfo = value; }
         }
 
-        void LogTextureInfo(StringBuilder stringBuilder, string textureName, Texture2D texture)
+        /// <summary>
+        /// The current screen orientation remembered so that we are only updating the raw image layout when it changes.
+        /// </summary>
+        ScreenOrientation m_CurrentScreenOrientation;
+
+        void OnEnable()
         {
-            stringBuilder.AppendFormat("texture : {0}\n", textureName);
-            if (texture == null)
-            {
-                stringBuilder.AppendFormat("   <null>\n");
-            }
-            else
-            {
-                stringBuilder.AppendFormat("   format : {0}\n", texture.format.ToString());
-                stringBuilder.AppendFormat("   width  : {0}\n", texture.width);
-                stringBuilder.AppendFormat("   height : {0}\n", texture.height);
-                stringBuilder.AppendFormat("   mipmap : {0}\n", texture.mipmapCount);
-            }
+            m_CurrentScreenOrientation = Screen.orientation;
+            LayoutRawImage();
         }
 
         void Update()
@@ -116,13 +121,55 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 Debug.Log(sb.ToString());
             }
 
-            // To use the stencil, be sure the HumanSegmentationStencilMode property on the AROcclusionManager is set to a
-            // non-disabled value.
+            Debug.Assert(m_RawImage != null, "no raw image");
             m_RawImage.texture = envDepth;
 
-            // To use the depth, be sure the HumanSegmentationDepthMode property on the AROcclusionManager is set to a
-            /// non-disabled value.
-            // m_RawImage.texture = eventArgs.humanDepth;
+            if (m_CurrentScreenOrientation != Screen.orientation)
+            {
+                m_CurrentScreenOrientation = Screen.orientation;
+                LayoutRawImage();
+            }
+        }
+
+        void LogTextureInfo(StringBuilder stringBuilder, string textureName, Texture2D texture)
+        {
+            stringBuilder.AppendFormat("texture : {0}\n", textureName);
+            if (texture == null)
+            {
+                stringBuilder.AppendFormat("   <null>\n");
+            }
+            else
+            {
+                stringBuilder.AppendFormat("   format : {0}\n", texture.format.ToString());
+                stringBuilder.AppendFormat("   width  : {0}\n", texture.width);
+                stringBuilder.AppendFormat("   height : {0}\n", texture.height);
+                stringBuilder.AppendFormat("   mipmap : {0}\n", texture.mipmapCount);
+            }
+        }
+
+        void LayoutRawImage()
+        {
+            Debug.Assert(m_RawImage != null, "no raw image");
+            switch (m_CurrentScreenOrientation)
+            {
+                case ScreenOrientation.LandscapeRight:
+                    m_RawImage.rectTransform.sizeDelta = new Vector2(640.0f, 480.0f);
+                    m_RawImage.material.SetFloat(k_TextureRotationId, 0.0f);
+                    break;
+                case ScreenOrientation.LandscapeLeft:
+                    m_RawImage.rectTransform.sizeDelta = new Vector2(640.0f, 480.0f);
+                    m_RawImage.material.SetFloat(k_TextureRotationId, 180.0f);
+                    break;
+                case ScreenOrientation.PortraitUpsideDown:
+                    m_RawImage.rectTransform.sizeDelta = new Vector2(480.0f, 640.0f);
+                    m_RawImage.material.SetFloat(k_TextureRotationId, 270.0f);
+                    break;
+                case ScreenOrientation.Portrait:
+                default:
+                    m_RawImage.rectTransform.sizeDelta = new Vector2(480.0f, 640.0f);
+                    m_RawImage.material.SetFloat(k_TextureRotationId, 90.0f);
+                    break;
+            }
         }
     }
 }
