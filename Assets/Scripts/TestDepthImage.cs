@@ -42,6 +42,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         static readonly int k_TextureRotationId = Shader.PropertyToID(k_TextureRotationName);
 
+        /// <summary>
+        /// A string builder for construction of strings.
+        /// </summary>
+        readonly StringBuilder m_StringBuilder = new StringBuilder();
+
         [SerializeField]
         [Tooltip("The AROcclusionManager which will produce frame events.")]
         AROcclusionManager m_OcclusionManager;
@@ -84,6 +89,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         ScreenOrientation m_CurrentScreenOrientation;
 
+        /// <summary>
+        /// The current texture aspect ratio remembered so that we can resize the raw image layout when it changes.
+        float m_TextureAspectRatio = 1.0f;
+
         void OnEnable()
         {
             m_CurrentScreenOrientation = Screen.orientation;
@@ -104,29 +113,35 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 return;
             }
 
-            StringBuilder sb = new StringBuilder();
             Texture2D humanStencil = m_OcclusionManager.humanStencilTexture;
             Texture2D humanDepth = m_OcclusionManager.humanDepthTexture;
             Texture2D envDepth = m_OcclusionManager.environmentDepthTexture;
-            LogTextureInfo(sb, "stencil", humanStencil);
-            LogTextureInfo(sb, "depth", humanDepth);
-            LogTextureInfo(sb, "env", envDepth);
 
+            Texture2D displayTexture = envDepth;
+
+            m_StringBuilder.Clear();
+            LogTextureInfo(m_StringBuilder, "stencil", humanStencil);
+            LogTextureInfo(m_StringBuilder, "depth", humanDepth);
+            LogTextureInfo(m_StringBuilder, "env", envDepth);
             if (m_ImageInfo != null)
             {
-                m_ImageInfo.text = sb.ToString();
+                m_ImageInfo.text = m_StringBuilder.ToString();
             }
             else
             {
-                Debug.Log(sb.ToString());
+                Debug.Log(m_StringBuilder.ToString());
             }
 
             Debug.Assert(m_RawImage != null, "no raw image");
-            m_RawImage.texture = envDepth;
+            m_RawImage.texture = displayTexture;
 
-            if (m_CurrentScreenOrientation != Screen.orientation)
+            float textureAspectRatio = (displayTexture == null) ? 1.0f : ((float)displayTexture.width / (float)displayTexture.height);
+
+            if ((m_CurrentScreenOrientation != Screen.orientation)
+                || !Mathf.Approximately(m_TextureAspectRatio, textureAspectRatio))
             {
                 m_CurrentScreenOrientation = Screen.orientation;
+                m_TextureAspectRatio = textureAspectRatio;
                 LayoutRawImage();
             }
         }
@@ -150,26 +165,34 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void LayoutRawImage()
         {
             Debug.Assert(m_RawImage != null, "no raw image");
+
+            float minDimension = 480.0f;
+            float maxDimension = Mathf.Round(minDimension * m_TextureAspectRatio);
+            Vector2 rectSize;
+            float rotation;
+
             switch (m_CurrentScreenOrientation)
             {
                 case ScreenOrientation.LandscapeRight:
-                    m_RawImage.rectTransform.sizeDelta = new Vector2(640.0f, 480.0f);
-                    m_RawImage.material.SetFloat(k_TextureRotationId, 0.0f);
+                    rectSize = new Vector2(maxDimension, minDimension);
+                    rotation = 0.0f;
                     break;
                 case ScreenOrientation.LandscapeLeft:
-                    m_RawImage.rectTransform.sizeDelta = new Vector2(640.0f, 480.0f);
-                    m_RawImage.material.SetFloat(k_TextureRotationId, 180.0f);
+                    rectSize = new Vector2(maxDimension, minDimension);
+                    rotation = 180.0f;
                     break;
                 case ScreenOrientation.PortraitUpsideDown:
-                    m_RawImage.rectTransform.sizeDelta = new Vector2(480.0f, 640.0f);
-                    m_RawImage.material.SetFloat(k_TextureRotationId, 270.0f);
+                    rectSize = new Vector2(minDimension, maxDimension);
+                    rotation = 270.0f;
                     break;
                 case ScreenOrientation.Portrait:
                 default:
-                    m_RawImage.rectTransform.sizeDelta = new Vector2(480.0f, 640.0f);
-                    m_RawImage.material.SetFloat(k_TextureRotationId, 90.0f);
+                    rectSize = new Vector2(minDimension, maxDimension);
+                    rotation = 90.0f;
                     break;
             }
+            m_RawImage.rectTransform.sizeDelta = rectSize;
+            m_RawImage.material.SetFloat(k_TextureRotationId, rotation);
         }
     }
 }
