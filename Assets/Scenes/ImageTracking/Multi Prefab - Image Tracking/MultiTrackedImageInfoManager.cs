@@ -17,6 +17,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
     [RequireComponent(typeof(ARTrackedImageManager))]
     public class MultiTrackedImageInfoManager : MonoBehaviour
     {
+
         [SerializeField]
         [Tooltip("The camera to set on the world space UI canvas for each instantiated image info.")]
         Camera m_WorldSpaceCanvasCamera;
@@ -51,6 +52,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public struct NamedPrefab
         {
+            [HideInInspector]
             [SerializeField]
             string m_ImageName;
             [SerializeField]
@@ -77,7 +79,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         [SerializeField]
         [Tooltip("Each prefab corresponds to each image in the Image Library.")]
-        List<NamedPrefab> m_PrefabList = new List<NamedPrefab>();
+        List<NamedPrefab> m_PrefabList;
 
         /// <summary>
         /// Each prefab corresponds to the each image in the Image Library in the same order.
@@ -131,9 +133,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void UpdatePrefabList()
         {
+            
             if (m_ImageLibrary != null)
             {
-                if (m_PrefabList.Count == m_ImageLibrary.count)
+                if (m_PrefabList != null && m_PrefabList.Count == m_ImageLibrary.count)
                 {
                     for (int i = 0; i < m_PrefabList.Count; i++)
                     {
@@ -144,6 +147,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
                 else
                 {
+                    m_PrefabList = new List<NamedPrefab>();
+
                     for (int i = 0; i < m_ImageLibrary.count; i++)
                     {
                         var pref = new NamedPrefab(m_ImageLibrary[i].name, null);
@@ -172,7 +177,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     if (trackedImage.trackingState != TrackingState.None)
                     {
                         // The image extents is only valid when the image is being tracked
-                        trackedImage.transform.localScale = new Vector3(trackedImage.size.x/10, trackedImage.size.x/10, trackedImage.size.x/10);
+                        trackedImage.transform.localScale = new Vector3(trackedImage.size.x/2, trackedImage.size.x/2, trackedImage.size.x/2);
                     }
                     break;
 
@@ -230,8 +235,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 UpdateInfo(trackedImage);
             }
-                
-
         }
 
         public class ReferenceImageLibraryChangedAttribute : PropertyAttribute { }
@@ -283,6 +286,32 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     }
                 }
             }
+        }
+
+        [CustomEditor(typeof(MultiTrackedImageInfoManager))]
+        public class MultiTrackedImageInfoManagerInspector : Editor {
+            public override void OnInspectorGUI () {
+                serializedObject.Update();
+                GUI.enabled = false;
+                SerializedProperty prop = serializedObject.FindProperty("m_Script");
+                EditorGUILayout.PropertyField(prop, true, new GUILayoutOption[0]);
+                GUI.enabled = true;
+                
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("m_WorldSpaceCanvasCamera"), true);
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("m_DefaultTexture"), true);
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("m_ImageLibrary"), true);
+                Show(serializedObject.FindProperty("m_PrefabList"));
+                serializedObject.ApplyModifiedProperties();
+	        }
+
+            public static void Show (SerializedProperty list) {
+                EditorGUILayout.PropertyField(list, false);
+                EditorGUI.indentLevel += 1;
+                for (int i = 0; i < list.arraySize; i++) {
+                    EditorGUILayout.PropertyField(list.GetArrayElementAtIndex(i));
+                }
+                EditorGUI.indentLevel -= 1;
+	        }
         }
 
         #endif
