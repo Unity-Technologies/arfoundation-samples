@@ -98,28 +98,23 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         internal void OnLibraryChanged(XRReferenceImageLibrary library)
         {
-            UpdatePrefabList();
-        }
-
-        void UpdatePrefabList()
-        {
-            if (m_ImageLibrary != null)
+            if (library)
             {
                 if (m_PrefabList == null)
                 {
                     m_PrefabList = new List<NamedPrefab>();
-                    for (int i = 0; i < m_ImageLibrary.count; i++)
+                    for (int i = 0; i < library.count; i++)
                     {
-                        m_PrefabList.Add(new NamedPrefab(m_ImageLibrary[i].guid, null));
+                        m_PrefabList.Add(new NamedPrefab(library[i].guid, null));
                     }
                 }
                 else
                 {
                     var tempList = new List<NamedPrefab>();
-                    for (int i = 0; i < m_ImageLibrary.count; i++)
+                    for (int i = 0; i < library.count; i++)
                     {
-                        var idx = m_PrefabList.FindIndex(item => item.imageGuid == m_ImageLibrary[i].guid);
-                        tempList.Add(new NamedPrefab(m_ImageLibrary[i].guid, (idx != -1) ? m_PrefabList[idx].prefab : null));
+                        var idx = m_PrefabList.FindIndex(item => item.imageGuid == library[i].guid);
+                        tempList.Add(new NamedPrefab(library[i].guid, (idx != -1) ? m_PrefabList[idx].prefab : null));
                     }
                     m_PrefabList = tempList;
                 }
@@ -170,8 +165,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
             
             public override void OnInspectorGUI () 
             {
+                //customized inspector
                 var behaviour = serializedObject.targetObject as MultiTrackedImageInfoManager;
                 var library = serializedObject.FindProperty("m_ImageLibrary").objectReferenceValue as XRReferenceImageLibrary;
+                var list = serializedObject.FindProperty("m_PrefabList");
 
                 serializedObject.Update();
                 GUI.enabled = false;
@@ -179,9 +176,19 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 GUI.enabled = true;
                 
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("m_ImageLibrary"));
-                ShowPrefabList(serializedObject.FindProperty("m_PrefabList"), library);
-                serializedObject.ApplyModifiedProperties();
 
+                //show prefab list
+                EditorGUILayout.PropertyField(list, false);
+                EditorGUI.indentLevel += 1;
+                if (list.isExpanded)
+                {
+                    for (int i = 0; i < list.arraySize; i++) {
+                        EditorGUILayout.PropertyField(list.GetArrayElementAtIndex(i).FindPropertyRelative("m_Prefab"), new GUIContent(library[i].name));
+                    }
+                }
+                EditorGUI.indentLevel -= 1;
+
+                //check library changes
                 EditorGUI.BeginChangeCheck();
 
                 if (EditorGUI.EndChangeCheck())
@@ -198,19 +205,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         m_ReferenceImages.Add(referenceImage);
                     }
                 }
-	        }
 
-            public static void ShowPrefabList (SerializedProperty list, XRReferenceImageLibrary library) 
-            {
-                EditorGUILayout.PropertyField(list, false);
-                EditorGUI.indentLevel += 1;
-                if (list.isExpanded)
-                {
-                    for (int i = 0; i < list.arraySize; i++) {
-                        EditorGUILayout.PropertyField(list.GetArrayElementAtIndex(i).FindPropertyRelative("m_Prefab"), new GUIContent(library[i].name));
-                    }
-                }
-                EditorGUI.indentLevel -= 1;
+                serializedObject.ApplyModifiedProperties();
 	        }
         }
         #endif
