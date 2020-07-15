@@ -133,7 +133,6 @@ GameObject:
   - component: {fileID: 264295718}
   - component: {fileID: 264295717}
   - component: {fileID: 264295716}
-  - component: {fileID: 264295715}
   m_Layer: 0
   m_Name: AR Session Origin
   m_TagString: Untagged
@@ -141,25 +140,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &264295715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 264295714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92dfcdbbdd0754f9fb947d3639ad91c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Images:
-  - m_Texture: {fileID: 2800000, guid: d1879707d69d24adfb421bde69c92c94, type: 3}
-    m_Name: One
-    m_Width: 0.1
-  - m_Texture: {fileID: 2800000, guid: 038b8a7b4862745aaadfd7c9f14e7bbd, type: 3}
-    m_Name: Two
-    m_Width: 0.1
 --- !u!114 &264295716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,17 +152,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 467eefdf66a9b4c24b9d89f2f71b2ce9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_WorldSpaceCanvasCamera: {fileID: 579846251}
-  m_DefaultTexture: {fileID: 10305, guid: 0000000000000000f000000000000000, type: 0}
   m_PrefabList:
-  - m_ImageName: Rafflesia
-    m_Prefab: {fileID: 6916502901855112170, guid: e22b43a8fcdab413bb4f52f5076f759e,
+  - m_Prefab: {fileID: 6916502901855112170, guid: e22b43a8fcdab413bb4f52f5076f759e,
       type: 3}
-  - m_ImageName: Logo
-    m_Prefab: {fileID: 2804028924010200506, guid: 379785de5e39005469c875710d3cc5a7,
+  - m_Prefab: {fileID: 2804028924010200506, guid: 379785de5e39005469c875710d3cc5a7,
       type: 3}
-  - m_ImageName: QRCode
-    m_Prefab: {fileID: 3312728602301253215, guid: 5d81b097707c58e4b949537763ba4bbe,
+  - m_Prefab: {fileID: 3279860958548870494, guid: 2584331523bd14e8898965d93034efdb,
       type: 3}
   m_ImageLibrary: {fileID: 11400000, guid: c86e375d7e7430442a1104e88fa21f21, type: 2}
 --- !u!114 &264295717

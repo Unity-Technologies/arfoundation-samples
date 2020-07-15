@@ -18,51 +18,21 @@ namespace UnityEngine.XR.ARFoundation.Samples
     public class MultiTrackedImageInfoManager : MonoBehaviour
     {
 
-        [SerializeField]
-        [Tooltip("The camera to set on the world space UI canvas for each instantiated image info.")]
-        Camera m_WorldSpaceCanvasCamera;
-
-        /// <summary>
-        /// The prefab has a world space UI canvas,
-        /// which requires a camera to function properly.
-        /// </summary>
-        public Camera worldSpaceCanvasCamera
-        {
-            get => m_WorldSpaceCanvasCamera; 
-            set => m_WorldSpaceCanvasCamera = value; 
-        }
-
-        [SerializeField]
-        [Tooltip("If an image is detected but no source texture can be found, this texture is used instead.")]
-        Texture2D m_DefaultTexture;
-
-        /// <summary>
-        /// If an image is detected but no source texture can be found,
-        /// this texture is used instead.
-        /// </summary>
-        public Texture2D defaultTexture
-        {
-            get => m_DefaultTexture; 
-            set => m_DefaultTexture = value; 
-        }
-
         [Serializable]
         /// <summary>
-        /// It has a string for name and a GameObject for prefab.
+        /// It has an image guid and a GameObject for prefab.
         /// </summary>
         public struct NamedPrefab
         {
-            [HideInInspector]
-            [SerializeField]
-            string m_ImageName;
+            Guid m_ImageGuid;
+
+            public Guid imageGuid
+            {
+                get => m_ImageGuid; 
+            }
+
             [SerializeField]
             GameObject m_Prefab;
-            
-            public string imageName
-            {
-                get => m_ImageName; 
-                set => m_ImageName = value; 
-            }
 
             public GameObject prefab
             {
@@ -70,9 +40,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 set => m_Prefab = value;
             }
 
-            public NamedPrefab(string imageName, GameObject prefab)
+            public NamedPrefab(Guid imageGuid, GameObject prefab)
             {
-                m_ImageName = imageName;
+                m_ImageGuid = imageGuid;
                 m_Prefab = prefab;
             }
         }
@@ -90,10 +60,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set => m_PrefabList = value;
         }
 
-        Dictionary<string, GameObject> m_PrefabsDictionary = new Dictionary<string, GameObject>();
+        Dictionary<Guid, GameObject> m_PrefabsDictionary = new Dictionary<Guid, GameObject>();
         ARTrackedImageManager m_TrackedImageManager;
         
-        [SerializeField, ReferenceImageLibraryChanged]
+        [SerializeField]
         [Tooltip("Reference Image Library")]
         XRReferenceImageLibrary m_ImageLibrary;
 
@@ -112,7 +82,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             
             for (int i = 0; i < prefabList.Count; i++)
             {                
-                m_PrefabsDictionary.Add(prefabList[i].imageName, prefabList[i].prefab);
+                m_PrefabsDictionary.Add(ImageLibrary[i].guid, prefabList[i].prefab);
             }
         }
 
@@ -133,92 +103,27 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void UpdatePrefabList()
         {
-            
             if (m_ImageLibrary != null)
             {
-                if (m_PrefabList != null && m_PrefabList.Count == m_ImageLibrary.count)
+                if (m_PrefabList == null)
                 {
-                    for (int i = 0; i < m_PrefabList.Count; i++)
+                    m_PrefabList = new List<NamedPrefab>();
+                    for (int i = 0; i < m_ImageLibrary.count; i++)
                     {
-                        var pref = m_PrefabList[i];
-                        pref.imageName = m_ImageLibrary[i].name;
-                        m_PrefabList[i] = pref;
+                        m_PrefabList.Add(new NamedPrefab(m_ImageLibrary[i].guid, null));
                     }
                 }
                 else
                 {
-                    m_PrefabList = new List<NamedPrefab>();
-
+                    var tempList = new List<NamedPrefab>();
                     for (int i = 0; i < m_ImageLibrary.count; i++)
                     {
-                        var pref = new NamedPrefab(m_ImageLibrary[i].name, null);
-                        m_PrefabList.Add(pref);
+                        var idx = m_PrefabList.FindIndex(item => item.imageGuid == m_ImageLibrary[i].guid);
+                        tempList.Add(new NamedPrefab(m_ImageLibrary[i].guid, (idx != -1) ? m_PrefabList[idx].prefab : null));
                     }
+                    m_PrefabList = tempList;
                 }
-            }
-            
-        }
-
-        void AssignPrefab(ARTrackedImage trackedImage)
-        {
-            if (m_PrefabsDictionary.TryGetValue(trackedImage.referenceImage.name, out GameObject prefab)){
-                Instantiate(prefab, trackedImage.transform);
-            }
-        }
-
-        void UpdateInfo(ARTrackedImage trackedImage)
-        {
-            switch(trackedImage.referenceImage.name)
-            {
-
-                case "Rafflesia":
-
-                    // Disable the visual plane if it is not being tracked
-                    if (trackedImage.trackingState != TrackingState.None)
-                    {
-                        // The image extents is only valid when the image is being tracked
-                        trackedImage.transform.localScale = new Vector3(trackedImage.size.x/2, trackedImage.size.x/2, trackedImage.size.x/2);
-                    }
-                    break;
-
-                case "QRCode":
-
-                    // Set canvas camera
-                    var canvas = trackedImage.GetComponentInChildren<Canvas>();
-                    canvas.worldCamera = worldSpaceCanvasCamera;
-
-                    // Update information about the tracked image
-                    var text = canvas.GetComponentInChildren<Text>();
-                    text.text = string.Format(
-                        "{0}\ntrackingState: {1}\nGUID: {2}\nReference size: {3} cm\nDetected size: {4} cm",
-                        trackedImage.referenceImage.name,
-                        trackedImage.trackingState,
-                        trackedImage.referenceImage.guid,
-                        trackedImage.referenceImage.size * 100f,
-                        trackedImage.size * 100f);
-
-                    var planeParentGo = trackedImage.transform.GetChild(0).gameObject;
-                    var planeGo = planeParentGo.transform.GetChild(0).gameObject;
-
-                    // Disable the visual plane if it is not being tracked
-                    if (trackedImage.trackingState != TrackingState.None)
-                    {
-                        planeGo.SetActive(true);
-
-                        // The image extents is only valid when the image is being tracked
-                        trackedImage.transform.localScale = new Vector3(trackedImage.size.x, 1f, trackedImage.size.y);
-
-                        // Set the texture
-                        var material = planeGo.GetComponentInChildren<MeshRenderer>().material;
-                        material.mainTexture = (trackedImage.referenceImage.texture == null) ? defaultTexture : trackedImage.referenceImage.texture;
-                    }
-                    else
-                    {
-                        planeGo.SetActive(false);
-                    }
-
-                    break;
-            }
+            }  
         }
 
         void OnTrackedImagesChanged(ARTrackedImagesChangedEventArgs eventArgs)
@@ -226,23 +131,23 @@ namespace UnityEngine.XR.ARFoundation.Samples
             foreach (var trackedImage in eventArgs.added)
             {
                 // Give the initial image a reasonable default scale
-                trackedImage.transform.localScale = new Vector3(0.02f, 0.02f, 0.02f);
+                trackedImage.transform.localScale = new Vector3(trackedImage.size.x/2, trackedImage.size.x/2, trackedImage.size.x/2);
 
                 AssignPrefab(trackedImage);
             }
+        }
 
-            foreach (var trackedImage in eventArgs.updated)
-            {
-                UpdateInfo(trackedImage);
+        void AssignPrefab(ARTrackedImage trackedImage)
+        {
+            if (m_PrefabsDictionary.TryGetValue(trackedImage.referenceImage.guid, out GameObject prefab)){
+                Instantiate(prefab, trackedImage.transform);
             }
         }
 
-        public class ReferenceImageLibraryChangedAttribute : PropertyAttribute { }
-
         #if UNITY_EDITOR
 
-        [CustomPropertyDrawer(typeof(ReferenceImageLibraryChangedAttribute))]
-        public class ReferenceImageLibraryChangedAttributePropertyDrawer : PropertyDrawer
+        [CustomEditor(typeof(MultiTrackedImageInfoManager))]
+        public class MultiTrackedImageInfoManagerInspector : Editor 
         {
             List<XRReferenceImage> m_ReferenceImages = new List<XRReferenceImage>();
 
@@ -262,14 +167,22 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 return false;
             }
-
-            public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+            
+            public override void OnInspectorGUI () 
             {
-                var behaviour = property.serializedObject.targetObject as MultiTrackedImageInfoManager;
-                var library = property.objectReferenceValue as XRReferenceImageLibrary;
+                var behaviour = serializedObject.targetObject as MultiTrackedImageInfoManager;
+                var library = serializedObject.FindProperty("m_ImageLibrary").objectReferenceValue as XRReferenceImageLibrary;
+
+                serializedObject.Update();
+                GUI.enabled = false;
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("m_Script"));
+                GUI.enabled = true;
+                
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("m_ImageLibrary"));
+                ShowPrefabList(serializedObject.FindProperty("m_PrefabList"), library);
+                serializedObject.ApplyModifiedProperties();
 
                 EditorGUI.BeginChangeCheck();
-                EditorGUI.PropertyField(position, property);
 
                 if (EditorGUI.EndChangeCheck())
                     behaviour.OnLibraryChanged(library);
@@ -285,35 +198,21 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         m_ReferenceImages.Add(referenceImage);
                     }
                 }
-            }
-        }
-
-        [CustomEditor(typeof(MultiTrackedImageInfoManager))]
-        public class MultiTrackedImageInfoManagerInspector : Editor {
-            public override void OnInspectorGUI () {
-                serializedObject.Update();
-                GUI.enabled = false;
-                SerializedProperty prop = serializedObject.FindProperty("m_Script");
-                EditorGUILayout.PropertyField(prop, true, new GUILayoutOption[0]);
-                GUI.enabled = true;
-                
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("m_WorldSpaceCanvasCamera"), true);
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("m_DefaultTexture"), true);
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("m_ImageLibrary"), true);
-                Show(serializedObject.FindProperty("m_PrefabList"));
-                serializedObject.ApplyModifiedProperties();
 	        }
 
-            public static void Show (SerializedProperty list) {
+            public static void ShowPrefabList (SerializedProperty list, XRReferenceImageLibrary library) 
+            {
                 EditorGUILayout.PropertyField(list, false);
                 EditorGUI.indentLevel += 1;
-                for (int i = 0; i < list.arraySize; i++) {
-                    EditorGUILayout.PropertyField(list.GetArrayElementAtIndex(i));
+                if (list.isExpanded)
+                {
+                    for (int i = 0; i < list.arraySize; i++) {
+                        EditorGUILayout.PropertyField(list.GetArrayElementAtIndex(i).FindPropertyRelative("m_Prefab"), new GUIContent(library[i].name));
+                    }
                 }
                 EditorGUI.indentLevel -= 1;
 	        }
         }
-
         #endif
     }
 }
