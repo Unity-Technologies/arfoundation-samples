@@ -24,11 +24,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public struct NamedPrefab
         {
-            Guid m_ImageGuid;
+            [SerializeField]
+            string m_ImageGuid;
 
-            public Guid imageGuid
+            public string imageGuid
             {
-                get => m_ImageGuid; 
+                get => m_ImageGuid;
             }
 
             [SerializeField]
@@ -36,13 +37,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             public GameObject prefab
             {
-                get => m_Prefab; 
+                get => m_Prefab;
                 set => m_Prefab = value;
             }
 
-            public NamedPrefab(Guid imageGuid, GameObject prefab)
+            public NamedPrefab(Guid guid, GameObject prefab)
             {
-                m_ImageGuid = imageGuid;
+                m_ImageGuid = guid.ToString();
                 m_Prefab = prefab;
             }
         }
@@ -62,7 +63,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         Dictionary<Guid, GameObject> m_PrefabsDictionary = new Dictionary<Guid, GameObject>();
         ARTrackedImageManager m_TrackedImageManager;
-        
+
         [SerializeField]
         [Tooltip("Reference Image Library")]
         XRReferenceImageLibrary m_ImageLibrary;
@@ -79,9 +80,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void Awake()
         {
             m_TrackedImageManager = GetComponent<ARTrackedImageManager>();
-            
+
             for (int i = 0; i < prefabList.Count; i++)
-            {                
+            {
                 m_PrefabsDictionary.Add(ImageLibrary[i].guid, prefabList[i].prefab);
             }
         }
@@ -100,12 +101,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             if (library)
             {
-                if (m_PrefabList == null)
+                if (prefabList == null)
                 {
-                    m_PrefabList = new List<NamedPrefab>();
+                    prefabList = new List<NamedPrefab>();
                     for (int i = 0; i < library.count; i++)
                     {
-                        m_PrefabList.Add(new NamedPrefab(library[i].guid, null));
+                        prefabList.Add(new NamedPrefab(library[i].guid, null));
                     }
                 }
                 else
@@ -113,12 +114,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     var tempList = new List<NamedPrefab>();
                     for (int i = 0; i < library.count; i++)
                     {
-                        var idx = m_PrefabList.FindIndex(item => item.imageGuid == library[i].guid);
-                        tempList.Add(new NamedPrefab(library[i].guid, (idx != -1) ? m_PrefabList[idx].prefab : null));
+                        var idx = prefabList.FindIndex(item => item.imageGuid == library[i].guid.ToString());
+                        tempList.Add(new NamedPrefab(library[i].guid, (idx != -1) ? prefabList[idx].prefab : null));
                     }
-                    m_PrefabList = tempList;
+                    prefabList = tempList;
                 }
-            }  
+            }
         }
 
         void OnTrackedImagesChanged(ARTrackedImagesChangedEventArgs eventArgs)
@@ -126,7 +127,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             foreach (var trackedImage in eventArgs.added)
             {
                 // Give the initial image a reasonable default scale
-                trackedImage.transform.localScale = new Vector3(trackedImage.size.x/2, trackedImage.size.x/2, trackedImage.size.x/2);
+                trackedImage.transform.localScale = new Vector3(trackedImage.size.x / 2, trackedImage.size.x / 2, trackedImage.size.x / 2);
 
                 AssignPrefab(trackedImage);
             }
@@ -134,12 +135,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void AssignPrefab(ARTrackedImage trackedImage)
         {
-            if (m_PrefabsDictionary.TryGetValue(trackedImage.referenceImage.guid, out GameObject prefab)){
+            if (m_PrefabsDictionary.TryGetValue(trackedImage.referenceImage.guid, out GameObject prefab))
+            {
                 Instantiate(prefab, trackedImage.transform);
             }
         }
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
 
         [CustomEditor(typeof(MultiTrackedImageInfoManager))]
         public class MultiTrackedImageInfoManagerInspector : Editor 
@@ -194,9 +196,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 if (EditorGUI.EndChangeCheck())
                     behaviour.OnLibraryChanged(library);
                 else if (HasLibraryChanged(library))
-                    behaviour.OnLibraryChanged(library);
+                    behaviour.OnLibraryChanged(library);     
 
-                // Update current
+                // update current
                 m_ReferenceImages.Clear();
                 if (library)
                 {
@@ -207,8 +209,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
 
                 serializedObject.ApplyModifiedProperties();
+                Undo.RecordObject(target, "Sync Library");
+                EditorUtility.SetDirty(target);
 	        }
         }
-        #endif
+#endif
     }
 }
