@@ -101,18 +101,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 if (prefabList == null)
                 {
                     prefabList = new List<NamedPrefab>();
-                    for (int i = 0; i < library.count; i++)
+                    foreach (var referenceImage in library)
                     {
-                        prefabList.Add(new NamedPrefab(library[i], null));
+                        prefabList.Add(new NamedPrefab(referenceImage, null));
                     }
                 }
                 else
                 {
                     var tempList = new List<NamedPrefab>();
-                    for (int i = 0; i < library.count; i++)
+                    foreach (var referenceImage in library)
                     {
-                        var listIndex = prefabList.FindIndex(item => item.imageGuid == library[i].guid.ToString());
-                        tempList.Add(new NamedPrefab(library[i], (listIndex != -1) ? prefabList[listIndex].prefab : null));
+                        var listIndex = prefabList.FindIndex(item => item.imageGuid == referenceImage.guid.ToString());
+                        tempList.Add(new NamedPrefab(referenceImage, (listIndex != -1) ? prefabList[listIndex].prefab : null));
                     }
                     prefabList = tempList;
                 }
