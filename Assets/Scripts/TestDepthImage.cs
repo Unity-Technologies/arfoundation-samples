@@ -33,14 +33,34 @@ namespace UnityEngine.XR.ARFoundation.Samples
     public class TestDepthImage : MonoBehaviour
     {
         /// <summary>
+        /// The display mode for the texture widget. Values must match the UI dropdown.
+        /// </summary>
+        enum DisplayMode
+        {
+            EnvironmentDepth = 0,
+            HumanDepth = 1,
+            HumanStencil = 2,
+        }
+
+        /// <summary>
         /// Name of the texture rotation property in the shader.
         /// </summary>
         const string k_TextureRotationName = "_TextureRotation";
 
         /// <summary>
+        /// Name of the max distance property in the shader.
+        /// </summary>
+        const string k_MaxDistanceName = "_MaxDistance";
+
+        /// <summary>
         /// ID of the texture rotation property in the shader.
         /// </summary>
         static readonly int k_TextureRotationId = Shader.PropertyToID(k_TextureRotationName);
+
+        /// <summary>
+        /// ID of the max distance  property in the shader.
+        /// </summary>
+        static readonly int k_MaxDistanceId = Shader.PropertyToID(k_MaxDistanceName);
 
         /// <summary>
         /// A string builder for construction of strings.
@@ -84,6 +104,54 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set { m_ImageInfo = value; }
         }
 
+        [SerializeField]
+        Material m_DepthMaterial;
+
+        /// <summary>
+        /// The depth material for rendering depth textures.
+        /// </summary>
+        public Material depthMaterial
+        {
+            get => m_DepthMaterial;
+            set => m_DepthMaterial = value;
+        }
+
+        [SerializeField]
+        Material m_StencilMaterial;
+
+        /// <summary>
+        /// The stencil material for rendering stencil textures.
+        /// </summary>
+        public Material stencilMaterial
+        {
+            get => m_StencilMaterial;
+            set => m_StencilMaterial = value;
+        }
+
+        [SerializeField]
+        float m_MaxEnvironmentDistance = 8.0f;
+
+        /// <summary>
+        /// The max distance value for the shader when showing an environment depth texture.
+        /// </summary>
+        public float maxEnvironmentDistance
+        {
+            get => m_MaxEnvironmentDistance;
+            set => m_MaxEnvironmentDistance = value;
+        }
+
+        [SerializeField]
+        float m_MaxHumanDistance = 3.0f;
+
+        /// <summary>
+        /// The max distance value for the shader when showing an human depth texture.
+        /// </summary>
+        public float maxHumanDistance
+        {
+            get => m_MaxHumanDistance;
+            set => m_MaxHumanDistance = value;
+        }
+
         /// <summary>
         /// The current screen orientation remembered so that we are only updating the raw image layout when it changes.
         /// </summary>
@@ -91,7 +159,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         /// <summary>
         /// The current texture aspect ratio remembered so that we can resize the raw image layout when it changes.
+        /// </summary>
         float m_TextureAspectRatio = 1.0f;
+
+        /// <summary>
+        /// The mode indicating which texture to display.
+        /// </summary>
+        DisplayMode m_DisplayMode = DisplayMode.EnvironmentDepth;
 
         void OnEnable()
         {
@@ -117,7 +191,20 @@ namespace UnityEngine.XR.ARFoundation.Samples
             Texture2D humanDepth = m_OcclusionManager.humanDepthTexture;
             Texture2D envDepth = m_OcclusionManager.environmentDepthTexture;
 
-            Texture2D displayTexture = envDepth;
+            Texture2D displayTexture;
+            switch (m_DisplayMode)
+            {
+                case DisplayMode.HumanStencil:
+                    displayTexture = humanStencil;
+                    break;
+                case DisplayMode.HumanDepth:
+                    displayTexture = humanDepth;
+                    break;
+                case DisplayMode.EnvironmentDepth:
+                default:
+                    displayTexture = envDepth;
+                    break;
+            }
 
             m_StringBuilder.Clear();
             LogTextureInfo(m_StringBuilder, "stencil", humanStencil);
@@ -191,8 +278,51 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     rotation = 270.0f;
                     break;
             }
+
+            float maxDistance;
+            switch (m_DisplayMode)
+            {
+                case DisplayMode.HumanStencil:
+                    m_RawImage.material = m_StencilMaterial;
+                    maxDistance = m_MaxHumanDistance;
+                    break;
+                case DisplayMode.HumanDepth:
+                    m_RawImage.material = m_DepthMaterial;
+                    maxDistance = m_MaxHumanDistance;
+                    break;
+                case DisplayMode.EnvironmentDepth:
+                default:
+                    m_RawImage.material = m_DepthMaterial;
+                    maxDistance = m_MaxEnvironmentDistance;
+                    break;
+            }
+
             m_RawImage.rectTransform.sizeDelta = rectSize;
             m_RawImage.material.SetFloat(k_TextureRotationId, rotation);
+            m_RawImage.material.SetFloat(k_MaxDistanceId, maxDistance);
+        }
+
+        public void OnDepthModeDropdownValueChanged(Dropdown dropdown)
+        {
+            m_DisplayMode = (DisplayMode)dropdown.value;
+
+            Debug.Assert(m_OcclusionManager != null, "no occlusion manager");
+            Debug.Assert(m_RawImage != null, "no raw image");
+            switch (m_DisplayMode)
+            {
+                case DisplayMode.HumanStencil:
+                    m_OcclusionManager.requestedOcclusionPreferenceMode = OcclusionPreferenceMode.PreferHumanOcclusion;
+                    break;
+                case DisplayMode.HumanDepth:
+                    m_OcclusionManager.requestedOcclusionPreferenceMode = OcclusionPreferenceMode.PreferHumanOcclusion;
+                    break;
+                case DisplayMode.EnvironmentDepth:
+                default:
+                    m_OcclusionManager.requestedOcclusionPreferenceMode = OcclusionPreferenceMode.PreferEnvironmentOcclusion;
+                    break;
+            }
+
+            LayoutRawImage();
         }
     }
 }

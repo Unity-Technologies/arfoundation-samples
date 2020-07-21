@@ -1,4 +1,4 @@
-Shader "Unlit/EnvironmentDepthGradient"
+Shader "Unlit/DepthGradient"
 {
     Properties
     {
