@@ -9,26 +9,8 @@ using UnityEngine.XR.ARSubsystems;
 namespace UnityEngine.XR.ARFoundation.Samples
 {
     /// <summary>
-    /// This component tests getting the latest camera image
-    /// and converting it to RGBA format. If successful,
-    /// it displays the image on the screen as a RawImage
-    /// and also displays information about the image.
-    ///
-    /// This is useful for computer vision applications where
-    /// you need to access the raw pixels from camera image
-    /// on the CPU.
-    ///
-    /// This is different from the ARCameraBackground component, which
-    /// efficiently displays the camera image on the screen. If you
-    /// just want to blit the camera texture to the screen, use
-    /// the ARCameraBackground, or use Graphics.Blit to create
-    /// a GPU-friendly RenderTexture.
-    ///
-    /// In this example, we get the camera image data on the CPU,
-    /// convert it to an RGBA format, then display it on the screen
-    /// as a RawImage texture to demonstrate it is working.
-    /// This is done as an example; do not use this technique simply
-    /// to render the camera image on screen.
+    /// This component displays a picture-in-picture view of the environment depth texture, the human depth texture, or
+    /// the human stencil texture.
     /// </summary>
     public class TestDepthImage : MonoBehaviour
     {
@@ -67,91 +49,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         readonly StringBuilder m_StringBuilder = new StringBuilder();
 
-        [SerializeField]
-        [Tooltip("The AROcclusionManager which will produce frame events.")]
-        AROcclusionManager m_OcclusionManager;
-
-        /// <summary>
-        /// Get or set the <c>AROcclusionManager</c>.
-        /// </summary>
-        public AROcclusionManager occlusionManager
-        {
-            get { return m_OcclusionManager; }
-            set { m_OcclusionManager = value; }
-        }
-
-        [SerializeField]
-        RawImage m_RawImage;
-
-        /// <summary>
-        /// The UI RawImage used to display the image on screen.
-        /// </summary>
-        public RawImage rawImage
-        {
-            get { return m_RawImage; }
-            set { m_RawImage = value; }
-        }
-
-        [SerializeField]
-        Text m_ImageInfo;
-
-        /// <summary>
-        /// The UI Text used to display information about the image on screen.
-        /// </summary>
-        public Text imageInfo
-        {
-            get { return m_ImageInfo; }
-            set { m_ImageInfo = value; }
-        }
-
-        [SerializeField]
-        Material m_DepthMaterial;
-
-        /// <summary>
-        /// The depth material for rendering depth textures.
-        /// </summary>
-        public Material depthMaterial
-        {
-            get => m_DepthMaterial;
-            set => m_DepthMaterial = value;
-        }
-
-        [SerializeField]
-        Material m_StencilMaterial;
-
-        /// <summary>
-        /// The stencil material for rendering stencil textures.
-        /// </summary>
-        public Material stencilMaterial
-        {
-            get => m_StencilMaterial;
-            set => m_StencilMaterial = value;
-        }
-
-        [SerializeField]
-        float m_MaxEnvironmentDistance = 8.0f;
-
-        /// <summary>
-        /// The max distance value for the shader when showing an environment depth texture.
-        /// </summary>
-        public float maxEnvironmentDistance
-        {
-            get => m_MaxEnvironmentDistance;
-            set => m_MaxEnvironmentDistance = value;
-        }
-
-        [SerializeField]
-        float m_MaxHumanDistance = 3.0f;
-
-        /// <summary>
-        /// The max distance value for the shader when showing an human depth texture.
-        /// </summary>
-        public float maxHumanDistance
-        {
-            get => m_MaxHumanDistance;
-            set => m_MaxHumanDistance = value;
-        }
-
         /// <summary>
         /// The current screen orientation remembered so that we are only updating the raw image layout when it changes.
         /// </summary>
@@ -167,14 +64,102 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         DisplayMode m_DisplayMode = DisplayMode.EnvironmentDepth;
 
+        /// <summary>
+        /// Get or set the <c>AROcclusionManager</c>.
+        /// </summary>
+        public AROcclusionManager occlusionManager
+        {
+            get { return m_OcclusionManager; }
+            set { m_OcclusionManager = value; }
+        }
+
+        [SerializeField]
+        [Tooltip("The AROcclusionManager which will produce frame events.")]
+        AROcclusionManager m_OcclusionManager;
+
+        /// <summary>
+        /// The UI RawImage used to display the image on screen.
+        /// </summary>
+        public RawImage rawImage
+        {
+            get { return m_RawImage; }
+            set { m_RawImage = value; }
+        }
+
+        [SerializeField]
+        RawImage m_RawImage;
+
+        /// <summary>
+        /// The UI Text used to display information about the image on screen.
+        /// </summary>
+        public Text imageInfo
+        {
+            get { return m_ImageInfo; }
+            set { m_ImageInfo = value; }
+        }
+
+        [SerializeField]
+        Text m_ImageInfo;
+
+        /// <summary>
+        /// The depth material for rendering depth textures.
+        /// </summary>
+        public Material depthMaterial
+        {
+            get => m_DepthMaterial;
+            set => m_DepthMaterial = value;
+        }
+
+        [SerializeField]
+        Material m_DepthMaterial;
+
+        /// <summary>
+        /// The stencil material for rendering stencil textures.
+        /// </summary>
+        public Material stencilMaterial
+        {
+            get => m_StencilMaterial;
+            set => m_StencilMaterial = value;
+        }
+
+        [SerializeField]
+        Material m_StencilMaterial;
+
+        /// <summary>
+        /// The max distance value for the shader when showing an environment depth texture.
+        /// </summary>
+        public float maxEnvironmentDistance
+        {
+            get => m_MaxEnvironmentDistance;
+            set => m_MaxEnvironmentDistance = value;
+        }
+
+        [SerializeField]
+        float m_MaxEnvironmentDistance = 8.0f;
+
+        /// <summary>
+        /// The max distance value for the shader when showing an human depth texture.
+        /// </summary>
+        public float maxHumanDistance
+        {
+            get => m_MaxHumanDistance;
+            set => m_MaxHumanDistance = value;
+        }
+
+        [SerializeField]
+        float m_MaxHumanDistance = 3.0f;
+
         void OnEnable()
         {
+            // When enabled, get the current screen orientation, and update the raw image UI.
             m_CurrentScreenOrientation = Screen.orientation;
-            LayoutRawImage();
+            UpdateRawImage();
         }
 
         void Update()
         {
+            // If we are on a device that does supports neither human stencil, human depth, nor environment depth,
+            // display a message about unsupported functionality and return.
             Debug.Assert(m_OcclusionManager != null, "no occlusion manager");
             if ((m_OcclusionManager.descriptor?.supportsHumanSegmentationStencilImage == false)
                 && (m_OcclusionManager.descriptor?.supportsHumanSegmentationDepthImage == false)
@@ -187,10 +172,26 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 return;
             }
 
+            // Get all of the occlusion textures.
             Texture2D humanStencil = m_OcclusionManager.humanStencilTexture;
             Texture2D humanDepth = m_OcclusionManager.humanDepthTexture;
             Texture2D envDepth = m_OcclusionManager.environmentDepthTexture;
 
+            // Display some text information about each of the textures.
+            m_StringBuilder.Clear();
+            LogTextureInfo(m_StringBuilder, "stencil", humanStencil);
+            LogTextureInfo(m_StringBuilder, "depth", humanDepth);
+            LogTextureInfo(m_StringBuilder, "env", envDepth);
+            if (m_ImageInfo != null)
+            {
+                m_ImageInfo.text = m_StringBuilder.ToString();
+            }
+            else
+            {
+                Debug.Log(m_StringBuilder.ToString());
+            }
+
+            // Decide which to display based on the current mode.
             Texture2D displayTexture;
             switch (m_DisplayMode)
             {
@@ -206,33 +207,30 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     break;
             }
 
-            m_StringBuilder.Clear();
-            LogTextureInfo(m_StringBuilder, "stencil", humanStencil);
-            LogTextureInfo(m_StringBuilder, "depth", humanDepth);
-            LogTextureInfo(m_StringBuilder, "env", envDepth);
-            if (m_ImageInfo != null)
-            {
-                m_ImageInfo.text = m_StringBuilder.ToString();
-            }
-            else
-            {
-                Debug.Log(m_StringBuilder.ToString());
-            }
-
+            // Assign the texture to display to the raw image.
             Debug.Assert(m_RawImage != null, "no raw image");
             m_RawImage.texture = displayTexture;
 
+            // Get the aspect ratio for the current texture.
             float textureAspectRatio = (displayTexture == null) ? 1.0f : ((float)displayTexture.width / (float)displayTexture.height);
 
+            // If the raw image needs to be updated because of a device orientation change or because of a texture
+            // aspect ratio difference, then update the raw image with the new values.
             if ((m_CurrentScreenOrientation != Screen.orientation)
                 || !Mathf.Approximately(m_TextureAspectRatio, textureAspectRatio))
             {
                 m_CurrentScreenOrientation = Screen.orientation;
                 m_TextureAspectRatio = textureAspectRatio;
-                LayoutRawImage();
+                UpdateRawImage();
             }
         }
 
+        /// <summary>
+        /// Create log information about the given texture.
+        /// </summary>
+        /// <param name="stringBuilder">The string builder to which to append the texture information.</param>
+        /// <param name="textureName">The semantic name of the texture for logging purposes.</param>
+        /// <param name="texture">The texture for which to log information.</param>
         void LogTextureInfo(StringBuilder stringBuilder, string textureName, Texture2D texture)
         {
             stringBuilder.AppendFormat("texture : {0}\n", textureName);
@@ -249,15 +247,19 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
-        void LayoutRawImage()
+        /// <summary>
+        /// Update the raw image with the current configurations.
+        /// </summary>
+        void UpdateRawImage()
         {
             Debug.Assert(m_RawImage != null, "no raw image");
 
+            // Determine the raw imge rectSize preserving the texture aspect ratio, matching the screen orientation,
+            // and keeping a minimum dimension size.
             float minDimension = 480.0f;
             float maxDimension = Mathf.Round(minDimension * m_TextureAspectRatio);
             Vector2 rectSize;
             float rotation;
-
             switch (m_CurrentScreenOrientation)
             {
                 case ScreenOrientation.LandscapeRight:
@@ -279,35 +281,45 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     break;
             }
 
+            // Determine the raw image material and maxDistance material parameter based on the display mode.
             float maxDistance;
+            Material material;
             switch (m_DisplayMode)
             {
                 case DisplayMode.HumanStencil:
-                    m_RawImage.material = m_StencilMaterial;
+                    material = m_StencilMaterial;
                     maxDistance = m_MaxHumanDistance;
                     break;
                 case DisplayMode.HumanDepth:
-                    m_RawImage.material = m_DepthMaterial;
+                    material = m_DepthMaterial;
                     maxDistance = m_MaxHumanDistance;
                     break;
                 case DisplayMode.EnvironmentDepth:
                 default:
-                    m_RawImage.material = m_DepthMaterial;
+                    material = m_DepthMaterial;
                     maxDistance = m_MaxEnvironmentDistance;
                     break;
             }
 
+            // Update the raw image dimensions and the raw image material parameters.
             m_RawImage.rectTransform.sizeDelta = rectSize;
-            m_RawImage.material.SetFloat(k_TextureRotationId, rotation);
-            m_RawImage.material.SetFloat(k_MaxDistanceId, maxDistance);
+            material.SetFloat(k_TextureRotationId, rotation);
+            material.SetFloat(k_MaxDistanceId, maxDistance);
+            m_RawImage.material = material;
         }
 
+        /// <summary>
+        /// Callback when the depth mode dropdown UI has a value change.
+        /// </summary>
+        /// <param name="dropdown">The dropdown UI that changed.</param>
         public void OnDepthModeDropdownValueChanged(Dropdown dropdown)
         {
+            // Update the display mode from the dropdown value.
             m_DisplayMode = (DisplayMode)dropdown.value;
 
+            // XXX stinson 2020/07/20 : This is a workaround for an iOS 14 beta issue that causes environment depth and
+            // human depth/stencil to not work together. This should be removed when iOS 14 exits beta.
             Debug.Assert(m_OcclusionManager != null, "no occlusion manager");
-            Debug.Assert(m_RawImage != null, "no raw image");
             switch (m_DisplayMode)
             {
                 case DisplayMode.HumanStencil:
@@ -322,7 +334,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     break;
             }
 
-            LayoutRawImage();
+            // Update the raw image following the mode change.
+            UpdateRawImage();
         }
     }
 }
