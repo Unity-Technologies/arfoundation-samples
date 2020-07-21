@@ -69,8 +69,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public AROcclusionManager occlusionManager
         {
-            get { return m_OcclusionManager; }
-            set { m_OcclusionManager = value; }
+            get => m_OcclusionManager;
+            set => m_OcclusionManager = value;
         }
 
         [SerializeField]
@@ -82,8 +82,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public RawImage rawImage
         {
-            get { return m_RawImage; }
-            set { m_RawImage = value; }
+            get => m_RawImage;
+            set => m_RawImage = value;
         }
 
         [SerializeField]
@@ -94,8 +94,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public Text imageInfo
         {
-            get { return m_ImageInfo; }
-            set { m_ImageInfo = value; }
+            get => m_ImageInfo;
+            set => m_ImageInfo = value;
         }
 
         [SerializeField]
@@ -161,15 +161,31 @@ namespace UnityEngine.XR.ARFoundation.Samples
             // If we are on a device that does supports neither human stencil, human depth, nor environment depth,
             // display a message about unsupported functionality and return.
             Debug.Assert(m_OcclusionManager != null, "no occlusion manager");
-            if ((m_OcclusionManager.descriptor?.supportsHumanSegmentationStencilImage == false)
-                && (m_OcclusionManager.descriptor?.supportsHumanSegmentationDepthImage == false)
-                && (m_OcclusionManager.descriptor?.supportsEnvironmentDepthImage == false))
+            switch (m_DisplayMode)
             {
-                if (m_ImageInfo != null)
-                {
-                    m_ImageInfo.text = "Depth functionality is not supported on this device.";
-                }
-                return;
+                case DisplayMode.HumanDepth:
+                case DisplayMode.HumanStencil:
+                    if ((m_OcclusionManager.descriptor?.supportsHumanSegmentationDepthImage == false)
+                        && (m_OcclusionManager.descriptor?.supportsEnvironmentDepthImage == false))
+                    {
+                        if (m_ImageInfo != null)
+                        {
+                            m_ImageInfo.text = "Human segmentation is not supported on this device.";
+                        }
+                        return;
+                    }
+                    break;
+                case DisplayMode.EnvironmentDepth :
+                default:
+                    if (m_OcclusionManager.descriptor?.supportsHumanSegmentationStencilImage == false)
+                    {
+                        if (m_ImageInfo != null)
+                        {
+                            m_ImageInfo.text = "Environment depth is not supported on this device.";
+                        }
+                        return;
+                    }
+                    break;
             }
 
             // Get all of the occlusion textures.
