@@ -45,12 +45,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 touchPosition = Input.GetTouch(0).position;
                 return true;
             }
-            else if (Input.GetMouseButton(0))
-            {
-                var mousePosition = Input.mousePosition;
-                touchPosition = new Vector2(mousePosition.x, mousePosition.y);
-                return true;
-            }
 
             touchPosition = default;
             return false;
