@@ -149,6 +149,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
 
         [SerializeField]
+        Button m_HDRLightEstimation;
+        public Button HDRLightEstimation
+        {
+            get { return m_HDRLightEstimation; }
+            set { m_HDRLightEstimation = value; }
+        }
+
+        [SerializeField]
         Button m_PlaneDetection;
         public Button planeDetection
         {
@@ -338,6 +346,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         cameraDescriptor.supportsCameraImage)
                     {
                         m_LightEstimation.interactable = true;
+                    }
+                    if(cameraDescriptor.supportsFaceTrackingHDRLightEstimation || cameraDescriptor.supportsWorldTrackingHDRLightEstimation)
+                    {
+                        m_HDRLightEstimation.interactable = true;
                     }
 
                 }

@@ -57,6 +57,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set { m_DepthMenu = value; }
         }
 
+        [SerializeField]
+        GameObject m_LightEstimationMenu;
+        public GameObject lightEstimationMenu
+        {
+            get { return m_LightEstimationMenu; }
+            set { m_LightEstimationMenu = value; }
+        }
+
         void Start()
         {
             if(ActiveMenu.currentMenu == MenuType.FaceTracking)
@@ -82,6 +90,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             else if(ActiveMenu.currentMenu == MenuType.Depth)
             {
                 m_DepthMenu.SetActive(true);
+                m_AllMenu.SetActive(false);
+            }
+            else if(ActiveMenu.currentMenu == MenuType.LightEstimation)
+            {
+                m_LightEstimationMenu.SetActive(true);
                 m_AllMenu.SetActive(false);
             }
         }
@@ -261,6 +274,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_BodyTrackingMenu.SetActive(false);
             m_MeshingMenu.SetActive(false);
             m_DepthMenu.SetActive(false);
+            m_LightEstimationMenu.SetActive(false);
             m_AllMenu.SetActive(true);
         }
 
@@ -275,6 +289,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             ActiveMenu.currentMenu = MenuType.Depth;
             m_DepthMenu.SetActive(true);
+            m_AllMenu.SetActive(false);
+        }
+
+        public void LightEstimationMenuButtonPressed()
+        {
+            ActiveMenu.currentMenu = MenuType.LightEstimation;
+            m_LightEstimationMenu.SetActive(true);
             m_AllMenu.SetActive(false);
         }
 
@@ -306,6 +327,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public void DepthImagesButtonPressed()
         {
             LoadScene("DepthImages");
+        }
+
+        public void HDRLightEstimationButtonPressed()
+        {
+            LoadScene("HDRLightEstimation");
         }
     }
 }
