@@ -78,12 +78,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public void OnBeforeSerialize() {}
         
-        //TODO: exception thrown
         public void OnAfterDeserialize()
         {
-            for (int i = 0; i < prefabList.Count; i++)
+            if (ImageLibrary.count != 0)
             {
-                m_PrefabsDictionary.Add(ImageLibrary[i].guid, prefabList[i].prefab);
+                for (int i = 0; i < prefabList.Count; i++)
+                    {
+                        m_PrefabsDictionary.Add(ImageLibrary[i].guid, prefabList[i].prefab);
+                    }
             }
         }
 
@@ -166,23 +168,26 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
-        void UpdateInstantiatedPrefab(ARTrackedImage trackedImage)
+        void RemoveInstantiatedPrefab(XRReferenceImage referenceImage)
         {
-            RemoveInstantiatedPrefab(trackedImage);
-            AssignPrefab(trackedImage);
+            if(m_InstantiatedPrefabsDictionary.TryGetValue(referenceImage.guid, out GameObject instantiatedPrefab))
+            {
+                Destroy(instantiatedPrefab);
+                m_InstantiatedPrefabsDictionary.Remove(referenceImage.guid);
+            }
         }
 
-        public GameObject GetPrefabForReferenceImage(ARTrackedImage trackedImage)
+        public GameObject GetPrefabForReferenceImage(XRReferenceImage referenceImage)
         {
-            if (m_PrefabsDictionary.TryGetValue(trackedImage.referenceImage.guid, out GameObject prefab))
+            if (m_PrefabsDictionary.TryGetValue(referenceImage.guid, out GameObject prefab))
                 return prefab;
             else
                 return null;
         }
 
-        public void SetPrefabForReferenceImage(ARTrackedImage trackedImage, GameObject alternativePrefab)
+        public void SetPrefabForReferenceImage(XRReferenceImage referenceImage, GameObject alternativePrefab)
         {
-            if (m_PrefabsDictionary.TryGetValue(trackedImage.referenceImage.guid, out GameObject targetPrefabInDictionary))
+            if (m_PrefabsDictionary.TryGetValue(referenceImage.guid, out GameObject targetPrefabInDictionary))
             {
                 var listIndex = prefabList.FindIndex(item => item.prefab == targetPrefabInDictionary);
                 if (listIndex!= -1)
@@ -192,9 +197,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     targetPrefabInList.prefab = alternativePrefab;
                     prefabList[listIndex] = targetPrefabInList;
                     //update prefab dictionary
-                    m_PrefabsDictionary[trackedImage.referenceImage.guid] = alternativePrefab;
-                    //update instantiated prefab
-                    UpdateInstantiatedPrefab(trackedImage);
+                    m_PrefabsDictionary[referenceImage.guid] = alternativePrefab;
+                    //remove instantiated prefab
+                    RemoveInstantiatedPrefab(referenceImage);
                 }
             }   
         }
