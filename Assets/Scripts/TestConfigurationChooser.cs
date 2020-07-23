@@ -1,5 +1,4 @@
 using System;
-using System.Text;
 using Unity.Collections;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.XR.ARFoundation;
@@ -9,7 +8,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
     public class TestConfigurationChooser : MonoBehaviour
     {
         /// <summary>
-        /// The AR session to set the configuration chooser.
+        /// The AR session on which to set the configuration chooser.
         /// </summary>
         public ARSession session
         {
