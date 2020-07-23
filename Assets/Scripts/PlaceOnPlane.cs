@@ -40,20 +40,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         bool TryGetTouchPosition(out Vector2 touchPosition)
         {
-    #if UNITY_EDITOR
-            if (Input.GetMouseButton(0))
-            {
-                var mousePosition = Input.mousePosition;
-                touchPosition = new Vector2(mousePosition.x, mousePosition.y);
-                return true;
-            }
-    #else
             if (Input.touchCount > 0)
             {
                 touchPosition = Input.GetTouch(0).position;
                 return true;
             }
-    #endif
 
             touchPosition = default;
             return false;
