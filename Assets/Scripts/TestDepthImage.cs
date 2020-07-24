@@ -177,7 +177,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     break;
                 case DisplayMode.EnvironmentDepth :
                 default:
-                    if (m_OcclusionManager.descriptor?.supportsHumanSegmentationStencilImage == false)
+                    if (m_OcclusionManager.descriptor?.supportsEnvironmentDepthImage == false)
                     {
                         if (m_ImageInfo != null)
                         {
