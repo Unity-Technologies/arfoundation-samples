@@ -22,42 +22,31 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// <summary>
         /// Used to associate an `XRReferenceImage` with a Prefab by using the `XRReferenceImage`'s guid as a unique identifier for a particular reference image.
         /// </summary>
-        public struct NamedPrefab
+        struct NamedPrefab
         {
             // System.Guid isn't serializable, so we store the Guid as a string. At runtime, this is converted back to a System.Guid
             [SerializeField]
-            string m_ImageGuid;
-
-            public string imageGuid => m_ImageGuid;
+            public readonly string m_ImageGuid;
 
             [SerializeField]
-            GameObject m_Prefab;
-
-            public GameObject prefab
-            {
-                get => m_Prefab;
-                set => m_Prefab = value;
-            }
+            public GameObject m_Prefab;
 
             public NamedPrefab(XRReferenceImage image, GameObject prefab)
             {
                 m_ImageGuid = image.guid.ToString();
                 m_Prefab = prefab;
             }
+
+            public NamedPrefab(Guid guid, GameObject prefab)
+            {
+                m_ImageGuid = guid.ToString();
+                m_Prefab = prefab;
+            }
         }
 
         [SerializeField]
         [Tooltip("Each prefab corresponds to each image in the Image Library.")]
-        List<NamedPrefab> m_PrefabList;
-
-        /// <summary>
-        /// Each prefab corresponds to the each image in the Image Library in the same order.
-        /// </summary>
-        List<NamedPrefab> prefabList
-        {
-            get => m_PrefabList;
-            set => m_PrefabList = value;
-        }
+        List<NamedPrefab> m_PrefabsList = new List<NamedPrefab>();
 
         Dictionary<Guid, GameObject> m_PrefabsDictionary = new Dictionary<Guid, GameObject>();
         Dictionary<Guid, GameObject> m_InstantiatedPrefabsDictionary = new Dictionary<Guid, GameObject>();
@@ -76,16 +65,24 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set => m_ImageLibrary = value;
         }
 
-        public void OnBeforeSerialize() {}
-        
+        public void OnBeforeSerialize()
+        {
+            m_PrefabsList.Clear();
+            foreach (var kvp in m_PrefabsDictionary)
+            {
+                m_PrefabsList.Add(new NamedPrefab(kvp.Key, kvp.Value));
+            }
+        }
+
         public void OnAfterDeserialize()
         {
             if (ImageLibrary.count != 0)
             {
-                for (int i = 0; i < prefabList.Count; i++)
-                    {
-                        m_PrefabsDictionary.Add(ImageLibrary[i].guid, prefabList[i].prefab);
-                    }
+                m_PrefabsDictionary = new Dictionary<Guid, GameObject>();
+                for (int i = 0; i < m_PrefabsList.Count; i++)
+                {
+                    m_PrefabsDictionary.Add(ImageLibrary[i].guid, m_PrefabsList[i].m_Prefab);
+                }
             }
         }
 
@@ -108,24 +105,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             if (library)
             {
-                if (prefabList == null)
+                var tempDictionary = new Dictionary<Guid, GameObject>();
+                foreach (var referenceImage in library)
                 {
-                    prefabList = new List<NamedPrefab>();
-                    foreach (var referenceImage in library)
-                    {
-                        prefabList.Add(new NamedPrefab(referenceImage, null));
-                    }
+                    tempDictionary.Add(referenceImage.guid, (m_PrefabsDictionary.TryGetValue(referenceImage.guid, out GameObject prefab)) ? prefab : null);
                 }
-                else
-                {
-                    var tempList = new List<NamedPrefab>();
-                    foreach (var referenceImage in library)
-                    {
-                        var listIndex = prefabList.FindIndex(item => item.imageGuid == referenceImage.guid.ToString());
-                        tempList.Add(new NamedPrefab(referenceImage, (listIndex != -1) ? prefabList[listIndex].prefab : null));
-                    }
-                    prefabList = tempList;
-                }
+                m_PrefabsDictionary = tempDictionary;
             }
         }
 
@@ -161,7 +146,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void RemoveInstantiatedPrefab(ARTrackedImage trackedImage)
         {
-            if(m_InstantiatedPrefabsDictionary.TryGetValue(trackedImage.referenceImage.guid, out GameObject instantiatedPrefab))
+            if (m_InstantiatedPrefabsDictionary.TryGetValue(trackedImage.referenceImage.guid, out GameObject instantiatedPrefab))
             {
                 Destroy(instantiatedPrefab);
                 m_InstantiatedPrefabsDictionary.Remove(trackedImage.referenceImage.guid);
@@ -170,7 +155,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void RemoveInstantiatedPrefab(XRReferenceImage referenceImage)
         {
-            if(m_InstantiatedPrefabsDictionary.TryGetValue(referenceImage.guid, out GameObject instantiatedPrefab))
+            if (m_InstantiatedPrefabsDictionary.TryGetValue(referenceImage.guid, out GameObject instantiatedPrefab))
             {
                 Destroy(instantiatedPrefab);
                 m_InstantiatedPrefabsDictionary.Remove(referenceImage.guid);
@@ -178,30 +163,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
 
         public GameObject GetPrefabForReferenceImage(XRReferenceImage referenceImage)
-        {
-            if (m_PrefabsDictionary.TryGetValue(referenceImage.guid, out GameObject prefab))
-                return prefab;
-            else
-                return null;
-        }
+            => m_PrefabsDictionary.TryGetValue(referenceImage.guid, out var prefab) ? prefab : null;
 
         public void SetPrefabForReferenceImage(XRReferenceImage referenceImage, GameObject alternativePrefab)
         {
             if (m_PrefabsDictionary.TryGetValue(referenceImage.guid, out GameObject targetPrefabInDictionary))
             {
-                var listIndex = prefabList.FindIndex(item => item.prefab == targetPrefabInDictionary);
-                if (listIndex!= -1)
-                {
-                    //update prefab list
-                    var targetPrefabInList = prefabList[listIndex];
-                    targetPrefabInList.prefab = alternativePrefab;
-                    prefabList[listIndex] = targetPrefabInList;
-                    //update prefab dictionary
-                    m_PrefabsDictionary[referenceImage.guid] = alternativePrefab;
-                    //remove instantiated prefab
-                    RemoveInstantiatedPrefab(referenceImage);
-                }
-            }   
+                m_PrefabsDictionary[referenceImage.guid] = alternativePrefab;
+                RemoveInstantiatedPrefab(referenceImage);
+            }
         }
 
 #if UNITY_EDITOR
@@ -210,6 +180,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         class MultiTrackedImageInfoManagerInspector : Editor 
         {
             List<XRReferenceImage> m_ReferenceImages = new List<XRReferenceImage>();
+            bool isExpanded = true;
 
             bool HasLibraryChanged(XRReferenceImageLibrary library)
             {
@@ -233,12 +204,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 //customized inspector
                 var behaviour = serializedObject.targetObject as MultiTrackedImageInfoManager;
                 var library = serializedObject.FindProperty("m_ImageLibrary").objectReferenceValue as XRReferenceImageLibrary;
-                var list = serializedObject.FindProperty("m_PrefabList");
 
                 serializedObject.Update();
-                GUI.enabled = false;
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("m_Script"));
-                GUI.enabled = true;
+                using (new EditorGUI.DisabledScope(true))
+                {
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("m_Script"));
+                }
                 
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("m_ImageLibrary"));
 
@@ -261,15 +232,22 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
 
                 //show prefab list
-                EditorGUILayout.PropertyField(list, false);
-                EditorGUI.indentLevel += 1;
-                if (list.isExpanded)
+                isExpanded = EditorGUILayout.Foldout(isExpanded, "Prefab List");
+                if (isExpanded)
                 {
-                    for (int i = 0; i < list.arraySize; i++) {
-                        EditorGUILayout.PropertyField(list.GetArrayElementAtIndex(i).FindPropertyRelative("m_Prefab"), new GUIContent(library[i].name));
+                    EditorGUI.indentLevel += 1;
+                    foreach (var image in library)
+                    {
+                        if (behaviour.m_PrefabsDictionary.TryGetValue(image.guid, out GameObject prefab))
+                        {
+                            EditorGUILayout.BeginHorizontal();
+                            EditorGUILayout.LabelField(image.name, GUILayout.Width(200f));
+                            EditorGUILayout.ObjectField(prefab, typeof(GameObject), false);
+                            EditorGUILayout.EndHorizontal();
+                        }
                     }
+                    EditorGUI.indentLevel -= 1;
                 }
-                EditorGUI.indentLevel -= 1;
 
                 serializedObject.ApplyModifiedProperties();
 	        }
