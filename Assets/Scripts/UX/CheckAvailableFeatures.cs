@@ -149,6 +149,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
 
         [SerializeField]
+        Button m_BasicLightEstimation;
+        public Button basicLightEstimation
+        {
+            get { return m_BasicLightEstimation; }
+            set { m_BasicLightEstimation = value; }
+        }
+
+        [SerializeField]
         Button m_HDRLightEstimation;
         public Button HDRLightEstimation
         {
@@ -339,13 +347,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if(cameraDescriptors.Count > 0)
             {
+                m_LightEstimation.interactable = true;
                 foreach(var cameraDescriptor in cameraDescriptors)
                 {
                     if((cameraDescriptor.supportsAverageBrightness || cameraDescriptor.supportsAverageIntensityInLumens) &&
-                        cameraDescriptor.supportsAverageColorTemperature && cameraDescriptor.supportsCameraConfigurations &&
+                        (cameraDescriptor.supportsAverageColorTemperature || cameraDescriptor.supportsColorCorrection) && cameraDescriptor.supportsCameraConfigurations &&
                         cameraDescriptor.supportsCameraImage)
                     {
-                        m_LightEstimation.interactable = true;
+                        m_BasicLightEstimation.interactable = true;
                     }
                     if(cameraDescriptor.supportsFaceTrackingHDRLightEstimation || cameraDescriptor.supportsWorldTrackingHDRLightEstimation)
                     {

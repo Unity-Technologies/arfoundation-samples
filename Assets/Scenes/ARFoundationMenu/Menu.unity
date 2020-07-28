@@ -3358,6 +3358,7 @@ GameObject:
   - component: {fileID: 671986756}
   - component: {fileID: 671986755}
   - component: {fileID: 671986754}
+  - component: {fileID: 671986757}
   m_Layer: 5
   m_Name: HDRLightEstimation
   m_TagString: Untagged
@@ -3423,7 +3424,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 671986755}
   m_OnClick:
     m_PersistentCalls:
@@ -3476,6 +3477,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 671986752}
   m_CullTransparentMesh: 0
+--- !u!114 &671986757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 671986752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Tooltip: {fileID: 0}
 --- !u!1 &700557012
 GameObject:
   m_ObjectHideFlags: 0
@@ -4104,7 +4118,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -63.99994}
+  m_AnchoredPosition: {x: 0, y: -64}
   m_SizeDelta: {x: 0, y: -128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &749209460
@@ -4544,6 +4558,7 @@ MonoBehaviour:
   m_FaceRegions: {fileID: 876148839}
   m_BodyTracking: {fileID: 2111581279}
   m_LightEstimation: {fileID: 11739801}
+  m_BasicLightEstimation: {fileID: 1938811972}
   m_HDRLightEstimation: {fileID: 671986754}
   m_PlaneDetection: {fileID: 1172329691}
   m_PlaneClassification: {fileID: 988159692}
@@ -8685,7 +8700,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000015258789, y: 0.00007243082}
+  m_AnchoredPosition: {x: 0.000015258789, y: 0.00013437918}
   m_SizeDelta: {x: 0, y: 1100}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1416737520
@@ -10955,8 +10970,9 @@ GameObject:
   - component: {fileID: 1938811974}
   - component: {fileID: 1938811973}
   - component: {fileID: 1938811972}
+  - component: {fileID: 1938811975}
   m_Layer: 5
-  m_Name: LightEstimation
+  m_Name: BasicLightEstimation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11020,7 +11036,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1938811973}
   m_OnClick:
     m_PersistentCalls:
@@ -11073,6 +11089,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1938811970}
   m_CullTransparentMesh: 0
+--- !u!114 &1938811975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938811970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Tooltip: {fileID: 0}
 --- !u!1 &1948233961
 GameObject:
   m_ObjectHideFlags: 0
@@ -11154,8 +11183,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1130901186}
   m_HandleRect: {fileID: 1130901185}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.99999475
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
