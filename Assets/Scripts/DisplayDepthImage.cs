@@ -12,7 +12,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
     /// This component displays a picture-in-picture view of the environment depth texture, the human depth texture, or
     /// the human stencil texture.
     /// </summary>
-    public class TestDepthImage : MonoBehaviour
+    public class DisplayDepthImage : MonoBehaviour
     {
         /// <summary>
         /// The display mode for the texture widget. Values must match the UI dropdown.
