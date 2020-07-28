@@ -1,7 +1,4 @@
-using System;
 using System.Text;
-using Unity.Collections.LowLevel.Unsafe;
-using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
