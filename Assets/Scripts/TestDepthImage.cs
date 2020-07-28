@@ -35,6 +35,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         const string k_MaxDistanceName = "_MaxDistance";
 
         /// <summary>
+        /// The default texture aspect ratio.
+        /// </summary>
+        const float k_DefaultTextureAspectRadio = 1.0f;
+
+        /// <summary>
         /// ID of the texture rotation property in the shader.
         /// </summary>
         static readonly int k_TextureRotationId = Shader.PropertyToID(k_TextureRotationName);
@@ -57,7 +62,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// <summary>
         /// The current texture aspect ratio remembered so that we can resize the raw image layout when it changes.
         /// </summary>
-        float m_TextureAspectRatio = 1.0f;
+        float m_TextureAspectRatio = k_DefaultTextureAspectRadio;
 
         /// <summary>
         /// The mode indicating which texture to display.
@@ -165,13 +170,21 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 case DisplayMode.HumanDepth:
                 case DisplayMode.HumanStencil:
-                    if ((m_OcclusionManager.descriptor?.supportsHumanSegmentationDepthImage == false)
-                        && (m_OcclusionManager.descriptor?.supportsEnvironmentDepthImage == false))
+                    if ((m_OcclusionManager.descriptor?.supportsHumanSegmentationStencilImage == false)
+                        && (m_OcclusionManager.descriptor?.supportsHumanSegmentationDepthImage == false))
                     {
                         if (m_ImageInfo != null)
                         {
                             m_ImageInfo.text = "Human segmentation is not supported on this device.";
                         }
+
+                        m_RawImage.texture = null;
+                        if (!Mathf.Approximately(m_TextureAspectRatio, k_DefaultTextureAspectRadio))
+                        {
+                            m_TextureAspectRatio = k_DefaultTextureAspectRadio;
+                            UpdateRawImage();
+                        }
+
                         return;
                     }
                     break;
@@ -183,6 +196,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         {
                             m_ImageInfo.text = "Environment depth is not supported on this device.";
                         }
+
+                        m_RawImage.texture = null;
+                        if (!Mathf.Approximately(m_TextureAspectRatio, k_DefaultTextureAspectRadio))
+                        {
+                            m_TextureAspectRatio = k_DefaultTextureAspectRadio;
+                            UpdateRawImage();
+                        }
+
                         return;
                     }
                     break;
