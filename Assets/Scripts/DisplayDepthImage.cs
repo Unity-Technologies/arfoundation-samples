@@ -351,23 +351,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             // Update the display mode from the dropdown value.
             m_DisplayMode = (DisplayMode)dropdown.value;
 
-            // XXX stinson 2020/07/20 : This is a workaround for an iOS 14 beta issue that causes environment depth and
-            // human depth/stencil to not work together. This should be removed when iOS 14 exits beta.
-            Debug.Assert(m_OcclusionManager != null, "no occlusion manager");
-            switch (m_DisplayMode)
-            {
-                case DisplayMode.HumanStencil:
-                    m_OcclusionManager.requestedOcclusionPreferenceMode = OcclusionPreferenceMode.PreferHumanOcclusion;
-                    break;
-                case DisplayMode.HumanDepth:
-                    m_OcclusionManager.requestedOcclusionPreferenceMode = OcclusionPreferenceMode.PreferHumanOcclusion;
-                    break;
-                case DisplayMode.EnvironmentDepth:
-                default:
-                    m_OcclusionManager.requestedOcclusionPreferenceMode = OcclusionPreferenceMode.PreferEnvironmentOcclusion;
-                    break;
-            }
-
             // Update the raw image following the mode change.
             UpdateRawImage();
         }
