@@ -68,7 +68,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public void OnBeforeSerialize()
         {
-            Debug.Log("serialize");
             m_PrefabsList.Clear();
             foreach (var kvp in m_PrefabsDictionary)
             {
@@ -78,13 +77,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public void OnAfterDeserialize()
         {
-            if (imageLibrary.count != 0)
+            m_PrefabsDictionary = new Dictionary<Guid, GameObject>();
+            foreach (var entry in m_PrefabsList)
             {
-                m_PrefabsDictionary = new Dictionary<Guid, GameObject>();
-                for (int i = 0; i < m_PrefabsList.Count; i++)
-                {
-                    m_PrefabsDictionary.Add(Guid.Parse(m_PrefabsList[i].imageGuid), m_PrefabsList[i].m_Prefab);
-                }
+                m_PrefabsDictionary.Add(Guid.Parse(entry.imageGuid), entry.m_Prefab);
             }
         }
 
@@ -205,7 +201,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 //customized inspector
                 var behaviour = serializedObject.targetObject as MultiTrackedImageInfoManager;
-                var library = serializedObject.FindProperty("m_ImageLibrary").objectReferenceValue as XRReferenceImageLibrary;
 
                 serializedObject.Update();
                 using (new EditorGUI.DisabledScope(true))
@@ -214,13 +209,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
                 
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("m_ImageLibrary"));
+                var library = serializedObject.FindProperty("m_ImageLibrary").objectReferenceValue as XRReferenceImageLibrary;
 
                 //check library changes
-                EditorGUI.BeginChangeCheck();
-
-                if (EditorGUI.EndChangeCheck())
-                    behaviour.OnLibraryChanged(library);
-                else if (HasLibraryChanged(library))
+                if (HasLibraryChanged(library))
                     behaviour.OnLibraryChanged(library);     
 
                 // update current
@@ -237,19 +229,26 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_IsExpanded = EditorGUILayout.Foldout(m_IsExpanded, "Prefab List");
                 if (m_IsExpanded)
                 {
-                    EditorGUI.indentLevel += 1;
-                    foreach (var image in library)
+                    using (new EditorGUI.IndentLevelScope())
                     {
-                        var prefab = (GameObject)EditorGUILayout.ObjectField(image.name, behaviour.m_PrefabsDictionary[image.guid], typeof(GameObject), false);
-                        behaviour.m_PrefabsDictionary[image.guid] = prefab;
-                    }
-                    EditorGUI.indentLevel -= 1;
+                        EditorGUI.BeginChangeCheck();
+                    
+                        var tempDictionary = new Dictionary<Guid, GameObject>();
+                        foreach (var image in library)
+                        {
+                            var prefab = (GameObject)EditorGUILayout.ObjectField(image.name, behaviour.m_PrefabsDictionary[image.guid], typeof(GameObject), false);
+                            tempDictionary.Add(image.guid, prefab);
+                        }
+                        if (EditorGUI.EndChangeCheck())
+                        {
+                            Undo.RecordObject(target, "Update Prefab");
+                            behaviour.m_PrefabsDictionary = tempDictionary;
+                            EditorUtility.SetDirty(target);
+                        }
+                    }   
                 }
 
                 serializedObject.ApplyModifiedProperties();
-
-                Undo.RecordObject(target, "Update Prefab");
-                EditorUtility.SetDirty(target);
 	        }
         }
 #endif

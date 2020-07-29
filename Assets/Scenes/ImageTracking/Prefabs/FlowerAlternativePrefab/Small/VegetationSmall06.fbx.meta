@@ -1,38 +1,36 @@
 fileFormatVersion: 2
-guid: 266f03476f36b2945b733736a459bf7a
+guid: 95a59a779c708744f9268e68ea353e42
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
-    100002: VegetationSmall01_LOD00
-    100004: VegetationSmall01_LOD01
-    100006: VegetationSmall01_LOD02
+    100002: VegetationSmall06_LOD00
+    100004: VegetationSmall06_LOD01
+    100006: VegetationSmall06_LOD02
     400000: //RootNode
-    400002: VegetationSmall01_LOD00
-    400004: VegetationSmall01_LOD01
-    400006: VegetationSmall01_LOD02
-    2100000: VegetationSmall01_Mat
-    2300000: VegetationSmall01_LOD00
-    2300002: VegetationSmall01_LOD01
-    2300004: VegetationSmall01_LOD02
-    3300000: VegetationSmall01_LOD00
-    3300002: VegetationSmall01_LOD01
-    3300004: VegetationSmall01_LOD02
-    4300000: VegetationSmall01_LOD00
-    4300002: VegetationSmall01_LOD01
-    4300004: VegetationSmall01_LOD02
+    400002: VegetationSmall06_LOD00
+    400004: VegetationSmall06_LOD01
+    400006: VegetationSmall06_LOD02
+    2100000: VegetationSmall06_Mat
+    2300000: //RootNode
+    2300002: VegetationSmall06_LOD00
+    2300004: VegetationSmall06_LOD01
+    2300006: VegetationSmall06_LOD02
+    3300000: //RootNode
+    3300002: VegetationSmall06_LOD00
+    3300004: VegetationSmall06_LOD01
+    3300006: VegetationSmall06_LOD02
+    4300000: VegetationSmall06_LOD00
+    4300002: VegetationSmall06_LOD01
+    4300004: VegetationSmall06_LOD02
     9500000: //RootNode
     20500000: //RootNode
-    2186277476908879412: ImportLogs
-    2186277476908879414: ImportLogs
-    2186277476908879416: ImportLogs
-    2186277476908879418: ImportLogs
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: VegetationSmall01_Mat
-    second: {fileID: 2100000, guid: 896bbfa91dbcbf042994a7e983a4df10, type: 2}
+      name: VegetationSmall06_Mat
+    second: {fileID: 2100000, guid: 5405f4473c846ef408c58df310ad92d3, type: 2}
   materials:
     importMaterials: 1
     materialName: 1
@@ -69,10 +67,10 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
-    importVisibility: 0
+    importVisibility: 1
     importBlendShapes: 1
-    importCameras: 0
-    importLights: 0
+    importCameras: 1
+    importLights: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1

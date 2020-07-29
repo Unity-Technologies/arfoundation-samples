@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4354704932497689857
+--- !u!1 &8367145187887469793
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,42 +8,42 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4354704932497854753}
-  - component: {fileID: 4354704932479419777}
+  - component: {fileID: 8367145187887106241}
+  - component: {fileID: 8367145187903773793}
   m_Layer: 0
-  m_Name: VegetationSmall01
+  m_Name: FlowerAlternativePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4354704932497854753
+--- !u!4 &8367145187887106241
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4354704932497689857}
+  m_GameObject: {fileID: 8367145187887469793}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4354704932497854755}
-  - {fileID: 4354704932497854757}
-  - {fileID: 4354704932497854759}
+  - {fileID: 8367145187887106243}
+  - {fileID: 8367145187887106245}
+  - {fileID: 8367145187887106247}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!205 &4354704932479419777
+--- !u!205 &8367145187903773793
 LODGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4354704932497689857}
+  m_GameObject: {fileID: 8367145187887469793}
   serializedVersion: 2
-  m_LocalReferencePoint: {x: -0.1549226, y: 0.94626725, z: -0.049044967}
-  m_Size: 2.097925
+  m_LocalReferencePoint: {x: 0.20911652, y: 0.8288138, z: -0.113377094}
+  m_Size: 1.9034579
   m_FadeMode: 0
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
@@ -51,17 +51,17 @@ LODGroup:
   - screenRelativeHeight: 0.25
     fadeTransitionWidth: 0
     renderers:
-    - renderer: {fileID: 4354704932495430593}
+    - renderer: {fileID: 8367145187885206051}
   - screenRelativeHeight: 0.125
     fadeTransitionWidth: 0
     renderers:
-    - renderer: {fileID: 4354704932495430595}
+    - renderer: {fileID: 8367145187885206053}
   - screenRelativeHeight: 0.01
     fadeTransitionWidth: 0
     renderers:
-    - renderer: {fileID: 4354704932495430597}
+    - renderer: {fileID: 8367145187885206055}
   m_Enabled: 1
---- !u!1 &4354704932497689859
+--- !u!1 &8367145187887469795
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -69,45 +69,45 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4354704932497854755}
-  - component: {fileID: 4354704932496560385}
-  - component: {fileID: 4354704932495430593}
+  - component: {fileID: 8367145187887106243}
+  - component: {fileID: 8367145187886303459}
+  - component: {fileID: 8367145187885206051}
   m_Layer: 0
-  m_Name: VegetationSmall01_LOD00
+  m_Name: VegetationSmall06_LOD00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4354704932497854755
+--- !u!4 &8367145187887106243
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4354704932497689859}
+  m_GameObject: {fileID: 8367145187887469795}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4354704932497854753}
+  m_Father: {fileID: 8367145187887106241}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &4354704932496560385
+--- !u!33 &8367145187886303459
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4354704932497689859}
-  m_Mesh: {fileID: 4300000, guid: 266f03476f36b2945b733736a459bf7a, type: 3}
---- !u!23 &4354704932495430593
+  m_GameObject: {fileID: 8367145187887469795}
+  m_Mesh: {fileID: 4300000, guid: 95a59a779c708744f9268e68ea353e42, type: 3}
+--- !u!23 &8367145187885206051
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4354704932497689859}
+  m_GameObject: {fileID: 8367145187887469795}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -116,10 +116,11 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 896bbfa91dbcbf042994a7e983a4df10, type: 2}
+  - {fileID: 2100000, guid: 5405f4473c846ef408c58df310ad92d3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -140,7 +141,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!1 &4354704932497689861
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &8367145187887469797
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,45 +150,45 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4354704932497854757}
-  - component: {fileID: 4354704932496560387}
-  - component: {fileID: 4354704932495430595}
+  - component: {fileID: 8367145187887106245}
+  - component: {fileID: 8367145187886303461}
+  - component: {fileID: 8367145187885206053}
   m_Layer: 0
-  m_Name: VegetationSmall01_LOD01
+  m_Name: VegetationSmall06_LOD01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4354704932497854757
+--- !u!4 &8367145187887106245
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4354704932497689861}
+  m_GameObject: {fileID: 8367145187887469797}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4354704932497854753}
+  m_Father: {fileID: 8367145187887106241}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &4354704932496560387
+--- !u!33 &8367145187886303461
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4354704932497689861}
-  m_Mesh: {fileID: 4300002, guid: 266f03476f36b2945b733736a459bf7a, type: 3}
---- !u!23 &4354704932495430595
+  m_GameObject: {fileID: 8367145187887469797}
+  m_Mesh: {fileID: 4300002, guid: 95a59a779c708744f9268e68ea353e42, type: 3}
+--- !u!23 &8367145187885206053
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4354704932497689861}
+  m_GameObject: {fileID: 8367145187887469797}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -195,10 +197,11 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 896bbfa91dbcbf042994a7e983a4df10, type: 2}
+  - {fileID: 2100000, guid: 5405f4473c846ef408c58df310ad92d3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -219,7 +222,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!1 &4354704932497689863
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &8367145187887469799
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -227,45 +231,45 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4354704932497854759}
-  - component: {fileID: 4354704932496560389}
-  - component: {fileID: 4354704932495430597}
+  - component: {fileID: 8367145187887106247}
+  - component: {fileID: 8367145187886303463}
+  - component: {fileID: 8367145187885206055}
   m_Layer: 0
-  m_Name: VegetationSmall01_LOD02
+  m_Name: VegetationSmall06_LOD02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4354704932497854759
+--- !u!4 &8367145187887106247
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4354704932497689863}
+  m_GameObject: {fileID: 8367145187887469799}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4354704932497854753}
+  m_Father: {fileID: 8367145187887106241}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &4354704932496560389
+--- !u!33 &8367145187886303463
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4354704932497689863}
-  m_Mesh: {fileID: 4300004, guid: 266f03476f36b2945b733736a459bf7a, type: 3}
---- !u!23 &4354704932495430597
+  m_GameObject: {fileID: 8367145187887469799}
+  m_Mesh: {fileID: 4300004, guid: 95a59a779c708744f9268e68ea353e42, type: 3}
+--- !u!23 &8367145187885206055
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4354704932497689863}
+  m_GameObject: {fileID: 8367145187887469799}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -274,10 +278,11 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 896bbfa91dbcbf042994a7e983a4df10, type: 2}
+  - {fileID: 2100000, guid: 5405f4473c846ef408c58df310ad92d3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -298,3 +303,4 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
