@@ -18,10 +18,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
     [RequireComponent(typeof(ARTrackedImageManager))]
     public class MultiTrackedImageInfoManager : MonoBehaviour, ISerializationCallbackReceiver
     {
-        [Serializable]
         /// <summary>
         /// Used to associate an `XRReferenceImage` with a Prefab by using the `XRReferenceImage`'s guid as a unique identifier for a particular reference image.
         /// </summary>
+        [Serializable]
         struct NamedPrefab
         {
             // System.Guid isn't serializable, so we store the Guid as a string. At runtime, this is converted back to a System.Guid
@@ -31,12 +31,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             [SerializeField]
             public GameObject m_Prefab;
-
-            public NamedPrefab(XRReferenceImage image, GameObject prefab)
-            {
-                m_ImageGuid = image.guid.ToString();
-                m_Prefab = prefab;
-            }
 
             public NamedPrefab(Guid guid, GameObject prefab)
             {
