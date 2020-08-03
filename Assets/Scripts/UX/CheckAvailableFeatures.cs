@@ -337,13 +337,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         cameraDescriptor.supportsAverageColorTemperature && cameraDescriptor.supportsCameraConfigurations &&
                         cameraDescriptor.supportsCameraImage)
                     {
-                        Debug.Log("###Unity");
-                        Debug.Log(cameraDescriptor.supportsAverageBrightness);
-                        Debug.Log(cameraDescriptor.supportsAverageIntensityInLumens);
-                        Debug.Log(cameraDescriptor.supportsAverageColorTemperature);
-                        Debug.Log(cameraDescriptor.supportsCameraConfigurations);
-                        Debug.Log(cameraDescriptor.supportsCameraImage);
-                        Debug.Log("~~~~~~~~");
                         m_LightEstimation.interactable = true;
                     }
 

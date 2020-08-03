@@ -8,7 +8,7 @@ using UnityEngine.XR.ARSubsystems;
 namespace UnityEngine.XR.ARFoundation.Samples
 {
     /// <summary>
-    /// Change the prefab for Rafflesia at runtime.
+    /// Change the prefab for the first image in library at runtime.
     /// </summary>
     [RequireComponent(typeof(ARTrackedImageManager))]
     public class DynamicPrefab : MonoBehaviour
@@ -51,7 +51,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 case State.OriginalPrefab:
                     {
-                        if (GUILayout.Button("Alternative Prefab for Rafflesia"))
+                        if (GUILayout.Button($"Alternative Prefab for {GetComponent<MultiTrackedImageInfoManager>().imageLibrary[0].name}"))
                         {
                             m_State = State.ChangeToAlternativePrefab;
                         }
@@ -59,7 +59,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     }
                 case State.AlternativePrefab:
                     {
-                        if (GUILayout.Button("Original Prefab for Rafflesia"))
+                        if (GUILayout.Button($"Original Prefab for {GetComponent<MultiTrackedImageInfoManager>().imageLibrary[0].name}"))
                         {
                             m_State = State.ChangeToOriginalPrefab;
                         }

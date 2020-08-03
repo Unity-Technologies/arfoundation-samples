@@ -46,7 +46,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
 
         [SerializeField]
-        [Tooltip("Each prefab corresponds to each image in the Image Library.")]
+        [HideInInspector]
         List<NamedPrefab> m_PrefabsList = new List<NamedPrefab>();
 
         Dictionary<Guid, GameObject> m_PrefabsDictionary = new Dictionary<Guid, GameObject>();
@@ -99,38 +99,29 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_TrackedImageManager.trackedImagesChanged -= OnTrackedImagesChanged;
         }
 
-        void OnLibraryChanged(XRReferenceImageLibrary library)
-        {
-            if (library)
-            {
-                var tempDictionary = new Dictionary<Guid, GameObject>();
-                foreach (var referenceImage in library)
-                {
-                    tempDictionary.Add(referenceImage.guid, (m_PrefabsDictionary.TryGetValue(referenceImage.guid, out GameObject prefab)) ? prefab : null);
-                }
-                m_PrefabsDictionary = tempDictionary;
-            }
-        }
-
         void OnTrackedImagesChanged(ARTrackedImagesChangedEventArgs eventArgs)
         {
             foreach (var trackedImage in eventArgs.added)
             {
                 // Give the initial image a reasonable default scale
-                trackedImage.transform.localScale = new Vector3(trackedImage.size.x / 2, trackedImage.size.x / 2, trackedImage.size.x / 2);
-                AssignPrefab(trackedImage);
+                var minLocalScalar = Mathf.Min(trackedImage.size.x, trackedImage.size.y);
+                trackedImage.transform.localScale = new Vector3(minLocalScalar / 2, minLocalScalar / 2, minLocalScalar / 2);
+                AssignOrShowPrefab(trackedImage);
             }
 
             foreach (var trackedImage in eventArgs.updated)
             {
                 if (trackedImage.trackingState != TrackingState.Tracking)
-                    RemoveInstantiatedPrefab(trackedImage);
-                else if (trackedImage.trackingState == TrackingState.Tracking)
-                    AssignPrefab(trackedImage);
+                {
+                    if (m_InstantiatedPrefabsDictionary.TryGetValue(trackedImage.referenceImage.guid, out GameObject instantiatedPrefab))
+                        instantiatedPrefab.SetActive(false);
+                }
+                else
+                    AssignOrShowPrefab(trackedImage);
             }
         }
 
-        void AssignPrefab(ARTrackedImage trackedImage)
+        void AssignOrShowPrefab(ARTrackedImage trackedImage)
         {
             if (m_PrefabsDictionary.TryGetValue(trackedImage.referenceImage.guid, out GameObject prefab))
             {
@@ -139,24 +130,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     var instantiatedPrefab = Instantiate(prefab, trackedImage.transform);
                     m_InstantiatedPrefabsDictionary.Add(trackedImage.referenceImage.guid, instantiatedPrefab);
                 }
-            }
-        }
-
-        void RemoveInstantiatedPrefab(ARTrackedImage trackedImage)
-        {
-            if (m_InstantiatedPrefabsDictionary.TryGetValue(trackedImage.referenceImage.guid, out GameObject instantiatedPrefab))
-            {
-                Destroy(instantiatedPrefab);
-                m_InstantiatedPrefabsDictionary.Remove(trackedImage.referenceImage.guid);
-            }
-        }
-
-        void RemoveInstantiatedPrefab(XRReferenceImage referenceImage)
-        {
-            if (m_InstantiatedPrefabsDictionary.TryGetValue(referenceImage.guid, out GameObject instantiatedPrefab))
-            {
-                Destroy(instantiatedPrefab);
-                m_InstantiatedPrefabsDictionary.Remove(referenceImage.guid);
+                else
+                {
+                    var instantiatedPrefab = m_InstantiatedPrefabsDictionary[trackedImage.referenceImage.guid];
+                    instantiatedPrefab.SetActive(true);
+                }
             }
         }
 
@@ -168,7 +146,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (m_PrefabsDictionary.TryGetValue(referenceImage.guid, out GameObject targetPrefabInDictionary))
             {
                 m_PrefabsDictionary[referenceImage.guid] = alternativePrefab;
-                RemoveInstantiatedPrefab(referenceImage);
+                if (m_InstantiatedPrefabsDictionary.TryGetValue(referenceImage.guid, out GameObject instantiatedPrefab))
+                {
+                    Destroy(instantiatedPrefab);
+                    m_InstantiatedPrefabsDictionary.Remove(referenceImage.guid);
+                }
             }
         }
 
@@ -208,12 +190,23 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("m_Script"));
                 }
                 
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("m_ImageLibrary"));
-                var library = serializedObject.FindProperty("m_ImageLibrary").objectReferenceValue as XRReferenceImageLibrary;
+                var libraryProperty = serializedObject.FindProperty(nameof(m_ImageLibrary));
+                EditorGUILayout.PropertyField(libraryProperty);
+                var library = libraryProperty.objectReferenceValue as XRReferenceImageLibrary;
 
                 //check library changes
                 if (HasLibraryChanged(library))
-                    behaviour.OnLibraryChanged(library);     
+                {
+                    if (library)
+                    {
+                        var tempDictionary = new Dictionary<Guid, GameObject>();
+                        foreach (var referenceImage in library)
+                        {
+                            tempDictionary.Add(referenceImage.guid, behaviour.GetPrefabForReferenceImage(referenceImage));
+                        }
+                        behaviour.m_PrefabsDictionary = tempDictionary;
+                    }
+                }   
 
                 // update current
                 m_ReferenceImages.Clear();
