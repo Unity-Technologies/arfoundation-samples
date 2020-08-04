@@ -25,17 +25,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
         struct NamedPrefab
         {
             // System.Guid isn't serializable, so we store the Guid as a string. At runtime, this is converted back to a System.Guid
-            [SerializeField]
-            string m_ImageGuid;
-            public string imageGuid => m_ImageGuid;
-
-            [SerializeField]
-            public GameObject m_Prefab;
+            public string imageGuid;
+            public GameObject imagePrefab;
 
             public NamedPrefab(Guid guid, GameObject prefab)
             {
-                m_ImageGuid = guid.ToString();
-                m_Prefab = prefab;
+                imageGuid = guid.ToString();
+                imagePrefab = prefab;
             }
         }
 
@@ -74,7 +70,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_PrefabsDictionary = new Dictionary<Guid, GameObject>();
             foreach (var entry in m_PrefabsList)
             {
-                m_PrefabsDictionary.Add(Guid.Parse(entry.imageGuid), entry.m_Prefab);
+                m_PrefabsDictionary.Add(Guid.Parse(entry.imageGuid), entry.imagePrefab);
             }
         }
 
@@ -98,8 +94,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             foreach (var trackedImage in eventArgs.added)
             {
                 // Give the initial image a reasonable default scale
-                var minLocalScalar = Mathf.Min(trackedImage.size.x, trackedImage.size.y);
-                trackedImage.transform.localScale = new Vector3(minLocalScalar / 2, minLocalScalar / 2, minLocalScalar / 2);
+                var minLocalScalar = Mathf.Min(trackedImage.size.x, trackedImage.size.y) / 2;
+                trackedImage.transform.localScale = new Vector3(minLocalScalar, minLocalScalar, minLocalScalar);
                 AssignOrShowPrefab(trackedImage);
             }
 

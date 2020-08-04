@@ -87,27 +87,27 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 case State.ChangeToAlternativePrefab:
                     {
-                        if (alternativePrefab == null)
+                        if (!alternativePrefab)
                         {
                             SetError("No alternative prefab is given.");
                             break;
                         }
 
                         var manager = GetComponent<MultiTrackedImageInfoManager>();
-                        if (manager == null)
+                        if (!manager)
                         {
                             SetError($"No {nameof(MultiTrackedImageInfoManager)} available.");
                             break;
                         }
 
                         var library = manager.imageLibrary;
-                        if (library == null)
+                        if (!library)
                         {
                             SetError($"No image library available.");
                             break;
                         }
 
-                        if (m_OriginalPrefab == null)
+                        if (!m_OriginalPrefab)
                             m_OriginalPrefab = manager.GetPrefabForReferenceImage(library[0]);
 
                         manager.SetPrefabForReferenceImage(library[0], alternativePrefab);
@@ -117,21 +117,21 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 case State.ChangeToOriginalPrefab:
                     {
-                        if (m_OriginalPrefab == null)
+                        if (!m_OriginalPrefab)
                         {
                             SetError("No original prefab is given.");
                             break;
                         }
 
                         var manager = GetComponent<MultiTrackedImageInfoManager>();
-                        if (manager == null)
+                        if (!manager)
                         {
                             SetError($"No {nameof(MultiTrackedImageInfoManager)} available.");
                             break;
                         }
 
                         var library = manager.imageLibrary;
-                        if (library == null)
+                        if (!library)
                         {
                             SetError($"No image library available.");
                             break;
