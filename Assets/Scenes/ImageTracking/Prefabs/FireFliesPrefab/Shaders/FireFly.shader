@@ -35,13 +35,11 @@
 
             sampler2D _MainTex;
             float _EmissiveAmount;
-            //float4 _MainTex_ST;
             
             v2f vert (appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                //o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 o.uv = v.uv;
                 o.color.rgba = v.color.rgba;
                 return o;
@@ -88,13 +86,11 @@
             };
 
             sampler2D _Wings;
-            //float4 _MainTex_ST;
             
             v2f vert (appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                //o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 o.uv = v.uv;
                 o.color.rgba = v.color.rgba;
                 return o;
