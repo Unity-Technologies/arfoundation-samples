@@ -49,9 +49,19 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
         StringBuilder m_SphericalHarmonicsStringBuilder = new StringBuilder("");
 
+        [Tooltip("The UI Text element used to display whether the requested light estimation mode is supported on the device.")]
+        [SerializeField]
+        Text m_ModeSupportedText;
+        public Text modeSupportedText
+        {
+            get => m_ModeSupportedText;
+            set => m_ModeSupportedText = value;
+        }
+        
         void Awake()
         {
             m_LightEstimation = GetComponent<LightEstimation>();
+            m_cameraManager = m_LightEstimation.cameraManager;
         }
 
         void Update()
@@ -60,6 +70,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             SetUIValue(m_LightEstimation.mainLightColor, mainLightColorText);
             SetUIValue(m_LightEstimation.mainLightIntensityLumens, mainLightIntensityLumens);
             SetSphericalHarmonicsUIValue(m_LightEstimation.sphericalHarmonics, ambientSphericalHarmonicsText);
+            SetModeSupportedUIValue(m_cameraManager.requestedLightEstimation, m_cameraManager.requestedFacingDirection);
         }
 
         void SetSphericalHarmonicsUIValue(SphericalHarmonicsL2? maybeAmbientSphericalHarmonics, Text text)
@@ -98,8 +109,26 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 text.text = displayValue.HasValue ? displayValue.Value.ToString(): k_UnavailableText;
         }
 
+        void SetModeSupportedUIValue(ARFoundation.LightEstimation lightEstimation, CameraFacingDirection direction)
+        {
+#if UNITY_IOS
+            if (direction == CameraFacingDirection.World)
+            {
+                m_ModeSupportedText.text = "The requested world facing and HDR Mode is NOT supported on iOS.";
+            }
+#endif
+#if UNITY_ANDROID
+            if (direction == CameraFacingDirection.User)
+            {
+                m_ModeSupportedText.text = "The requested user facing and HDR Mode is NOT supported on Android.";
+            }
+#endif
+        }
+
         const string k_UnavailableText = "Unavailable";
 
         LightEstimation m_LightEstimation;
+
+        ARCameraManager m_cameraManager;
     }
 }
