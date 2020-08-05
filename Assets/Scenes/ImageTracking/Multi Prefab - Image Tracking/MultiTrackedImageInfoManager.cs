@@ -112,11 +112,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public void SetPrefabForReferenceImage(XRReferenceImage referenceImage, GameObject alternativePrefab)
         {
             m_PrefabsDictionary[referenceImage.guid] = alternativePrefab;
-            if (m_Instantiated.TryGetValue(referenceImage.guid, out GameObject instantiatedPrefab))
-            {
-                m_Instantiated[referenceImage.guid] = Instantiate(alternativePrefab, instantiatedPrefab.transform.parent);
-                Destroy(instantiatedPrefab);
-            }
+            var instantiatedPrefab = m_Instantiated[referenceImage.guid];
+            m_Instantiated[referenceImage.guid] = Instantiate(alternativePrefab, instantiatedPrefab.transform.parent);
+            Destroy(instantiatedPrefab);
         }
 
 #if UNITY_EDITOR
