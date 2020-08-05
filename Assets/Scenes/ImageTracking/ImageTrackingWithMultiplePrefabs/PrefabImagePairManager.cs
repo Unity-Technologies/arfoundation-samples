@@ -16,7 +16,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
     /// detected image.
     /// </summary>
     [RequireComponent(typeof(ARTrackedImageManager))]
-    public class MultiTrackedImageInfoManager : MonoBehaviour, ISerializationCallbackReceiver
+    public class PrefabImagePairManager : MonoBehaviour, ISerializationCallbackReceiver
     {
         /// <summary>
         /// Used to associate an `XRReferenceImage` with a Prefab by using the `XRReferenceImage`'s guid as a unique identifier for a particular reference image.
@@ -121,7 +121,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
 #if UNITY_EDITOR
 
-        [CustomEditor(typeof(MultiTrackedImageInfoManager))]
+        [CustomEditor(typeof(PrefabImagePairManager))]
         class MultiTrackedImageInfoManagerInspector : Editor 
         {
             List<XRReferenceImage> m_ReferenceImages = new List<XRReferenceImage>();
@@ -147,7 +147,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             public override void OnInspectorGUI () 
             {
                 //customized inspector
-                var behaviour = serializedObject.targetObject as MultiTrackedImageInfoManager;
+                var behaviour = serializedObject.targetObject as PrefabImagePairManager;
 
                 serializedObject.Update();
                 using (new EditorGUI.DisabledScope(true))

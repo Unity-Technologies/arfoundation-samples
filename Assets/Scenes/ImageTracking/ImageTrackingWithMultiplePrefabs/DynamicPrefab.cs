@@ -51,7 +51,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 case State.OriginalPrefab:
                     {
-                        if (GUILayout.Button($"Alternative Prefab for {GetComponent<MultiTrackedImageInfoManager>().imageLibrary[0].name}"))
+                        if (GUILayout.Button($"Alternative Prefab for {GetComponent<PrefabImagePairManager>().imageLibrary[0].name}"))
                         {
                             m_State = State.ChangeToAlternativePrefab;
                         }
@@ -59,7 +59,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     }
                 case State.AlternativePrefab:
                     {
-                        if (GUILayout.Button($"Original Prefab for {GetComponent<MultiTrackedImageInfoManager>().imageLibrary[0].name}"))
+                        if (GUILayout.Button($"Original Prefab for {GetComponent<PrefabImagePairManager>().imageLibrary[0].name}"))
                         {
                             m_State = State.ChangeToOriginalPrefab;
                         }
@@ -93,10 +93,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             break;
                         }
 
-                        var manager = GetComponent<MultiTrackedImageInfoManager>();
+                        var manager = GetComponent<PrefabImagePairManager>();
                         if (!manager)
                         {
-                            SetError($"No {nameof(MultiTrackedImageInfoManager)} available.");
+                            SetError($"No {nameof(PrefabImagePairManager)} available.");
                             break;
                         }
 
@@ -123,10 +123,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             break;
                         }
 
-                        var manager = GetComponent<MultiTrackedImageInfoManager>();
+                        var manager = GetComponent<PrefabImagePairManager>();
                         if (!manager)
                         {
-                            SetError($"No {nameof(MultiTrackedImageInfoManager)} available.");
+                            SetError($"No {nameof(PrefabImagePairManager)} available.");
                             break;
                         }
 
