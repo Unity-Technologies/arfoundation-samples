@@ -117,14 +117,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_AllMenu.SetActive(false);
         }
 
-        public void SinglePrefabTrackingButtonPressed()
+        public void BasicImageTrackingButtonPressed()
         {
-            LoadScene("ImageTracking");
+            LoadScene("BasicImageTracking");
         }
 
-        public void MultiPrefabTrackingButtonPressed()
+        public void MultiImagesTrackingButtonPressed()
         {
-            LoadScene("Multi-Image Tracking");
+            LoadScene("MultiImageTracking");
         }
 
         public void AnchorsButtonPressed()
