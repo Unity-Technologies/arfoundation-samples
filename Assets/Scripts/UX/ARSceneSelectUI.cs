@@ -162,6 +162,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             LoadScene("SampleUXScene");
         }
 
+        public void ConfigChooserButtonPressed()
+        {
+            LoadScene("ConfigurationChooser");
+        }
+
         public void FaceTrackingMenuButtonPressed()
         {
             ActiveMenu.currentMenu = MenuType.FaceTracking;
