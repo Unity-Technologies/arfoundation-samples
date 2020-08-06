@@ -229,13 +229,13 @@ This sample requires a device with an A12 bionic chip running iOS 13.
 ## DepthImages
 
 This sample demonstrates raw texture depth images from different methods.
-* Environment depth (certain Android devices)
+* Environment depth (certain Android devices and Apple devices with the LiDAR sensor)
 * Human stencil (Apple devices with an A12 bionic chip (or later) running iOS 13 or later)
 * Human depth (Apple devices with an A12 bionic chip (or later) running iOS 13 or later)
 
 ## SimpleOcclusion
 
-This sample demonstrates occlusion of virtual content by real world content through the use of environment depth images on supported Android devices.
+This sample demonstrates occlusion of virtual content by real world content through the use of environment depth images on supported Android and iOS devices.
 
 ## AllPointCloudPoints
 
