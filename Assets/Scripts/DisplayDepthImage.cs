@@ -305,9 +305,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 // Copy the display rotation matrix from the camera.
                 Matrix4x4 cameraMatrix = cameraFrameEventArgs.displayMatrix ?? Matrix4x4.identity;
 
-                Vector2 affineBasisX;
-                Vector2 affineBasisY;
-                Vector2 affineTranslation;
+                Vector2 affineBasisX = new Vector2(1.0f, 0.0f);
+                Vector2 affineBasisY = new Vector2(0.0f, 1.0f);
+                Vector2 affineTranslation = new Vector2(0.0f, 0.0f);
 #if UNITY_IOS
                 affineBasisX = new Vector2(cameraMatrix[0, 0], cameraMatrix[1, 0]);
                 affineBasisY = new Vector2(cameraMatrix[0, 1], cameraMatrix[1, 1]);
