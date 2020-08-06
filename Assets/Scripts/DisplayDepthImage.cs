@@ -170,10 +170,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     if ((m_OcclusionManager.descriptor?.supportsHumanSegmentationStencilImage == false)
                         && (m_OcclusionManager.descriptor?.supportsHumanSegmentationDepthImage == false))
                     {
-                        if (m_ImageInfo != null)
-                        {
-                            m_ImageInfo.text = "Human segmentation is not supported on this device.";
-                        }
+                        LogText("Human segmentation is not supported on this device.");
 
                         m_RawImage.texture = null;
                         if (!Mathf.Approximately(m_TextureAspectRatio, k_DefaultTextureAspectRadio))
@@ -189,10 +186,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 default:
                     if (m_OcclusionManager.descriptor?.supportsEnvironmentDepthImage == false)
                     {
-                        if (m_ImageInfo != null)
-                        {
-                            m_ImageInfo.text = "Environment depth is not supported on this device.";
-                        }
+                        LogText("Environment depth is not supported on this device.");
 
                         m_RawImage.texture = null;
                         if (!Mathf.Approximately(m_TextureAspectRatio, k_DefaultTextureAspectRadio))
@@ -213,17 +207,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             // Display some text information about each of the textures.
             m_StringBuilder.Clear();
-            LogTextureInfo(m_StringBuilder, "stencil", humanStencil);
-            LogTextureInfo(m_StringBuilder, "depth", humanDepth);
-            LogTextureInfo(m_StringBuilder, "env", envDepth);
-            if (m_ImageInfo != null)
-            {
-                m_ImageInfo.text = m_StringBuilder.ToString();
-            }
-            else
-            {
-                Debug.Log(m_StringBuilder.ToString());
-            }
+            BuildTextureInfo(m_StringBuilder, "stencil", humanStencil);
+            BuildTextureInfo(m_StringBuilder, "depth", humanDepth);
+            BuildTextureInfo(m_StringBuilder, "env", envDepth);
+
+            LogText(m_StringBuilder.ToString());
 
             // Decide which to display based on the current mode.
             Texture2D displayTexture;
@@ -265,7 +253,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// <param name="stringBuilder">The string builder to which to append the texture information.</param>
         /// <param name="textureName">The semantic name of the texture for logging purposes.</param>
         /// <param name="texture">The texture for which to log information.</param>
-        void LogTextureInfo(StringBuilder stringBuilder, string textureName, Texture2D texture)
+        void BuildTextureInfo(StringBuilder stringBuilder, string textureName, Texture2D texture)
         {
             stringBuilder.AppendLine($"texture : {textureName}");
             if (texture == null)
@@ -278,6 +266,22 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 stringBuilder.AppendLine($"   width  : {texture.width}");
                 stringBuilder.AppendLine($"   height : {texture.height}");
                 stringBuilder.AppendLine($"   mipmap : {texture.mipmapCount}");
+            }
+        }
+
+        /// <summary>
+        /// Log the given text to the screen if the image info UI is set. Otherwise, log the string to debug.
+        /// </summary>
+        /// <param name="text">The text string to log.</param>
+        void LogText(string text)
+        {
+            if (m_ImageInfo != null)
+            {
+                m_ImageInfo.text = text;
+            }
+            else
+            {
+                Debug.Log(text);
             }
         }
 
