@@ -34,9 +34,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public void AddObject(InputAction.CallbackContext context)
         {
-            Debug.Log("Spawn!");
             var touchPosition = context.ReadValue<Vector2>();
-            Debug.Log(touchPosition);
             if (m_RaycastManager.Raycast(touchPosition, s_Hits, TrackableType.PlaneWithinPolygon))
             {
                 // Raycast hits are sorted by distance, so the first one
@@ -52,12 +50,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     spawnedObject.transform.position = hitPose.position;
                 }
             }
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
         }
 
         static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
