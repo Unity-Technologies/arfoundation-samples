@@ -5,7 +5,6 @@ Shader "Unlit/DepthGradient"
         _MainTex ("Main Texture", 2D) = "black" {}
         _MinDistance ("Min Distance", Float) = 0.0
         _MaxDistance ("Max Distance", Float) = 8.0
-        _TextureRotation ("Texture Rotation (Degrees)", Float) = 0.0
     }
     SubShader
     {
@@ -63,26 +62,15 @@ Shader "Unlit/DepthGradient"
                 real4 color : SV_Target;
             };
 
-
-            real _TextureRotation;
+            CBUFFER_START(DisplayRotationPerFrame)
+            float4x4 _DisplayRotationPerFrame;
+            CBUFFER_END
 
             v2f vert (appdata v)
             {
-                float angle = radians(_TextureRotation);
-                float cosrot = cos(angle);
-                float sinrot = sin(angle);
-
-                float3x3 textureXformMatrix = float3x3(
-                    float3(cosrot, -sinrot, 0.5f),
-                    float3(sinrot, cosrot, 0.5f),
-                    float3(0.0f, 0.0f, 1.0f)
-                );
-
-                float3 tmp = float3(v.texcoord.x - 0.5f, 0.5f - v.texcoord.y, 1.0f);
-
                 v2f o;
                 o.position = TransformObjectToHClip(v.position);
-                o.texcoord = mul(textureXformMatrix, tmp).xy;
+                o.texcoord = mul(float3(v.texcoord, 1.0f), _DisplayRotationPerFrame).xy;
                 return o;
             }
 
