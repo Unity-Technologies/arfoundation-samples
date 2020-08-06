@@ -12,8 +12,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 {
     /// <summary>
     /// This component listens for images detected by the <c>XRImageTrackingSubsystem</c>
-    /// and overlays some information as well as the source Texture2D on top of the
-    /// detected image.
+    /// and overlays some prefabs on top of the detected image.
     /// </summary>
     [RequireComponent(typeof(ARTrackedImageManager))]
     public class PrefabImagePairManager : MonoBehaviour, ISerializationCallbackReceiver
@@ -120,9 +119,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
 
 #if UNITY_EDITOR
-
+        /// <summary>
+        /// This customizes the inspector component and updates the prefab list when
+        /// the reference image library is changed.
+        /// </summary>
         [CustomEditor(typeof(PrefabImagePairManager))]
-        class MultiTrackedImageInfoManagerInspector : Editor 
+        class PrefabImagePairManagerInspector : Editor
         {
             List<XRReferenceImage> m_ReferenceImages = new List<XRReferenceImage>();
             bool m_IsExpanded = true;
@@ -143,8 +145,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 return false;
             }
-            
-            public override void OnInspectorGUI () 
+
+            public override void OnInspectorGUI()
             {
                 //customized inspector
                 var behaviour = serializedObject.targetObject as PrefabImagePairManager;
@@ -154,7 +156,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 {
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("m_Script"));
                 }
-                
+
                 var libraryProperty = serializedObject.FindProperty(nameof(m_ImageLibrary));
                 EditorGUILayout.PropertyField(libraryProperty);
                 var library = libraryProperty.objectReferenceValue as XRReferenceImageLibrary;
@@ -171,7 +173,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         }
                         behaviour.m_PrefabsDictionary = tempDictionary;
                     }
-                }   
+                }
 
                 // update current
                 m_ReferenceImages.Clear();
@@ -190,24 +192,25 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     using (new EditorGUI.IndentLevelScope())
                     {
                         EditorGUI.BeginChangeCheck();
-                    
+
                         var tempDictionary = new Dictionary<Guid, GameObject>();
                         foreach (var image in library)
                         {
-                            var prefab = (GameObject)EditorGUILayout.ObjectField(image.name, behaviour.m_PrefabsDictionary[image.guid], typeof(GameObject), false);
+                            var prefab = (GameObject) EditorGUILayout.ObjectField(image.name, behaviour.m_PrefabsDictionary[image.guid], typeof(GameObject), false);
                             tempDictionary.Add(image.guid, prefab);
                         }
+
                         if (EditorGUI.EndChangeCheck())
                         {
                             Undo.RecordObject(target, "Update Prefab");
                             behaviour.m_PrefabsDictionary = tempDictionary;
                             EditorUtility.SetDirty(target);
                         }
-                    }   
+                    }
                 }
 
                 serializedObject.ApplyModifiedProperties();
-	        }
+            }
         }
 #endif
     }
