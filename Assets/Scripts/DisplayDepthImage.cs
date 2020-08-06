@@ -317,7 +317,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 affineBasisX = new Vector2(cameraMatrix[0, 0], cameraMatrix[0, 1]);
                 affineBasisY = new Vector2(cameraMatrix[1, 0], cameraMatrix[1, 1]);
                 affineTranslation = new Vector2(cameraMatrix[0, 2], cameraMatrix[1, 2]);
-#endif // UNITY_IOS
+#endif // UNITY_ANDROID
 
                 // The camera display matrix includes scaling and offsets to fit the aspect ratio of the device. In most
                 // cases, the camera display matrix should be used directly without modification when applying depth to
@@ -336,7 +336,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
 #if UNITY_ANDROID
                 m_DisplayRotationMatrix = k_AndroidFlipYMatrix * m_DisplayRotationMatrix;
-#endif // UNITY_IOS
+#endif // UNITY_ANDROID
 
                 // Set the matrix to the raw image material.
                 m_RawImage.material.SetMatrix(k_DisplayRotationPerFrameId, m_DisplayRotationMatrix);
@@ -396,14 +396,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
             switch (m_CurrentScreenOrientation)
             {
                 case ScreenOrientation.LandscapeRight:
-                    rectSize = new Vector2(maxDimension, minDimension);
-                    break;
                 case ScreenOrientation.LandscapeLeft:
                     rectSize = new Vector2(maxDimension, minDimension);
                     break;
                 case ScreenOrientation.PortraitUpsideDown:
-                    rectSize = new Vector2(minDimension, maxDimension);
-                    break;
                 case ScreenOrientation.Portrait:
                 default:
                     rectSize = new Vector2(minDimension, maxDimension);
