@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text;
 using UnityEngine;
-
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
@@ -50,28 +49,29 @@ namespace UnityEngine.XR.ARFoundation.Samples
             switch (m_State)
             {
                 case State.OriginalPrefab:
+                {
+                    if (GUILayout.Button($"Alternative Prefab for {GetComponent<PrefabImagePairManager>().imageLibrary[0].name}"))
                     {
-                        if (GUILayout.Button($"Alternative Prefab for {GetComponent<PrefabImagePairManager>().imageLibrary[0].name}"))
-                        {
-                            m_State = State.ChangeToAlternativePrefab;
-                        }
-                        break;
+                        m_State = State.ChangeToAlternativePrefab;
                     }
-                case State.AlternativePrefab:
-                    {
-                        if (GUILayout.Button($"Original Prefab for {GetComponent<PrefabImagePairManager>().imageLibrary[0].name}"))
-                        {
-                            m_State = State.ChangeToOriginalPrefab;
-                        }
-                        break;
-                    }
-                case State.Error:
-                    {
-                        GUILayout.Label(m_ErrorMessage);
-                        break;
-                    }
-            }
 
+                    break;
+                }
+                case State.AlternativePrefab:
+                {
+                    if (GUILayout.Button($"Original Prefab for {GetComponent<PrefabImagePairManager>().imageLibrary[0].name}"))
+                    {
+                        m_State = State.ChangeToOriginalPrefab;
+                    }
+
+                    break;
+                }
+                case State.Error:
+                {
+                    GUILayout.Label(m_ErrorMessage);
+                    break;
+                }
+            }
             GUILayout.EndArea();
         }
 
@@ -86,62 +86,61 @@ namespace UnityEngine.XR.ARFoundation.Samples
             switch (m_State)
             {
                 case State.ChangeToAlternativePrefab:
+                {
+                    if (!alternativePrefab)
                     {
-                        if (!alternativePrefab)
-                        {
-                            SetError("No alternative prefab is given.");
-                            break;
-                        }
-
-                        var manager = GetComponent<PrefabImagePairManager>();
-                        if (!manager)
-                        {
-                            SetError($"No {nameof(PrefabImagePairManager)} available.");
-                            break;
-                        }
-
-                        var library = manager.imageLibrary;
-                        if (!library)
-                        {
-                            SetError($"No image library available.");
-                            break;
-                        }
-
-                        if (!m_OriginalPrefab)
-                            m_OriginalPrefab = manager.GetPrefabForReferenceImage(library[0]);
-
-                        manager.SetPrefabForReferenceImage(library[0], alternativePrefab);
-                        m_State = State.AlternativePrefab;
+                        SetError("No alternative prefab is given.");
                         break;
                     }
+
+                    var manager = GetComponent<PrefabImagePairManager>();
+                    if (!manager)
+                    {
+                        SetError($"No {nameof(PrefabImagePairManager)} available.");
+                        break;
+                    }
+
+                    var library = manager.imageLibrary;
+                    if (!library)
+                    {
+                        SetError($"No image library available.");
+                        break;
+                    }
+
+                    if (!m_OriginalPrefab)
+                        m_OriginalPrefab = manager.GetPrefabForReferenceImage(library[0]);
+
+                    manager.SetPrefabForReferenceImage(library[0], alternativePrefab);
+                    m_State = State.AlternativePrefab;
+                    break;
+                }
 
                 case State.ChangeToOriginalPrefab:
+                {
+                    if (!m_OriginalPrefab)
                     {
-                        if (!m_OriginalPrefab)
-                        {
-                            SetError("No original prefab is given.");
-                            break;
-                        }
-
-                        var manager = GetComponent<PrefabImagePairManager>();
-                        if (!manager)
-                        {
-                            SetError($"No {nameof(PrefabImagePairManager)} available.");
-                            break;
-                        }
-
-                        var library = manager.imageLibrary;
-                        if (!library)
-                        {
-                            SetError($"No image library available.");
-                            break;
-                        }
-
-                        manager.SetPrefabForReferenceImage(library[0], m_OriginalPrefab);
-                        m_State = State.OriginalPrefab;
+                        SetError("No original prefab is given.");
                         break;
                     }
 
+                    var manager = GetComponent<PrefabImagePairManager>();
+                    if (!manager)
+                    {
+                        SetError($"No {nameof(PrefabImagePairManager)} available.");
+                        break;
+                    }
+
+                    var library = manager.imageLibrary;
+                    if (!library)
+                    {
+                        SetError($"No image library available.");
+                        break;
+                    }
+
+                    manager.SetPrefabForReferenceImage(library[0], m_OriginalPrefab);
+                    m_State = State.OriginalPrefab;
+                    break;
+                }
             }
         }
     }

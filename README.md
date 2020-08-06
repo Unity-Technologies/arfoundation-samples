@@ -152,7 +152,7 @@ This sample requires iOS 13.
 
 ## ImageTracking
 
-There are two samples demonstrating image tracking. Basic and Multi Image tracking are supported on ARCore, ARKit, and Magic Leap. To enable image tracking, you must first create an `XRReferenceImageLibrary`. This is the set of images to look for in the environment. [Click here](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@4.1/manual/image-tracking.html) for instructions on creating one.
+There are two samples demonstrating image tracking. The image tracking samples are supported on ARCore, ARKit, and Magic Leap. To enable image tracking, you must first create an `XRReferenceImageLibrary`. This is the set of images to look for in the environment. [Click here](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@4.1/manual/image-tracking.html) for instructions on creating one.
 
 You can also add images to the reference image library at runtime. This sample includes a button that adds the images `one.png` and `two.png` to the reference image library. See the script `DynamicLibrary.cs` for example code.
 
@@ -166,7 +166,7 @@ At runtime, ARFoundation will generate an `ARTrackedImage` for each detected ref
 
 With [`PrefabImagePairManager.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ImageTracking/ImageTrackingWithMultiplePrefabs/PrefabImagePairManager.cs) script, you can assign different prefabs for each image in the reference image library.
 
-You can also change prefabs at runtime. This sample includes a button that switch between the original and alternative prefab for the first image in the reference image library. See the script `DynamicPrefab.cs` for example code.
+You can also change prefabs at runtime. This sample includes a button that switch between the original and alternative prefab for the first image in the reference image library. See the script [`DynamicPrefab.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ImageTracking/ImageTrackingWithMultiplePrefabs/DynamicPrefab.cs) for example code.
 ## ObjectTracking
 
 Similar to the image tracking sample, this sample detects a 3D object from a set of reference objects in an `XRReferenceObjectLibrary`. [Click here](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@4.1/manual/object-tracking.html) for instructions on creating one.
@@ -288,4 +288,4 @@ The intention of this reposititory is to provide a means for getting started wit
 
 ## Contributions and Pull Requests
 
-We are not accepting pull requests at this time. If you find an issue with the samples, our would like to request a new sample, please [submit a GitHub issue](https://github.com/Unity-Technologies/arfoundation-samples/issues).
+We are not accepting pull requests at this time. If you find an issue with the samples, or would like to request a new sample, please [submit a GitHub issue](https://github.com/Unity-Technologies/arfoundation-samples/issues).
