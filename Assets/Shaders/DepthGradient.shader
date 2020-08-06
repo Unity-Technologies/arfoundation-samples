@@ -62,9 +62,11 @@ Shader "Unlit/DepthGradient"
                 real4 color : SV_Target;
             };
 
+
             CBUFFER_START(DisplayRotationPerFrame)
             float4x4 _DisplayRotationPerFrame;
             CBUFFER_END
+
 
             v2f vert (appdata v)
             {
