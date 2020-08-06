@@ -1,5 +1,6 @@
 using System;
 using Unity.Collections;
+using UnityEngine.UI;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.XR.ARFoundation;
 
@@ -7,6 +8,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
 {
     public class TestConfigurationChooser : MonoBehaviour
     {
+        /// <summary>
+        /// The configuration chooser mode. Values must match the UI dropdown.
+        /// </summary>
+        enum ConfigurationChooserMode
+        {
+            Default = 0,
+            PreferCamera = 1,
+        }
+
         /// <summary>
         /// The AR session on which to set the configuration chooser.
         /// </summary>
@@ -19,17 +29,62 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         ARSession m_Session;
 
+        /// <summary>
+        /// The instantiated instance of the default configuration chooser.
+        /// </summary>
+        static readonly ConfigurationChooser m_DefaultConfigurationChooser = new DefaultConfigurationChooser();
+
+        /// <summary>
+        /// The instantiated instance of the prefer camera configuration chooser.
+        /// </summary>
+        static readonly ConfigurationChooser m_PreferCameraConfigurationChooser = new PreferCameraConfigurationChooser();
+
+        /// <summary>
+        /// The current configuration chooser mode.
+        /// </summary>
+        ConfigurationChooserMode m_ConfigurationChooserMode = ConfigurationChooserMode.Default;
+
         void Start()
         {
-            // On start, set our custom configuration chooser.
+            UpdateConfigurationChooser();
+        }
+
+        /// <summary>
+        /// Callback when the depth mode dropdown UI has a value change.
+        /// </summary>
+        /// <param name="dropdown">The dropdown UI that changed.</param>
+        public void OnDepthModeDropdownValueChanged(Dropdown dropdown)
+        {
+            // Update the display mode from the dropdown value.
+            m_ConfigurationChooserMode = (ConfigurationChooserMode)dropdown.value;
+
+            // Update the configuration chooser.
+            UpdateConfigurationChooser();
+        }
+
+        /// <summary>
+        /// Update the configuration chooser based on the current mode.
+        /// </summary>
+        void UpdateConfigurationChooser()
+        {
             Debug.Assert(m_Session != null, "ARSession must be nonnull");
-            m_Session.subsystem.configurationChooser = new ARFSamplesConfigurationChooser();
+            Debug.Assert(m_Session.subsystem != null, "ARSession must have a subsystem");
+            switch (m_ConfigurationChooserMode)
+            {
+                case ConfigurationChooserMode.PreferCamera:
+                    m_Session.subsystem.configurationChooser = m_PreferCameraConfigurationChooser;
+                    break;
+                case ConfigurationChooserMode.Default:
+                default:
+                    m_Session.subsystem.configurationChooser = m_DefaultConfigurationChooser;
+                    break;
+            }
         }
 
         /// <summary>
         /// A custom implementation of a <see cref="ConfigurationChooser"/>.
         /// </summary>
-        class ARFSamplesConfigurationChooser : ConfigurationChooser
+        class PreferCameraConfigurationChooser : ConfigurationChooser
         {
             /// <summary>
             /// Selects a configuration from the given <paramref name="descriptors"/> and <paramref name="requestedFeatures"/>.

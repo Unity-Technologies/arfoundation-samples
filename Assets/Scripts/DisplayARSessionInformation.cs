@@ -1,8 +1,5 @@
-using System;
 using System.Text;
-using Unity.Collections;
 using UnityEngine.UI;
-using UnityEngine.XR.ARSubsystems;
 using UnityEngine.XR.ARFoundation;
 
 namespace UnityEngine.XR.ARFoundation.Samples
@@ -68,81 +65,101 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_StringBuilder.Clear();
 
             // Log the various manager states.
-            LogCameraManger();
-            LogPlaneManger();
-            LogOcclusionManger();
+            BuildCameraMangerInfo(m_StringBuilder);
+            BuildPlaneMangerInfo(m_StringBuilder);
+            BuildOcclusionMangerInfo(m_StringBuilder);
 
-            // If there is a text UI, set the text to the UI. Otherwise, debug log to console.
-            if (m_InfoText == null)
-            {
-                Debug.Log(m_StringBuilder.ToString());
-            }
-            else
-            {
-                m_InfoText.text = m_StringBuilder.ToString();
-            }
+            LogText(m_StringBuilder.ToString());
         }
 
-        void LogCameraManger()
+        /// <summary>
+        /// Construct the camera manager information.
+        /// </summary>
+        void BuildCameraMangerInfo(StringBuilder stringBuilder)
         {
-            m_StringBuilder.Append("ARCameraManager\n");
+            stringBuilder.AppendLine("ARCameraManager");
             if (m_CameraManager == null)
             {
-                m_StringBuilder.Append("   <null>\n");
+                stringBuilder.AppendLine("   <null>");
             }
             else if (!m_CameraManager.enabled)
             {
-                m_StringBuilder.Append("   <disabled>\n");
+                stringBuilder.AppendLine("   <disabled>");
             }
             else
             {
-                m_StringBuilder.Append("   Facing direction:\n");
-                m_StringBuilder.Append($"      Requested: {m_CameraManager.requestedFacingDirection}\n");
-                m_StringBuilder.Append($"      Current: {m_CameraManager.currentFacingDirection}\n");
-                m_StringBuilder.Append("   Auto-focus:\n");
-                m_StringBuilder.Append($"      Requested: {m_CameraManager.autoFocusRequested}\n");
-                m_StringBuilder.Append($"      Current: {m_CameraManager.autoFocusEnabled}\n");
+                stringBuilder.AppendLine("   Facing direction:");
+                stringBuilder.AppendLine($"      Requested: {m_CameraManager.requestedFacingDirection}");
+                stringBuilder.AppendLine($"      Current: {m_CameraManager.currentFacingDirection}");
+                stringBuilder.AppendLine("   Auto-focus:");
+                stringBuilder.AppendLine($"      Requested: {m_CameraManager.autoFocusRequested}");
+                stringBuilder.AppendLine($"      Current: {m_CameraManager.autoFocusEnabled}");
             }
         }
 
-        void LogPlaneManger()
+        /// <summary>
+        /// Construct the plane manager information.
+        /// </summary>
+        void BuildPlaneMangerInfo(StringBuilder stringBuilder)
         {
-            m_StringBuilder.Append("ARPlaneManager\n");
+            stringBuilder.AppendLine("ARPlaneManager");
             if (m_PlaneManager == null)
             {
-                m_StringBuilder.Append("   <null>\n");
+                stringBuilder.AppendLine("   <null>");
             }
             else if (!m_PlaneManager.enabled)
             {
-                m_StringBuilder.Append("   <disabled>\n");
+                stringBuilder.AppendLine("   <disabled>");
             }
             else
             {
-                m_StringBuilder.Append("   Detection mode:\n");
-                m_StringBuilder.Append($"      Requested: {m_PlaneManager.requestedDetectionMode}\n");
-                m_StringBuilder.Append($"      Current: {m_PlaneManager.currentDetectionMode}\n");
+                stringBuilder.AppendLine("   Detection mode:");
+                stringBuilder.AppendLine($"      Requested: {m_PlaneManager.requestedDetectionMode}");
+                stringBuilder.AppendLine($"      Current: {m_PlaneManager.currentDetectionMode}");
             }
         }
 
-        void LogOcclusionManger()
+        /// <summary>
+        /// Construct the occlusion manager information.
+        /// </summary>
+        void BuildOcclusionMangerInfo(StringBuilder stringBuilder)
         {
-            m_StringBuilder.Append("AROcclusionManager\n");
+            stringBuilder.AppendLine("AROcclusionManager");
             if (m_OcclusionManager == null)
             {
-                m_StringBuilder.Append("   <null>\n");
+                stringBuilder.AppendLine("   <null>");
             }
             else if (!m_OcclusionManager.enabled)
             {
-                m_StringBuilder.Append("   <disabled>\n");
+                stringBuilder.AppendLine("   <disabled>");
             }
             else
             {
-                m_StringBuilder.Append("   Human stencil mode:\n");
-                m_StringBuilder.Append($"      Requested: {m_OcclusionManager.requestedHumanStencilMode}\n");
-                m_StringBuilder.Append($"      Current: {m_OcclusionManager.currentHumanStencilMode}\n");
-                m_StringBuilder.Append("   Human depth mode:\n");
-                m_StringBuilder.Append($"      Requested: {m_OcclusionManager.requestedHumanDepthMode}\n");
-                m_StringBuilder.Append($"      Current: {m_OcclusionManager.currentHumanDepthMode}\n");
+                stringBuilder.AppendLine("   Environment depth mode:");
+                stringBuilder.AppendLine($"      Requested: {m_OcclusionManager.requestedEnvironmentDepthMode}");
+                stringBuilder.AppendLine($"      Current: {m_OcclusionManager.currentEnvironmentDepthMode}");
+                stringBuilder.AppendLine("   Human stencil mode:");
+                stringBuilder.AppendLine($"      Requested: {m_OcclusionManager.requestedHumanStencilMode}");
+                stringBuilder.AppendLine($"      Current: {m_OcclusionManager.currentHumanStencilMode}");
+                stringBuilder.AppendLine("   Human depth mode:");
+                stringBuilder.AppendLine($"      Requested: {m_OcclusionManager.requestedHumanDepthMode}");
+                stringBuilder.AppendLine($"      Current: {m_OcclusionManager.currentHumanDepthMode}");
+            }
+        }
+
+        /// <summary>
+        /// Log the given text to the screen if the image info UI is set. Otherwise, log the string to debug.
+        /// </summary>
+        /// <param name="text">The text string to log.</param>
+        void LogText(string text)
+        {
+            if (m_InfoText != null)
+            {
+                m_InfoText.text = text;
+            }
+            else
+            {
+                Debug.Log(text);
             }
         }
     }
