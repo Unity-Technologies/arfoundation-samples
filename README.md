@@ -281,4 +281,4 @@ The intention of this reposititory is to provide a means for getting started wit
 
 ## Contributions and Pull Requests
 
-We are not accepting pull requests at this time. If you find an issue with the samples, our would like to request a new sample, please [submit a GitHub issue](https://github.com/Unity-Technologies/arfoundation-samples/issues).
+We are not accepting pull requests at this time. If you find an issue with the samples, or would like to request a new sample, please [submit a GitHub issue](https://github.com/Unity-Technologies/arfoundation-samples/issues).
