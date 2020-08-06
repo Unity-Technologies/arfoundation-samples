@@ -267,17 +267,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// <param name="texture">The texture for which to log information.</param>
         void LogTextureInfo(StringBuilder stringBuilder, string textureName, Texture2D texture)
         {
-            stringBuilder.Append($"texture : {textureName}\n");
+            stringBuilder.AppendLine($"texture : {textureName}");
             if (texture == null)
             {
-                stringBuilder.Append("   <null>\n");
+                stringBuilder.AppendLine("   <null>");
             }
             else
             {
-                stringBuilder.Append($"   format : {texture.format}\n");
-                stringBuilder.Append($"   width  : {texture.width}\n");
-                stringBuilder.Append($"   height : {texture.height}\n");
-                stringBuilder.Append($"   mipmap : {texture.mipmapCount}\n");
+                stringBuilder.AppendLine($"   format : {texture.format}");
+                stringBuilder.AppendLine($"   width  : {texture.width}");
+                stringBuilder.AppendLine($"   height : {texture.height}");
+                stringBuilder.AppendLine($"   mipmap : {texture.mipmapCount}");
             }
         }
 
