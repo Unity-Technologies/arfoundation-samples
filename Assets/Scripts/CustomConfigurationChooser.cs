@@ -6,7 +6,7 @@ using UnityEngine.XR.ARFoundation;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
-    public class TestConfigurationChooser : MonoBehaviour
+    public class CustomConfigurationChooser : MonoBehaviour
     {
         /// <summary>
         /// The configuration chooser mode. Values must match the UI dropdown.

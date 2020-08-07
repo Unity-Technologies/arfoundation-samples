@@ -2,7 +2,7 @@ using UnityEngine.XR.ARFoundation;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
-    public class TestCameraSwapper : MonoBehaviour
+    public class CameraSwapper : MonoBehaviour
     {
         /// <summary>
         /// The camera manager for switching the camera direction.
