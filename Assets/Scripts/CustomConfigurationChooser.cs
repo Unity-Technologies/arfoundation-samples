@@ -118,7 +118,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     int featureWeight = requestedFeatures.Intersection(descriptor.capabilities).Count();
 
                     // Increase the weight if there are matching camera features.
-                    if (requestedCameraFeatures.Intersection(descriptor.capabilities) > 0)
+                    if (requestedCameraFeatures.Any(descriptor.capabilities))
                     {
                         featureWeight += 100;
                     }
