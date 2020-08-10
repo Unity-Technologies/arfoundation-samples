@@ -7,6 +7,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
     public enum MenuType
     {
         Main,
+        ImageTracking,
         FaceTracking,
         PlaneDetection,
         BodyTracking,

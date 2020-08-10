@@ -54,17 +54,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 494693590331823523}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 16
@@ -78,9 +77,26 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "TEST TEXT\n\ntrackableId\n00000000DA775700-600613A12A17C812\r\n\ntrackingState:
-    Unavailable\r\n\nreferenceImage: GUID: b32abd15-4963-1004-8a67-52a280fdfeb4,\n\nWidth:
-    0.07\r\n\nextents: 0.0700x0.1207"
+  m_Text: 'TEST TEXT
+
+
+    trackableId
+
+    00000000DA775700-600613A12A17C812
+
+
+    trackingState:
+    Unavailable
+
+
+    referenceImage: GUID: b32abd15-4963-1004-8a67-52a280fdfeb4,
+
+
+    Width:
+    0.07
+
+
+    extents: 0.0700x0.1207'
 --- !u!1 &3312728602301253215
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,7 +198,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5067368238825118482}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 0
@@ -204,7 +220,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5067368238825118482}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
@@ -297,6 +313,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
