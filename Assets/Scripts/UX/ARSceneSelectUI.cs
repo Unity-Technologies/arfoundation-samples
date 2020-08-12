@@ -18,6 +18,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
 
         [SerializeField]
+        GameObject m_ImageTrackingMenu;
+        public GameObject imageTrackingMenu
+        {
+            get { return m_ImageTrackingMenu; }
+            set { m_ImageTrackingMenu = value; }
+        }
+
+        [SerializeField]
         GameObject m_FaceTrackingMenu;
         public GameObject faceTrackingMenu
         {
@@ -64,6 +72,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_FaceTrackingMenu.SetActive(true);
                 m_AllMenu.SetActive(false);
             }
+            else if(ActiveMenu.currentMenu == MenuType.ImageTracking)
+            {
+                m_ImageTrackingMenu.SetActive(true);
+                m_AllMenu.SetActive(false);
+            }
             else if(ActiveMenu.currentMenu == MenuType.PlaneDetection)
             {
                 m_PlaneDetectionMenu.SetActive(true);
@@ -99,7 +112,19 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public void ImageTrackableButtonPressed()
         {
-            LoadScene("ImageTracking");
+            ActiveMenu.currentMenu = MenuType.ImageTracking;
+            m_ImageTrackingMenu.SetActive(true);
+            m_AllMenu.SetActive(false);
+        }
+
+        public void BasicImageTrackingButtonPressed()
+        {
+            LoadScene("BasicImageTracking");
+        }
+
+        public void MultiImagesTrackingButtonPressed()
+        {
+            LoadScene("ImageTrackingWithMultiplePrefabs");
         }
 
         public void AnchorsButtonPressed()
@@ -160,6 +185,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public void SampleUXButtonPressed()
         {
             LoadScene("SampleUXScene");
+        }
+
+        public void ConfigChooserButtonPressed()
+        {
+            LoadScene("ConfigurationChooser");
         }
 
         public void FaceTrackingMenuButtonPressed()
@@ -256,6 +286,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public void BackButtonPressed()
         {
             ActiveMenu.currentMenu = MenuType.Main;
+            m_ImageTrackingMenu.SetActive(false);
             m_FaceTrackingMenu.SetActive(false);
             m_PlaneDetectionMenu.SetActive(false);
             m_BodyTrackingMenu.SetActive(false);

@@ -34,7 +34,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set { m_CameraManager = value; }
         }
 
-    /// <summary>
+        /// <summary>
         /// Callback invoked when <see cref="m_Dropdown"/> changes. This
         /// lets us change the camera configuration when the user changes
         /// the selection in the UI.
@@ -92,7 +92,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 // 1. Use a foreach to iterate over all the available configurations
                 foreach (var config in configurations)
                 {
-                    m_ConfigurationNames.Add(config.ToString());
+                    m_ConfigurationNames.Add($"{config.width}x{config.height}{(config.framerate.HasValue ? $" at {config.framerate.Value} Hz" : "")}");
                 }
                 m_Dropdown.AddOptions(m_ConfigurationNames);
 
