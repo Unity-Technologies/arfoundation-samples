@@ -1,8 +1,4 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Text;
-
-using UnityEngine.Rendering;
+﻿using UnityEngine.UI;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -10,7 +6,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
     /// A simple UI controller to display light estimation information.
     /// </summary>
     [RequireComponent(typeof(LightEstimation))]
-    public class LightEstimationUI : MonoBehaviour
+    public class BasicLightEstimationUI : MonoBehaviour
     {
         [Tooltip("The UI Text element used to display the estimated ambient intensity in the physical environment.")]
         [SerializeField]

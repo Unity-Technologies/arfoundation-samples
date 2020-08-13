@@ -269,9 +269,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
             LoadScene("HumanBodyTracking3D");
         }
 
-        public void LightEstimationButtonPressed()
+        public void BasicLightEstimationButtonPressed()
         {
-            LoadScene("LightEstimation");
+            LoadScene("BasicLightEstimation");
         }
 
         public void PlaneDetectionMenuButtonPressed()
