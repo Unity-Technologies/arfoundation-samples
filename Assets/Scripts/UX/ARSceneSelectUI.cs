@@ -338,5 +338,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             LoadScene("DepthImages");
         }
+
+        public void InputSystemButtonPressed()
+        {
+            LoadScene("InputSystem");
+        }
     }
 }
