@@ -252,6 +252,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set => m_ConfigChooser = value;
         }
 
+        [SerializeField]
+        Button m_InputSystem;
+        public Button inputSystem
+        {
+            get => m_InputSystem;
+            set => m_InputSystem = value;
+        }
+
         // Start is called before the first frame update
         void Start()
         {
@@ -302,6 +310,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_SampleUX.interactable = true;
                 m_CheckSupport.interactable = true;
                 m_ConfigChooser.interactable = true;
+                m_InputSystem.interactable = true;
             }
 
             if(faceDescriptors.Count > 0)
