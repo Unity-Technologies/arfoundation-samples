@@ -6,16 +6,15 @@ using UnityEngine.XR.ARFoundation;
 namespace UnityEngine.XR.ARFoundation.Samples
 {
     /// <summary>
-    /// On ARKit, HDR light estimation only works in face tracking mode.
-    /// On ARCore, HDR light estimation only works when NOT in face tracking mode.
-    /// This script enables face tracking on iOS and disables it otherwise.
+    /// This script enables face tracking with user facing camera and disables it otherwise.
+    /// It enables the world space object with world facing camera and disables it otherwise.
     /// </summary>
     [RequireComponent(typeof(ARSessionOrigin))]
     [RequireComponent(typeof(ARFaceManager))]
     [RequireComponent(typeof(ARCameraManager))]
     public class FacingDirectionManager : MonoBehaviour
     {
-        [SerializeField]
+        [SerializeField] 
         GameObject m_WorldSpaceObject;
 
         public GameObject worldSpaceObject
@@ -24,28 +23,29 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set => m_WorldSpaceObject = value;
         }
 
-        CameraFacingDirection updatedCameraFacingDirection;
-        CameraFacingDirection originalCameraFacingDirection;
+        CameraFacingDirection m_CurrentCameraFacingDirection;
+        ARCameraManager m_CameraManager;
+
         void OnEnable()
         {
-            originalCameraFacingDirection = GetComponentInChildren<ARCameraManager>().currentFacingDirection;
-            updatedCameraFacingDirection = originalCameraFacingDirection;
+            m_CameraManager = GetComponentInChildren<ARCameraManager>();
+            m_CurrentCameraFacingDirection = m_CameraManager.currentFacingDirection;
         }
 
         void Update()
         {
-            updatedCameraFacingDirection = GetComponentInChildren<ARCameraManager>().currentFacingDirection;
-            if (updatedCameraFacingDirection != CameraFacingDirection.None && updatedCameraFacingDirection != originalCameraFacingDirection)
+            var updatedCameraFacingDirection = m_CameraManager.currentFacingDirection;
+            if (updatedCameraFacingDirection != CameraFacingDirection.None && updatedCameraFacingDirection != m_CurrentCameraFacingDirection)
             {
                 if (updatedCameraFacingDirection == CameraFacingDirection.User)
                 {
-                    originalCameraFacingDirection = updatedCameraFacingDirection;
+                    m_CurrentCameraFacingDirection = updatedCameraFacingDirection;
                     GetComponent<ARFaceManager>().enabled = true;
                     worldSpaceObject.SetActive(false);
                 }
                 else if (updatedCameraFacingDirection == CameraFacingDirection.World)
                 {
-                    originalCameraFacingDirection = updatedCameraFacingDirection;
+                    m_CurrentCameraFacingDirection = updatedCameraFacingDirection;
                     GetComponent<ARFaceManager>().enabled = false;
                     worldSpaceObject.SetActive(true);
                     Application.onBeforeRender += OnBeforeRender;
