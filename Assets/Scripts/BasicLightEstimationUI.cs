@@ -3,7 +3,7 @@
 namespace UnityEngine.XR.ARFoundation.Samples
 {
     /// <summary>
-    /// A simple UI controller to display light estimation information.
+    /// A simple UI controller to display basic light estimation information.
     /// </summary>
     [RequireComponent(typeof(BasicLightEstimation))]
     public class BasicLightEstimationUI : MonoBehaviour
@@ -26,7 +26,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         Text m_AmbientColorText;
 
         /// <summary>
-        /// The UI Text element used to display the estimated color temperature in the scene.
+        /// The UI Text element used to display the estimated ambient color in the scene.
         /// </summary>
         public Text ambientColorText
         {

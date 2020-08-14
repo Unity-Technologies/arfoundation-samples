@@ -5,10 +5,8 @@ using UnityEngine.XR.ARFoundation;
 namespace UnityEngine.XR.ARFoundation.Samples
 {
     /// <summary>
-    /// A component that can be used to access the most
-    /// recently received light estimation information
-    /// for the physical environment as observed by an
-    /// AR device.
+    /// A component that can be used to access the most recently received HDR light estimation information
+    /// for the physical environment as observed by an AR device.
     /// </summary>
     [RequireComponent(typeof(Light))]
     public class HDRLightEstimation : MonoBehaviour
