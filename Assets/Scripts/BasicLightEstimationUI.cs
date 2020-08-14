@@ -5,7 +5,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
     /// <summary>
     /// A simple UI controller to display light estimation information.
     /// </summary>
-    [RequireComponent(typeof(LightEstimation))]
+    [RequireComponent(typeof(BasicLightEstimation))]
     public class BasicLightEstimationUI : MonoBehaviour
     {
         [Tooltip("The UI Text element used to display the estimated ambient intensity in the physical environment.")]
@@ -36,11 +36,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void Awake()
         {
-            m_LightEstimation = GetComponent<LightEstimation>();
+            m_LightEstimation = GetComponent<BasicLightEstimation>();
         }
 
         void Update()
         {
+            Debug.Log(m_LightEstimation.cameraManager.currentLightEstimation);
             SetUIValue(m_LightEstimation.brightness, ambientIntensityText);
 
             //Display either color temperature or color correction if supported
@@ -58,6 +59,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         const string k_UnavailableText = "Unavailable";
 
-        LightEstimation m_LightEstimation;
+        BasicLightEstimation m_LightEstimation;
     }
 }

@@ -11,7 +11,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
     /// AR device.
     /// </summary>
     [RequireComponent(typeof(Light))]
-    public class LightEstimation : MonoBehaviour
+    public class HDRLightEstimation : MonoBehaviour
     {
         [SerializeField]
         [Tooltip("The ARCameraManager which will produce frame events containing light estimation information.")]
@@ -46,22 +46,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     m_CameraManager.frameReceived += FrameChanged;
             }
         }
-
-        /// <summary>
-        /// The estimated brightness of the physical environment, if available.
-        /// </summary>
-        public float? brightness { get; private set; }
-
-        /// <summary>
-        /// The estimated color temperature of the physical environment, if available.
-        /// </summary>
-        public float? colorTemperature { get; private set; }
-
-        /// <summary>
-        /// The estimated color correction value of the physical environment, if available.
-        /// </summary>
-        public Color? colorCorrection { get; private set; }
-
+        
         /// <summary>
         /// The estimated direction of the main light of the physical environment, if available.
         /// </summary>
@@ -119,24 +104,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void FrameChanged(ARCameraFrameEventArgs args)
         {
-            if (args.lightEstimation.averageBrightness.HasValue)
-            {
-                brightness = args.lightEstimation.averageBrightness.Value;
-                m_Light.intensity = brightness.Value;
-            }
-
-            if (args.lightEstimation.averageColorTemperature.HasValue)
-            {
-                colorTemperature = args.lightEstimation.averageColorTemperature.Value;
-                m_Light.colorTemperature = colorTemperature.Value;
-            }
-
-            if (args.lightEstimation.colorCorrection.HasValue)
-            {
-                colorCorrection = args.lightEstimation.colorCorrection.Value;
-                m_Light.color = colorCorrection.Value;
-            }
-
             if (args.lightEstimation.mainLightDirection.HasValue)
             {
                 mainLightDirection = args.lightEstimation.mainLightDirection;

@@ -8,7 +8,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
     /// <summary>
     /// A simple UI controller to display light estimation information.
     /// </summary>
-    [RequireComponent(typeof(LightEstimation))]
+    [RequireComponent(typeof(HDRLightEstimation))]
     public class HDRLightEstimationUI : MonoBehaviour
     {
         [Tooltip("The UI Text element used to display the estimated direction of the main light for the physical environment.")]
@@ -59,17 +59,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
         
         void Awake()
         {
-            m_LightEstimation = GetComponent<LightEstimation>();
-            m_cameraManager = m_LightEstimation.cameraManager;
+            m_HDRLightEstimation = GetComponent<HDRLightEstimation>();
+            m_cameraManager = m_HDRLightEstimation.cameraManager;
         }
 
         void Update()
         {
-            SetUIValue(m_LightEstimation.mainLightDirection, mainLightDirectionText);
-            SetUIValue(m_LightEstimation.mainLightColor, mainLightColorText);
-            SetUIValue(m_LightEstimation.mainLightIntensityLumens, mainLightIntensityLumens);
-            SetSphericalHarmonicsUIValue(m_LightEstimation.sphericalHarmonics, ambientSphericalHarmonicsText);
-            SetModeSupportedUIValue(m_cameraManager.requestedLightEstimation, m_cameraManager.requestedFacingDirection);
+            SetUIValue(m_HDRLightEstimation.mainLightDirection, mainLightDirectionText);
+            SetUIValue(m_HDRLightEstimation.mainLightColor, mainLightColorText);
+            SetUIValue(m_HDRLightEstimation.mainLightIntensityLumens, mainLightIntensityLumens);
+            SetSphericalHarmonicsUIValue(m_HDRLightEstimation.sphericalHarmonics, ambientSphericalHarmonicsText);
+            SetModeSupportedUIValue(m_cameraManager.requestedFacingDirection);
         }
 
         void SetSphericalHarmonicsUIValue(SphericalHarmonicsL2? maybeAmbientSphericalHarmonics, Text text)
@@ -108,7 +108,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 text.text = displayValue.HasValue ? displayValue.Value.ToString(): k_UnavailableText;
         }
 
-        void SetModeSupportedUIValue(ARFoundation.LightEstimation lightEstimation, CameraFacingDirection direction)
+        void SetModeSupportedUIValue(CameraFacingDirection direction)
         {
 #if UNITY_IOS
             if (direction == CameraFacingDirection.World)
@@ -126,7 +126,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         const string k_UnavailableText = "Unavailable";
 
-        LightEstimation m_LightEstimation;
+        HDRLightEstimation m_HDRLightEstimation;
 
         ARCameraManager m_cameraManager;
     }
