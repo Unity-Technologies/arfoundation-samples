@@ -41,7 +41,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void Update()
         {
-            Debug.Log(m_LightEstimation.cameraManager.currentLightEstimation);
             SetUIValue(m_LightEstimation.brightness, ambientIntensityText);
 
             //Display either color temperature or color correction if supported
