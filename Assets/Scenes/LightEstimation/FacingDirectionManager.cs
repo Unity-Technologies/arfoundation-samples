@@ -42,6 +42,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     m_CurrentCameraFacingDirection = updatedCameraFacingDirection;
                     GetComponent<ARFaceManager>().enabled = true;
                     worldSpaceObject.SetActive(false);
+                    Application.onBeforeRender -= OnBeforeRender;
                 }
                 else if (updatedCameraFacingDirection == CameraFacingDirection.World)
                 {

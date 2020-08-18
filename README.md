@@ -70,9 +70,9 @@ Demonstrates basic light estimation information from the camera frame. You shoul
 ### HDRLightEstimation
 This sample attempts to read HDR lighting information. You should see values for "Main Light Direction", "Main Light Intensity Lumens", "Main Light Color", and "Spherical Harmonics". Most devices only support a subset of these 4, so some will be listed as "unavailable." The relevant script is [`HDRLightEstimation.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/HDRLightEstimation.cs) script.
 
-On iOS, this is only available when face tracking is enabled and requires a device with a TrueDepth camera (such as an iPhone X, XS or 11). When available, a virtual arrow appears in front of the camera which indicates the estimated main light direction. The virtual light direction is also updated, so that virtual content appears to be lit from the direction of the real light source.
+On iOS, this is only available when face tracking is enabled and requires a device that supports face tracking (such as an iPhone X, XS or 11). When available, a virtual arrow appears in front of the camera which indicates the estimated main light direction. The virtual light direction is also updated, so that virtual content appears to be lit from the direction of the real light source.
 
-When using `HDRLightEstimation`, the sample will automatically pick the supported camera facing direction for you, for example `World` on Android and `User` on iOS, so it does not matter which you select in `ARCameraManager.cs`.
+When using `HDRLightEstimation`, the sample will automatically pick the supported camera facing direction for you, for example `World` on Android and `User` on iOS, so it does not matter which you facing direction select in the `ARCameraManager.cs` component.
 
 ## Anchors
 
