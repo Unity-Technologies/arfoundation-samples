@@ -114,7 +114,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
             else if (arrow)
             {
-                arrow?.gameObject.SetActive(false);
+                arrow.gameObject.SetActive(false);
                 mainLightDirection = null;
             }
 

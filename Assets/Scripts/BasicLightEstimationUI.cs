@@ -1,4 +1,5 @@
-﻿using UnityEngine.UI;
+﻿using System;
+using UnityEngine.UI;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -43,13 +44,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             SetUIValue(m_LightEstimation.brightness, ambientIntensityText);
 
-            //Display either color temperature or color correction if supported
+            //Display color temperature or color correction if supported
             if (m_LightEstimation.colorTemperature != null)
                 SetUIValue(m_LightEstimation.colorTemperature, ambientColorText);
-            else
+            else if (m_LightEstimation.colorCorrection != null)
                 SetUIValue(m_LightEstimation.colorCorrection, ambientColorText);
+            else
+                SetUIValue<float>(null, ambientColorText);
         }
-
+        
         void SetUIValue<T>(T? displayValue, Text text) where T : struct
         {
             if (text != null)
