@@ -75,17 +75,29 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 brightness = args.lightEstimation.averageBrightness.Value;
                 m_Light.intensity = brightness.Value;
             }
+            else
+            {
+                brightness = null;
+            }
 
             if (args.lightEstimation.averageColorTemperature.HasValue)
             {
                 colorTemperature = args.lightEstimation.averageColorTemperature.Value;
                 m_Light.colorTemperature = colorTemperature.Value;
             }
+            else
+            {
+                colorTemperature = null;
+            }
 
             if (args.lightEstimation.colorCorrection.HasValue)
             {
                 colorCorrection = args.lightEstimation.colorCorrection.Value;
                 m_Light.color = colorCorrection.Value;
+            }
+            else
+            {
+                colorCorrection = null;
             }
         }
 

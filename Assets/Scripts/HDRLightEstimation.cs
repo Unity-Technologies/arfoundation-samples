@@ -115,6 +115,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             else
             {
                 arrow?.gameObject.SetActive(false);
+                mainLightDirection = null;
             }
 
             if (args.lightEstimation.mainLightColor.HasValue)
@@ -122,11 +123,19 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 mainLightColor = args.lightEstimation.mainLightColor;
                 m_Light.color = mainLightColor.Value;
             }
+            else
+            {
+                mainLightColor = null;
+            }
 
             if (args.lightEstimation.mainLightIntensityLumens.HasValue)
             {
                 mainLightIntensityLumens = args.lightEstimation.mainLightIntensityLumens;
                 m_Light.intensity = args.lightEstimation.averageMainLightBrightness.Value;
+            }
+            else
+            {
+                mainLightIntensityLumens = null;
             }
 
             if (args.lightEstimation.ambientSphericalHarmonics.HasValue)
@@ -134,6 +143,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 sphericalHarmonics = args.lightEstimation.ambientSphericalHarmonics;
                 RenderSettings.ambientMode = AmbientMode.Skybox;
                 RenderSettings.ambientProbe = sphericalHarmonics.Value;
+            }
+            else
+            {
+                sphericalHarmonics = null;
             }
         }
 

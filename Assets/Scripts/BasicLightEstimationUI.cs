@@ -53,10 +53,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void SetUIValue<T>(T? displayValue, Text text) where T : struct
         {
             if (text != null)
-                text.text = displayValue.HasValue ? displayValue.Value.ToString(): k_UnavailableText;
+                text.text = displayValue.HasValue ? displayValue.Value.ToString(): "Unavailable";
         }
-
-        const string k_UnavailableText = "Unavailable";
 
         BasicLightEstimation m_LightEstimation;
     }
