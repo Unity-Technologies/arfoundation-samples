@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 using System.Text;
 
 using UnityEngine.Rendering;
@@ -7,41 +6,11 @@ using UnityEngine.Rendering;
 namespace UnityEngine.XR.ARFoundation.Samples
 {
     /// <summary>
-    /// A simple UI controller to display light estimation information.
+    /// A simple UI controller to display HDR light estimation information.
     /// </summary>
-    [RequireComponent(typeof(LightEstimation))]
-    public class LightEstimationUI : MonoBehaviour
+    [RequireComponent(typeof(HDRLightEstimation))]
+    public class HDRLightEstimationUI : MonoBehaviour
     {
-        [Tooltip("The UI Text element used to display the estimated brightness in the physical environment.")]
-        [SerializeField]
-        Text m_BrightnessText;
-
-        /// <summary>
-        /// The UI Text element used to display the estimated brightness value.
-        /// </summary>
-        public Text brightnessText
-        {
-            get { return m_BrightnessText; }
-            set { m_BrightnessText = brightnessText; }
-        }
-
-        [Tooltip("The UI Text element used to display the estimated color temperature in the physical environment.")]
-        [SerializeField]
-        Text m_ColorTemperatureText;
-
-        /// <summary>
-        /// The UI Text element used to display the estimated color temperature in the scene.
-        /// </summary>
-        public Text colorTemperatureText
-        {
-            get { return m_ColorTemperatureText; }
-            set { m_ColorTemperatureText = value; }
-        }
-
-        [Tooltip("The UI Text element used to display the estimated color correction value for the physical environment.")]
-        [SerializeField]
-        Text m_ColorCorrectionText;
-
         [Tooltip("The UI Text element used to display the estimated direction of the main light for the physical environment.")]
         [SerializeField]
         Text m_MainLightDirectionText;
@@ -79,29 +48,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
         StringBuilder m_SphericalHarmonicsStringBuilder = new StringBuilder("");
 
-        /// <summary>
-        /// The UI Text element used to display the estimated color correction value for the scene.
-        /// </summary>
-        public Text colorCorrectionText
-        {
-            get { return m_ColorCorrectionText; }
-            set { m_ColorCorrectionText = value; }
-        }
-
         void Awake()
         {
-            m_LightEstimation = GetComponent<LightEstimation>();
+            m_HDRLightEstimation = GetComponent<HDRLightEstimation>();
         }
 
         void Update()
         {
-            SetUIValue(m_LightEstimation.brightness, brightnessText);
-            SetUIValue(m_LightEstimation.colorTemperature, colorTemperatureText);
-            SetUIValue(m_LightEstimation.colorCorrection, colorCorrectionText);
-            SetUIValue(m_LightEstimation.mainLightDirection, mainLightDirectionText);
-            SetUIValue(m_LightEstimation.mainLightColor, mainLightColorText);
-            SetUIValue(m_LightEstimation.mainLightIntensityLumens, mainLightIntensityLumens);
-            SetSphericalHarmonicsUIValue(m_LightEstimation.sphericalHarmonics, ambientSphericalHarmonicsText);
+            SetUIValue(m_HDRLightEstimation.mainLightDirection, mainLightDirectionText);
+            SetUIValue(m_HDRLightEstimation.mainLightColor, mainLightColorText);
+            SetUIValue(m_HDRLightEstimation.mainLightIntensityLumens, mainLightIntensityLumens);
+            SetSphericalHarmonicsUIValue(m_HDRLightEstimation.sphericalHarmonics, ambientSphericalHarmonicsText);
         }
 
         void SetSphericalHarmonicsUIValue(SphericalHarmonicsL2? maybeAmbientSphericalHarmonics, Text text)
@@ -142,6 +99,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         const string k_UnavailableText = "Unavailable";
 
-        LightEstimation m_LightEstimation;
+        HDRLightEstimation m_HDRLightEstimation;
     }
 }

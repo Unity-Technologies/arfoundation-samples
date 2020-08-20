@@ -12,7 +12,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         PlaneDetection,
         BodyTracking,
         Meshing,
-        Depth
+        Depth,
+        LightEstimation
     }
 
     public static class ActiveMenu

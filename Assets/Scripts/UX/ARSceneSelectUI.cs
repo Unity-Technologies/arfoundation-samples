@@ -64,6 +64,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
             get { return m_DepthMenu; }
             set { m_DepthMenu = value; }
         }
+        
+        [SerializeField]
+        GameObject m_LightEstimationMenu;
+        public GameObject lightEstimationMenu
+        {
+            get { return m_LightEstimationMenu; }
+            set { m_LightEstimationMenu = value; }
+        }
 
         void Start()
         {
@@ -95,6 +103,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             else if(ActiveMenu.currentMenu == MenuType.Depth)
             {
                 m_DepthMenu.SetActive(true);
+                m_AllMenu.SetActive(false);
+            }
+            else if(ActiveMenu.currentMenu == MenuType.LightEstimation)
+            {
+                m_LightEstimationMenu.SetActive(true);
                 m_AllMenu.SetActive(false);
             }
         }
@@ -256,9 +269,21 @@ namespace UnityEngine.XR.ARFoundation.Samples
             LoadScene("HumanBodyTracking3D");
         }
 
-        public void LightEstimationButtonPressed()
+        public void LightEstimationMenuButtonPressed()
         {
-            LoadScene("LightEstimation");
+            ActiveMenu.currentMenu = MenuType.LightEstimation;
+            m_LightEstimationMenu.SetActive(true);
+            m_AllMenu.SetActive(false);
+        }
+        
+        public void BasicLightEstimationButtonPressed()
+        {
+            LoadScene("BasicLightEstimation");
+        }
+        
+        public void HDRLightEstimationButtonPressed()
+        {
+            LoadScene("HDRLightEstimation");
         }
 
         public void PlaneDetectionMenuButtonPressed()
@@ -292,6 +317,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_BodyTrackingMenu.SetActive(false);
             m_MeshingMenu.SetActive(false);
             m_DepthMenu.SetActive(false);
+            m_LightEstimationMenu.SetActive(false);
             m_AllMenu.SetActive(true);
         }
 
