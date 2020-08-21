@@ -37,18 +37,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void Awake()
         {
-            m_LightEstimation = GetComponent<BasicLightEstimation>();
+            m_BasicLightEstimation = GetComponent<BasicLightEstimation>();
         }
 
         void Update()
         {
-            SetUIValue(m_LightEstimation.brightness, ambientIntensityText);
+            SetUIValue(m_BasicLightEstimation.brightness, ambientIntensityText);
 
             //Display color temperature or color correction if supported
-            if (m_LightEstimation.colorTemperature != null)
-                SetUIValue(m_LightEstimation.colorTemperature, ambientColorText);
-            else if (m_LightEstimation.colorCorrection != null)
-                SetUIValue(m_LightEstimation.colorCorrection, ambientColorText);
+            if (m_BasicLightEstimation.colorTemperature != null)
+                SetUIValue(m_BasicLightEstimation.colorTemperature, ambientColorText);
+            else if (m_BasicLightEstimation.colorCorrection != null)
+                SetUIValue(m_BasicLightEstimation.colorCorrection, ambientColorText);
             else
                 SetUIValue<float>(null, ambientColorText);
         }
@@ -59,6 +59,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 text.text = displayValue.HasValue ? displayValue.Value.ToString(): "Unavailable";
         }
 
-        BasicLightEstimation m_LightEstimation;
+        BasicLightEstimation m_BasicLightEstimation;
     }
 }
