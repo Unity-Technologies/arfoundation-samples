@@ -46,6 +46,21 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
         
         /// <summary>
+        /// The estimated brightness of the physical environment, if available.
+        /// </summary>
+        public float? brightness { get; private set; }
+
+        /// <summary>
+        /// The estimated color temperature of the physical environment, if available.
+        /// </summary>
+        public float? colorTemperature { get; private set; }
+
+        /// <summary>
+        /// The estimated color correction value of the physical environment, if available.
+        /// </summary>
+        public Color? colorCorrection { get; private set; }
+        
+        /// <summary>
         /// The estimated direction of the main light of the physical environment, if available.
         /// </summary>
         public Vector3? mainLightDirection { get; private set; }
@@ -102,6 +117,36 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void FrameChanged(ARCameraFrameEventArgs args)
         {
+            if (args.lightEstimation.averageBrightness.HasValue)
+            {
+                brightness = args.lightEstimation.averageBrightness.Value;
+                m_Light.intensity = brightness.Value;
+            }
+            else
+            {
+                brightness = null;
+            }
+
+            if (args.lightEstimation.averageColorTemperature.HasValue)
+            {
+                colorTemperature = args.lightEstimation.averageColorTemperature.Value;
+                m_Light.colorTemperature = colorTemperature.Value;
+            }
+            else
+            {
+                colorTemperature = null;
+            }
+
+            if (args.lightEstimation.colorCorrection.HasValue)
+            {
+                colorCorrection = args.lightEstimation.colorCorrection.Value;
+                m_Light.color = colorCorrection.Value;
+            }
+            else
+            {
+                colorCorrection = null;
+            }
+            
             if (args.lightEstimation.mainLightDirection.HasValue)
             {
                 mainLightDirection = args.lightEstimation.mainLightDirection;
