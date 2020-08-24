@@ -11,6 +11,32 @@ namespace UnityEngine.XR.ARFoundation.Samples
     [RequireComponent(typeof(HDRLightEstimation))]
     public class HDRLightEstimationUI : MonoBehaviour
     {
+        [Tooltip("The UI Text element used to display the estimated ambient intensity in the physical environment.")]
+        [SerializeField]
+        Text m_AmbientIntensityText;
+
+        /// <summary>
+        /// The UI Text element used to display the estimated ambient intensity value.
+        /// </summary>
+        public Text ambientIntensityText
+        {
+            get { return m_AmbientIntensityText; }
+            set { m_AmbientIntensityText = ambientIntensityText; }
+        }
+
+        [Tooltip("The UI Text element used to display the estimated ambient color in the physical environment.")]
+        [SerializeField]
+        Text m_AmbientColorText;
+
+        /// <summary>
+        /// The UI Text element used to display the estimated ambient color in the scene.
+        /// </summary>
+        public Text ambientColorText
+        {
+            get { return m_AmbientColorText; }
+            set { m_AmbientColorText = value; }
+        }
+        
         [Tooltip("The UI Text element used to display the estimated direction of the main light for the physical environment.")]
         [SerializeField]
         Text m_MainLightDirectionText;
@@ -55,6 +81,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void Update()
         {
+            //Display basic light estimation info
+            SetUIValue(m_HDRLightEstimation.brightness, ambientIntensityText);
+            //Display color temperature or color correction if supported
+            if (m_HDRLightEstimation.colorTemperature != null)
+                SetUIValue(m_HDRLightEstimation.colorTemperature, ambientColorText);
+            else if (m_HDRLightEstimation.colorCorrection != null)
+                SetUIValue(m_HDRLightEstimation.colorCorrection, ambientColorText);
+            else
+                SetUIValue<float>(null, ambientColorText);
+            
+            //Display HDR only light estimation info
             SetUIValue(m_HDRLightEstimation.mainLightDirection, mainLightDirectionText);
             SetUIValue(m_HDRLightEstimation.mainLightColor, mainLightColorText);
             SetUIValue(m_HDRLightEstimation.mainLightIntensityLumens, mainLightIntensityLumens);
