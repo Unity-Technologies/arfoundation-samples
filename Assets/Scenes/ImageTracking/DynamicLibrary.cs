@@ -80,7 +80,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             GUI.skin.button.fontSize = fontSize;
             GUI.skin.label.fontSize = fontSize;
 
-            float margin = 50;
+            float margin = 100;
 
             GUILayout.BeginArea(new Rect(margin, margin, Screen.width - margin * 2, Screen.height - margin * 2));
 

@@ -10,11 +10,35 @@ namespace UnityEngine.XR.ARFoundation.Samples
     public class ARSceneSelectUI : MonoBehaviour
     {
         [SerializeField]
+        Scrollbar m_HorizontalScrollBar;
+        public Scrollbar horizontalScrollBar
+        {
+            get => m_HorizontalScrollBar;
+            set => m_HorizontalScrollBar = value;
+        }
+
+        [SerializeField]
+        Scrollbar m_VerticalScrollBar;
+        public Scrollbar verticalScrollBar
+        {
+            get => m_VerticalScrollBar;
+            set => m_VerticalScrollBar = value;
+        }
+
+        [SerializeField]
         GameObject m_AllMenu;
         public GameObject allMenu
         {
             get { return m_AllMenu; }
             set { m_AllMenu = value; }
+        }
+
+        [SerializeField]
+        GameObject m_ImageTrackingMenu;
+        public GameObject imageTrackingMenu
+        {
+            get { return m_ImageTrackingMenu; }
+            set { m_ImageTrackingMenu = value; }
         }
 
         [SerializeField]
@@ -26,11 +50,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
 
         [SerializeField]
-        GameObject m_HumanSegmentationMenu;
-        public GameObject humanSegmentationMenu
+        GameObject m_BodyTrackingMenu;
+        public GameObject bodyTrackingMenu
         {
-            get { return m_HumanSegmentationMenu; }
-            set { m_HumanSegmentationMenu = value; }
+            get { return m_BodyTrackingMenu; }
+            set { m_BodyTrackingMenu = value; }
         }
 
         [SerializeField]
@@ -49,6 +73,22 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set { m_MeshingMenu = value; }
         }
 
+        [SerializeField]
+        GameObject m_DepthMenu;
+        public GameObject depthMenu
+        {
+            get { return m_DepthMenu; }
+            set { m_DepthMenu = value; }
+        }
+
+        [SerializeField]
+        GameObject m_LightEstimationMenu;
+        public GameObject lightEstimationMenu
+        {
+            get { return m_LightEstimationMenu; }
+            set { m_LightEstimationMenu = value; }
+        }
+
         void Start()
         {
             if(ActiveMenu.currentMenu == MenuType.FaceTracking)
@@ -56,14 +96,19 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_FaceTrackingMenu.SetActive(true);
                 m_AllMenu.SetActive(false);
             }
+            else if(ActiveMenu.currentMenu == MenuType.ImageTracking)
+            {
+                m_ImageTrackingMenu.SetActive(true);
+                m_AllMenu.SetActive(false);
+            }
             else if(ActiveMenu.currentMenu == MenuType.PlaneDetection)
             {
                 m_PlaneDetectionMenu.SetActive(true);
                 m_AllMenu.SetActive(false);
             }
-            else if(ActiveMenu.currentMenu == MenuType.HumanSegmentation)
+            else if(ActiveMenu.currentMenu == MenuType.BodyTracking)
             {
-                m_HumanSegmentationMenu.SetActive(true);
+                m_BodyTrackingMenu.SetActive(true);
                 m_AllMenu.SetActive(false);
             }
             else if(ActiveMenu.currentMenu == MenuType.Meshing)
@@ -71,6 +116,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_MeshingMenu.SetActive(true);
                 m_AllMenu.SetActive(false);
             }
+            else if(ActiveMenu.currentMenu == MenuType.Depth)
+            {
+                m_DepthMenu.SetActive(true);
+                m_AllMenu.SetActive(false);
+            }
+            else if(ActiveMenu.currentMenu == MenuType.LightEstimation)
+            {
+                m_LightEstimationMenu.SetActive(true);
+                m_AllMenu.SetActive(false);
+            }
+            ScrollToStartPosition();
         }
 
         static void LoadScene(string sceneName)
@@ -86,7 +142,20 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public void ImageTrackableButtonPressed()
         {
-            LoadScene("ImageTracking");
+            ActiveMenu.currentMenu = MenuType.ImageTracking;
+            m_ImageTrackingMenu.SetActive(true);
+            m_AllMenu.SetActive(false);
+            ScrollToStartPosition();
+        }
+
+        public void BasicImageTrackingButtonPressed()
+        {
+            LoadScene("BasicImageTracking");
+        }
+
+        public void MultiImagesTrackingButtonPressed()
+        {
+            LoadScene("ImageTrackingWithMultiplePrefabs");
         }
 
         public void AnchorsButtonPressed()
@@ -149,11 +218,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
             LoadScene("SampleUXScene");
         }
 
+        public void ConfigChooserButtonPressed()
+        {
+            LoadScene("ConfigurationChooser");
+        }
+
         public void FaceTrackingMenuButtonPressed()
         {
             ActiveMenu.currentMenu = MenuType.FaceTracking;
             m_FaceTrackingMenu.SetActive(true);
             m_AllMenu.SetActive(false);
+            ScrollToStartPosition();
         }
 
         public void ARCoreFaceRegionsButtonPressed()
@@ -196,31 +271,40 @@ namespace UnityEngine.XR.ARFoundation.Samples
             LoadScene("WorldCameraWithUserFacingFaceTracking");
         }
 
-        public void HumanSegmentationMenuButtonPressed()
+        public void BodyTrackingMenuButtonPressed()
         {
-            ActiveMenu.currentMenu = MenuType.HumanSegmentation;
-            m_HumanSegmentationMenu.SetActive(true);
+            ActiveMenu.currentMenu = MenuType.BodyTracking;
+            m_BodyTrackingMenu.SetActive(true);
             m_AllMenu.SetActive(false);
+            ScrollToStartPosition();
         }
 
-        public void HumanSegmentation2DButtonPressed()
+        public void BodyTracking2DButtonPressed()
         {
             LoadScene("HumanBodyTracking2D");
         }
 
-        public void HumanSegmentation3DButtonPressed()
+        public void BodyTracking3DButtonPressed()
         {
             LoadScene("HumanBodyTracking3D");
         }
 
-        public void HumanSegmentationImagesButtonPressed()
+        public void LightEstimationMenuButtonPressed()
         {
-            LoadScene("HumanSegmentationImages");
+            ActiveMenu.currentMenu = MenuType.LightEstimation;
+            m_LightEstimationMenu.SetActive(true);
+            m_AllMenu.SetActive(false);
+            ScrollToStartPosition();
         }
 
-        public void LightEstimationButtonPressed()
+        public void BasicLightEstimationButtonPressed()
         {
-            LoadScene("LightEstimation");
+            LoadScene("BasicLightEstimation");
+        }
+
+        public void HDRLightEstimationButtonPressed()
+        {
+            LoadScene("HDRLightEstimation");
         }
 
         public void PlaneDetectionMenuButtonPressed()
@@ -228,6 +312,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             ActiveMenu.currentMenu = MenuType.PlaneDetection;
             m_PlaneDetectionMenu.SetActive(true);
             m_AllMenu.SetActive(false);
+            ScrollToStartPosition();
         }
 
         public void FeatheredPlanesButtonPressed()
@@ -248,11 +333,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public void BackButtonPressed()
         {
             ActiveMenu.currentMenu = MenuType.Main;
+            m_ImageTrackingMenu.SetActive(false);
             m_FaceTrackingMenu.SetActive(false);
             m_PlaneDetectionMenu.SetActive(false);
-            m_HumanSegmentationMenu.SetActive(false);
+            m_BodyTrackingMenu.SetActive(false);
             m_MeshingMenu.SetActive(false);
+            m_DepthMenu.SetActive(false);
+            m_LightEstimationMenu.SetActive(false);
             m_AllMenu.SetActive(true);
+            ScrollToStartPosition();
         }
 
         public void MeshingMenuButtonPressed()
@@ -260,6 +349,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
             ActiveMenu.currentMenu = MenuType.Meshing;
             m_MeshingMenu.SetActive(true);
             m_AllMenu.SetActive(false);
+            ScrollToStartPosition();
+        }
+
+        public void DepthMenuButtonPressed()
+        {
+            ActiveMenu.currentMenu = MenuType.Depth;
+            m_DepthMenu.SetActive(true);
+            m_AllMenu.SetActive(false);
+            ScrollToStartPosition();
         }
 
         public void ClassificationMeshesButtonPressed()
@@ -280,6 +378,27 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public void InteractionButtonPressed()
         {
             LoadScene("Interaction");
+        }
+
+        public void SimpleOcclusionButtonPressed()
+        {
+            LoadScene("SimpleOcclusion");
+        }
+
+        public void DepthImagesButtonPressed()
+        {
+            LoadScene("DepthImages");
+        }
+
+        public void InputSystemButtonPressed()
+        {
+            LoadScene("InputSystem");
+        }
+
+        void ScrollToStartPosition()
+        {
+            m_HorizontalScrollBar.value = 0;
+            m_VerticalScrollBar.value = 1;
         }
     }
 }

@@ -56,39 +56,42 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set => m_RawCameraImage = value;
         }
 
-        [SerializeField]
-        [Tooltip("The AROcclusionManager which will produce human depth and stencil textures.")]
-        AROcclusionManager m_OcclusionManager;
+         [SerializeField]
+         [Tooltip("The AROcclusionManager which will produce human depth and stencil textures.")]
+         AROcclusionManager m_OcclusionManager;
 
-        public AROcclusionManager occlusionManager
-        {
-            get => m_OcclusionManager;
-            set => m_OcclusionManager = value;
-        }
+         public AROcclusionManager occlusionManager
+         {
+             get => m_OcclusionManager;
+             set => m_OcclusionManager = value;
+         }
 
-        [SerializeField]
-        RawImage m_RawHumanDepthImage;
+         [SerializeField]
+         RawImage m_RawHumanDepthImage;
 
-        /// <summary>
-        /// The UI RawImage used to display the image on screen.
-        /// </summary>
-        public RawImage rawHumanDepthImage
-        {
-            get => m_RawHumanDepthImage;
-            set => m_RawHumanDepthImage = value;
-        }
+         /// <summary>
+         /// The UI RawImage used to display the image on screen.
+         /// </summary>
+         public RawImage rawHumanDepthImage
+         {
+             get => m_RawHumanDepthImage;
+             set => m_RawHumanDepthImage = value;
+         }
 
-        [SerializeField]
-        RawImage m_RawHumanStencilImage;
+         [SerializeField]
+         RawImage m_RawHumanStencilImage;
 
-        /// <summary>
-        /// The UI RawImage used to display the image on screen.
-        /// </summary>
-        public RawImage rawHumanStencilImage
-        {
-            get => m_RawHumanStencilImage;
-            set => m_RawHumanStencilImage = value;
-        }
+         /// <summary>
+         /// The UI RawImage used to display the image on screen.
+         /// </summary>
+         public RawImage rawHumanStencilImage
+         {
+             get => m_RawHumanStencilImage;
+             set => m_RawHumanStencilImage = value;
+         }
+
+         [SerializeField]
+         RawImage m_RawEnvironmentDepthImage;
 
         [SerializeField]
         Text m_ImageInfo;

@@ -133,11 +133,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
 
         [SerializeField]
-        Button m_HumanSegmentation;
-        public Button humanSegmentation
+        Button m_BodyTracking;
+        public Button bodyTracking
         {
-            get { return m_HumanSegmentation; }
-            set { m_HumanSegmentation = value; }
+            get { return m_BodyTracking; }
+            set { m_BodyTracking = value; }
         }
 
         [SerializeField]
@@ -146,6 +146,22 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             get { return m_LightEstimation; }
             set { m_LightEstimation = value; }
+        }
+
+        [SerializeField]
+        Button m_BasicLightEstimation;
+        public Button basicLightEstimation
+        {
+            get { return m_BasicLightEstimation; }
+            set { m_BasicLightEstimation = value; }
+        }
+
+        [SerializeField]
+        Button m_HDRLightEstimation;
+        public Button HDRLightEstimation
+        {
+            get { return m_HDRLightEstimation; }
+            set { m_HDRLightEstimation = value; }
         }
 
         [SerializeField]
@@ -220,6 +236,30 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set { m_CheckSupport = value; }
         }
 
+        [SerializeField]
+        Button m_Depth;
+        public Button depth
+        {
+            get { return m_Depth; }
+            set { m_Depth = value; }
+        }
+
+        [SerializeField]
+        Button m_ConfigChooser;
+        public Button configChooser
+        {
+            get => m_ConfigChooser;
+            set => m_ConfigChooser = value;
+        }
+
+        [SerializeField]
+        Button m_InputSystem;
+        public Button inputSystem
+        {
+            get => m_InputSystem;
+            set => m_InputSystem = value;
+        }
+
         // Start is called before the first frame update
         void Start()
         {
@@ -259,6 +299,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
             var sessionDescriptors = new List<XRSessionSubsystemDescriptor>();
             SubsystemManager.GetSubsystemDescriptors<XRSessionSubsystemDescriptor>(sessionDescriptors);
 
+            var bodyTrackingDescriptors = new List<XRHumanBodySubsystemDescriptor>();
+            SubsystemManager.GetSubsystemDescriptors<XRHumanBodySubsystemDescriptor>(bodyTrackingDescriptors);
+
             if(planeDescriptors.Count > 0 && rayCastDescriptors.Count > 0)
             {
                 m_SimpleAR.interactable = true;
@@ -266,6 +309,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_Interaction.interactable = true;
                 m_SampleUX.interactable = true;
                 m_CheckSupport.interactable = true;
+                m_ConfigChooser.interactable = true;
+                m_InputSystem.interactable = true;
             }
 
             if(faceDescriptors.Count > 0)
@@ -293,23 +338,44 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 foreach(var occlusionDescriptor in occlusionDescriptors)
                 {
-                    if(occlusionDescriptor.supportsHumanSegmentationDepthImage && occlusionDescriptor.supportsHumanSegmentationStencilImage)
+#if UNITY_IOS
+                    if(occlusionDescriptor.supportsHumanSegmentationDepthImage
+                       || occlusionDescriptor.supportsHumanSegmentationStencilImage)
                     {
-                        m_HumanSegmentation.interactable = true;
-                        break;
+                        m_Depth.interactable = true;
+                    }
+#endif
+#if UNITY_ANDROID
+                    m_Depth.interactable = true;
+#endif
+                }
+            }
+
+            if(bodyTrackingDescriptors.Count > 0)
+            {
+                foreach(var bodyTrackingDescriptor in bodyTrackingDescriptors)
+                {
+                    if(bodyTrackingDescriptor.supportsHumanBody2D || bodyTrackingDescriptor.supportsHumanBody3D)
+                    {
+                        m_BodyTracking.interactable = true;
                     }
                 }
             }
 
             if(cameraDescriptors.Count > 0)
             {
+                m_LightEstimation.interactable = true;
                 foreach(var cameraDescriptor in cameraDescriptors)
                 {
                     if((cameraDescriptor.supportsAverageBrightness || cameraDescriptor.supportsAverageIntensityInLumens) &&
                         cameraDescriptor.supportsAverageColorTemperature && cameraDescriptor.supportsCameraConfigurations &&
                         cameraDescriptor.supportsCameraImage)
                     {
-                        m_LightEstimation.interactable = true;
+                        m_BasicLightEstimation.interactable = true;
+                    }
+                    if(cameraDescriptor.supportsFaceTrackingHDRLightEstimation || cameraDescriptor.supportsWorldTrackingHDRLightEstimation)
+                    {
+                        m_HDRLightEstimation.interactable = true;
                     }
 
                 }

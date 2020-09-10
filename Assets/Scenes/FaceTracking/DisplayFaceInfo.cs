@@ -65,7 +65,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             m_FaceManager = GetComponent<ARFaceManager>();
             m_Session = GetComponent<ARSession>();
-            m_CameraManager = GetComponent<ARSessionOrigin>().camera?.GetComponent<ARCameraManager>();
+            var camera = GetComponent<ARSessionOrigin>().camera;
+            m_CameraManager = camera ? camera.GetComponent<ARCameraManager>() : null;
         }
 
         void OnEnable()
@@ -73,7 +74,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             Application.onBeforeRender += OnBeforeRender;
 
             // Detect face tracking with world-facing camera support
-            var subsystem = m_Session?.subsystem;
+            var subsystem = m_Session ? m_Session.subsystem : null;
             if (subsystem != null)
             {
                 var configs = subsystem.GetConfigurationDescriptors(Allocator.Temp);

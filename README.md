@@ -1,14 +1,14 @@
 # AR Foundation Samples
 
-Example projects that use [*AR Foundation 4.0*](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@4.0/manual/index.html) and demonstrate its functionality with sample assets and components.
+Example projects that use [*AR Foundation 4.1*](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@4.1/manual/index.html) and demonstrate its functionality with sample assets and components.
 
 This set of samples relies on five Unity packages:
 
-* ARSubsystems ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@4.0/manual/index.html))
-* ARCore XR Plugin ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arcore@4.0/manual/index.html))
-* ARKit XR Plugin ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arkit@4.0/manual/index.html))
-* ARKit Face Tracking ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arkit-face-tracking@4.0/manual/index.html))
-* ARFoundation ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@4.0/manual/index.html))
+* ARSubsystems ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@4.1/manual/index.html))
+* ARCore XR Plugin ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arcore@4.1/manual/index.html))
+* ARKit XR Plugin ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arkit@4.1/manual/index.html))
+* ARKit Face Tracking ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arkit-face-tracking@4.1/manual/index.html))
+* ARFoundation ([documentation](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@4.1/manual/index.html))
 
 ## What version should I use?
 
@@ -19,13 +19,13 @@ In ARFoundation, this means:
 | Unity Version | ARFoundation Version |
 | ------------- | -------------------- |
 |    2018.4     | [1.5 (preview)](https://github.com/Unity-Technologies/arfoundation-samples/tree/1.5-preview)  |
-|    2019.4     | [2.1 (verified)](https://github.com/Unity-Technologies/arfoundation-samples/tree/2.1)         |
-|    2020.1     | [3.1 (verified)](https://github.com/Unity-Technologies/arfoundation-samples/tree/3.1)         |
-|    2020.2     | [4.0 (verified)](https://github.com/Unity-Technologies/arfoundation-samples/tree/4.0)         |
+|    2019.3     | [2.1 (verified)](https://github.com/Unity-Technologies/arfoundation-samples/tree/2.1)         |
+|    2020.1     | 3.0 (verified)                                                                                |
+|    2020.2     | 4.1 (preview)                                                                                 |
 
 ## ARSubsystems
 
-ARFoundation is built on "[subsystems](https://docs.unity3d.com/2019.3/Documentation/ScriptReference/Subsystem.html)" and depends on a separate package called [ARSubsystems](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@4.0/manual/index.html). ARSubsystems defines an interface, and the platform-specific implementations are in the [ARCore](https://docs.unity3d.com/Packages/com.unity.xr.arcore@4.0/manual/index.html) and [ARKit](https://docs.unity3d.com/Packages/com.unity.xr.arkit@4.0/manual/index.html) packages. ARFoundation turns the AR data provided by ARSubsystems into Unity `GameObject`s and `MonoBehavour`s.
+ARFoundation is built on "[subsystems](https://docs.unity3d.com/2019.3/Documentation/ScriptReference/Subsystem.html)" and depends on a separate package called [ARSubsystems](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@4.1/manual/index.html). ARSubsystems defines an interface, and the platform-specific implementations are in the [ARCore](https://docs.unity3d.com/Packages/com.unity.xr.arcore@4.1/manual/index.html) and [ARKit](https://docs.unity3d.com/Packages/com.unity.xr.arkit@4.1/manual/index.html) packages. ARFoundation turns the AR data provided by ARSubsystems into Unity `GameObject`s and `MonoBehavour`s.
 
 The `master` branch is compatible with Unity 2019.3 and later. For 2018.4, see the [1.5-preview branch](https://github.com/Unity-Technologies/arfoundation-samples/tree/1.5-preview).
 
@@ -41,7 +41,7 @@ For privacy reasons, use of ARKit's face tracking feature requires additional va
 
 3. Open your choice of sample scene.
 
-4. See the [AR Foundation Documentation](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@4.0/manual/index.html) for usage instructions and more information.
+4. See the [AR Foundation Documentation](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@4.1/manual/index.html) for usage instructions and more information.
 
 # Samples
 
@@ -64,11 +64,15 @@ Demonstrates checking for AR support and logs the results to the screen. The rel
 
 ## LightEstimation
 
-Demonstrates light estimation information from the camera frame. You should see values for "Brightness", "Color Temp", and "Color Correct" on screen. Most devices only support a subset of these 3, so some will be listed as "unavailable."
+### BasicLightEstimation
+Demonstrates basic light estimation information from the camera frame. You should see values for "Ambient Intensity" and "Ambient Color" on screen. The relevant script is [`BasicLightEstimation.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/BasicLightEstimation.cs) script.
 
-This sample also attempts to read HDR lighting information. On iOS, this is only available when face tracking is enabled and requires a device with a TrueDepth camera (such as an iPhone X, XS or 11). When available, a virtual arrow appears in front of the camera which indicates the estimated main light direction. The virtual light direction is also updated, so that virtual content appears to be lit from the direction of the real light source.
+### HDRLightEstimation
+This sample attempts to read HDR lighting information. You should see values for "Ambient Intensity", "Ambient Color", "Main Light Direction", "Main Light Intensity Lumens", "Main Light Color", and "Spherical Harmonics". Most devices only support a subset of these 6, so some will be listed as "Unavailable." The relevant script is [`HDRLightEstimation.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/HDRLightEstimation.cs) script.
 
-The relevant scripts are on the "Directional Light" GameObject.
+On iOS, this is only available when face tracking is enabled and requires a device that supports face tracking (such as an iPhone X, XS or 11). When available, a virtual arrow appears in front of the camera which indicates the estimated main light direction. The virtual light direction is also updated, so that virtual content appears to be lit from the direction of the real light source.
+
+When using `HDRLightEstimation`, the sample will automatically pick the supported camera facing direction for you, for example `World` on Android and `User` on iOS, so it does not matter which you facing direction select in the `ARCameraManager.cs` component.
 
 ## Anchors
 
@@ -152,17 +156,24 @@ This sample requires iOS 13.
 
 ## ImageTracking
 
-This sample demonstrates image tracking. Image tracking is supported on ARCore and ARKit. To enable image tracking, you must first create an `XRReferenceImageLibrary`. This is the set of images to look for in the environment. [Click here](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@4.0/manual/image-tracking.html) for instructions on creating one.
+There are two samples demonstrating image tracking. The image tracking samples are supported on ARCore, ARKit, and Magic Leap. To enable image tracking, you must first create an `XRReferenceImageLibrary`. This is the set of images to look for in the environment. [Click here](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@4.1/manual/image-tracking.html) for instructions on creating one.
 
 You can also add images to the reference image library at runtime. This sample includes a button that adds the images `one.png` and `two.png` to the reference image library. See the script `DynamicLibrary.cs` for example code.
 
-At runtime, ARFoundation will generate an `ARTrackedImage` for each detected reference image. This sample uses the [`TrackedImageInfoManager.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ImageTracking/TrackedImageInfoManager.cs) script to overlay the original image on top of the detected image, along with some meta data.
-
 Run the sample on an ARCore or ARKit-capable device and point your device at one of the images in [`Assets/Scenes/ImageTracking/Images`](https://github.com/Unity-Technologies/arfoundation-samples/tree/master/Assets/Scenes/ImageTracking/Images). They can be displayed on a computer monitor; they do not need to be printed out.
 
+### BasicImageTracking
+
+At runtime, ARFoundation will generate an `ARTrackedImage` for each detected reference image. This sample uses the [`TrackedImageInfoManager.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ImageTracking/BasicImageTracking/TrackedImageInfoManager.cs) script to overlay the original image on top of the detected image, along with some meta data.
+
+### ImageTrackingWithMultiplePrefabs
+
+With [`PrefabImagePairManager.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ImageTracking/ImageTrackingWithMultiplePrefabs/PrefabImagePairManager.cs) script, you can assign different prefabs for each image in the reference image library.
+
+You can also change prefabs at runtime. This sample includes a button that switch between the original and alternative prefab for the first image in the reference image library. See the script [`DynamicPrefab.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ImageTracking/ImageTrackingWithMultiplePrefabs/DynamicPrefab.cs) for example code.
 ## ObjectTracking
 
-Similar to the image tracking sample, this sample detects a 3D object from a set of reference objects in an `XRReferenceObjectLibrary`. [Click here](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@4.0/manual/object-tracking.html) for instructions on creating one.
+Similar to the image tracking sample, this sample detects a 3D object from a set of reference objects in an `XRReferenceObjectLibrary`. [Click here](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@4.1/manual/object-tracking.html) for instructions on creating one.
 
 To use this sample, you must have a physical object the device can recognize. The sample's reference object library is built using two reference objects. The sample includes [printable templates](https://github.com/Unity-Technologies/arfoundation-samples/tree/master/Assets/Scenes/Object%20Tracking/Printable%20Templates) which can be printed on 8.5x11 inch paper and folded into a cube and cylinder.
 
@@ -226,11 +237,16 @@ This sample demonstrates 3D world space body tracking. A 3D skeleton is generate
 
 This sample requires a device with an A12 bionic chip running iOS 13.
 
-## HumanSegmentationImages
+## DepthImages
 
-This sample demonstrates "people occlusion", which can produce stencil and depth textures for detected persons. This sample is very primitive and simply displays the raw texture on the screen. We are currently working on a better sample.
+This sample demonstrates raw texture depth images from different methods.
+* Environment depth (certain Android devices and Apple devices with the LiDAR sensor)
+* Human stencil (Apple devices with an A12 bionic chip (or later) running iOS 13 or later)
+* Human depth (Apple devices with an A12 bionic chip (or later) running iOS 13 or later)
 
-This sample requires a device with an A12 bionic chip running iOS 13.
+## SimpleOcclusion
+
+This sample demonstrates occlusion of virtual content by real world content through the use of environment depth images on supported Android and iOS devices.
 
 ## AllPointCloudPoints
 
@@ -270,10 +286,13 @@ At first, this scene may appear to be doing nothing. However, it is rendering a 
 
 This sample scene demonstrates the functionality of the `XR Interaction Toolkit` package. In the scene, you are able to place a cube on a plane which you can translate, rotate and scale with gestures. See the [`XR Interaction Toolkit Documentation`](https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@0.9/manual/index.html) for more details.
 
+## Input System
+This sample demonstrates a version of the SimpleAR scene using Unity's new Input System. See the [`Input System Documentation`](https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/manual/index.html) for more details.
+
 # Community and Feedback
 
 The intention of this reposititory is to provide a means for getting started with the features in ARFoundation. The samples are intentionally simplistic with a focus on teaching basic scene setup and APIs. If you you have a question, find a bug, or would like to request a new feature concerning any of the ARFoundation packages or these samples please [submit a GitHub issue](https://github.com/Unity-Technologies/arfoundation-samples/issues). New issues are reviewed regularly.
 
 ## Contributions and Pull Requests
 
-We are not accepting pull requests at this time. If you find an issue with the samples, our would like to request a new sample, please [submit a GitHub issue](https://github.com/Unity-Technologies/arfoundation-samples/issues).
+We are not accepting pull requests at this time. If you find an issue with the samples, or would like to request a new sample, please [submit a GitHub issue](https://github.com/Unity-Technologies/arfoundation-samples/issues).
