@@ -13,40 +13,36 @@ namespace UnityEngine.XR.ARFoundation.Samples
         Text m_LogText;
         public Text logText
         {
-            get { return s_LogText; }
-            set
-            {
-                m_LogText = value;
-                s_LogText = value;
-            }
+            get => m_LogText;
+            set => m_LogText = value;
         }
 
         [SerializeField]
         int m_VisibleMessageCount = 40;
         public int visibleMessageCount
         {
-            get { return s_VisibleMessageCount; }
-            set
-            {
-                m_VisibleMessageCount = value;
-                s_VisibleMessageCount = value;
-            }
+            get => m_VisibleMessageCount;
+            set => m_VisibleMessageCount = value;
         }
 
         int m_LastMessageCount;
 
-        static int s_VisibleMessageCount;
-
-        static Text s_LogText;
-
         static List<string> s_Log = new List<string>();
 
-        static StringBuilder s_StringBuilder = new StringBuilder();
+        static StringBuilder m_StringBuilder = new StringBuilder();
 
         void Awake()
         {
-            s_LogText = m_LogText;
-            s_VisibleMessageCount = m_VisibleMessageCount;
+            if (m_LogText == null)
+            {
+                m_LogText = GetComponent<Text>();
+            }
+
+            lock (s_Log)
+            {
+                s_Log?.Clear();
+            }
+
             Log("Log console initialized.");
         }
 
@@ -56,14 +52,23 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 if (m_LastMessageCount != s_Log.Count)
                 {
-                    s_StringBuilder.Clear();
-                    var startIndex = Mathf.Max(s_Log.Count - s_VisibleMessageCount, 0);
+                    m_StringBuilder.Clear();
+                    var startIndex = Mathf.Max(s_Log.Count - m_VisibleMessageCount, 0);
                     for (int i = startIndex; i < s_Log.Count; ++i)
                     {
-                        s_StringBuilder.Append($"{i:000}> {s_Log[i]}\n");
+                        m_StringBuilder.Append($"{i:000}> {s_Log[i]}\n");
                     }
 
-                    s_LogText.text = s_StringBuilder.ToString();
+                    var text = m_StringBuilder.ToString();
+
+                    if (m_LogText)
+                    {
+                        m_LogText.text = text;
+                    }
+                    else
+                    {
+                        Debug.Log(text);
+                    }
                 }
 
                 m_LastMessageCount = s_Log.Count;
