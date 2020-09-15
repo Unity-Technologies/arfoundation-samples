@@ -20,15 +20,24 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Anchors.unity
     guid: 5cba9114a192a46a7aef31da62316e39
-  - enabled: 1
-    path: Assets/Scenes/CpuImages.unity
-    guid: e769916924fd3814ab1d9474de816b22
+  - enabled: 0
+    path: Assets/Scenes/CameraGrain/CameraGrain.unity
+    guid: 68237ded327024ec39c1317a214ad56f
   - enabled: 1
     path: Assets/Scenes/Check Support.unity
     guid: cf67ab53e5ff241dfa61608222d82109
   - enabled: 1
     path: Assets/Scenes/Configurations/ConfigurationChooser.unity
     guid: 3aae069bebee946a090ed6a756a1e77b
+  - enabled: 1
+    path: Assets/Scenes/CpuImages.unity
+    guid: e769916924fd3814ab1d9474de816b22
+  - enabled: 1
+    path: Assets/Scenes/Depth/DepthImages.unity
+    guid: ed5207d50697d40d688249cd6c59608b
+  - enabled: 1
+    path: Assets/Scenes/Depth/SimpleOcclusion.unity
+    guid: 50a69364b393d4ce8a8b3589422b67b7
   - enabled: 1
     path: Assets/Scenes/EnvironmentProbes.unity
     guid: d568d188cadf141e38769dbabd3fe385
@@ -45,6 +54,9 @@ EditorBuildSettings:
     path: Assets/Scenes/FaceTracking/EyePoses.unity
     guid: 19344822e252a420e94db72338383cbc
   - enabled: 1
+    path: Assets/Scenes/FaceTracking/FaceMesh.unity
+    guid: 6dd901454502546c88b6cf8b9f47ded0
+  - enabled: 1
     path: Assets/Scenes/FaceTracking/FacePose.unity
     guid: d8b65509a10894e1dbb93c799ececfd9
   - enabled: 1
@@ -60,20 +72,23 @@ EditorBuildSettings:
     path: Assets/Scenes/HumanTracking/HumanBodyTracking3D.unity
     guid: 9fc1f5ed98d414310a8b9e659c295d7c
   - enabled: 1
-    path: Assets/Scenes/Depth/DepthImages.unity
-    guid: ed5207d50697d40d688249cd6c59608b
-  - enabled: 1
-    path: Assets/Scenes/Depth/SimpleOcclusion.unity
-    guid: 50a69364b393d4ce8a8b3589422b67b7
-  - enabled: 1
     path: Assets/Scenes/ImageTracking/BasicImageTracking/BasicImageTracking.unity
     guid: e0b018a3c3b5cfd4c8e316706ec0a18c
   - enabled: 1
     path: Assets/Scenes/ImageTracking/ImageTrackingWithMultiplePrefabs/ImageTrackingWithMultiplePrefabs.unity
     guid: a1bf0e7b9cece455f81c1d2731ba76e7
   - enabled: 1
+    path: Assets/Scenes/InputSystem/InputSystem.unity
+    guid: 3956525d2e8364c3bad0d962f5821708
+  - enabled: 1
+    path: Assets/Scenes/Interaction/Interaction.unity
+    guid: ff9b6e62e970e432a9e8d51604b3bad8
+  - enabled: 1
     path: Assets/Scenes/LightEstimation/BasicLightEstimation.unity
     guid: 2f0cbc82480584c258f99f0d9e4ba302
+  - enabled: 1
+    path: Assets/Scenes/LightEstimation/HDRLightEstimation.unity
+    guid: 9d96daba3bd254cfebe94efd2d61b2c3
   - enabled: 1
     path: Assets/Scenes/Meshing/ClassificationMeshes.unity
     guid: edd18841a7a8f4a68a80239a5e7f14f9
@@ -110,15 +125,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/UX/SampleUXScene.unity
     guid: 3b42d67a72bbc4004bf713db0e312326
-  - enabled: 1
-    path: Assets/Scenes/FaceTracking/FaceMesh.unity
-    guid: 6dd901454502546c88b6cf8b9f47ded0
-  - enabled: 1
-    path: Assets/Scenes/Interaction/Interaction.unity
-    guid: ff9b6e62e970e432a9e8d51604b3bad8
-  - enabled: 1
-    path: Assets/Scenes/LightEstimation/HDRLightEstimation.unity
-    guid: 9d96daba3bd254cfebe94efd2d61b2c3
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: f8ce26fe3bc69499b9be4b2378e97a94,
       type: 2}
