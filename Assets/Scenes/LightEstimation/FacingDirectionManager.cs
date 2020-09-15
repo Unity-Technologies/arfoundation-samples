@@ -11,10 +11,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
     /// </summary>
     [RequireComponent(typeof(ARSessionOrigin))]
     [RequireComponent(typeof(ARFaceManager))]
-    [RequireComponent(typeof(ARCameraManager))]
     public class FacingDirectionManager : MonoBehaviour
     {
-        [SerializeField] 
+        [SerializeField]
         GameObject m_WorldSpaceObject;
 
         public GameObject worldSpaceObject
