@@ -291,7 +291,7 @@ At first, this scene may appear to be doing nothing. However, it is rendering a 
 This sample scene demonstrates the functionality of the `XR Interaction Toolkit` package. In the scene, you are able to place a cube on a plane which you can translate, rotate and scale with gestures. See the [`XR Interaction Toolkit Documentation`](https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@0.9/manual/index.html) for more details.
 
 ## Input System
-This sample demonstrates a version of the SimpleAR scene using Unity's new Input System. See the [`Input System Documentation`](https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/manual/index.html) for more details.
+This sample demonstrates a version of the SimpleAR scene using Unity's new Input System. See `ARController.inpucations` for an example of an action map. For a demonstration on how these action map bindings are used, see the `InputSystem_PlaceOnPlane.cs` script. For more details, see the [`Input System Documentation`](https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/manual/index.html).
 
 # Community and Feedback
 
