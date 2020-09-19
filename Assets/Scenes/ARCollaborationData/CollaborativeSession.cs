@@ -22,8 +22,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public string serviceType
         {
-            get { return m_ServiceType; }
-            set { m_ServiceType = value; }
+            get => m_ServiceType;
+            set => m_ServiceType = value;
         }
 
         ARSession m_ARSession;
