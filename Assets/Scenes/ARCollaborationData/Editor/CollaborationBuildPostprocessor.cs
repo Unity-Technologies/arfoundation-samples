@@ -11,7 +11,11 @@ using UnityEngine.XR.ARFoundation.Samples;
 
 namespace UnityEditor.XR.ARFoundation.Samples
 {
-    class Processor : IPostprocessBuildWithReport, IPreprocessBuildWithReport
+    /// <summary>
+    /// This build processor finds all <see cref="CollaborativeSession"/> components in the build and adds the
+    /// necessary plist entries according to https://developer.apple.com/documentation/multipeerconnectivity
+    /// </summary>
+    class CollaborationBuildProcessor : IPostprocessBuildWithReport, IPreprocessBuildWithReport
     {
         public int callbackOrder => 2;
 
@@ -20,12 +24,17 @@ namespace UnityEditor.XR.ARFoundation.Samples
             s_CollaborativeSessions = new List<CollaborativeSession>();
         }
 
-        PlistElementArray GetOrCreatePlistElementArray(PlistElementDict dict, string key)
+        static PlistElementArray GetOrCreatePlistElementArray(PlistElementDict dict, string key)
         {
             var element = dict[key];
             return element == null ? dict.CreateArray(key) : element.AsArray();
         }
 
+        /// <summary>
+        /// Adds necessary plist entries required by iOS 14+.
+        /// See https://developer.apple.com/documentation/multipeerconnectivity for details.
+        /// </summary>
+        /// <param name="report">The BuildReport provided by the post build process.</param>
         void IPostprocessBuildWithReport.OnPostprocessBuild(BuildReport report)
         {
             if (report.summary.platform != BuildTarget.iOS)
@@ -39,12 +48,14 @@ namespace UnityEditor.XR.ARFoundation.Samples
             plist.ReadFromString(File.ReadAllText(plistPath));
             var root = plist.root;
 
+            // The app requires permission from the user to use the local network
             if (root["NSLocalNetworkUsageDescription"] == null)
             {
+                // If no entry exists, then we will add one with the prompt "Collaborative Session"
                 root["NSLocalNetworkUsageDescription"] = new PlistElementString("Collaborative Session");
             }
 
-            // Get all the service names
+            // Collect all the service names we need to add
             var bonjourServices = GetOrCreatePlistElementArray(root, "NSBonjourServices");
             var existingValues = new HashSet<string>(bonjourServices.values
                 .Where(value => value is PlistElementString)
@@ -55,6 +66,8 @@ namespace UnityEditor.XR.ARFoundation.Samples
                 .Select(collaborativeSession => collaborativeSession.serviceType)
                 .Where(serviceType => !string.IsNullOrEmpty(serviceType)))
             {
+                // Each "serviceType" must be registered as a Bonjour Service or the app will crash
+                // See https://developer.apple.com/documentation/bundleresources/information_property_list/nsbonjourservices
                 AddIfNecessary(existingValues, valuesToAdd, $"_{serviceType}._tcp");
                 AddIfNecessary(existingValues, valuesToAdd, $"_{serviceType}._udp");
             }
@@ -73,6 +86,9 @@ namespace UnityEditor.XR.ARFoundation.Samples
                 valuesToAdd.Add(value);
         }
 
+        /// <summary>
+        /// Collects all CollaborativeSession components from each scene in the final build
+        /// </summary>
         [PostProcessScene]
         static void OnPostProcessScene()
         {
