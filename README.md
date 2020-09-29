@@ -120,9 +120,7 @@ Move the device around until a plane is detected (its edges are still drawn) and
 
 ## UX
 
-This sample demonstrates some UI that may be useful when guiding new users through an AR application. It uses the script [`UIManager.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/UX/UIManager.cs) to trigger different UI animations based on events (e.g., a plane being detected).
-
-The functionality demonstrated here is conceptually similar to the `ARKitCoachingOverlay` sample.
+A sample demonstrating UI that may be useful when guiding new users through an AR application is available in the [ARFoundation Demos](https://github.com/Unity-Technologies/arfoundation-demos#ux--also-available-on-the-asset-store-here) repository.
 
 ## EnvironmentProbes
 
