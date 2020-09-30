@@ -221,14 +221,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
 
         [SerializeField]
-        Button m_SampleUX;
-        public Button sampleUX
-        {
-            get { return m_SampleUX; }
-            set { m_SampleUX = value; }
-        }
-
-        [SerializeField]
         Button m_CheckSupport;
         public Button checkSupport
         {
@@ -307,7 +299,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_SimpleAR.interactable = true;
                 m_Scale.interactable = true;
                 m_Interaction.interactable = true;
-                m_SampleUX.interactable = true;
                 m_CheckSupport.interactable = true;
                 m_ConfigChooser.interactable = true;
                 m_InputSystem.interactable = true;

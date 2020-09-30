@@ -213,11 +213,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             LoadScene("Scale");
         }
 
-        public void SampleUXButtonPressed()
-        {
-            LoadScene("SampleUXScene");
-        }
-
         public void ConfigChooserButtonPressed()
         {
             LoadScene("ConfigurationChooser");
