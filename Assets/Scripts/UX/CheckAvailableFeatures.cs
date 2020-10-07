@@ -16,224 +16,224 @@ namespace UnityEngine.XR.ARFoundation.Samples
         Button m_SimpleAR;
         public Button simpleAR
         {
-            get { return m_SimpleAR; }
-            set { m_SimpleAR = value; }
+            get => m_SimpleAR;
+            set => m_SimpleAR = value;
         }
 
         [SerializeField]
         Button m_ImageTracking;
         public Button imageTracking
         {
-            get { return m_ImageTracking; }
-            set { m_ImageTracking = value; }
+            get => m_ImageTracking;
+            set => m_ImageTracking = value;
         }
 
         [SerializeField]
         Button m_Anchors;
         public Button anchors
         {
-            get { return m_Anchors; }
-            set { m_Anchors = value; }
+            get => m_Anchors;
+            set => m_Anchors = value;
         }
 
         [SerializeField]
         Button m_ARWorldMap;
         public Button ARWorldMap
         {
-            get { return m_ARWorldMap; }
-            set { m_ARWorldMap = value; }
+            get => m_ARWorldMap;
+            set => m_ARWorldMap = value;
         }
 
         [SerializeField]
         Button m_CpuImages;
         public Button cpuImages
         {
-            get { return m_CpuImages; }
-            set { m_CpuImages = value; }
+            get => m_CpuImages;
+            set => m_CpuImages = value;
         }
 
         [SerializeField]
         Button m_EnvironmentProbes;
         public Button environmentProbes
         {
-            get { return m_EnvironmentProbes; }
-            set { m_EnvironmentProbes = value; }
+            get => m_EnvironmentProbes;
+            set => m_EnvironmentProbes = value;
         }
 
         [SerializeField]
         Button m_ARCollaborationData;
         public Button ARCollaborationData
         {
-            get { return m_ARCollaborationData; }
-            set { m_ARCollaborationData = value; }
+            get => m_ARCollaborationData;
+            set => m_ARCollaborationData = value;
         }
 
         [SerializeField]
         Button m_ARKitCoachingOverlay;
         public Button ARKitCoachingOverlay
         {
-            get { return m_ARKitCoachingOverlay; }
-            set { m_ARKitCoachingOverlay = value; }
+            get => m_ARKitCoachingOverlay;
+            set => m_ARKitCoachingOverlay = value;
         }
 
         [SerializeField]
         Button m_Scale;
         public Button scale
         {
-            get { return m_Scale; }
-            set { m_Scale = value; }
+            get => m_Scale;
+            set => m_Scale = value;
         }
 
         [SerializeField]
         Button m_ObjectTracking;
         public Button objectTracking
         {
-            get { return m_ObjectTracking; }
-            set { m_ObjectTracking = value; }
+            get => m_ObjectTracking;
+            set => m_ObjectTracking = value;
         }
 
         [SerializeField]
         Button m_PlaneOcclusion;
         public Button planeOcclusion
         {
-            get { return m_PlaneOcclusion; }
-            set { m_PlaneOcclusion = value; }
+            get => m_PlaneOcclusion;
+            set => m_PlaneOcclusion = value;
         }
 
         [SerializeField]
         Button m_PointCloud;
         public Button pointCloud
         {
-            get { return m_PointCloud; }
-            set { m_PointCloud = value; }
+            get => m_PointCloud;
+            set => m_PointCloud = value;
         }
 
         [SerializeField]
         Button m_FaceTracking;
         public Button faceTracking
         {
-            get { return m_FaceTracking; }
-            set { m_FaceTracking = value; }
+            get => m_FaceTracking;
+            set => m_FaceTracking = value;
         }
 
         [SerializeField]
         Button m_FaceBlendShapes;
         public Button faceBlendShapes
         {
-            get { return m_FaceBlendShapes; }
-            set { m_FaceBlendShapes = value; }
+            get => m_FaceBlendShapes;
+            set => m_FaceBlendShapes = value;
         }
 
         [SerializeField]
         Button m_FaceRegions;
         public Button faceRegions
         {
-            get { return m_FaceRegions; }
-            set { m_FaceRegions = value; }
+            get => m_FaceRegions;
+            set => m_FaceRegions = value;
         }
 
         [SerializeField]
         Button m_BodyTracking;
         public Button bodyTracking
         {
-            get { return m_BodyTracking; }
-            set { m_BodyTracking = value; }
+            get => m_BodyTracking;
+            set => m_BodyTracking = value;
         }
 
         [SerializeField]
         Button m_LightEstimation;
         public Button lightEstimation
         {
-            get { return m_LightEstimation; }
-            set { m_LightEstimation = value; }
+            get => m_LightEstimation;
+            set => m_LightEstimation = value;
         }
 
         [SerializeField]
         Button m_BasicLightEstimation;
         public Button basicLightEstimation
         {
-            get { return m_BasicLightEstimation; }
-            set { m_BasicLightEstimation = value; }
+            get => m_BasicLightEstimation;
+            set => m_BasicLightEstimation = value;
         }
 
         [SerializeField]
         Button m_HDRLightEstimation;
         public Button HDRLightEstimation
         {
-            get { return m_HDRLightEstimation; }
-            set { m_HDRLightEstimation = value; }
+            get => m_HDRLightEstimation;
+            set => m_HDRLightEstimation = value;
         }
 
         [SerializeField]
         Button m_PlaneDetection;
         public Button planeDetection
         {
-            get { return m_PlaneDetection; }
-            set { m_PlaneDetection = value; }
+            get => m_PlaneDetection;
+            set => m_PlaneDetection = value;
         }
 
         [SerializeField]
         Button m_PlaneClassification;
         public Button planeClassification
         {
-            get { return m_PlaneClassification; }
-            set { m_PlaneClassification = value; }
+            get => m_PlaneClassification;
+            set => m_PlaneClassification = value;
         }
 
         [SerializeField]
         Button m_Meshing;
         public Button meshing
         {
-            get { return m_Meshing; }
-            set { m_Meshing = value; }
+            get => m_Meshing;
+            set => m_Meshing = value;
         }
 
         [SerializeField]
         Button m_Interaction;
         public Button interaction
         {
-            get { return m_Interaction; }
-            set { m_Interaction = value; }
+            get => m_Interaction;
+            set => m_Interaction = value;
         }
 
         [SerializeField]
         Button m_FixationPoint;
         public Button fixationPoint
         {
-            get { return m_FixationPoint; }
-            set { m_FixationPoint = value; }
+            get => m_FixationPoint;
+            set => m_FixationPoint = value;
         }
 
         [SerializeField]
         Button m_EyePoses;
         public Button eyePoses
         {
-            get { return m_EyePoses; }
-            set { m_EyePoses = value; }
+            get => m_EyePoses;
+            set => m_EyePoses = value;
         }
 
         [SerializeField]
         Button m_EyeLasers;
         public Button eyeLasers
         {
-            get { return m_EyeLasers; }
-            set { m_EyeLasers = value; }
+            get => m_EyeLasers;
+            set => m_EyeLasers = value;
         }
 
         [SerializeField]
         Button m_CheckSupport;
         public Button checkSupport
         {
-            get { return m_CheckSupport; }
-            set { m_CheckSupport = value; }
+            get => m_CheckSupport;
+            set => m_CheckSupport = value;
         }
 
         [SerializeField]
         Button m_Depth;
         public Button depth
         {
-            get { return m_Depth; }
-            set { m_Depth = value; }
+            get => m_Depth;
+            set => m_Depth = value;
         }
 
         [SerializeField]
