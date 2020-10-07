@@ -390,6 +390,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             LoadScene("InputSystem");
         }
 
+        public void CameraGrainButtonPressed()
+        {
+            LoadScene("CameraGrain");
+        }
+
         void ScrollToStartPosition()
         {
             m_HorizontalScrollBar.value = 0;

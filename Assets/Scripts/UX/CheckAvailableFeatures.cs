@@ -252,7 +252,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set => m_InputSystem = value;
         }
 
-        // Start is called before the first frame update
+        [SerializeField]
+        Button m_CameraGrain;
+        public Button cameraGrain
+        {
+            get => m_CameraGrain;
+            set => m_CameraGrain = value;
+        }
+
         void Start()
         {
             var planeDescriptors = new List<XRPlaneSubsystemDescriptor>();
@@ -359,17 +366,21 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_LightEstimation.interactable = true;
                 foreach(var cameraDescriptor in cameraDescriptors)
                 {
-                    if((cameraDescriptor.supportsAverageBrightness || cameraDescriptor.supportsAverageIntensityInLumens) &&
+                    if ((cameraDescriptor.supportsAverageBrightness || cameraDescriptor.supportsAverageIntensityInLumens) &&
                         (cameraDescriptor.supportsAverageColorTemperature || cameraDescriptor.supportsColorCorrection) && cameraDescriptor.supportsCameraConfigurations &&
                         cameraDescriptor.supportsCameraImage)
                     {
                         m_BasicLightEstimation.interactable = true;
                     }
-                    if(cameraDescriptor.supportsFaceTrackingHDRLightEstimation || cameraDescriptor.supportsWorldTrackingHDRLightEstimation)
+
+                    if (cameraDescriptor.supportsFaceTrackingHDRLightEstimation || cameraDescriptor.supportsWorldTrackingHDRLightEstimation)
                     {
                         m_HDRLightEstimation.interactable = true;
                     }
 
+#if UNITY_2020_2_OR_NEWER
+                    m_CameraGrain.interactable = cameraDescriptor.supportsCameraGrain;
+#endif
                 }
             }
 
