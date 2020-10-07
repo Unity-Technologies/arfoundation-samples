@@ -256,43 +256,43 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void Start()
         {
             var planeDescriptors = new List<XRPlaneSubsystemDescriptor>();
-            SubsystemManager.GetSubsystemDescriptors<XRPlaneSubsystemDescriptor>(planeDescriptors);
+            SubsystemManager.GetSubsystemDescriptors(planeDescriptors);
 
             var rayCastDescriptors = new List<XRRaycastSubsystemDescriptor>();
-            SubsystemManager.GetSubsystemDescriptors<XRRaycastSubsystemDescriptor>(rayCastDescriptors);
+            SubsystemManager.GetSubsystemDescriptors(rayCastDescriptors);
 
             var faceDescriptors = new List<XRFaceSubsystemDescriptor>();
-            SubsystemManager.GetSubsystemDescriptors<XRFaceSubsystemDescriptor>(faceDescriptors);
+            SubsystemManager.GetSubsystemDescriptors(faceDescriptors);
 
             var imageDescriptors = new List<XRImageTrackingSubsystemDescriptor>();
-            SubsystemManager.GetSubsystemDescriptors<XRImageTrackingSubsystemDescriptor>(imageDescriptors);
+            SubsystemManager.GetSubsystemDescriptors(imageDescriptors);
 
             var envDescriptors = new List<XREnvironmentProbeSubsystemDescriptor>();
-            SubsystemManager.GetSubsystemDescriptors<XREnvironmentProbeSubsystemDescriptor>(envDescriptors);
+            SubsystemManager.GetSubsystemDescriptors(envDescriptors);
 
             var anchorDescriptors = new List<XRAnchorSubsystemDescriptor>();
-            SubsystemManager.GetSubsystemDescriptors<XRAnchorSubsystemDescriptor>(anchorDescriptors);
+            SubsystemManager.GetSubsystemDescriptors(anchorDescriptors);
 
             var objectDescriptors = new List<XRObjectTrackingSubsystemDescriptor>();
-            SubsystemManager.GetSubsystemDescriptors<XRObjectTrackingSubsystemDescriptor>(objectDescriptors);
+            SubsystemManager.GetSubsystemDescriptors(objectDescriptors);
 
             var participantDescriptors = new List<XRParticipantSubsystemDescriptor>();
-            SubsystemManager.GetSubsystemDescriptors<XRParticipantSubsystemDescriptor>(participantDescriptors);
+            SubsystemManager.GetSubsystemDescriptors(participantDescriptors);
 
             var depthDescriptors = new List<XRDepthSubsystemDescriptor>();
-            SubsystemManager.GetSubsystemDescriptors<XRDepthSubsystemDescriptor>(depthDescriptors);
+            SubsystemManager.GetSubsystemDescriptors(depthDescriptors);
 
             var occlusionDescriptors = new List<XROcclusionSubsystemDescriptor>();
-            SubsystemManager.GetSubsystemDescriptors<XROcclusionSubsystemDescriptor>(occlusionDescriptors);
+            SubsystemManager.GetSubsystemDescriptors(occlusionDescriptors);
 
             var cameraDescriptors = new List<XRCameraSubsystemDescriptor>();
-            SubsystemManager.GetSubsystemDescriptors<XRCameraSubsystemDescriptor>(cameraDescriptors);
+            SubsystemManager.GetSubsystemDescriptors(cameraDescriptors);
 
             var sessionDescriptors = new List<XRSessionSubsystemDescriptor>();
-            SubsystemManager.GetSubsystemDescriptors<XRSessionSubsystemDescriptor>(sessionDescriptors);
+            SubsystemManager.GetSubsystemDescriptors(sessionDescriptors);
 
             var bodyTrackingDescriptors = new List<XRHumanBodySubsystemDescriptor>();
-            SubsystemManager.GetSubsystemDescriptors<XRHumanBodySubsystemDescriptor>(bodyTrackingDescriptors);
+            SubsystemManager.GetSubsystemDescriptors(bodyTrackingDescriptors);
 
             if(planeDescriptors.Count > 0 && rayCastDescriptors.Count > 0)
             {
