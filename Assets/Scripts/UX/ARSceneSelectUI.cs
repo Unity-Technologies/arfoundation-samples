@@ -29,24 +29,24 @@ namespace UnityEngine.XR.ARFoundation.Samples
         GameObject m_AllMenu;
         public GameObject allMenu
         {
-            get { return m_AllMenu; }
-            set { m_AllMenu = value; }
+            get => m_AllMenu;
+            set => m_AllMenu = value;
         }
 
         [SerializeField]
         GameObject m_ImageTrackingMenu;
         public GameObject imageTrackingMenu
         {
-            get { return m_ImageTrackingMenu; }
-            set { m_ImageTrackingMenu = value; }
+            get => m_ImageTrackingMenu;
+            set => m_ImageTrackingMenu = value;
         }
 
         [SerializeField]
         GameObject m_FaceTrackingMenu;
         public GameObject faceTrackingMenu
         {
-            get { return m_FaceTrackingMenu; }
-            set { m_FaceTrackingMenu = value; }
+            get => m_FaceTrackingMenu;
+            set => m_FaceTrackingMenu = value;
         }
 
         [SerializeField]
@@ -61,32 +61,32 @@ namespace UnityEngine.XR.ARFoundation.Samples
         GameObject m_PlaneDetectionMenu;
         public GameObject planeDetectionMenu
         {
-            get { return m_PlaneDetectionMenu; }
-            set { m_PlaneDetectionMenu = value; }
+            get => m_PlaneDetectionMenu;
+            set => m_PlaneDetectionMenu = value;
         }
 
         [SerializeField]
         GameObject m_MeshingMenu;
         public GameObject meshingMenu
         {
-            get { return m_MeshingMenu; }
-            set { m_MeshingMenu = value; }
+            get => m_MeshingMenu;
+            set => m_MeshingMenu = value;
         }
 
         [SerializeField]
         GameObject m_DepthMenu;
         public GameObject depthMenu
         {
-            get { return m_DepthMenu; }
-            set { m_DepthMenu = value; }
+            get => m_DepthMenu;
+            set => m_DepthMenu = value;
         }
 
         [SerializeField]
         GameObject m_LightEstimationMenu;
         public GameObject lightEstimationMenu
         {
-            get { return m_LightEstimationMenu; }
-            set { m_LightEstimationMenu = value; }
+            get => m_LightEstimationMenu;
+            set => m_LightEstimationMenu = value;
         }
 
         void Start()
@@ -388,6 +388,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public void InputSystemButtonPressed()
         {
             LoadScene("InputSystem");
+        }
+
+        public void CameraGrainButtonPressed()
+        {
+            LoadScene("CameraGrain");
         }
 
         void ScrollToStartPosition()

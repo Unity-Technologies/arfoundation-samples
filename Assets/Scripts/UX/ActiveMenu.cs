@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -19,6 +17,5 @@ namespace UnityEngine.XR.ARFoundation.Samples
     public static class ActiveMenu
     {
         public static MenuType currentMenu { get; set; }
-
     }
 }
