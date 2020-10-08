@@ -2,6 +2,7 @@
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
+    [RequireComponent(typeof(Renderer))]
     public class CameraGrain : MonoBehaviour
     {
         [SerializeField]
