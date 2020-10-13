@@ -21,8 +21,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public ARSession session
         {
-            get { return m_Session; }
-            set { m_Session = value; }
+            get => m_Session;
+            set => m_Session = value;
         }
 
         void OnEnable()
@@ -37,14 +37,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void OnAnchorsChanged(ARAnchorsChangedEventArgs eventArgs)
         {
-            foreach (var referencePoint in eventArgs.added)
+            foreach (var anchor in eventArgs.added)
             {
-                UpdateAnchor(referencePoint);
+                UpdateAnchor(anchor);
             }
 
-            foreach (var referencePoint in eventArgs.updated)
+            foreach (var anchor in eventArgs.updated)
             {
-                UpdateAnchor(referencePoint);
+                UpdateAnchor(anchor);
             }
         }
 
@@ -53,45 +53,28 @@ namespace UnityEngine.XR.ARFoundation.Samples
             public fixed byte data[16];
         }
 
-        void UpdateAnchor(ARAnchor referencePoint)
+        void UpdateAnchor(ARAnchor anchor)
         {
-            var canvas = referencePoint.GetComponentInChildren<Canvas>();
-            if (canvas == null)
-                return;
+            var sessionId = anchor.sessionId;
 
-            canvas.worldCamera = GetComponent<ARSessionOrigin>().camera;
-
-            var text = canvas.GetComponentInChildren<Text>();
-            if (text == null)
-                return;
-
-            var sessionId = referencePoint.sessionId;
-            if (sessionId.Equals(session.subsystem.sessionId))
+            var textManager = anchor.GetComponent<CanvasTextManager>();
+            if (textManager)
             {
-                text.text = $"Local";
-            }
-            else
-            {
-                text.text = $"Remote";
+                textManager.text = sessionId.Equals(session.subsystem.sessionId) ? "Local" : "Remote";
             }
 
-            var cube = referencePoint.transform.Find("Scale/SessionId Indicator");
-            if (cube != null)
+            var colorizer = anchor.GetComponent<Colorizer>();
+            if (colorizer)
             {
-                var renderer = cube.GetComponent<Renderer>();
+                // Generate a color from the sessionId
+                unsafe
                 {
-                    // Generate a color from the sessionId
-                    Color color;
-                    unsafe
-                    {
-                        var bytes = *(byte128*)&sessionId;
-                        color = new Color(
-                            bytes.data[0] / 255f,
-                            bytes.data[4] / 255f,
-                            bytes.data[8] / 255f,
-                            bytes.data[12] / 255f);
-                    }
-                    renderer.material.color = color;
+                    var bytes = *(byte128*)&sessionId;
+                    colorizer.color = new Color(
+                        bytes.data[0] / 255f,
+                        bytes.data[4] / 255f,
+                        bytes.data[8] / 255f,
+                        bytes.data[12] / 255f);
                 }
             }
         }
