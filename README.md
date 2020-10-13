@@ -291,6 +291,10 @@ This sample scene demonstrates the functionality of the `XR Interaction Toolkit`
 ## Input System
 This sample demonstrates a version of the SimpleAR scene using Unity's new Input System. See [`ARController.inputactions`](https://github.com/Unity-Technologies/arfoundation-samples/blob/latest-preview/Assets/Scenes/InputSystem/ARController.inputactions) for an example of an action map. For a demonstration on how these action map bindings are used, see the [`InputSystem_PlaceOnPlane.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/latest-preview/Assets/Scenes/InputSystem/InputSystem_PlaceOnPlane.cs) script. For more details, see the [`Input System Documentation`](https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/manual/index.html).
 
+## Thermal State
+
+This sample contains the code required to query for an iOS device's thermal state so that the thermal state may be used with C# game code. This sample illustrates how the thermal state may be used to disable AR Foundation features to reduce the thermal state of the device.
+
 # Community and Feedback
 
 The intention of this reposititory is to provide a means for getting started with the features in ARFoundation. The samples are intentionally simplistic with a focus on teaching basic scene setup and APIs. If you you have a question, find a bug, or would like to request a new feature concerning any of the ARFoundation packages or these samples please [submit a GitHub issue](https://github.com/Unity-Technologies/arfoundation-samples/issues). New issues are reviewed regularly.

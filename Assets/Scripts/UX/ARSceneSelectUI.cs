@@ -395,6 +395,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             LoadScene("CameraGrain");
         }
 
+        public void ThermalStateButtonPressed()
+        {
+            LoadScene("ThermalState");
+        }
+
         void ScrollToStartPosition()
         {
             m_HorizontalScrollBar.value = 0;

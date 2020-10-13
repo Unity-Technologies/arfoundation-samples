@@ -260,6 +260,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set => m_CameraGrain = value;
         }
 
+        [SerializeField]
+        Button m_ThermalStateButton;
+        public Button thermalStateButton
+        {
+            get => m_ThermalStateButton;
+            set => m_ThermalStateButton = value;
+        }
+
         void Start()
         {
             var planeDescriptors = new List<XRPlaneSubsystemDescriptor>();
@@ -461,6 +469,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 m_Meshing.interactable = true;
             }
+
+#if UNITY_IOS
+            m_ThermalStateButton.interactable = true;
+#endif // UNITY_IOS
+
         }
     }
 }
