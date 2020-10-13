@@ -168,39 +168,39 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void Update()
         {
-            bool isARSessionEnabled = (m_Session?.subsystem?.running ?? false);
-            bool isCameraManagerEnabled = isARSessionEnabled && (m_CameraManager?.subsystem?.running ?? false);
-            bool isEnvironmentProbeManagerEnabled = isARSessionEnabled && (m_EnvironmentProbeManager?.subsystem?.running ?? false);
-            bool isFaceManagerEnabled = isARSessionEnabled && (m_FaceManager?.subsystem?.running ?? false);
-            bool isMeshManagerEnabled = isARSessionEnabled && (m_MeshManager?.subsystem?.running ?? false);
-            bool isOcclusionManagerEnabled = isARSessionEnabled && (m_OcclusionManager?.subsystem?.running ?? false);
-            bool isPlaneManagerEnabled = isARSessionEnabled && (m_PlaneManager?.subsystem?.running ?? false);
-            bool isRaycastManagerEnabled = isARSessionEnabled && (m_RaycastManager?.subsystem?.running ?? false);
+            bool isARSessionEnabled = m_Session && (m_Session.subsystem?.running ?? false);
+            bool isCameraManagerEnabled = isARSessionEnabled && m_CameraManager && (m_CameraManager.subsystem?.running ?? false);
+            bool isEnvironmentProbeManagerEnabled = isARSessionEnabled && m_EnvironmentProbeManager && (m_EnvironmentProbeManager.subsystem?.running ?? false);
+            bool isFaceManagerEnabled = isARSessionEnabled && m_FaceManager && (m_FaceManager.subsystem?.running ?? false);
+            bool isMeshManagerEnabled = isARSessionEnabled && m_MeshManager && (m_MeshManager.subsystem?.running ?? false);
+            bool isOcclusionManagerEnabled = isARSessionEnabled && m_OcclusionManager && (m_OcclusionManager.subsystem?.running ?? false);
+            bool isPlaneManagerEnabled = isARSessionEnabled && m_PlaneManager && (m_PlaneManager.subsystem?.running ?? false);
+            bool isRaycastManagerEnabled = isARSessionEnabled && m_RaycastManager && (m_RaycastManager.subsystem?.running ?? false);
 
-            SetFeatureDisplayState(m_AutoFocusText, isCameraManagerEnabled && (m_CameraManager?.autoFocusEnabled ?? false));
-            SetFeatureDisplayState(m_EnvironmentDepthText, isOcclusionManagerEnabled && (m_OcclusionManager?.currentEnvironmentDepthMode.Enabled() ?? false));
+            SetFeatureDisplayState(m_AutoFocusText, isCameraManagerEnabled && m_CameraManager.autoFocusEnabled);
+            SetFeatureDisplayState(m_EnvironmentDepthText, isOcclusionManagerEnabled && m_OcclusionManager.currentEnvironmentDepthMode.Enabled());
             SetFeatureDisplayState(m_EnvironmentProbesText, isEnvironmentProbeManagerEnabled);
-            SetFeatureDisplayState(m_FaceTrackingText, isFaceManagerEnabled && ((m_FaceManager?.supportedFaceCount ?? 0) > 0));
-            SetFeatureDisplayState(m_HumanDepthText, isOcclusionManagerEnabled && (m_OcclusionManager?.currentHumanDepthMode.Enabled() ?? false));
-            SetFeatureDisplayState(m_HumanStencilText, isOcclusionManagerEnabled && (m_OcclusionManager?.currentHumanStencilMode.Enabled() ?? false));
-            SetFeatureDisplayState(m_LightEstimationColorText, isCameraManagerEnabled && (((m_CameraManager?.currentLightEstimation ?? LightEstimation.None) & LightEstimation.AmbientColor) == LightEstimation.AmbientColor));
-            SetFeatureDisplayState(m_LightEstimationIntensityText, isCameraManagerEnabled && (((m_CameraManager?.currentLightEstimation ?? LightEstimation.None) & LightEstimation.AmbientIntensity) == LightEstimation.AmbientIntensity));
+            SetFeatureDisplayState(m_FaceTrackingText, isFaceManagerEnabled && (m_FaceManager.supportedFaceCount > 0));
+            SetFeatureDisplayState(m_HumanDepthText, isOcclusionManagerEnabled && m_OcclusionManager.currentHumanDepthMode.Enabled());
+            SetFeatureDisplayState(m_HumanStencilText, isOcclusionManagerEnabled && m_OcclusionManager.currentHumanStencilMode.Enabled());
+            SetFeatureDisplayState(m_LightEstimationColorText, isCameraManagerEnabled && ((m_CameraManager.currentLightEstimation & LightEstimation.AmbientColor) == LightEstimation.AmbientColor));
+            SetFeatureDisplayState(m_LightEstimationIntensityText, isCameraManagerEnabled && ((m_CameraManager.currentLightEstimation & LightEstimation.AmbientIntensity) == LightEstimation.AmbientIntensity));
             SetFeatureDisplayState(m_MeshingText, isMeshManagerEnabled);
 #if UNITY_IOS && !UNITY_EDITOR
             {
                 XRMeshSubsystem meshSubsystem = m_MeshManager?.subsystem as XRMeshSubsystem;
-                SetFeatureDisplayState(m_MeshingClassificationText, isMeshManagerEnabled && (meshSubsystem?.GetClassificationEnabled() ?? false));
+                SetFeatureDisplayState(m_MeshingClassificationText, isMeshManagerEnabled && meshSubsystem.GetClassificationEnabled());
             }
 #else // UNITY_IOS && !UNITY_EDITOR
             SetFeatureDisplayState(m_MeshingClassificationText, false);
 #endif // UNITY_IOS && !UNITY_EDITOR
-            SetFeatureDisplayState(m_PlaneTrackingText, isPlaneManagerEnabled && ((m_PlaneManager?.currentDetectionMode ?? PlaneDetectionMode.None) != PlaneDetectionMode.None));
+            SetFeatureDisplayState(m_PlaneTrackingText, isPlaneManagerEnabled && (m_PlaneManager.currentDetectionMode != PlaneDetectionMode.None));
             SetFeatureDisplayState(m_RaycastingText, isRaycastManagerEnabled);
-            SetFeatureDisplayState(m_RotationAndOrientationText, isARSessionEnabled && ((m_Session?.currentTrackingMode ?? TrackingMode.DontCare) == TrackingMode.PositionAndRotation));
-            SetFeatureDisplayState(m_WorldFacingCameraText, isCameraManagerEnabled && ((m_CameraManager?.currentFacingDirection ?? CameraFacingDirection.None) == CameraFacingDirection.World));
+            SetFeatureDisplayState(m_RotationAndOrientationText, isARSessionEnabled && (m_Session.currentTrackingMode == TrackingMode.PositionAndRotation));
+            SetFeatureDisplayState(m_WorldFacingCameraText, isCameraManagerEnabled && (m_CameraManager.currentFacingDirection == CameraFacingDirection.World));
             SetFeatureDisplayState(m_SessionFpsText, isARSessionEnabled);
 
-            int arFrameRate = isARSessionEnabled ? (m_Session?.frameRate ?? 0) : 0;
+            int arFrameRate = isARSessionEnabled ? (m_Session.frameRate ?? 0) : 0;
             m_SessionFpsText.text = $"AR Session FPS: {arFrameRate}";
         }
 
