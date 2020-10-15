@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
-
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -10,12 +8,21 @@ namespace UnityEngine.XR.ARFoundation.Samples
     [RequireComponent(typeof(ARRaycastManager))]
     public class AnchorCreator : MonoBehaviour
     {
+        [SerializeField]
+        GameObject m_Prefab;
+
+        public GameObject prefab
+        {
+            get => m_Prefab;
+            set => m_Prefab = value;
+        }
+
         public void RemoveAllAnchors()
         {
             Logger.Log($"Removing all anchors ({m_Anchors.Count})");
             foreach (var anchor in m_Anchors)
             {
-                m_AnchorManager.RemoveAnchor(anchor);
+                Destroy(anchor.gameObject);
             }
             m_Anchors.Clear();
         }
@@ -26,8 +33,19 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_AnchorManager = GetComponent<ARAnchorManager>();
         }
 
+        void SetAnchorText(ARAnchor anchor, string text)
+        {
+            var canvasTextManager = anchor.GetComponent<CanvasTextManager>();
+            if (canvasTextManager)
+            {
+                canvasTextManager.text = text;
+            }
+        }
+
         ARAnchor CreateAnchor(in ARRaycastHit hit)
         {
+            ARAnchor anchor = null;
+
             // If we hit a plane, try to "attach" the anchor to the plane
             if (hit.trackable is ARPlane plane)
             {
@@ -35,13 +53,31 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 if (planeManager)
                 {
                     Logger.Log("Creating anchor attachment.");
-                    return m_AnchorManager.AttachAnchor(plane, hit.pose);
+                    var oldPrefab = m_AnchorManager.anchorPrefab;
+                    m_AnchorManager.anchorPrefab = prefab;
+                    anchor = m_AnchorManager.AttachAnchor(plane, hit.pose);
+                    m_AnchorManager.anchorPrefab = oldPrefab;
+                    SetAnchorText(anchor, $"Attached to plane {plane.trackableId}");
+                    return anchor;
                 }
             }
 
             // Otherwise, just create a regular anchor at the hit pose
             Logger.Log("Creating regular anchor.");
-            return m_AnchorManager.AddAnchor(hit.pose);
+
+            // Note: the anchor can be anywhere in the scene hierarchy
+            var gameObject = Instantiate(prefab, hit.pose.position, hit.pose.rotation);
+
+            // Make sure the new GameObject has an ARAnchor component
+            anchor = gameObject.GetComponent<ARAnchor>();
+            if (anchor == null)
+            {
+                anchor = gameObject.AddComponent<ARAnchor>();
+            }
+
+            SetAnchorText(anchor, $"Anchor (from {hit.hitType})");
+
+            return anchor;
         }
 
         void Update()
