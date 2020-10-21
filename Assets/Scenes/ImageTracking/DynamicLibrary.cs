@@ -44,7 +44,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 set => m_Width = value;
             }
 
-            public JobHandle jobHandle { get; set; }
+            public AddReferenceImageJobState jobState { get; set; }
         }
 
         [SerializeField, Tooltip("The set of images to add to the image library at runtime")]
@@ -101,7 +101,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     m_StringBuilder.AppendLine("Add image status:");
                     foreach (var image in m_Images)
                     {
-                        m_StringBuilder.AppendLine($"\t{image.name}: {(image.jobHandle.IsCompleted ? "done" : "pending")}");
+                        m_StringBuilder.AppendLine($"\t{image.name}: {(image.jobState.status.ToString())}");
                     }
                     GUILayout.Label(m_StringBuilder.ToString());
                     break;
@@ -167,7 +167,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                                 // Note: You do not need to do anything with the returned JobHandle, but it can be
                                 // useful if you want to know when the image has been added to the library since it may
                                 // take several frames.
-                                image.jobHandle = mutableLibrary.ScheduleAddImageJob(image.texture, image.name, image.width);
+                                image.jobState = mutableLibrary.ScheduleAddImageWithValidationJob(image.texture, image.name, image.width);
                             }
 
                             m_State = State.AddingImages;
@@ -190,7 +190,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     var done = true;
                     foreach (var image in m_Images)
                     {
-                        if (!image.jobHandle.IsCompleted)
+                        if (!image.jobState.jobHandle.IsCompleted)
                         {
                             done = false;
                             break;
