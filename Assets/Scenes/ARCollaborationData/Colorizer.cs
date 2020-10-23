@@ -10,7 +10,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         Renderer m_Renderer;
 
+#if UNITY_EDITOR
         public new Renderer renderer
+#else
+        public Renderer renderer
+#endif
         {
             get => m_Renderer;
             set => m_Renderer = value;
