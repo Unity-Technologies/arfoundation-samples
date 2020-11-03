@@ -116,6 +116,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 sessionSubsystem.requestedCoachingGoal = (ARCoachingGoal)m_Goal;
                 sessionSubsystem.coachingActivatesAutomatically = m_ActivatesAutomatically;
+                sessionSubsystem.sessionDelegate = new CustomSessionDelegate();
             }
             else
     #endif

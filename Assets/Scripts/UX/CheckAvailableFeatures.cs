@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARSubsystems;
@@ -42,6 +43,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             get => m_ARWorldMap;
             set => m_ARWorldMap = value;
+        }
+
+        [SerializeField]
+        Button m_ARKitGeoAnchors;
+        public Button ARKitGeoAnchors
+        {
+            get => m_ARKitGeoAnchors;
+            set => m_ARKitGeoAnchors = value;
         }
 
         [SerializeField]
@@ -443,6 +452,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_ARWorldMap.interactable = true;
             }
 
+            if (sessionDescriptors.Count > 0 && IsiOS14OrLater())
+            {
+                m_ARKitGeoAnchors.interactable = true;
+            }
+
             if(planeDescriptors.Count > 0 && rayCastDescriptors.Count > 0 && participantDescriptors.Count > 0 && ARKitSessionSubsystem.supportsCollaboration)
             {
                 m_ARCollaborationData.interactable = true;
@@ -473,7 +487,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
 #if UNITY_IOS
             m_ThermalStateButton.interactable = true;
 #endif // UNITY_IOS
-
         }
+
+#if UNITY_IOS && !UNITY_EDITOR
+        [DllImport("__Internal", EntryPoint = "ARFoundationSamples_IsiOS14OrLater")]
+        static extern bool IsiOS14OrLater();
+#else
+        static bool IsiOS14OrLater() => false;
+#endif
     }
 }

@@ -178,6 +178,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             LoadScene("ARWorldMap");
         }
 
+        public void ARKitGeoAnchorsButtonPressed()
+        {
+            LoadScene("ARKitGeoAnchors");
+        }
+
         public void CpuImagesButtonPressed()
         {
             LoadScene("CpuImages");

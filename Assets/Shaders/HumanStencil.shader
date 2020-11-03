@@ -47,12 +47,16 @@ Shader "Unlit/HumanStencil"
             {
                 float3 position : POSITION;
                 float2 texcoord : TEXCOORD0;
+
+                UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
             struct v2f
             {
                 float4 position : SV_POSITION;
                 float2 texcoord : TEXCOORD0;
+
+                UNITY_VERTEX_OUTPUT_STEREO
             };
 
             struct fragment_output
@@ -69,6 +73,11 @@ Shader "Unlit/HumanStencil"
             v2f vert (appdata v)
             {
                 v2f o;
+
+                UNITY_SETUP_INSTANCE_ID(v);
+                UNITY_INITIALIZE_OUTPUT(v2f, o);
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+
                 o.position = TransformObjectToHClip(v.position);
                 o.texcoord = mul(float3(v.texcoord, 1.0f), _DisplayRotationPerFrame).xy;
                 return o;
@@ -80,6 +89,8 @@ Shader "Unlit/HumanStencil"
 
             fragment_output frag (v2f i)
             {
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(i);
+
                 float stencilValue = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.texcoord).r;
 
                 fragment_output o;

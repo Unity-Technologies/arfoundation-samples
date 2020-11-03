@@ -80,7 +80,7 @@ This sample shows how to create anchors as the result of a raycast hit. The "Cle
 
 This script can create two kinds of anchors:
 1. If a feature point is hit, it creates a normal anchor at the hit pose using the [AddAnchor](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@4.0/api/UnityEngine.XR.ARFoundation.ARAnchorManager.html#UnityEngine_XR_ARFoundation_ARAnchorManager_AddAnchor_UnityEngine_Pose_) method.
-1. If a plane is hit, it creates an anchor "attached" to the plane using the [AttachAnchor](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@4.0/api/UnityEngine.XR.ARFoundation.ARAnchorManager.html#UnityEngine_XR_ARFoundation_ARAnchorManager_AttachAnchor_UnityEngine_XR_ARFoundation_ARPlane_UnityEngine_Pose_) method. 
+1. If a plane is hit, it creates an anchor "attached" to the plane using the [AttachAnchor](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@4.0/api/UnityEngine.XR.ARFoundation.ARAnchorManager.html#UnityEngine_XR_ARFoundation_ARAnchorManager_AttachAnchor_UnityEngine_XR_ARFoundation_ARPlane_UnityEngine_Pose_) method.
 
 ## Scale
 
@@ -152,9 +152,19 @@ The coaching overlay is an ARKit-specific feature which will overlay a helpful U
 
 The coaching overlay can be activated automatically or manually, and you can set its goal. In this sample, we've set the goal to be "Any plane", and for it to activate automatically. This will display a special UI on the screen until a plane is found. There is also a button to activate it manually.
 
-The sample includes a MonoBehavior to define the settings of the coaching overlay. See [`ARKitCoachingOverlay.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ARKitCoachingOverlay/ARKitCoachingOverlay.cs).
+The sample includes a MonoBehavior to define the settings of the coaching overlay. See [`ARKitCoachingOverlay.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ARKit/ARKitCoachingOverlay/ARKitCoachingOverlay.cs).
+
+This sample also shows how to subscribe to ARKit session callbacks. See [CustomSessionDelegate](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ARKit/ARKitCoachingOverlay/CustomSessionDelegate.cs)
 
 This sample requires iOS 13.
+
+## ARKitGeoAnchors
+
+[ARKit's ARGeoAnchors](https://developer.apple.com/documentation/arkit/argeoanchor?language=objc) are not yet supported by ARFoundation, but you can still access this feature with a bit of Objective-C. This sample uses a custom [ConfigurationChooser](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@4.1/api/UnityEngine.XR.ARSubsystems.ConfigurationChooser.html) to instruct the ARKit XR Plugin to use an [ARGeoTrackingConfiguration](https://developer.apple.com/documentation/arkit/argeotrackingconfiguration?language=objc).
+
+This sample also shows how to interpret the [nativePtr](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@4.1/api/UnityEngine.XR.ARSubsystems.XRSessionSubsystem.html#UnityEngine_XR_ARSubsystems_XRSessionSubsystem_nativePtr) provided by the [XRSessionSubsystem](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@4.1/api/UnityEngine.XR.ARSubsystems.XRSessionSubsystem.html) as an ARKit [ARSession](https://developer.apple.com/documentation/arkit/arsession?language=objc) pointer.
+
+This sample requires an iOS device running iOS 14.0 or later, an A12 chip or later, location services enabled, and cellular capability.
 
 ## ImageTracking
 
