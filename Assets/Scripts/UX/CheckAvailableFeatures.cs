@@ -452,7 +452,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_ARWorldMap.interactable = true;
             }
 
-            if (sessionDescriptors.Count > 0 && IsiOS14OrLater())
+            if (sessionDescriptors.Count > 0 && EnableGeoAnchors.IsSupported)
             {
                 m_ARKitGeoAnchors.interactable = true;
             }
@@ -488,12 +488,5 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_ThermalStateButton.interactable = true;
 #endif // UNITY_IOS
         }
-
-#if UNITY_IOS && !UNITY_EDITOR
-        [DllImport("__Internal", EntryPoint = "ARFoundationSamples_IsiOS14OrLater")]
-        static extern bool IsiOS14OrLater();
-#else
-        static bool IsiOS14OrLater() => false;
-#endif
     }
 }

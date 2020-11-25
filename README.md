@@ -21,7 +21,7 @@ In ARFoundation, this means:
 |    2018.4     | [1.5 (preview)](https://github.com/Unity-Technologies/arfoundation-samples/tree/1.5-preview)  |
 |    2019.3     | [2.1 (verified)](https://github.com/Unity-Technologies/arfoundation-samples/tree/2.1)         |
 |    2020.1     | 3.0 (verified)                                                                                |
-|    2020.2     | 4.1 (preview)                                                                                 |
+|    2020.2     | 4.1 (verified)                                                                                |
 
 ## ARSubsystems
 

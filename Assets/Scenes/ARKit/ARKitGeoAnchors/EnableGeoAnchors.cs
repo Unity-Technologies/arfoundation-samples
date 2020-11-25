@@ -7,147 +7,155 @@ using UnityEngine.XR.ARSubsystems;
 #if UNITY_IOS
 using System.Runtime.InteropServices;
 using UnityEngine.XR.ARKit;
-
-// This custom ConfigurationChooser tells the ARKit XR Plugin to use an ARGeoTrackingConfiguration
-// See https://developer.apple.com/documentation/arkit/argeotrackingconfiguration?language=objc
-class ARGeoAnchorConfigurationChooser : ConfigurationChooser
-{
-    static readonly ConfigurationChooser s_DefaultChooser = new DefaultConfigurationChooser();
-
-    static readonly ConfigurationDescriptor s_ARGeoConfigurationDescriptor = new ConfigurationDescriptor(
-        // On iOS, the "identifier" used by the ConfigurationDescriptor is the Objective-C metaclass for the type
-        // of configuration that should be used. In general, you should not create new ConfigurationDescriptors
-        // (you should pick one of the descriptors passed into ChooseConfiguration); however, this will do for this
-        // specific case.
-        ARGeoTrackingConfigurationClass,
-
-        // These are the "features" supported by the ARGeoTrackingConfiguration
-        Feature.WorldFacingCamera |
-        Feature.PositionAndRotation |
-        Feature.ImageTracking |
-        Feature.PlaneTracking |
-        Feature.ObjectTracking |
-        Feature.EnvironmentProbes,
-
-        // Rank is meant to be used as a tie breaker in our implementation of ChooseConfiguration, but since we will
-        // always choose this descriptor, it doesn't matter what value we use here.
-        0);
-
-    public override Configuration ChooseConfiguration(NativeSlice<ConfigurationDescriptor> descriptors, Feature requestedFeatures)
-    {
-        // If location services are running, then we can request an ARGeoTrackingConfiguration by its class pointer
-        return Input.location.status == LocationServiceStatus.Running
-            ? new Configuration(s_ARGeoConfigurationDescriptor, requestedFeatures.Intersection(s_ARGeoConfigurationDescriptor.capabilities))
-            : s_DefaultChooser.ChooseConfiguration(descriptors, requestedFeatures);
-    }
-
-    public static extern IntPtr ARGeoTrackingConfigurationClass
-    {
-        [DllImport("__Internal", EntryPoint = "ARGeoTrackingConfiguration_class")]
-        get;
-    }
-}
 #endif
 
-[RequireComponent(typeof(ARSession))]
-public class EnableGeoAnchors : MonoBehaviour
+namespace UnityEngine.XR.ARFoundation.Samples
 {
-#if UNITY_IOS// && !UNITY_EDITOR
-
-    // See https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@4.0/manual/extensions.html
-    public struct NativePtrData
+#if UNITY_IOS && !UNITY_EDITOR
+    // This custom ConfigurationChooser tells the ARKit XR Plugin to use an ARGeoTrackingConfiguration
+    // See https://developer.apple.com/documentation/arkit/argeotrackingconfiguration?language=objc
+    class ARGeoAnchorConfigurationChooser : ConfigurationChooser
     {
-        public int version;
-        public IntPtr sessionPtr;
-    }
+        static readonly ConfigurationChooser s_DefaultChooser = new DefaultConfigurationChooser();
 
-    // See https://developer.apple.com/documentation/corelocation/cllocationcoordinate2d?language=objc
-    public struct CLLocationCoordinate2D
-    {
-        public double latitude;
-        public double longitude;
-    }
+        static readonly ConfigurationDescriptor s_ARGeoConfigurationDescriptor = new ConfigurationDescriptor(
+            // On iOS, the "identifier" used by the ConfigurationDescriptor is the Objective-C metaclass for the type
+            // of configuration that should be used. In general, you should not create new ConfigurationDescriptors
+            // (you should pick one of the descriptors passed into ChooseConfiguration); however, this will do for this
+            // specific case.
+            ARGeoTrackingConfigurationClass,
 
-    // ARGeoAnchors requires location services
-    void Start() => Input.location.Start();
+            // These are the "features" supported by the ARGeoTrackingConfiguration
+            Feature.WorldFacingCamera |
+            Feature.PositionAndRotation |
+            Feature.ImageTracking |
+            Feature.PlaneTracking |
+            Feature.ObjectTracking |
+            Feature.EnvironmentProbes,
 
-    void OnGUI()
-    {
-        GUI.skin.label.fontSize = 50;
-        GUILayout.Space(100);
+            // Rank is meant to be used as a tie breaker in our implementation of ChooseConfiguration, but since we will
+            // always choose this descriptor, it doesn't matter what value we use here.
+            0);
 
-        if (ARGeoAnchorConfigurationChooser.ARGeoTrackingConfigurationClass == IntPtr.Zero)
+        public override Configuration ChooseConfiguration(NativeSlice<ConfigurationDescriptor> descriptors, Feature requestedFeatures)
         {
-            GUILayout.Label("ARGeoTrackingConfiguration is not supported on this device.");
-            return;
+            // If location services are running, then we can request an ARGeoTrackingConfiguration by its class pointer
+            return Input.location.status == LocationServiceStatus.Running
+                ? new Configuration(s_ARGeoConfigurationDescriptor, requestedFeatures.Intersection(s_ARGeoConfigurationDescriptor.capabilities))
+                : s_DefaultChooser.ChooseConfiguration(descriptors, requestedFeatures);
         }
 
-        switch (Input.location.status)
+        public static extern IntPtr ARGeoTrackingConfigurationClass
         {
-            case LocationServiceStatus.Initializing:
-                GUILayout.Label("Waiting for location services...");
-                break;
-            case LocationServiceStatus.Stopped:
-                GUILayout.Label("Location services stopped. Unable to use geo anchors.");
-                break;
-            case LocationServiceStatus.Failed:
-                GUILayout.Label("Location services failed. Unable to use geo anchors.");
-                break;
-            case LocationServiceStatus.Running:
-                GUILayout.Label("Tap screen to add a geo anchor.");
-                break;
+            [DllImport("__Internal", EntryPoint = "ARGeoTrackingConfiguration_class")]
+            get;
         }
     }
+#endif
 
-    void Update()
+    [RequireComponent(typeof(ARSession))]
+    public class EnableGeoAnchors : MonoBehaviour
     {
-        // Can't do anything interesting until location services are running.
-        if (Input.location.status != LocationServiceStatus.Running)
-            return;
+#if UNITY_IOS && !UNITY_EDITOR
+        public static bool IsSupported => ARGeoAnchorConfigurationChooser.ARGeoTrackingConfigurationClass != IntPtr.Zero;
 
-        if (GetComponent<ARSession>().subsystem is ARKitSessionSubsystem subsystem)
+        // See https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@4.0/manual/extensions.html
+        public struct NativePtrData
         {
-            if (!(subsystem.configurationChooser is ARGeoAnchorConfigurationChooser))
+            public int version;
+            public IntPtr sessionPtr;
+        }
+
+        // See https://developer.apple.com/documentation/corelocation/cllocationcoordinate2d?language=objc
+        public struct CLLocationCoordinate2D
+        {
+            public double latitude;
+            public double longitude;
+        }
+
+        // ARGeoAnchors requires location services
+        void Start() => Input.location.Start();
+
+        void OnGUI()
+        {
+            GUI.skin.label.fontSize = 50;
+            GUILayout.Space(100);
+
+            if (ARGeoAnchorConfigurationChooser.ARGeoTrackingConfigurationClass == IntPtr.Zero)
             {
-                // Replace the config chooser with our own
-                subsystem.configurationChooser = new ARGeoAnchorConfigurationChooser();
+                GUILayout.Label("ARGeoTrackingConfiguration is not supported on this device.");
+                return;
             }
 
-            // We don't have to do this, but it will silence a warning message in Xcode
-            // since the ARGeoTrackingConfiguration can only use the GravityAndHeading value.
-            subsystem.requestedWorldAlignment = ARWorldAlignment.GravityAndHeading;
-
-            // Make sure we have a native ptr
-            if (subsystem.nativePtr == IntPtr.Zero)
-                return;
-
-            // Get the session ptr from the native ptr data
-            var session = Marshal.PtrToStructure<NativePtrData>(subsystem.nativePtr).sessionPtr;
-            if (session == IntPtr.Zero)
-                return;
-
-            var screenTapped = Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended;
-            if (screenTapped)
+            switch (Input.location.status)
             {
-                // Get last known location data
-                var locationData = Input.location.lastData;
+                case LocationServiceStatus.Initializing:
+                    GUILayout.Label("Waiting for location services...");
+                    break;
+                case LocationServiceStatus.Stopped:
+                    GUILayout.Label("Location services stopped. Unable to use geo anchors.");
+                    break;
+                case LocationServiceStatus.Failed:
+                    GUILayout.Label("Location services failed. Unable to use geo anchors.");
+                    break;
+                case LocationServiceStatus.Running:
+                    GUILayout.Label("Tap screen to add a geo anchor.");
+                    break;
+            }
+        }
 
-                // Add a geo anchor. See GeoAnchorsNativeInterop.m to see how this works.
-                AddGeoAnchor(session, new CLLocationCoordinate2D
+        void Update()
+        {
+            // Can't do anything interesting until location services are running.
+            if (Input.location.status != LocationServiceStatus.Running)
+                return;
+
+            if (GetComponent<ARSession>().subsystem is ARKitSessionSubsystem subsystem)
+            {
+                if (!(subsystem.configurationChooser is ARGeoAnchorConfigurationChooser))
                 {
-                    latitude = locationData.latitude,
-                    longitude = locationData.longitude
-                }, locationData.altitude);
+                    // Replace the config chooser with our own
+                    subsystem.configurationChooser = new ARGeoAnchorConfigurationChooser();
+                }
+
+                // We don't have to do this, but it will silence a warning message in Xcode
+                // since the ARGeoTrackingConfiguration can only use the GravityAndHeading value.
+                subsystem.requestedWorldAlignment = ARWorldAlignment.GravityAndHeading;
+
+                // Make sure we have a native ptr
+                if (subsystem.nativePtr == IntPtr.Zero)
+                    return;
+
+                // Get the session ptr from the native ptr data
+                var session = Marshal.PtrToStructure<NativePtrData>(subsystem.nativePtr).sessionPtr;
+                if (session == IntPtr.Zero)
+                    return;
+
+                var screenTapped = Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended;
+                if (screenTapped)
+                {
+                    // Get last known location data
+                    var locationData = Input.location.lastData;
+
+                    // Add a geo anchor. See GeoAnchorsNativeInterop.m to see how this works.
+                    AddGeoAnchor(session, new CLLocationCoordinate2D
+                    {
+                        latitude = locationData.latitude,
+                        longitude = locationData.longitude
+                    }, locationData.altitude);
+                }
+
+                DoSomethingWithSession(session);
             }
-
-            DoSomethingWithSession(session);
         }
-    }
 
-    [DllImport("__Internal")]
-    static extern void DoSomethingWithSession(IntPtr session);
+        [DllImport("__Internal")]
+        static extern void DoSomethingWithSession(IntPtr session);
 
-    [DllImport("__Internal", EntryPoint = "ARSession_addGeoAnchor")]
-    static extern void AddGeoAnchor(IntPtr session, CLLocationCoordinate2D coordinate, double altitude);
+        [DllImport("__Internal", EntryPoint = "ARSession_addGeoAnchor")]
+        static extern void AddGeoAnchor(IntPtr session, CLLocationCoordinate2D coordinate, double altitude);
+#else
+        public static bool IsSupported => false;
 #endif
+    }
 }
