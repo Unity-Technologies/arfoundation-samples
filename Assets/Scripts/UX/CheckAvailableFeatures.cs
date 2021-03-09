@@ -353,17 +353,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 foreach(var occlusionDescriptor in occlusionDescriptors)
                 {
-#if UNITY_IOS
-                    if(occlusionDescriptor.supportsEnvironmentDepthImage
-                       || occlusionDescriptor.supportsHumanSegmentationDepthImage
-                       || occlusionDescriptor.supportsHumanSegmentationStencilImage)
+                    if (occlusionDescriptor.environmentDepthImageSupported != Supported.Unsupported ||
+                        occlusionDescriptor.humanSegmentationDepthImageSupported != Supported.Unsupported ||
+                        occlusionDescriptor.humanSegmentationStencilImageSupported != Supported.Unsupported)
                     {
                         m_Depth.interactable = true;
                     }
-#endif
-#if UNITY_ANDROID
-                    m_Depth.interactable = true;
-#endif
                 }
             }
 
@@ -395,9 +390,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         m_HDRLightEstimation.interactable = true;
                     }
 
-#if UNITY_2020_2_OR_NEWER
                     m_CameraGrain.interactable = cameraDescriptor.supportsCameraGrain;
-#endif
                 }
             }
 

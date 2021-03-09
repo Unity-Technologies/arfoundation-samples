@@ -23,8 +23,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public AROcclusionManager occlusionManager
         {
-            get { return m_OcclusionManager; }
-            set { m_OcclusionManager = value; }
+            get => m_OcclusionManager;
+            set => m_OcclusionManager = value;
         }
 
         [SerializeField]
@@ -35,17 +35,20 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public Text depthAvailabilityInfo
         {
-            get { return m_DepthAvailabilityInfo; }
-            set { m_DepthAvailabilityInfo = value; }
+            get => m_DepthAvailabilityInfo;
+            set => m_DepthAvailabilityInfo = value;
         }
 
         void Update()
         {
             Debug.Assert(m_OcclusionManager != null, "no occlusion manager");
             Debug.Assert(m_DepthAvailabilityInfo != null, "no text box");
-            m_DepthAvailabilityInfo.enabled = ((m_OcclusionManager.descriptor?.supportsHumanSegmentationStencilImage == false)
-                                               && (m_OcclusionManager.descriptor?.supportsHumanSegmentationDepthImage == false)
-                                               && (m_OcclusionManager.descriptor?.supportsEnvironmentDepthImage == false));
+            var descriptor = m_OcclusionManager.descriptor;
+            m_DepthAvailabilityInfo.enabled =
+                descriptor == null ||
+                (descriptor.humanSegmentationStencilImageSupported == Supported.Unsupported &&
+                descriptor.humanSegmentationDepthImageSupported == Supported.Unsupported &&
+                descriptor.environmentDepthImageSupported == Supported.Unsupported);
         }
     }
 }

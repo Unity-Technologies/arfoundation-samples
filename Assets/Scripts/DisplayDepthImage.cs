@@ -209,41 +209,65 @@ namespace UnityEngine.XR.ARFoundation.Samples
             // If we are on a device that does supports neither human stencil, human depth, nor environment depth,
             // display a message about unsupported functionality and return.
             Debug.Assert(m_OcclusionManager != null, "no occlusion manager");
+
+            var descriptor = m_OcclusionManager.descriptor;
             switch (m_DisplayMode)
             {
                 case DisplayMode.HumanDepth:
                 case DisplayMode.HumanStencil:
-                    if ((m_OcclusionManager.descriptor?.supportsHumanSegmentationStencilImage == false)
-                        && (m_OcclusionManager.descriptor?.supportsHumanSegmentationDepthImage == false))
+                {
+                    if (descriptor != null &&
+                        (descriptor.humanSegmentationDepthImageSupported == Supported.Supported ||
+                        descriptor.humanSegmentationStencilImageSupported == Supported.Supported))
+                    {
+                        break;
+                    }
+
+                    if (descriptor != null &&
+                        (descriptor.humanSegmentationStencilImageSupported == Supported.Unknown ||
+                         descriptor.humanSegmentationDepthImageSupported == Supported.Unknown))
+                    {
+                        LogText("Determining human segmentation support...");
+                    }
+                    else
                     {
                         LogText("Human segmentation is not supported on this device.");
-
-                        m_RawImage.texture = null;
-                        if (!Mathf.Approximately(m_TextureAspectRatio, k_DefaultTextureAspectRadio))
-                        {
-                            m_TextureAspectRatio = k_DefaultTextureAspectRadio;
-                            UpdateRawImage();
-                        }
-
-                        return;
                     }
-                    break;
-                case DisplayMode.EnvironmentDepth :
+
+                    m_RawImage.texture = null;
+                    if (!Mathf.Approximately(m_TextureAspectRatio, k_DefaultTextureAspectRadio))
+                    {
+                        m_TextureAspectRatio = k_DefaultTextureAspectRadio;
+                        UpdateRawImage();
+                    }
+
+                    return;
+                }
+                case DisplayMode.EnvironmentDepth:
                 default:
-                    if (m_OcclusionManager.descriptor?.supportsEnvironmentDepthImage == false)
+                {
+                    if (descriptor == null || descriptor.environmentDepthImageSupported == Supported.Unsupported)
                     {
                         LogText("Environment depth is not supported on this device.");
-
-                        m_RawImage.texture = null;
-                        if (!Mathf.Approximately(m_TextureAspectRatio, k_DefaultTextureAspectRadio))
-                        {
-                            m_TextureAspectRatio = k_DefaultTextureAspectRadio;
-                            UpdateRawImage();
-                        }
-
-                        return;
                     }
-                    break;
+                    else if (descriptor.environmentDepthImageSupported == Supported.Unknown)
+                    {
+                        LogText("Determining environment depth support...");
+                    }
+                    else if (descriptor.environmentDepthImageSupported == Supported.Supported)
+                    {
+                        break;
+                    }
+
+                    m_RawImage.texture = null;
+                    if (!Mathf.Approximately(m_TextureAspectRatio, k_DefaultTextureAspectRadio))
+                    {
+                        m_TextureAspectRatio = k_DefaultTextureAspectRadio;
+                        UpdateRawImage();
+                    }
+
+                    return;
+                }
             }
 
             // Get all of the occlusion textures.
