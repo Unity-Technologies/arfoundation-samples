@@ -23,9 +23,9 @@ This set of samples relies on five Unity packages:
 
 ## ARSubsystems
 
-ARFoundation is built on "[subsystems](https://docs.unity3d.com/2019.3/Documentation/ScriptReference/Subsystem.html)" and depends on a separate package called [ARSubsystems](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@4.2/manual/index.html). ARSubsystems defines an interface, and the platform-specific implementations are in the [ARCore](https://docs.unity3d.com/Packages/com.unity.xr.arcore@4.2/manual/index.html) and [ARKit](https://docs.unity3d.com/Packages/com.unity.xr.arkit@4.2/manual/index.html) packages. ARFoundation turns the AR data provided by ARSubsystems into Unity `GameObject`s and `MonoBehavour`s.
+ARFoundation is built on "[subsystems](https://docs.unity3d.com/2020.3/Documentation/ScriptReference/Subsystem.html)" and depends on a separate package called [ARSubsystems](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@4.2/manual/index.html). ARSubsystems defines an interface, and the platform-specific implementations are in the [ARCore](https://docs.unity3d.com/Packages/com.unity.xr.arcore@4.2/manual/index.html) and [ARKit](https://docs.unity3d.com/Packages/com.unity.xr.arkit@4.2/manual/index.html) packages. ARFoundation turns the AR data provided by ARSubsystems into Unity `GameObject`s and `MonoBehavour`s.
 
-The `master` branch is compatible with Unity 2019.3 and later. For 2018.4, see the [1.5-preview branch](https://github.com/Unity-Technologies/arfoundation-samples/tree/1.5-preview).
+The `main` branch is compatible with Unity 2020.3 and later. For earlier versions, see the table above.
 
 ## Why is ARKit Face Tracking a separate package?
 
@@ -33,7 +33,7 @@ For privacy reasons, use of ARKit's face tracking feature requires additional va
 
 ## Instructions for installing AR Foundation
 
-1. Download the latest version of Unity 2019.3 or later.
+1. Download the latest version of Unity 2020.3 or later.
 
 2. Open Unity, and load the project at the root of the *arfoundation-samples* repository.
 
