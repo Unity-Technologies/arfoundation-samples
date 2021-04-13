@@ -17,7 +17,7 @@ This set of samples relies on five Unity packages:
 |    2018.4     | [1.5 (preview)](https://github.com/Unity-Technologies/arfoundation-samples/tree/1.5-preview)  |
 |    2019.4     | [2.1 (verified)](https://github.com/Unity-Technologies/arfoundation-samples/tree/2.1)         |
 |    2020.1     | [3.1 (verified)](https://github.com/Unity-Technologies/arfoundation-samples/tree/3.1)         |
-|    2020.3     | [4.0 (verified)](https://github.com/Unity-Technologies/arfoundation-samples/tree/4.0)         |
+|    2020.3     | [4.1 (verified)](https://github.com/Unity-Technologies/arfoundation-samples/tree/4.1)         |
 |    2021.1     | [4.1 (verified)](https://github.com/Unity-Technologies/arfoundation-samples/tree/4.1)         |
 |    2021.2     | 4.2 (prerelease)                                                                              |
 
