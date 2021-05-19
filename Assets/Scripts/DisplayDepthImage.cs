@@ -16,9 +16,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         enum DisplayMode
         {
-            EnvironmentDepth = 0,
-            HumanDepth = 1,
-            HumanStencil = 2,
+            EnvironmentDepthRaw = 0,
+            EnvironmentDepthSmooth = 1,
+            HumanDepth = 2,
+            HumanStencil = 3,
         }
 
         /// <summary>
@@ -64,7 +65,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// <summary>
         /// The mode indicating which texture to display.
         /// </summary>
-        DisplayMode m_DisplayMode = DisplayMode.EnvironmentDepth;
+        DisplayMode m_DisplayMode = DisplayMode.EnvironmentDepthRaw;
 
         /// <summary>
         /// The display rotation matrix for the shader.
@@ -243,7 +244,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     return;
                 }
-                case DisplayMode.EnvironmentDepth:
+                case DisplayMode.EnvironmentDepthRaw:
+                case DisplayMode.EnvironmentDepthSmooth:
                 default:
                 {
                     if (descriptor == null || descriptor.environmentDepthImageSupported == Supported.Unsupported)
@@ -256,6 +258,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     }
                     else if (descriptor.environmentDepthImageSupported == Supported.Supported)
                     {
+                        m_OcclusionManager.environmentDepthTemporalSmoothingRequested = m_DisplayMode == DisplayMode.EnvironmentDepthSmooth;
                         break;
                     }
 
@@ -293,7 +296,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 case DisplayMode.HumanDepth:
                     displayTexture = humanDepth;
                     break;
-                case DisplayMode.EnvironmentDepth:
+                case DisplayMode.EnvironmentDepthRaw:
+                case DisplayMode.EnvironmentDepthSmooth:
                 default:
                     displayTexture = envDepth;
                     break;
@@ -443,7 +447,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     material = m_DepthMaterial;
                     maxDistance = m_MaxHumanDistance;
                     break;
-                case DisplayMode.EnvironmentDepth:
+                case DisplayMode.EnvironmentDepthRaw:
+                case DisplayMode.EnvironmentDepthSmooth:
                 default:
                     material = m_DepthMaterial;
                     maxDistance = m_MaxEnvironmentDistance;
