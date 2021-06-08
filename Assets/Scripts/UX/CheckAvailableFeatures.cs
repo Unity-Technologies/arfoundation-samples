@@ -279,6 +279,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void Start()
         {
+            if(!s_MeshingSupported)
+            {
+                var activeLoader = LoaderUtility.GetActiveLoader();
+                if(activeLoader && activeLoader.GetLoadedSubsystem<XRMeshSubsystem>() != null)
+                {
+                    s_MeshingSupported = true;
+                }
+            }
             var planeDescriptors = new List<XRPlaneSubsystemDescriptor>();
             SubsystemManager.GetSubsystemDescriptors(planeDescriptors);
 
@@ -471,8 +479,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_PlaneOcclusion.interactable  = true;
             }
 
-            var activeLoader = LoaderUtility.GetActiveLoader();
-            if(activeLoader && activeLoader.GetLoadedSubsystem<XRMeshSubsystem>() != null)
+            // Due to a change in XR Management version 4.0.2, where cached subsystems are cleared after XRLoader.Deinitialize is
+            // called, meshing support needs to be checked once as support will not be changed with scene changes.
+            if(s_MeshingSupported)
             {
                 m_Meshing.interactable = true;
             }
@@ -481,5 +490,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_ThermalStateButton.interactable = true;
 #endif // UNITY_IOS
         }
+
+        static bool s_MeshingSupported;
     }
 }
