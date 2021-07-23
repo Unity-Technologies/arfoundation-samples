@@ -256,7 +256,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             // Attempt to get the latest human stencil image. If this method succeeds,
             // it acquires a native resource that must be disposed (see below).
-            if (occlusionManager && occlusionManager.TryAcquireHumanStencilCpuImage(out XRCpuImage image))
+            if (occlusionManager && occlusionManager.TryAcquireHumanStencilCpuImage(out var image))
             {
                 using (image)
                 {
@@ -276,7 +276,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             // Attempt to get the latest environment depth image. If this method succeeds,
             // it acquires a native resource that must be disposed (see below).
-            if (occlusionManager && occlusionManager.TryAcquireEnvironmentDepthCpuImage(out XRCpuImage image))
+            if (occlusionManager && occlusionManager.TryAcquireEnvironmentDepthCpuImage(out var image))
             {
                 using (image)
                 {
@@ -296,7 +296,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             // Attempt to get the latest environment depth image. If this method succeeds,
             // it acquires a native resource that must be disposed (see below).
-            if (occlusionManager && occlusionManager.TryAcquireEnvironmentDepthConfidenceCpuImage(out XRCpuImage image))
+            if (occlusionManager && occlusionManager.TryAcquireEnvironmentDepthConfidenceCpuImage(out var image))
             {
                 using (image)
                 {

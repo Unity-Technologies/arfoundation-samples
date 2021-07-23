@@ -3,6 +3,7 @@ using Unity.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -30,8 +31,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public ARCameraManager cameraManager
         {
-            get { return m_CameraManager; }
-            set { m_CameraManager = value; }
+            get => m_CameraManager;
+            set => m_CameraManager = value;
         }
 
         /// <summary>
@@ -92,7 +93,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 // 1. Use a foreach to iterate over all the available configurations
                 foreach (var config in configurations)
                 {
-                    m_ConfigurationNames.Add($"{config.width}x{config.height}{(config.framerate.HasValue ? $" at {config.framerate.Value} Hz" : "")}");
+                    m_ConfigurationNames.Add($"{config.width}x{config.height}{(config.framerate.HasValue ? $" at {config.framerate.Value} Hz" : "")}{(config.depthSensorSupported == Supported.Supported ? " depth sensor" : "")}");
                 }
                 m_Dropdown.AddOptions(m_ConfigurationNames);
 
