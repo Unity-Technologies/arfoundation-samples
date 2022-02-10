@@ -70,15 +70,15 @@ This sample attempts to read HDR lighting information. You should see values for
 
 On iOS, this is only available when face tracking is enabled and requires a device that supports face tracking (such as an iPhone X, XS or 11). When available, a virtual arrow appears in front of the camera which indicates the estimated main light direction. The virtual light direction is also updated, so that virtual content appears to be lit from the direction of the real light source.
 
-When using `HDRLightEstimation`, the sample will automatically pick the supported camera facing direction for you, for example `World` on Android and `User` on iOS, so it does not matter which you facing direction select in the `ARCameraManager.cs` component.
+When using `HDRLightEstimation`, the sample will automatically pick the supported camera facing direction for you, for example `World` on Android and `User` on iOS, so it does not matter which facing direction you select in the `ARCameraManager` component.
 
 ## Anchors
 
 This sample shows how to create anchors as the result of a raycast hit. The "Clear Anchors" button removes all created anchors. See the [`AnchorCreator.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/AnchorCreator.cs) script.
 
 This script can create two kinds of anchors:
-1. If a feature point is hit, it creates a normal anchor at the hit pose using the [AddAnchor](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@4.0/api/UnityEngine.XR.ARFoundation.ARAnchorManager.html#UnityEngine_XR_ARFoundation_ARAnchorManager_AddAnchor_UnityEngine_Pose_) method.
-1. If a plane is hit, it creates an anchor "attached" to the plane using the [AttachAnchor](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@4.0/api/UnityEngine.XR.ARFoundation.ARAnchorManager.html#UnityEngine_XR_ARFoundation_ARAnchorManager_AttachAnchor_UnityEngine_XR_ARFoundation_ARPlane_UnityEngine_Pose_) method.
+1. If a feature point is hit, it creates a normal anchor at the hit pose using the `GameObject.AddComponent<ARAnchor>()` method.
+1. If a plane is hit, it creates an anchor "attached" to the plane using the [AttachAnchor](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@4.2/api/UnityEngine.XR.ARFoundation.ARAnchorManager.html#UnityEngine_XR_ARFoundation_ARAnchorManager_AttachAnchor_UnityEngine_XR_ARFoundation_ARPlane_UnityEngine_Pose_) method.
 
 ## Scale
 
@@ -136,7 +136,7 @@ This sample requires iOS 12.
 
 Similar to an `ARWorldMap`, a "collaborative session" is an ARKit-specific feature which allows multiple devices to share session information in real time. Each device will periodically produce `ARCollaborationData` which should be sent to all other devices in the collaborative session. ARKit will share each participant's pose and all reference points. Other types of trackables, such as detected planes, are not shared.
 
-See [`CollaborativeSession.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ARCollaborationData/CollaborativeSession.cs). Note there are two types of collaboration data: "Critical" and "Optional". "Critical" data is available periodically and should be sent to all other devices reliably. "Optional" data is available nearly every frame and may be sent unreliably. Data marked as "optional" includes data about the device's location, which is why it is produced very frequently (i.e., every frame).
+See [`CollaborativeSession.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ARKit/ARCollaborationData/CollaborativeSession.cs). Note there are two types of collaboration data: "Critical" and "Optional". "Critical" data is available periodically and should be sent to all other devices reliably. "Optional" data is available nearly every frame and may be sent unreliably. Data marked as "optional" includes data about the device's location, which is why it is produced very frequently (i.e., every frame).
 
 Note that ARKit's support for collaborative sessions does not include any networking; it is up to the developer to manage the connection and send data to other participants in the collaborative session. For this sample, we used Apple's [MultipeerConnectivity Framework](https://developer.apple.com/documentation/multipeerconnectivity). Our implementation can be found [here](https://github.com/Unity-Technologies/arfoundation-samples/tree/master/Assets/Scripts/Multipeer).
 
@@ -152,7 +152,7 @@ The coaching overlay can be activated automatically or manually, and you can set
 
 The sample includes a MonoBehavior to define the settings of the coaching overlay. See [`ARKitCoachingOverlay.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ARKit/ARKitCoachingOverlay/ARKitCoachingOverlay.cs).
 
-This sample also shows how to subscribe to ARKit session callbacks. See [CustomSessionDelegate](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ARKit/ARKitCoachingOverlay/CustomSessionDelegate.cs)
+This sample also shows how to subscribe to ARKit session callbacks. See [CustomSessionDelegate](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ARKit/ARKitCoachingOverlay/CustomSessionDelegate.cs).
 
 This sample requires iOS 13.
 
@@ -294,11 +294,11 @@ At first, this scene may appear to be doing nothing. However, it is rendering a 
 
 ## Interaction
 
-This sample scene demonstrates the functionality of the `XR Interaction Toolkit` package. In the scene, you are able to place a cube on a plane which you can translate, rotate and scale with gestures. See the [`XR Interaction Toolkit Documentation`](https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@0.9/manual/index.html) for more details.
+This sample scene demonstrates the functionality of the `XR Interaction Toolkit` package. In the scene, you are able to place a cube on a plane which you can translate, rotate and scale with gestures. See the [`XR Interaction Toolkit Documentation`](https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@1.0/manual/index.html) for more details.
 
 ## Input System
 
-This sample demonstrates a version of the SimpleAR scene using Unity's new Input System. See [`ARController.inputactions`](https://github.com/Unity-Technologies/arfoundation-samples/blob/latest-preview/Assets/Scenes/InputSystem/ARController.inputactions) for an example of an action map. For a demonstration on how these action map bindings are used, see the [`InputSystem_PlaceOnPlane.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/latest-preview/Assets/Scenes/InputSystem/InputSystem_PlaceOnPlane.cs) script. For more details, see the [`Input System Documentation`](https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/manual/index.html).
+This sample demonstrates a version of the SimpleAR scene using Unity's new Input System. See [`ARController.inputactions`](https://github.com/Unity-Technologies/arfoundation-samples/blob/main/Assets/Scenes/InputSystem/ARController.inputactions) for an example of an action map. For a demonstration on how these action map bindings are used, see the [`InputSystem_PlaceOnPlane.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/main/Assets/Scenes/InputSystem/InputSystem_PlaceOnPlane.cs) script. For more details, see the [`Input System Documentation`](https://docs.unity3d.com/Packages/com.unity.inputsystem@1.3/manual/index.html).
 
 ## Thermal State
 
