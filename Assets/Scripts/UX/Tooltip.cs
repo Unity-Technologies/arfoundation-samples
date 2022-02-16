@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -16,21 +16,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set { m_Tooltip = value; }
         }
         bool m_EnteredButton;
-        Vector3 m_ToolTipOffset;
-
-        void Start()
-        {
-            m_ToolTipOffset = new Vector3(-50,100,0);
-        }
 
         void Update()
         {
             if(m_EnteredButton)
             {
-                m_Tooltip.transform.position = Input.mousePosition + m_ToolTipOffset;
+                m_Tooltip.transform.position = transform.position;
             }
         }
-
 
         public void OnPointerEnter(PointerEventData eventData)
         {
@@ -40,7 +33,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_Tooltip.SetActive(true);
             }
         }
-
 
         public void OnPointerExit(PointerEventData eventData)
         {

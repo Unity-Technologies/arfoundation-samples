@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
+using Unity.XR.CoreUtils;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -12,7 +13,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
     /// The reference point prefab is assumed to include a GameObject
     /// which can be colored to indicate which session created it.
     /// </summary>
-    [RequireComponent(typeof(ARSessionOrigin))]
+    [RequireComponent(typeof(XROrigin))]
     [RequireComponent(typeof(ARAnchorManager))]
     public class AnchorInfoManager : MonoBehaviour
     {

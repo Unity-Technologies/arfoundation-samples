@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
+using Unity.XR.CoreUtils;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -9,7 +10,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
     /// This script enables face tracking with user facing camera and disables it otherwise.
     /// It enables the world space object with world facing camera and disables it otherwise.
     /// </summary>
-    [RequireComponent(typeof(ARSessionOrigin))]
+    [RequireComponent(typeof(XROrigin))]
     [RequireComponent(typeof(ARFaceManager))]
     public class FacingDirectionManager : MonoBehaviour
     {
@@ -61,7 +62,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void OnBeforeRender()
         {
-            var camera = GetComponent<ARSessionOrigin>().camera;
+            var camera = GetComponent<XROrigin>().Camera;
             if (camera && worldSpaceObject)
             {
                 worldSpaceObject.transform.position = camera.transform.position + camera.transform.forward;

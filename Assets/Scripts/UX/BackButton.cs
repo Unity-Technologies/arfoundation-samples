@@ -34,7 +34,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (Application.CanStreamedLevelBeLoaded("Menu"))
             {
                 SceneManager.LoadScene("Menu", LoadSceneMode.Single);
-                LoaderUtility.Deinitialize();
             }
         }
     }

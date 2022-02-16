@@ -86,14 +86,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
 
         [SerializeField]
-        Button m_Scale;
-        public Button scale
-        {
-            get => m_Scale;
-            set => m_Scale = value;
-        }
-
-        [SerializeField]
         Button m_ObjectTracking;
         public Button objectTracking
         {
@@ -277,6 +269,22 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set => m_ThermalStateButton = value;
         }
 
+        [SerializeField]
+        Button m_SessionRecording;
+        public Button sessionRecording
+        {
+            get => m_SessionRecording;
+            set => m_SessionRecording = value;
+        }
+
+        [SerializeField]
+        Button m_DebugMenu;
+        public Button debugMenu
+        {
+            get => m_DebugMenu;
+            set => m_DebugMenu = value;
+        }
+
         void Start()
         {
             if(!s_MeshingSupported)
@@ -329,7 +337,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if(planeDescriptors.Count > 0 && rayCastDescriptors.Count > 0)
             {
                 m_SimpleAR.interactable = true;
-                m_Scale.interactable = true;
                 m_Interaction.interactable = true;
                 m_CheckSupport.interactable = true;
                 m_ConfigChooser.interactable = true;
@@ -383,6 +390,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if(cameraDescriptors.Count > 0)
             {
+                bool cameraGrainSupported = false;
                 m_LightEstimation.interactable = true;
                 foreach(var cameraDescriptor in cameraDescriptors)
                 {
@@ -398,8 +406,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         m_HDRLightEstimation.interactable = true;
                     }
 
-                    m_CameraGrain.interactable = cameraDescriptor.supportsCameraGrain;
+                    if(cameraDescriptor.supportsCameraGrain)
+                    {
+                        cameraGrainSupported = true;
+                    }
                 }
+                m_CameraGrain.interactable = cameraGrainSupported;
             }
 
             if(imageDescriptors.Count > 0)
@@ -447,6 +459,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
             }
 
+            if(sessionDescriptors.Count > 0)
+            {
+                m_DebugMenu.interactable = true;
+            }
+
     #if UNITY_IOS
             if(sessionDescriptors.Count > 0 && ARKitSessionSubsystem.worldMapSupported)
             {
@@ -489,6 +506,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
 #if UNITY_IOS
             m_ThermalStateButton.interactable = true;
 #endif // UNITY_IOS
+
+#if UNITY_ANDROID
+            m_SessionRecording.interactable = true;
+#endif
         }
 
         static bool s_MeshingSupported;

@@ -12,7 +12,7 @@ using UnityEngine.XR.ARKit;
 namespace UnityEngine.XR.ARFoundation.Samples
 {
 #if UNITY_IOS && !UNITY_EDITOR
-    // This custom ConfigurationChooser tells the ARKit XR Plugin to use an ARGeoTrackingConfiguration
+    // This custom ConfigurationChooser tells the Apple ARKit XR Plug-in to use an ARGeoTrackingConfiguration
     // See https://developer.apple.com/documentation/arkit/argeotrackingconfiguration?language=objc
     class ARGeoAnchorConfigurationChooser : ConfigurationChooser
     {
