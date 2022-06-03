@@ -14,18 +14,15 @@ This set of samples relies on five Unity packages:
 
 | Unity Version | ARFoundation Version |
 | ------------- | -------------------- |
-|    2018.4     | [1.5 (preview)](https://github.com/Unity-Technologies/arfoundation-samples/tree/1.5-preview)  |
 |    2019.4     | [2.1 (verified)](https://github.com/Unity-Technologies/arfoundation-samples/tree/2.1)         |
-|    2020.1     | [3.1 (verified)](https://github.com/Unity-Technologies/arfoundation-samples/tree/3.1)         |
 |    2020.3     | [4.1 (verified)](https://github.com/Unity-Technologies/arfoundation-samples/tree/4.1)         |
-|    2021.1     | [4.1 (verified)](https://github.com/Unity-Technologies/arfoundation-samples/tree/4.1)         |
-|    2021.2     | 4.2 (prerelease)                                                                              |
+|    2021.3     | [4.2 (verified)](https://github.com/Unity-Technologies/arfoundation-samples/tree/4.2)         |
 
 ## ARSubsystems
 
 ARFoundation is built on "[subsystems](https://docs.unity3d.com/2020.3/Documentation/ScriptReference/Subsystem.html)" and depends on a separate package called [ARSubsystems](https://docs.unity3d.com/Packages/com.unity.xr.arsubsystems@4.2/manual/index.html). ARSubsystems defines an interface, and the platform-specific implementations are in the [ARCore](https://docs.unity3d.com/Packages/com.unity.xr.arcore@4.2/manual/index.html) and [ARKit](https://docs.unity3d.com/Packages/com.unity.xr.arkit@4.2/manual/index.html) packages. ARFoundation turns the AR data provided by ARSubsystems into Unity `GameObject`s and `MonoBehavour`s.
 
-The `main` branch is compatible with Unity 2020.3 and later. For earlier versions, see the table above.
+This branch is compatible with Unity 2020.3 and later. For earlier versions, see the table above.
 
 ## Why is ARKit Face Tracking a separate package?
 
