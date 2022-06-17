@@ -1,6 +1,7 @@
 ﻿using System;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
@@ -54,7 +55,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 #endif
 
     [RequireComponent(typeof(ARSession))]
-    public class EnableGeoAnchors : MonoBehaviour
+    public class EnableGeoAnchors : PressInputBase
     {
 #if UNITY_IOS && !UNITY_EDITOR
         public static bool IsSupported => ARGeoAnchorConfigurationChooser.ARGeoTrackingConfigurationClass != IntPtr.Zero;
@@ -104,12 +105,32 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
-        void Update()
+        protected override void OnPress(Vector3 position)
         {
             // Can't do anything interesting until location services are running.
             if (Input.location.status != LocationServiceStatus.Running)
                 return;
 
+            if (GetComponent<ARSession>().subsystem is ARKitSessionSubsystem subsystem)
+            {
+                var isValidSession = TryGetSession(subsystem, out var session);
+                if(!isValidSession)
+                    return;
+
+                // Get last known location data
+                var locationData = Input.location.lastData;
+
+                // Add a geo anchor. See GeoAnchorsNativeInterop.m to see how this works.
+                AddGeoAnchor(session, new CLLocationCoordinate2D
+                {
+                    latitude = locationData.latitude,
+                    longitude = locationData.longitude
+                }, locationData.altitude);
+            }
+        }
+
+        void Update()
+        {
             if (GetComponent<ARSession>().subsystem is ARKitSessionSubsystem subsystem)
             {
                 if (!(subsystem.configurationChooser is ARGeoAnchorConfigurationChooser))
@@ -122,31 +143,27 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 // since the ARGeoTrackingConfiguration can only use the GravityAndHeading value.
                 subsystem.requestedWorldAlignment = ARWorldAlignment.GravityAndHeading;
 
-                // Make sure we have a native ptr
-                if (subsystem.nativePtr == IntPtr.Zero)
+                var isValidSession = TryGetSession(subsystem, out var session);
+                if(!isValidSession)
                     return;
-
-                // Get the session ptr from the native ptr data
-                var session = Marshal.PtrToStructure<NativePtrData>(subsystem.nativePtr).sessionPtr;
-                if (session == IntPtr.Zero)
-                    return;
-
-                var screenTapped = Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended;
-                if (screenTapped)
-                {
-                    // Get last known location data
-                    var locationData = Input.location.lastData;
-
-                    // Add a geo anchor. See GeoAnchorsNativeInterop.m to see how this works.
-                    AddGeoAnchor(session, new CLLocationCoordinate2D
-                    {
-                        latitude = locationData.latitude,
-                        longitude = locationData.longitude
-                    }, locationData.altitude);
-                }
 
                 DoSomethingWithSession(session);
             }
+        }
+
+        bool TryGetSession(ARKitSessionSubsystem subsystem, out IntPtr session)
+        {
+            if (subsystem.nativePtr == IntPtr.Zero)
+            {
+                session = IntPtr.Zero;
+                return false;
+            }
+
+            session = Marshal.PtrToStructure<NativePtrData>(subsystem.nativePtr).sessionPtr;
+            if (session == IntPtr.Zero)
+                return false;
+            else
+                return true;
         }
 
         [DllImport("__Internal")]

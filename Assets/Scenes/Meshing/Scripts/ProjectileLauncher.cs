@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -6,7 +7,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
     /// Launches projectiles from a touch point with the specified <see cref="initialSpeed"/>.
     /// </summary>
     [RequireComponent(typeof(Camera))]
-    public class ProjectileLauncher : MonoBehaviour
+    public class ProjectileLauncher : PressInputBase
     {
         [SerializeField]
         Rigidbody m_ProjectilePrefab;
@@ -26,22 +27,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set => m_InitialSpeed = value;
         }
 
-        void Update()
+        protected override void OnPressBegan(Vector3 position)
         {
             if (m_ProjectilePrefab == null)
                 return;
 
-            if (Input.touchCount == 0)
-                return;
+            var ray = GetComponent<Camera>().ScreenPointToRay(position);
+            var projectile = Instantiate(m_ProjectilePrefab, ray.origin, Quaternion.identity);
+            var rigidbody = projectile.GetComponent<Rigidbody>();
+            rigidbody.velocity = ray.direction * m_InitialSpeed;
 
-            var touch = Input.touches[0];
-            if (touch.phase == TouchPhase.Began)
-            {
-                var ray = GetComponent<Camera>().ScreenPointToRay(touch.position);
-                var projectile = Instantiate(m_ProjectilePrefab, ray.origin, Quaternion.identity);
-                var rigidbody = projectile.GetComponent<Rigidbody>();
-                rigidbody.velocity = ray.direction * m_InitialSpeed;
-            }
         }
     }
 }

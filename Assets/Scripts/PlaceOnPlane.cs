@@ -1,6 +1,5 @@
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.XR.ARFoundation;
+using UnityEngine.InputSystem;
 using UnityEngine.XR.ARSubsystems;
 
 namespace UnityEngine.XR.ARFoundation.Samples
@@ -13,7 +12,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
     /// and moved to the hit position.
     /// </summary>
     [RequireComponent(typeof(ARRaycastManager))]
-    public class PlaceOnPlane : MonoBehaviour
+    public class PlaceOnPlane : PressInputBase
     {
         [SerializeField]
         [Tooltip("Instantiates this prefab on a plane at the touch location.")]
@@ -33,27 +32,21 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public GameObject spawnedObject { get; private set; }
 
-        void Awake()
+        bool m_Pressed;
+
+        protected override void Awake()
         {
+            base.Awake();
             m_RaycastManager = GetComponent<ARRaycastManager>();
-        }
-
-        bool TryGetTouchPosition(out Vector2 touchPosition)
-        {
-            if (Input.touchCount > 0)
-            {
-                touchPosition = Input.GetTouch(0).position;
-                return true;
-            }
-
-            touchPosition = default;
-            return false;
         }
 
         void Update()
         {
-            if (!TryGetTouchPosition(out Vector2 touchPosition))
+
+            if (Pointer.current == null || m_Pressed == false)
                 return;
+
+            var touchPosition = Pointer.current.position.ReadValue();
 
             if (m_RaycastManager.Raycast(touchPosition, s_Hits, TrackableType.PlaneWithinPolygon))
             {
@@ -71,6 +64,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
             }
         }
+
+        protected override void OnPress(Vector3 position) => m_Pressed = true;
+
+        protected override void OnPressCancel() => m_Pressed = false;
 
         static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
 

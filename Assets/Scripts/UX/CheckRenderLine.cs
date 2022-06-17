@@ -38,12 +38,14 @@ public class CheckRenderLine : MonoBehaviour
         if(state != null && (state.inputTrackingState & InputTrackingState.Position) != 0)
         {
             m_InteractorLine.enabled = true;
-            m_InteractorLine.reticle.SetActive(true);
+            if (m_InteractorLine.reticle != null)
+                m_InteractorLine.reticle.SetActive(true);
         }
         else
         {
             m_InteractorLine.enabled = false;
-            m_InteractorLine.reticle.SetActive(false);
+            if (m_InteractorLine.reticle != null)
+                m_InteractorLine.reticle.SetActive(false);
         }
     }
 

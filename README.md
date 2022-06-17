@@ -15,12 +15,13 @@ This set of samples relies on three Unity packages:
 |    2018.4     | [1.5 (preview)](https://github.com/Unity-Technologies/arfoundation-samples/tree/1.5-preview)  |
 |    2019.4     | [2.1 (verified)](https://github.com/Unity-Technologies/arfoundation-samples/tree/2.1)         |
 |    2020.3     | [4.1 (verified)](https://github.com/Unity-Technologies/arfoundation-samples/tree/4.1)         |
-|    2021.2     | [4.2 (verified)](https://github.com/Unity-Technologies/arfoundation-samples/tree/4.2)         |
+|    2021.3     | [4.2 (verified)](https://github.com/Unity-Technologies/arfoundation-samples/tree/4.2)         |
 |    2022.1     | 5.0 (prerelease)                                                                              |
+|    2022.2     | 5.0 (prerelease)                                                                              |
 
 ## ARSubsystems
 
-ARFoundation is built on "[subsystems](https://docs.unity3d.com/2021.2/Documentation/ScriptReference/Subsystem.html)" and depends on subsystems defined in `UnityEngine.XR.ARSubsystems` namespace. This namespace defines an interface, and the platform-specific implementations are in the [Google ARCore](https://docs.unity3d.com/Packages/com.unity.xr.arcore@5.0/manual/index.html) and [Apple ARKit](https://docs.unity3d.com/Packages/com.unity.xr.arkit@5.0/manual/index.html) packages. ARFoundation turns the AR data provided by ARSubsystems into Unity `GameObject`s and `MonoBehavour`s.
+ARFoundation is built on "[subsystems](https://docs.unity3d.com/2021.3/Documentation/ScriptReference/Subsystem.html)" and depends on subsystems defined in `UnityEngine.XR.ARSubsystems` namespace. This namespace defines an interface, and the platform-specific implementations are in the [Google ARCore](https://docs.unity3d.com/Packages/com.unity.xr.arcore@5.0/manual/index.html) and [Apple ARKit](https://docs.unity3d.com/Packages/com.unity.xr.arkit@5.0/manual/index.html) packages. ARFoundation turns the AR data provided by ARSubsystems into Unity `GameObject`s and `MonoBehavour`s.
 
 The `main` branch is compatible with Unity 2021.2 and later. For earlier versions, see the table above.
 
@@ -40,7 +41,7 @@ The `main` branch is compatible with Unity 2021.2 and later. For earlier version
 
 This is a good starting sample that enables point cloud visualization and plane detection. There are buttons on screen that let you pause, resume, reset, and reload the ARSession.
 
-When a plane is detected, you can tap on the detected plane to place a cube on it. This uses the `ARRaycastManager` to perform a raycast against the plane.
+When a plane is detected, you can tap on the detected plane to place a cube on it. This uses the `ARRaycastManager` to perform a raycast against the plane. If the plane is in `TrackingState.Limited`, it will highlight red. In the case of ARCore, this means that raycasting will not be available until the plane is in `TrackingState.Tracking` again.
 
 | Action | Meaning |
 | ------ | ------- |

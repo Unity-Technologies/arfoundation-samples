@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 namespace UnityEngine.XR.ARFoundation.Samples
@@ -16,25 +16,19 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void Start()
         {
             if (Application.CanStreamedLevelBeLoaded("Menu"))
-            {
                 m_BackButton.SetActive(true);
-            }
         }
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
+            if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
                 BackButtonPressed();
-            }
         }
 
         public void BackButtonPressed()
         {
             if (Application.CanStreamedLevelBeLoaded("Menu"))
-            {
                 SceneManager.LoadScene("Menu", LoadSceneMode.Single);
-            }
         }
     }
 }

@@ -384,11 +384,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             LoadScene("DepthImages");
         }
 
-        public void InputSystemButtonPressed()
-        {
-            LoadScene("InputSystem");
-        }
-
         public void CameraGrainButtonPressed()
         {
             LoadScene("CameraGrain");
@@ -407,6 +402,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public void DebugMenuButtonPressed()
         {
             LoadScene("DebugMenu");
+        }
+        
+        public void BackgroundRenderOrderButtonPressed()
+        {
+            LoadScene("BackgroundRenderOrder");
         }
 
         void ScrollToStartPosition()

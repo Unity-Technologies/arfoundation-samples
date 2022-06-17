@@ -1,4 +1,3 @@
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace UnityEngine.XR.ARFoundation.Samples
@@ -17,8 +16,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void OnSceneUnloaded(Scene current)
         {
-            LoaderUtility.Deinitialize();
-            LoaderUtility.Initialize();
+            if (current == SceneManager.GetActiveScene())
+            {
+                LoaderUtility.Deinitialize();
+                LoaderUtility.Initialize();
+            }
         }
 
         void OnDisable()
