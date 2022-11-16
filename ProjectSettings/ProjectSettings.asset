@@ -178,10 +178,10 @@ PlayerSettings:
   strictShaderVariantMatching: 0
   VertexChannelCompressionMask: 4054
   iPhoneSdkVersion: 988
-  iOSTargetOSVersionString: 12.0
+  iOSTargetOSVersionString: 13.0
   tvOSSdkVersion: 0
   tvOSRequireExtendedGameController: 0
-  tvOSTargetOSVersionString: 12.0
+  tvOSTargetOSVersionString: 13.0
   uIPrerenderedIcon: 0
   uIRequiresPersistentWiFi: 0
   uIRequiresFullScreen: 1
@@ -252,6 +252,7 @@ PlayerSettings:
   androidSplashScreen: {fileID: 0}
   AndroidKeystoreName: '{inproject}: {inproject}: '
   AndroidKeyaliasName: 
+  AndroidEnableArmv9SecurityFeatures: 0
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 1
   AndroidIsGame: 1
@@ -265,7 +266,6 @@ PlayerSettings:
     banner: {fileID: 0}
   androidGamepadSupportLevel: 0
   chromeosInputEmulation: 1
-  AndroidMinifyWithR8: 0
   AndroidMinifyRelease: 0
   AndroidMinifyDebug: 0
   AndroidValidateAppBundleSize: 1
@@ -760,6 +760,7 @@ PlayerSettings:
   webGLMemorySize: 256
   webGLExceptionSupport: 1
   webGLNameFilesAsHashes: 0
+  webGLShowDiagnostics: 0
   webGLDataCaching: 0
   webGLDebugSymbols: 0
   webGLEmscriptenArgs: 
@@ -785,6 +786,7 @@ PlayerSettings:
     EmbeddedLinux: UNITY_POST_PROCESSING_STACK_V2
     GameCoreScarlett: UNITY_POST_PROCESSING_STACK_V2
     GameCoreXboxOne: UNITY_POST_PROCESSING_STACK_V2
+    LinuxHeadlessSimulation: UNITY_POST_PROCESSING_STACK_V2
     Lumin: UNITY_POST_PROCESSING_STACK_V2
     Nintendo Switch: UNITY_POST_PROCESSING_STACK_V2
     PS4: UNITY_POST_PROCESSING_STACK_V2
@@ -897,5 +899,8 @@ PlayerSettings:
   legacyClampBlendShapeWeights: 1
   playerDataPath: 
   forceSRGBBlit: 1
+  enableGamepadInput: 1
+  cpuConfiguration: 
+  hmiLoadingImage: {fileID: 0}
   virtualTexturingSupportEnabled: 0
   insecureHttpOption: 0

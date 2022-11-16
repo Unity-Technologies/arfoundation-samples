@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44407046, g: 0.49331486, b: 0.57238823, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -104,7 +104,7 @@ NavMeshSettings:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_BuildSettings:
-    serializedVersion: 2
+    serializedVersion: 3
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
@@ -117,17 +117,30 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualTileSize: 0
     tileSize: 256
-    accuratePlacement: 0
+    buildHeightMesh: 0
     maxJobWorkers: 0
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &74588131 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1949154503687385066, guid: ef3886a9667424aedaa5b3b3e1285dbb,
+    type: 3}
+  m_PrefabInstance: {fileID: 114303042}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d0b652f32a2cc243917e4028fa0f046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &109708847
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 976441439}
     m_Modifications:
     - target: {fileID: 2304810881573073946, guid: 4ee22c1f54b174122b6a766fe09e0de8,
@@ -281,12 +294,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ee22c1f54b174122b6a766fe09e0de8, type: 3}
 --- !u!1001 &114303042
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 35470382566529432, guid: ef3886a9667424aedaa5b3b3e1285dbb,
@@ -315,6 +332,36 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 35470382566529432, guid: ef3886a9667424aedaa5b3b3e1285dbb,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 398239196469706615, guid: ef3886a9667424aedaa5b3b3e1285dbb,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 398239196469706615, guid: ef3886a9667424aedaa5b3b3e1285dbb,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 398239196469706615, guid: ef3886a9667424aedaa5b3b3e1285dbb,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 398239196469706615, guid: ef3886a9667424aedaa5b3b3e1285dbb,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 398239196469706615, guid: ef3886a9667424aedaa5b3b3e1285dbb,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 398239196469706615, guid: ef3886a9667424aedaa5b3b3e1285dbb,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
@@ -378,6 +425,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 182
+      objectReference: {fileID: 0}
+    - target: {fileID: 1949154503687385066, guid: ef3886a9667424aedaa5b3b3e1285dbb,
+        type: 3}
+      propertyPath: m_Options.m_Options.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3017846344531436388, guid: ef3886a9667424aedaa5b3b3e1285dbb,
         type: 3}
@@ -492,6 +544,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8975590683964028637, guid: 2a91e1f16d3bef84eb6c25e4c6a63fdb,
         type: 3}
+    - target: {fileID: 6234637625423282849, guid: ef3886a9667424aedaa5b3b3e1285dbb,
+        type: 3}
+      propertyPath: m_CameraConfigurationDropdown
+      value: 
+      objectReference: {fileID: 74588131}
     - target: {fileID: 6234637625423282858, guid: ef3886a9667424aedaa5b3b3e1285dbb,
         type: 3}
       propertyPath: m_Name
@@ -658,6 +715,11 @@ PrefabInstance:
       propertyPath: m_FontData.m_FontSize
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 8279901107205650532, guid: ef3886a9667424aedaa5b3b3e1285dbb,
+        type: 3}
+      propertyPath: m_Text
+      value: Option A
+      objectReference: {fileID: 0}
     - target: {fileID: 8506644878863973134, guid: ef3886a9667424aedaa5b3b3e1285dbb,
         type: 3}
       propertyPath: m_buttonHighlights.Array.size
@@ -679,6 +741,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 247429526}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef3886a9667424aedaa5b3b3e1285dbb, type: 3}
 --- !u!1 &183680056
 GameObject:
@@ -886,6 +951,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -1158,6 +1224,7 @@ MonoBehaviour:
   m_AutoFocus: 1
   m_LightEstimation: 0
   m_FacingDirection: 1
+  m_RenderMode: 0
 --- !u!114 &1408687041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1269,9 +1336,17 @@ Camera:
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0

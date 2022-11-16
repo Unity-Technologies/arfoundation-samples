@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
-using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
 namespace UnityEngine.XR.ARFoundation.Samples
@@ -31,6 +29,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             RightEye = 14, // parent: Head [0]
             LeftEye = 15, // parent: Head [0]
             Root = 16, // parent: <none> [-1]
+            RightEar = 17, // parent: RightEye [14] (iOS 16 and up)
+            LeftEar = 18 // parent: LeftEye [15] (iOS 16 and up)
         }
 
         [SerializeField]
@@ -72,18 +72,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set { m_LineRendererPrefab = value; }
         }
 
-        Dictionary<int, GameObject> m_LineRenderers;
-        static HashSet<int> s_JointSet = new HashSet<int>();
-
-        void Awake()
-        {
-            m_LineRenderers = new Dictionary<int, GameObject>();
-        }
+        Dictionary<int, GameObject> m_LineRenderers = new();
+        static HashSet<int> s_JointSet = new();
 
         void UpdateRenderer(NativeArray<XRHumanBodyPose2DJoint> joints, int index)
         {
-            GameObject lineRendererGO;
-            if (!m_LineRenderers.TryGetValue(index, out lineRendererGO))
+            if (!m_LineRenderers.TryGetValue(index, out var lineRendererGO))
             {
                 lineRendererGO = Instantiate(m_LineRendererPrefab, transform);
                 m_LineRenderers.Add(index, lineRendererGO);
@@ -96,7 +90,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             try
             {
                 var boneIndex = index;
-                int jointCount = 0;
+                var jointCount = 0;
                 while (boneIndex >= 0)
                 {
                     var joint = joints[boneIndex];
@@ -116,7 +110,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 lineRenderer.positionCount = jointCount;
                 lineRenderer.startWidth = 0.001f;
                 lineRenderer.endWidth = 0.001f;
-                for (int i = 0; i < jointCount; ++i)
+                for (var i = 0; i < jointCount; ++i)
                 {
                     var position = positions[i];
                     var worldPosition = m_ARCamera.ViewportToWorldPoint(
@@ -144,7 +138,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             using (joints)
             {
                 s_JointSet.Clear();
-                for (int i = joints.Length - 1; i >= 0; --i)
+                for (var i = joints.Length - 1; i >= 0; --i)
                 {
                     if (joints[i].parentIndex != -1)
                         UpdateRenderer(joints, i);

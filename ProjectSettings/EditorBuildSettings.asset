@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/ARFoundationMenu/Menu.unity
+    path: Assets/Scenes/Menu/Menu.unity
     guid: 904110ab8cef14f7d96c56ca20774e5a
   - enabled: 1
     path: Assets/Scenes/ARKit/ARCollaborationData/ARCollaborationDataExample.unity
@@ -24,28 +24,28 @@ EditorBuildSettings:
     path: Assets/Scenes/ARKit/ThermalState/ThermalState.unity
     guid: e5b0cb11dfe354e67a344c280bf8b611
   - enabled: 1
-    path: Assets/Scenes/Anchors.unity
+    path: Assets/Scenes/Anchors/Anchors.unity
     guid: 5cba9114a192a46a7aef31da62316e39
   - enabled: 1
-    path: Assets/Scenes/CameraGrain/CameraGrain.unity
+    path: Assets/Scenes/Camera/CameraGrain/CameraGrain.unity
     guid: 68237ded327024ec39c1317a214ad56f
   - enabled: 1
-    path: Assets/Scenes/Check Support.unity
+    path: Assets/Scenes/CheckSupport/Check Support.unity
     guid: cf67ab53e5ff241dfa61608222d82109
   - enabled: 1
     path: Assets/Scenes/Configurations/ConfigurationChooser.unity
     guid: 3aae069bebee946a090ed6a756a1e77b
   - enabled: 1
-    path: Assets/Scenes/CpuImages.unity
+    path: Assets/Scenes/Camera/CpuImages/CpuImages.unity
     guid: e769916924fd3814ab1d9474de816b22
   - enabled: 1
-    path: Assets/Scenes/Depth/DepthImages.unity
+    path: Assets/Scenes/Occlusion/DepthImages.unity
     guid: ed5207d50697d40d688249cd6c59608b
   - enabled: 1
-    path: Assets/Scenes/Depth/SimpleOcclusion.unity
+    path: Assets/Scenes/Occlusion/SimpleOcclusion.unity
     guid: 50a69364b393d4ce8a8b3589422b67b7
   - enabled: 1
-    path: Assets/Scenes/EnvironmentProbes.unity
+    path: Assets/Scenes/EnvironmentProbes/EnvironmentProbes.unity
     guid: d568d188cadf141e38769dbabd3fe385
   - enabled: 1
     path: Assets/Scenes/FaceTracking/ARCoreFaceRegions.unity
@@ -72,10 +72,10 @@ EditorBuildSettings:
     path: Assets/Scenes/FaceTracking/WorldCameraWithUserFacingFaceTracking.unity
     guid: ecea31d2ea5464e52bedb91fa1fcb6bb
   - enabled: 1
-    path: Assets/Scenes/HumanTracking/HumanBodyTracking2D.unity
+    path: Assets/Scenes/BodyTracking/HumanBodyTracking2D.unity
     guid: b2551dd1f69e7446e9093f0f38e03160
   - enabled: 1
-    path: Assets/Scenes/HumanTracking/HumanBodyTracking3D.unity
+    path: Assets/Scenes/BodyTracking/HumanBodyTracking3D.unity
     guid: 9fc1f5ed98d414310a8b9e659c295d7c
   - enabled: 1
     path: Assets/Scenes/ImageTracking/BasicImageTracking/BasicImageTracking.unity
@@ -87,10 +87,10 @@ EditorBuildSettings:
     path: Assets/Scenes/Interaction/Interaction.unity
     guid: ff9b6e62e970e432a9e8d51604b3bad8
   - enabled: 1
-    path: Assets/Scenes/LightEstimation/BasicLightEstimation.unity
+    path: Assets/Scenes/Camera/LightEstimation/BasicLightEstimation.unity
     guid: 2f0cbc82480584c258f99f0d9e4ba302
   - enabled: 1
-    path: Assets/Scenes/LightEstimation/HDRLightEstimation.unity
+    path: Assets/Scenes/Camera/LightEstimation/HDRLightEstimation.unity
     guid: 9d96daba3bd254cfebe94efd2d61b2c3
   - enabled: 1
     path: Assets/Scenes/Meshing/ClassificationMeshes.unity
@@ -102,22 +102,22 @@ EditorBuildSettings:
     path: Assets/Scenes/Meshing/OcclusionMeshes.unity
     guid: adcdbf89e115e4a489bd500be88c1459
   - enabled: 1
-    path: Assets/Scenes/Object Tracking/ObjectTracking.unity
+    path: Assets/Scenes/ObjectTracking/ObjectTracking.unity
     guid: 8f797cefb98fe43109524cbbcc8faafc
   - enabled: 1
-    path: Assets/Scenes/Plane Detection/FeatheredPlanes.unity
+    path: Assets/Scenes/PlaneDetection/FeatheredPlanes.unity
     guid: 8252358a1e2ba7549a94df43aacec984
   - enabled: 1
-    path: Assets/Scenes/Plane Detection/PlaneClassification.unity
+    path: Assets/Scenes/PlaneDetection/PlaneClassification.unity
     guid: ea35aff45ed534fb9b030b82a5d980f4
   - enabled: 1
-    path: Assets/Scenes/Plane Detection/TogglePlaneDetection.unity
+    path: Assets/Scenes/PlaneDetection/TogglePlaneDetection.unity
     guid: eb4bbb3a5e81acc41a903b1c5f1c827b
   - enabled: 1
-    path: Assets/Scenes/PlaneOcclusion/PlaneOcclusion.unity
+    path: Assets/Scenes/PlaneDetection/PlaneMasking/PlaneMasking.unity
     guid: 82d84156010e4481498cad3bf12744bd
   - enabled: 1
-    path: Assets/Scenes/PointCloud/AllPointCloudPoints.unity
+    path: Assets/Scenes/PointClouds/AllPointCloudPoints.unity
     guid: a84b70115cd154cf59b84651a828ac60
   - enabled: 1
     path: Assets/Scenes/SimpleAR/SimpleAR.unity
@@ -129,7 +129,7 @@ EditorBuildSettings:
     path: Assets/Scenes/DebugMenu.unity
     guid: 15456b85ccc6645c8825f7a70ae23ff1
   - enabled: 1
-    path: Assets/Scenes/BackgroundRenderOrder/BackgroundRenderOrder.unity
+    path: Assets/Scenes/Camera/BackgroundRenderOrder/BackgroundRenderOrder.unity
     guid: dd6d3723894ae4618b821f1e99d0a4c7
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: f8ce26fe3bc69499b9be4b2378e97a94,
