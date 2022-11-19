@@ -5,7 +5,7 @@
     {
         PackageRequirements
         {
-            "com.unity.render-pipelines.universal"
+            "com.unity.render-pipelines.universal": "12.0"
         }
 
         Tags
