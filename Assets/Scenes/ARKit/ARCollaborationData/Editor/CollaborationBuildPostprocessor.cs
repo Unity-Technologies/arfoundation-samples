@@ -92,13 +92,17 @@ namespace UnityEditor.XR.ARFoundation.Samples
         [PostProcessScene]
         static void OnPostProcessScene()
         {
+#if UNITY_2023_1_OR_NEWER
+            foreach (var collaborativeSession in Object.FindObjectsByType<CollaborativeSession>(FindObjectsSortMode.None))
+#else
             foreach (var collaborativeSession in Object.FindObjectsOfType<CollaborativeSession>())
+#endif
             {
                 s_CollaborativeSessions.Add(collaborativeSession);
             }
         }
 
-        static List<CollaborativeSession> s_CollaborativeSessions = new List<CollaborativeSession>();
+        static List<CollaborativeSession> s_CollaborativeSessions = new();
     }
 }
 #endif

@@ -103,6 +103,12 @@ When using `HDRLightEstimation`, the sample will automatically pick the supporte
 
 Produces a visual example of how changing the background rendering between `BeforeOpaqueGeometry` and `AfterOpaqueGeometry` would effect a rudimentary AR application. Leverages Occlusion where available to display `AfterOpaqueGeometry` support for AR Occlusion.
 
+### Camera Grain (ARKit)
+
+This sample demonstrates the camera grain effect. Once a plane is detected, you can place a cube on it with a material that simulates the camera grain noise in the camera feed. See the `CameraGrain.cs` script. Also see  `CameraGrain.shader` which animates and applies the camera grain texture (through linear interpolation) in screenspace.
+
+This sample requires a device running iOS 13 or later and Unity 2020.2 or later.
+
 ## Plane Detection 
 
 ### Feathered Planes
@@ -298,10 +304,6 @@ This sample requires iOS 13 or above.
 
 This sample contains the code required to query for an iOS device's thermal state so that the thermal state may be used with C# game code. This sample illustrates how the thermal state may be used to disable AR Foundation features to reduce the thermal state of the device.
 
-### EXIF Data
-
-This sample shows you how to access camera frame EXIF metadata (available on iOS 16 and up). To learn more about EXIF metadata, see https://exiftool.org/TagNames/EXIF.html.
-
 ### AR World Map
 
 An `ARWorldMap` is an ARKit-specific feature which lets you save a scanned area. ARKit can optionally relocalize to a saved world map at a later time. This can be used to synchronize multiple devices to a common space, or for curated experiences specific to a location, such as a museum exhibition or other special installation. Read more about world maps [here](https://developer.apple.com/documentation/arkit/arworldmap). A world map will store most types of trackables, such as reference points and planes.
@@ -330,11 +332,15 @@ You can create reference points by tapping on the screen. Reference points are c
 
 This sample requires iOS 13 or above.
 
-### Camera Grain
+### High Resolution CPU Image
 
-This sample demonstrates the camera grain effect. Once a plane is detected, you can place a cube on it with a material that simulates the camera grain noise in the camera feed. See the `CameraGrain.cs` script. Also see  `CameraGrain.shader` which animates and applies the camera grain texture (through linear interpolation) in screenspace.
+This sample demonstrates high resolution CPU image capture on iOS 16 and newer. See the [High Resolution CPU Image](https://docs.unity3d.com/Packages/com.unity.xr.arkit@5.1/manual/arkit-camera.html#high-resolution-cpu-image) package documentation to learn more about this feature.
 
-This sample requires a device running iOS 13 or later and Unity 2020.2 or later.
+### Camera Exposure
+
+This sample shows how to lock the device camera and set the camera exposure mode, duration, and ISO. See [CameraExposureController.cs](https://github.com/Unity-Technologies/arfoundation-samples/blob/main/Assets/Scenes/ARKit/CameraExposure/CameraExposureController.cs) for example code.
+
+This sample requires iOS 16 or newer and a device with an ultra-wide camera.
 
 ## ARCore Record Session
 

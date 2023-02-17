@@ -52,9 +52,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void Awake()
         {
             if (cameraManager == null)
-            {
+#if UNITY_2023_1_OR_NEWER
+                cameraManager = FindAnyObjectByType<ARCameraManager>();
+#else
                 cameraManager = FindObjectOfType<ARCameraManager>();
-            }
+#endif
 
             m_Dropdown = GetComponent<Dropdown>();
             m_Dropdown.ClearOptions();
@@ -65,9 +67,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void OnEnable()
         {
             if (cameraManager == null)
-            {
+#if UNITY_2023_1_OR_NEWER
+                cameraManager = FindAnyObjectByType<ARCameraManager>();
+#else
                 cameraManager = FindObjectOfType<ARCameraManager>();
-            }
+#endif
 
             if (cameraManager != null)
             {

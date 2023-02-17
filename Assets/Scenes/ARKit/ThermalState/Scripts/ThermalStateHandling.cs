@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
 namespace UnityEngine.XR.ARFoundation.Samples
@@ -61,11 +60,19 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         void Awake()
         {
+#if UNITY_2023_1_OR_NEWER
+            m_EnvironmentProbeManager = FindAnyObjectByType<AREnvironmentProbeManager>();
+            m_FaceManager = FindAnyObjectByType<ARFaceManager>();
+            m_MeshManager = FindAnyObjectByType<ARMeshManager>();
+            m_OcclusionManager = FindAnyObjectByType<AROcclusionManager>();
+            m_Session = FindAnyObjectByType<ARSession>();
+#else
             m_EnvironmentProbeManager = FindObjectOfType<AREnvironmentProbeManager>();
             m_FaceManager = FindObjectOfType<ARFaceManager>();
             m_MeshManager = FindObjectOfType<ARMeshManager>();
             m_OcclusionManager = FindObjectOfType<AROcclusionManager>();
             m_Session = FindObjectOfType<ARSession>();
+#endif
         }
 
         /// <summary>

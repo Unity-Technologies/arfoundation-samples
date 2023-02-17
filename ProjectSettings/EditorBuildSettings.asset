@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/ARKit/ARKitGeoAnchors/ARKitGeoAnchors.unity
     guid: 338f0f26e48a9442c8562245d8bae9ab
   - enabled: 1
-    path: Assets/Scenes/ARKit/ARWorldMap.unity
+    path: Assets/Scenes/ARKit/ARWorldMap/ARWorldMap.unity
     guid: 8d8902fd0b55449dcbf3572b49d6b1b1
   - enabled: 1
     path: Assets/Scenes/ARKit/ThermalState/ThermalState.unity
@@ -131,7 +131,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Camera/BackgroundRenderOrder/BackgroundRenderOrder.unity
     guid: dd6d3723894ae4618b821f1e99d0a4c7
+  - enabled: 1
+    path: Assets/Scenes/ARKit/HighResolutionCpuImage/HighResolutionCpuImage.unity
+    guid: 082b6138c8b8f49e8af38ad574a715d9
+  - enabled: 1
+    path: Assets/Scenes/ARKit/CameraExposure/CameraExposure.unity
+    guid: 1e974247d62884f67a7300f149cb7b71
   m_configObjects:
+    Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: c52d3bb36b4c86f47af54ab9c7a02589,
+      type: 2}
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: f8ce26fe3bc69499b9be4b2378e97a94,
       type: 2}
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 98c79e8cc22674a89a95a3a90e2b70cb,
@@ -142,3 +150,6 @@ EditorBuildSettings:
       type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: e2f869774b12e400996eb546603602e3,
       type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 2d2dec64879445247bb34603b4469c6c,
+      type: 2}
+  m_UseUCBPForAssetBundles: 0
