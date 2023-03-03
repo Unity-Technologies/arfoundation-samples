@@ -156,6 +156,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void Awake()
         {
+#if UNITY_2023_1_OR_NEWER
+            m_CameraManager = FindAnyObjectByType<ARCameraManager>();
+            m_EnvironmentProbeManager = FindAnyObjectByType<AREnvironmentProbeManager>();
+            m_FaceManager = FindAnyObjectByType<ARFaceManager>();
+            m_MeshManager = FindAnyObjectByType<ARMeshManager>();
+            m_OcclusionManager = FindAnyObjectByType<AROcclusionManager>();
+            m_PlaneManager = FindAnyObjectByType<ARPlaneManager>();
+            m_RaycastManager = FindAnyObjectByType<ARRaycastManager>();
+            m_Session = FindAnyObjectByType<ARSession>();
+#else
             m_CameraManager = FindObjectOfType<ARCameraManager>();
             m_EnvironmentProbeManager = FindObjectOfType<AREnvironmentProbeManager>();
             m_FaceManager = FindObjectOfType<ARFaceManager>();
@@ -164,6 +174,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_PlaneManager = FindObjectOfType<ARPlaneManager>();
             m_RaycastManager = FindObjectOfType<ARRaycastManager>();
             m_Session = FindObjectOfType<ARSession>();
+#endif
         }
 
         void Update()

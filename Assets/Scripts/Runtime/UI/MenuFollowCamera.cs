@@ -16,7 +16,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             get => m_SmoothFactor;
             set => m_SmoothFactor = value;
         }
-    
+
         [SerializeField]
         float m_Distance;
         public float distance
@@ -24,7 +24,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             get => m_Distance;
             set => m_Distance = value;
         }
-    
+
         [SerializeField]
         Camera m_CameraAR;
         public Camera cameraAR
@@ -32,13 +32,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
             get => m_CameraAR;
             set => m_CameraAR = value;
         }
-    
+
         void Start()
         {
             var menu = GetComponent<Canvas>();
             var scaler = GetComponent<CanvasScaler>();
-    
-#if UNITY_IOS || UNITY_ANDROID
+
+#if UNITY_IOS || UNITY_ANDROID || UNITY_EDITOR || UNITY_STANDALONE
             menu.renderMode = RenderMode.ScreenSpaceOverlay;
             scaler.matchWidthOrHeight = .5f;
 #else
@@ -48,7 +48,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, 575);
 #endif
         }
-    
+
         void Update()
         {
             if (!m_CameraFollow)

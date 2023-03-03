@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Text = UnityEngine.UI.Text;
-using UnityEngine.XR.ARFoundation;
-using UnityEngine.XR.ARSubsystems;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -17,7 +13,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             if (m_Manager == null)
             {
-                m_Manager = FindObjectOfType<ARFaceManager>();
+                m_Manager = FindObjectsUtility.FindAnyObjectByType<ARFaceManager>();
             }
             if (m_Manager != null && m_Manager.subsystem != null && m_Manager.descriptor.supportsEyeTracking)
             {

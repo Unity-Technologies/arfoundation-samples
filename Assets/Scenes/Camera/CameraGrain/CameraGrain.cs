@@ -18,9 +18,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void Start()
         {
             if (m_CameraManager == null)
-            {
+#if UNITY_2023_1_OR_NEWER
+                m_CameraManager = FindAnyObjectByType<ARCameraManager>();
+#else
                 m_CameraManager = FindObjectOfType<ARCameraManager>();
-            }
+#endif
 
             m_Renderer = GetComponent<Renderer>();
             m_CameraManager.frameReceived += OnReceivedFrame;

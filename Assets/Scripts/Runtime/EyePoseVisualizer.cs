@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.XR.ARFoundation;
+﻿using UnityEngine;
 using UnityEngine.XR.ARSubsystems;
 #if UNITY_IOS && !UNITY_EDITOR
 using UnityEngine.XR.ARKit;
@@ -29,9 +26,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         GameObject m_LeftEyeGameObject;
         GameObject m_RightEyeGameObject;
-
         ARFace m_Face;
-        XRFaceSubsystem m_FaceSubsystem;
 
         void Awake()
         {
@@ -61,13 +56,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
-
         void OnEnable()
         {
-            var faceManager = FindObjectOfType<ARFaceManager>();
+            var faceManager = FindObjectsUtility.FindAnyObjectByType<ARFaceManager>();
             if (faceManager != null && faceManager.subsystem != null && faceManager.descriptor.supportsEyeTracking)
             {
-                m_FaceSubsystem = (XRFaceSubsystem)faceManager.subsystem;
                 SetVisible((m_Face.trackingState == TrackingState.Tracking) && (ARSession.state > ARSessionState.Ready));
                 m_Face.updated += OnUpdated;
             }

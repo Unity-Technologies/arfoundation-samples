@@ -35,10 +35,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 var canvas = m_TextElement.GetComponentInParent<Canvas>();
                 if (canvas)
                 {
-                    var sessionOrigin = FindObjectOfType<XROrigin>();
-                    if (sessionOrigin && sessionOrigin.Camera)
+                    var xrOrigin = FindObjectsUtility.FindAnyObjectByType<XROrigin>();
+                    if (xrOrigin && xrOrigin.Camera)
                     {
-                        canvas.worldCamera = sessionOrigin.Camera;
+                        canvas.worldCamera = xrOrigin.Camera;
                     }
                 }
             }

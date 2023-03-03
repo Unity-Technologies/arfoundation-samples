@@ -102,7 +102,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             if (obj == null)
             {
+#if UNITY_2023_1_OR_NEWER
+                obj = FindAnyObjectByType<T>();
+#else
                 obj = FindObjectOfType<T>();
+#endif
                 return obj != null;
             }
 

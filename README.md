@@ -298,10 +298,6 @@ This sample requires iOS 13 or above.
 
 This sample contains the code required to query for an iOS device's thermal state so that the thermal state may be used with C# game code. This sample illustrates how the thermal state may be used to disable AR Foundation features to reduce the thermal state of the device.
 
-### EXIF Data
-
-This sample shows you how to access camera frame EXIF metadata (available on iOS 16 and up). To learn more about EXIF metadata, see https://exiftool.org/TagNames/EXIF.html.
-
 ### AR World Map
 
 An `ARWorldMap` is an ARKit-specific feature which lets you save a scanned area. ARKit can optionally relocalize to a saved world map at a later time. This can be used to synchronize multiple devices to a common space, or for curated experiences specific to a location, such as a museum exhibition or other special installation. Read more about world maps [here](https://developer.apple.com/documentation/arkit/arworldmap). A world map will store most types of trackables, such as reference points and planes.

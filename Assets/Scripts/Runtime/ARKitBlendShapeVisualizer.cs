@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using Unity.Collections;
-using UnityEngine;
-using UnityEngine.XR.ARFoundation;
+﻿using UnityEngine;
 using UnityEngine.XR.ARSubsystems;
 #if UNITY_IOS && !UNITY_EDITOR
+using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine.XR.ARKit;
 #endif
 
@@ -45,11 +44,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
-    #if UNITY_IOS && !UNITY_EDITOR
+#if UNITY_IOS && !UNITY_EDITOR
         ARKitFaceSubsystem m_ARKitFaceSubsystem;
 
         Dictionary<ARKitBlendShapeLocation, int> m_FaceArkitBlendShapeIndexMap;
-    #endif
+#endif
 
         ARFace m_Face;
 
@@ -66,7 +65,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 return;
             }
 
-    #if UNITY_IOS && !UNITY_EDITOR
+#if UNITY_IOS && !UNITY_EDITOR
             const string strPrefix = "blendShape2.";
             m_FaceArkitBlendShapeIndexMap = new Dictionary<ARKitBlendShapeLocation, int>();
 
@@ -122,7 +121,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_FaceArkitBlendShapeIndexMap[ARKitBlendShapeLocation.NoseSneerLeft       ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "noseSneer_L");
             m_FaceArkitBlendShapeIndexMap[ARKitBlendShapeLocation.NoseSneerRight      ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "noseSneer_R");
             m_FaceArkitBlendShapeIndexMap[ARKitBlendShapeLocation.TongueOut           ]   = skinnedMeshRenderer.sharedMesh.GetBlendShapeIndex(strPrefix + "tongueOut");
-    #endif
+#endif
         }
 
         void SetVisible(bool visible)
@@ -144,13 +143,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void OnEnable()
         {
-    #if UNITY_IOS && !UNITY_EDITOR
-            var faceManager = FindObjectOfType<ARFaceManager>();
+#if UNITY_IOS && !UNITY_EDITOR
+            var faceManager = FindObjectsUtility.FindAnyObjectByType<ARFaceManager>();
             if (faceManager != null)
             {
                 m_ARKitFaceSubsystem = (ARKitFaceSubsystem)faceManager.subsystem;
             }
-    #endif
+#endif
             UpdateVisibility();
             m_Face.updated += OnUpdated;
             ARSession.stateChanged += OnSystemStateChanged;
@@ -180,7 +179,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 return;
             }
 
-    #if UNITY_IOS && !UNITY_EDITOR
+#if UNITY_IOS && !UNITY_EDITOR
             using (var blendShapes = m_ARKitFaceSubsystem.GetBlendShapeCoefficients(m_Face.trackableId, Allocator.Temp))
             {
                 foreach (var featureCoefficient in blendShapes)
@@ -195,7 +194,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     }
                 }
             }
-    #endif
+#endif
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.XR.ARFoundation;
+﻿using UnityEngine;
 using UnityEngine.XR.ARSubsystems;
 
 namespace UnityEngine.XR.ARFoundation.Samples
@@ -23,11 +20,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             get => m_GUIFixationReticlePrefab;
             set => m_GUIFixationReticlePrefab = value;
         }
+
         GameObject m_FixationReticleGameObject;
 
         Canvas m_Canvas;
         ARFace m_Face;
-        XRFaceSubsystem m_FaceSubsystem;
 
         void Awake()
         {
@@ -36,7 +33,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void CreateEyeGameObjectsIfNecessary()
         {
-            var canvas = FindObjectOfType<Canvas>();
+            var canvas = FindObjectsUtility.FindAnyObjectByType<Canvas>();
             if (m_Face.fixationPoint != null && canvas != null && m_FixationReticleGameObject == null)
             {
                 m_FixationReticleGameObject = Instantiate(m_GUIFixationReticlePrefab, canvas.transform);
@@ -51,10 +48,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void OnEnable()
         {
-            var faceManager = FindObjectOfType<ARFaceManager>();
+            var faceManager = FindObjectsUtility.FindAnyObjectByType<ARFaceManager>();
             if (faceManager != null && faceManager.subsystem != null && faceManager.descriptor.supportsEyeTracking)
             {
-                m_FaceSubsystem = (XRFaceSubsystem)faceManager.subsystem;
                 SetVisible((m_Face.trackingState == TrackingState.Tracking) && (ARSession.state > ARSessionState.Ready));
                 m_Face.updated += OnUpdated;
             }
@@ -76,7 +72,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             SetVisible((m_Face.trackingState == TrackingState.Tracking) && (ARSession.state > ARSessionState.Ready));
             UpdateScreenReticle();
         }
-
 
         void UpdateScreenReticle()
         {

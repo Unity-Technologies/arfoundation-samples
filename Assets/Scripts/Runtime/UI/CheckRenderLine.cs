@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine.SpatialTracking;
 using UnityEngine.XR;
 
 [RequireComponent(typeof(XRInteractorLineVisual))]
 [RequireComponent(typeof(ActionBasedController))]
 public class CheckRenderLine : MonoBehaviour
 {
+    ActionBasedController m_Controller;
+    XRInteractorLineVisual m_InteractorLine;
+
     [SerializeField]
     Camera m_CameraAR;
 
@@ -48,7 +50,4 @@ public class CheckRenderLine : MonoBehaviour
                 m_InteractorLine.reticle.SetActive(false);
         }
     }
-
-    ActionBasedController m_Controller;
-    XRInteractorLineVisual m_InteractorLine;
 }

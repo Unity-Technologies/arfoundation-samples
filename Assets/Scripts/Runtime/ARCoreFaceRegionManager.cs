@@ -1,16 +1,14 @@
 ﻿using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
-using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using Unity.XR.CoreUtils;
+#if UNITY_ANDROID && !UNITY_EDITOR
+using UnityEngine.XR.ARCore;
+#endif
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
-    #if UNITY_ANDROID && !UNITY_EDITOR
-    using UnityEngine.XR.ARCore;
-    #endif
-
     /// <summary>
     /// This component uses the ARCoreFaceSubsystem to query for face regions, special
     /// regions detected within a face, such as the nose tip. Each region has a pose
@@ -37,26 +35,26 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         XROrigin m_Origin;
 
-    #if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
         NativeArray<ARCoreFaceRegionData> m_FaceRegions;
 
         Dictionary<TrackableId, Dictionary<ARCoreFaceRegion, GameObject>> m_InstantiatedPrefabs;
-    #endif
+#endif
 
         // Start is called before the first frame update
         void Start()
         {
             m_FaceManager = GetComponent<ARFaceManager>();
             m_Origin = GetComponent<XROrigin>();
-    #if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
             m_InstantiatedPrefabs = new Dictionary<TrackableId, Dictionary<ARCoreFaceRegion, GameObject>>();
-    #endif
+#endif
         }
 
         // Update is called once per frame
         void Update()
         {
-    #if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
             var subsystem = (ARCoreFaceSubsystem)m_FaceManager.subsystem;
             if (subsystem == null)
                 return;
@@ -86,15 +84,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     go.transform.localRotation = m_FaceRegions[i].pose.rotation;
                 }
             }
-    #endif
+#endif
         }
 
         void OnDestroy()
         {
-    #if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
             if (m_FaceRegions.IsCreated)
                 m_FaceRegions.Dispose();
-    #endif
+#endif
         }
     }
 }
