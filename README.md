@@ -15,8 +15,8 @@ The `main` branch of this repository uses AR Foundation 5.1 and is compatible wi
 
 | Unity Version  | AR Foundation Version |
 | -------------- | --------------------- |
-| 2023.1 (alpha) | 5.1 (prerelease)      |
-| 2022.2 (beta)  | [5.0 (release)](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.0) |
+| 2023.1 (beta)  | 5.1 (prerelease)      |
+| 2022.2         | [5.0 (release)](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.0) |
 | 2022.1         | [5.0 (release)](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.0) |
 | 2021.3         | [4.2 (release)](https://github.com/Unity-Technologies/arfoundation-samples/tree/4.2) |
 | 2020.3         | [4.1 (release)](https://github.com/Unity-Technologies/arfoundation-samples/tree/4.1) |
