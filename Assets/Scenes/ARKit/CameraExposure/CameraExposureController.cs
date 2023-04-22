@@ -1,39 +1,28 @@
 using System;
-using TMPro;
 using UnityEngine.UI;
 #if UNITY_IOS
-using System.Collections;
 using UnityEngine.XR.ARKit;
 #endif // UNITY_IOS
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
     [RequireComponent(typeof(ARCameraManager))]
-    public class CameraExposureController : MonoBehaviour
+    public class CameraExposureController
+#if UNITY_IOS
+        : ARKitAdvancedCameraConfigurationController<ARKitExposureMode, ARKitExposure>
+#else
+        : ARKitAdvancedCameraConfigurationController
+#endif
     {
-        [SerializeField]
-        TMP_Dropdown m_ExposureModeDropdown;
-
         [SerializeField]
         Slider m_DurationSlider;
 
         [SerializeField]
         Slider m_IsoSlider;
 
-        [SerializeField]
-        Button m_UpdateButton;
-
-        [SerializeField]
-        GameObject m_UnsupportedMessage;
-
 #if UNITY_IOS
         double m_Duration;
         float m_Iso;
-
-        SupportStatus status;
-
-        ARKitCameraSubsystem m_Subsystem;
-        ARKitLockedCamera m_LockedCamera;
 
         public float duration
         {
@@ -47,166 +36,76 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set => m_Iso = value;
         }
 
-        public bool cameraLocked => m_LockedCamera != null;
-
-        public ARKitExposureMode currentExposureMode { get; private set; }
-        public ARKitExposure currentExposure { get; private set; }
-
-        void Awake()
+        protected override void PostUpdate()
         {
-            status = SupportStatus.Pending;
-
-            var cameraManager = GetComponent<ARCameraManager>();
-            m_Subsystem = cameraManager.subsystem as ARKitCameraSubsystem;
-
-            if (m_Subsystem == null)
+            if (currentMode != ARKitExposureMode.Custom)
             {
-                Debug.LogWarning(
-                    $"No active instance of {nameof(ARKitCameraSubsystem)} found. {nameof(CameraExposureController)} will be disabled.");
-                enabled = false;
+                RefreshUI(currentValue);
             }
         }
 
-        void OnEnable()
+        protected override void UpdateCachedValues(ARKitLockedCamera lockedCamera)
         {
-            if (m_UnsupportedMessage)
-            {
-                m_UnsupportedMessage.SetActive(false);
-            }
-
-            status = SupportStatus.Checking;
-            StartCoroutine(CheckSupport());
-
-            // Update UI controls
-            PopulateExposureMode();
-            StartCoroutine(PopulateExposureRange());
+            currentMode = lockedCamera.currentExposureMode;
+            currentValue = lockedCamera.exposure;
         }
 
-        private void OnDisable()
+        protected override void PopulateSupportedModes(ARKitLockedCamera lockedCamera)
         {
-            if (m_LockedCamera != null)
+            var supportedModes = lockedCamera.supportedExposureModes;
+            m_SupportedModes = new();
+
+            if ((supportedModes & ARKitExposureMode.Locked) != ARKitExposureMode.None)
             {
-                m_LockedCamera.Dispose();
+                m_SupportedModes.Add(ARKitExposureMode.Locked);
             }
-        }
 
-        void Update()
-        {
-            UpdateCurrentExposureState();
-
-            // Update the UI controls with current values
-            RefreshCurrentExposureMode();
-
-            if (currentExposureMode != ARKitExposureMode.Custom)
+            if ((supportedModes & ARKitExposureMode.Auto) != ARKitExposureMode.None)
             {
-                RefreshCurrentExposure(currentExposure);
+                m_SupportedModes.Add(ARKitExposureMode.Auto);
+            }
+
+            if ((supportedModes & ARKitExposureMode.ContinuousAuto) != ARKitExposureMode.None)
+            {
+                m_SupportedModes.Add(ARKitExposureMode.ContinuousAuto);
+            }
+
+            if ((supportedModes & ARKitExposureMode.Custom) != ARKitExposureMode.None)
+            {
+                m_SupportedModes.Add(ARKitExposureMode.Custom);
             }
         }
 
-        void UpdateCurrentExposureState()
-        {
-            if (!m_Subsystem.TryGetLockedCamera(out var lockedCamera))
-                return;
-
-            using (lockedCamera)
-            {
-                currentExposureMode = lockedCamera.currentExposureMode;
-                currentExposure = lockedCamera.exposure;
-            }
-        }
-
-        void PopulateExposureMode()
-        {
-            if (m_ExposureModeDropdown == null)
-                return;
-
-            var options = m_ExposureModeDropdown.options;
-            options.Clear();
-
-            options.Add(new TMP_Dropdown.OptionData(ARKitExposureMode.Locked.ToString()));
-            options.Add(new TMP_Dropdown.OptionData(ARKitExposureMode.Auto.ToString()));
-            options.Add(new TMP_Dropdown.OptionData(ARKitExposureMode.ContinuousAuto.ToString()));
-            options.Add(new TMP_Dropdown.OptionData(ARKitExposureMode.Custom.ToString()));
-
-            m_ExposureModeDropdown.onValueChanged.AddListener(UpdateExposureMode);
-        }
-
-        IEnumerator CheckSupport()
-        {
-            yield return null;
-
-            if (m_Subsystem.advancedCameraConfigurationSupported)
-            {
-                status = SupportStatus.Supported;
-                yield break;
-            }
-
-            status = SupportStatus.Unsupported;
-
-            if (m_UnsupportedMessage)
-            {
-                m_UnsupportedMessage.SetActive(true);
-            }
-
-            Debug.LogWarning(
-                $"Advance camera configuration is not supported on this device. {nameof(CameraExposureController)} will be disabled.");
-            enabled = false;
-        }
-
-        IEnumerator PopulateExposureRange()
+        protected override void PopulateRanges(ARKitLockedCamera lockedCamera)
         {
             if (!m_DurationSlider && !m_IsoSlider)
             {
-                yield break;
-            }
-
-            // wait to check support and the platform plug-in to initialize
-            yield return new WaitWhile(() => status == SupportStatus.Pending || status == SupportStatus.Checking);
-
-            if (status == SupportStatus.Unsupported)
-            {
-                yield break;
-            }
-
-            if (!m_Subsystem.TryGetLockedCamera(out var lockedCamera))
-            {
-                Debug.LogError("Couldn't acquire lock on the camera to query exposure range.");
-                yield break;
-            }
-
-            using (lockedCamera)
-            {
-                var range = lockedCamera.exposureRange;
-                Debug.Log($"Exposure Range: {range.minimumDuration}, {range.maximumDuration}");
-                Debug.Log($"ISO Range: {range.minimumIso}, {range.maximumIso}");
-
-                // update range of duration slider
-                if (m_DurationSlider)
-                {
-                    m_DurationSlider.minValue = (float)range.minimumDuration;
-                    m_DurationSlider.maxValue = (float)range.maximumDuration;
-                }
-
-                // update range of iso slider
-                if (m_IsoSlider)
-                {
-                    m_IsoSlider.minValue = range.minimumIso;
-                    m_IsoSlider.maxValue = range.maximumIso;
-                }
-            }
-        }
-
-        void RefreshCurrentExposureMode()
-        {
-            var exposureMode = (int) currentExposureMode - 1;
-            if (m_ExposureModeDropdown.value == exposureMode)
                 return;
+            }
 
-            m_ExposureModeDropdown.SetValueWithoutNotify(exposureMode);
-            m_UpdateButton.interactable = ((ARKitExposureMode)exposureMode + 1) == ARKitExposureMode.Custom;
+            var range = lockedCamera.exposureRange;
+            Debug.Log($"Exposure Range: {range.minimumDuration}, {range.maximumDuration}");
+            Debug.Log($"ISO Range: {range.minimumIso}, {range.maximumIso}");
+
+            // update range of duration slider
+            if (m_DurationSlider)
+            {
+                m_DurationSlider.minValue = (float)range.minimumDuration;
+                m_DurationSlider.maxValue = (float)range.maximumDuration;
+            }
+
+            // update range of iso slider
+            if (m_IsoSlider)
+            {
+                m_IsoSlider.minValue = range.minimumIso;
+                m_IsoSlider.maxValue = range.maximumIso;
+            }
         }
 
-        void RefreshCurrentExposure(ARKitExposure exposure)
+        protected override bool InteractableUpdateButton(ARKitExposureMode mode)
+            => mode == ARKitExposureMode.Custom;
+
+        void RefreshUI(ARKitExposure exposure)
         {
             if (m_DurationSlider != null && Math.Abs(m_DurationSlider.value - exposure.duration) > float.Epsilon)
             {
@@ -221,59 +120,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
-        void UpdateExposureMode(int mode)
+        protected override void UpdateMode(ARKitLockedCamera lockedCamera, ARKitExposureMode mode)
         {
-            var exposureMode = (ARKitExposureMode)mode + 1;
-
-            if (!m_Subsystem.TryGetLockedCamera(out var lockedCamera))
-                return;
-
-            try
-            {
-                Debug.Log($"Updating exposure mode to {exposureMode.ToString()}.");
-                lockedCamera.requestedExposureMode = exposureMode;
-            }
-            finally
-            {
-                lockedCamera.Dispose();
-                m_UpdateButton.interactable = exposureMode == ARKitExposureMode.Custom;
-            }
+            Debug.Log($"Updating exposure mode to {mode.ToString()}.");
+            lockedCamera.requestedExposureMode = mode;
         }
 
-        public void UpdateExposure()
+        protected override void UpdateConfigValues(ARKitLockedCamera lockedCamera)
         {
-            if (!m_Subsystem.TryGetLockedCamera(out var lockedCamera))
-                return;
+            var exposure = new ARKitExposure(m_Duration, m_Iso);
+            Debug.Log($"Updating exposure: {exposure.ToString()}");
 
-            try
-            {
-                lockedCamera.exposure = new ARKitExposure(m_Duration, m_Iso);
-            }
-            finally
-            {
-                lockedCamera.Dispose();
-            }
-        }
-
-        public void ToggleLock()
-        {
-            if (cameraLocked)
-            {
-                m_LockedCamera.Dispose();
-                m_LockedCamera = default;
-            }
-            else
-            {
-                m_Subsystem.TryGetLockedCamera(out m_LockedCamera);
-            }
-        }
-
-        enum SupportStatus
-        {
-            Pending,
-            Checking,
-            Supported,
-            Unsupported
+            lockedCamera.exposure = exposure;
         }
 #endif // UNITY_IOS
     }
