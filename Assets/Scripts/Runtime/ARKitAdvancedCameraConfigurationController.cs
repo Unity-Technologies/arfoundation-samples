@@ -89,6 +89,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         IEnumerator CheckSupport()
         {
+            // wait for one frame to allow the subsystems and plug-in to initialize before checking support
             yield return null;
 
             if (m_Subsystem.advancedCameraConfigurationSupported)

@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Unity.XR.CoreUtils;
-using UnityEngine.InputSystem;
 using UnityEngine.XR.ARSubsystems;
 
 namespace UnityEngine.XR.ARFoundation.Samples
@@ -9,6 +8,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
     [RequireComponent(typeof(ARRaycastManager))]
     public class AnchorCreator : PressInputBase
     {
+        static readonly List<ARRaycastHit> s_Hits = new();
+
+        readonly List<ARAnchor> m_Anchors = new();
+
+        ARRaycastManager m_RaycastManager;
+        ARAnchorManager m_AnchorManager;
+
         [SerializeField]
         GameObject m_Prefab;
 
@@ -23,7 +29,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
             Logger.Log($"Removing all anchors ({m_Anchors.Count})");
             foreach (var anchor in m_Anchors)
             {
-                Destroy(anchor.gameObject);
+                // It's possible for ARSession.Reset() to invalidate anchors outside of this,
+                // so the additional checks will skip deleted anchors/anchor GOs.
+                if (anchor != null && anchor.gameObject != null)
+                    Destroy(anchor.gameObject);
             }
             m_Anchors.Clear();
         }
@@ -34,14 +43,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_RaycastManager = GetComponent<ARRaycastManager>();
             m_AnchorManager = GetComponent<ARAnchorManager>();
 
-            if (m_AnchorManager.subsystem == null)
-            {
-                enabled = false;
-                Debug.LogWarning($"No active XRAnchorSubsystem is available, so {typeof(AnchorCreator).FullName} will not be enabled.");
-            }
+            if (m_AnchorManager.subsystem != null)
+                return;
+
+            enabled = false;
+            Debug.LogWarning($"No active XRAnchorSubsystem is available, so {typeof(AnchorCreator).FullName} will not be enabled.");
         }
 
-        void SetAnchorText(ARAnchor anchor, string text)
+        static void SetAnchorText(ARAnchor anchor, string text)
         {
             var canvasTextManager = anchor.GetComponent<CanvasTextManager>();
             if (canvasTextManager)
@@ -52,7 +61,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         ARAnchor CreateAnchor(in ARRaycastHit hit)
         {
-            ARAnchor anchor = null;
+            ARAnchor anchor;
 
             // If we hit a plane, try to "attach" the anchor to the plane
             if (hit.trackable is ARPlane plane)
@@ -85,16 +94,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (m_Prefab != null)
             {
                 // Note: the anchor can be anywhere in the scene hierarchy
-                var gameObject = Instantiate(m_Prefab, hit.pose.position, hit.pose.rotation);
+                var anchorGameObject = Instantiate(m_Prefab, hit.pose.position, hit.pose.rotation);
 
                 // Make sure the new GameObject has an ARAnchor component
-                anchor = ComponentUtils.GetOrAddIf<ARAnchor>(gameObject, true);
+                anchor = ComponentUtils.GetOrAddIf<ARAnchor>(anchorGameObject, true);
             }
             else
             {
-                var gameObject = new GameObject("Anchor");
-                gameObject.transform.SetPositionAndRotation(hit.pose.position, hit.pose.rotation);
-                anchor = gameObject.AddComponent<ARAnchor>();
+                var anchorGameObject = new GameObject("Anchor");
+                anchorGameObject.transform.SetPositionAndRotation(hit.pose.position, hit.pose.rotation);
+                anchor = anchorGameObject.AddComponent<ARAnchor>();
             }
 
             SetAnchorText(anchor, $"Anchor (from {hit.hitType})");
@@ -110,31 +119,23 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 TrackableType.PlaneWithinPolygon;
 
             // Perform the raycast
-            if (m_RaycastManager.Raycast(position, s_Hits, trackableTypes))
-            {
-                // Raycast hits are sorted by distance, so the first one will be the closest hit.
-                var hit = s_Hits[0];
+            if (!m_RaycastManager.Raycast(position, s_Hits, trackableTypes))
+                return;
 
-                // Create a new anchor
-                var anchor = CreateAnchor(hit);
-                if (anchor != null)
-                {
-                    // Remember the anchor so we can remove it later.
-                    m_Anchors.Add(anchor);
-                }
-                else
-                {
-                    Logger.Log("Error creating anchor");
-                }
+            // Raycast hits are sorted by distance, so the first one will be the closest hit.
+            var hit = s_Hits[0];
+
+            // Create a new anchor
+            var anchor = CreateAnchor(hit);
+            if (anchor != null)
+            {
+                // Remember the anchor so we can remove it later.
+                m_Anchors.Add(anchor);
+            }
+            else
+            {
+                Logger.Log("Error creating anchor");
             }
         }
-
-        static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
-
-        List<ARAnchor> m_Anchors = new List<ARAnchor>();
-
-        ARRaycastManager m_RaycastManager;
-
-        ARAnchorManager m_AnchorManager;
     }
 }

@@ -109,6 +109,12 @@ This sample demonstrates the camera grain effect. Once a plane is detected, you 
 
 This sample requires a device running iOS 13 or later and Unity 2020.2 or later.
 
+### EXIF Data
+
+This sample demonstrates how to access camera frame's EXIF metadata. You should see values for all the supported EXIF tags on screen. Refer to `ExifDataLogger.cs` for more details.
+
+This sample requires iOS 16 or newer.
+
 ## Plane Detection 
 
 ### Feathered Planes

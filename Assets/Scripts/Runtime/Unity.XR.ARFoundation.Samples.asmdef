@@ -11,7 +11,9 @@
         "Unity.XR.Management",
         "Unity.XR.ARKit",
         "Unity.XR.ARKit.FaceTracking",
-        "Unity.XR.ARCore"
+        "Unity.XR.ARCore",
+        "Unity.VisualScripting.Core",
+        "Unity.VisualScripting.Flow"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -20,6 +22,12 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.visualscripting",
+            "expression": "1.8",
+            "define": "VISUALSCRIPTING_1_8_OR_NEWER"
+        }
+    ],
     "noEngineReferences": false
 }
