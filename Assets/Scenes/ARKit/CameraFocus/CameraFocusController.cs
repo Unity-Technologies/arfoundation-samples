@@ -17,7 +17,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         Slider m_LensPositionSlider;
 
-#if UNITY_IOS
         float m_LensPosition;
 
         public float lensPosition
@@ -26,6 +25,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set => m_LensPosition = value;
         }
 
+#if UNITY_IOS
         protected override void UpdateCachedValues(ARKitLockedCamera lockedCamera)
         {
             currentMode = lockedCamera.currentFocusMode;

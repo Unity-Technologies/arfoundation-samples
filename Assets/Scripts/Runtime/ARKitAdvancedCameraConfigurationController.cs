@@ -34,9 +34,55 @@ namespace UnityEngine.XR.ARFoundation.Samples
         ARKitLockedCamera m_LockedCamera;
 
         protected List<TMode> m_SupportedModes;
+#endif
 
-        public bool cameraLocked => m_LockedCamera != null;
+        public bool cameraLocked
+        {
+            get
+            {
+#if UNITY_IOS
+                return m_LockedCamera != null;
+#endif
+                return false;
+            }
+        }
 
+        public void UpdateConfigValues()
+        {
+#if UNITY_IOS
+            if (!m_Subsystem.TryGetLockedCamera(out var lockedCamera))
+            {
+                Debug.LogError("Couldn't acquire lock on the camera.");
+                return;
+            }
+
+            try
+            {
+                UpdateConfigValues(lockedCamera);
+            }
+            finally
+            {
+                lockedCamera.Dispose();
+            }
+#endif
+        }
+
+        public void ToggleLock()
+        {
+#if UNITY_IOS
+            if (cameraLocked)
+            {
+                m_LockedCamera.Dispose();
+                m_LockedCamera = default;
+            }
+            else
+            {
+                m_Subsystem.TryGetLockedCamera(out m_LockedCamera);
+            }
+#endif
+        }
+
+#if UNITY_IOS
         public TMode currentMode { get; protected set; }
         public TConfigValue currentValue { get; protected set; }
 
@@ -202,37 +248,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 lockedCamera.Dispose();
                 m_UpdateButton.interactable = InteractableUpdateButton(modeEnum);
-            }
-        }
-
-        public void UpdateConfigValues()
-        {
-            if (!m_Subsystem.TryGetLockedCamera(out var lockedCamera))
-            {
-                Debug.LogError("Couldn't acquire lock on the camera.");
-                return;
-            }
-
-            try
-            {
-                UpdateConfigValues(lockedCamera);
-            }
-            finally
-            {
-                lockedCamera.Dispose();
-            }
-        }
-
-        public void ToggleLock()
-        {
-            if (cameraLocked)
-            {
-                m_LockedCamera.Dispose();
-                m_LockedCamera = default;
-            }
-            else
-            {
-                m_Subsystem.TryGetLockedCamera(out m_LockedCamera);
             }
         }
 

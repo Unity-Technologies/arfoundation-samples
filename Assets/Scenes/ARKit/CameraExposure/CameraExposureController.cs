@@ -20,7 +20,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         Slider m_IsoSlider;
 
-#if UNITY_IOS
         double m_Duration;
         float m_Iso;
 
@@ -36,6 +35,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set => m_Iso = value;
         }
 
+#if UNITY_IOS
         protected override void PostUpdate()
         {
             if (currentMode != ARKitExposureMode.Custom)

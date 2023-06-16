@@ -23,7 +23,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         Slider m_RedGainSlider;
 
-#if UNITY_IOS
         float m_BlueGain;
         float m_GreenGain;
         float m_RedGain;
@@ -46,6 +45,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set => m_RedGain = value;
         }
 
+#if UNITY_IOS
         protected override void UpdateCachedValues(ARKitLockedCamera lockedCamera)
         {
             currentMode = lockedCamera.currentWhiteBalanceMode;
