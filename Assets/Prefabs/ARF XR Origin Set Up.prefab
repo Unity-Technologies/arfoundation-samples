@@ -52,7 +52,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 55
   m_InteractionLayers:
-    m_Bits: 1
+    m_Bits: 55
   m_AttachTransform: {fileID: 0}
   m_KeepSelectedTargetValid: 1
   m_DisableVisualsWhenBlockedInGroup: 1
@@ -466,7 +466,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 55
   m_InteractionLayers:
-    m_Bits: 1
+    m_Bits: 55
   m_AttachTransform: {fileID: 0}
   m_KeepSelectedTargetValid: 1
   m_DisableVisualsWhenBlockedInGroup: 1
@@ -922,7 +922,7 @@ GameObject:
   - component: {fileID: 7483832679409300361}
   - component: {fileID: 6653242968285633920}
   - component: {fileID: 1685683891318497212}
-  - component: {fileID: 6070054444788828004}
+  - component: {fileID: 2075297372898977589}
   m_Layer: 0
   m_Name: Gaze Interactor
   m_TagString: Untagged
@@ -1251,7 +1251,7 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 0}
   m_ButtonPressPoint: 0.5
---- !u!114 &6070054444788828004
+--- !u!114 &2075297372898977589
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1260,7 +1260,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3160085029946906612}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9a1bc6920ac7f646a4095c62cf8fd36, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ef0e4723b64c884699a375196c13ac0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_FallbackIfEyeTrackingUnavailable: 1
@@ -1314,7 +1314,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 23
   m_InteractionLayers:
-    m_Bits: 1
+    m_Bits: 23
   m_AttachTransform: {fileID: 0}
   m_KeepSelectedTargetValid: 1
   m_DisableVisualsWhenBlockedInGroup: 1
@@ -2473,7 +2473,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 23
   m_InteractionLayers:
-    m_Bits: 1
+    m_Bits: 23
   m_AttachTransform: {fileID: 0}
   m_KeepSelectedTargetValid: 1
   m_DisableVisualsWhenBlockedInGroup: 1
@@ -2865,7 +2865,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8766024632898161120}
-  - component: {fileID: 4316896837718902161}
+  - component: {fileID: 9116642074291218168}
   - component: {fileID: 8766024632898161124}
   - component: {fileID: 3160787282254883000}
   - component: {fileID: 8408965567446506061}
@@ -2895,7 +2895,7 @@ Transform:
   m_Father: {fileID: 8766024634641266083}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4316896837718902161
+--- !u!114 &9116642074291218168
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2904,7 +2904,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8766024632898161151}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cea88355f0c03e24aa99e887c20ef1de, type: 3}
+  m_Script: {fileID: 11500000, guid: f9ac216f0eb04754b1d938aac6380b31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ManipulationInteractionGroup: {fileID: 8408965567446506061}
@@ -4044,7 +4044,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8766024634768935169}
-  - component: {fileID: 3980370354736040378}
+  - component: {fileID: 2660857931694009910}
   - component: {fileID: 8766024634768935172}
   - component: {fileID: 4808675089683749207}
   - component: {fileID: 2668937249620033359}
@@ -4074,7 +4074,7 @@ Transform:
   m_Father: {fileID: 8766024634641266083}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3980370354736040378
+--- !u!114 &2660857931694009910
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4083,7 +4083,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8766024634768935168}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cea88355f0c03e24aa99e887c20ef1de, type: 3}
+  m_Script: {fileID: 11500000, guid: f9ac216f0eb04754b1d938aac6380b31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ManipulationInteractionGroup: {fileID: 2668937249620033359}

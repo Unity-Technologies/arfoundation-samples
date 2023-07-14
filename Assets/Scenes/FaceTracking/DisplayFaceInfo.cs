@@ -1,19 +1,27 @@
 using System.Text;
 using Unity.Collections;
-using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using Unity.XR.CoreUtils;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
-    [RequireComponent(typeof(ARSession))]
     [RequireComponent(typeof(ARFaceManager))]
     [RequireComponent(typeof(XROrigin))]
     public class DisplayFaceInfo : MonoBehaviour
     {
         [SerializeField]
+        [Tooltip("The active AR Session")]
+        ARSession m_Session;
+
+        public ARSession session
+        {
+            get => m_Session;
+            set => m_Session = value;
+        }
+
+        [SerializeField]
+        [Tooltip("The Text to display the status and info regarding face tracking")]
         Text m_FaceInfoText;
 
         public Text faceInfoText
@@ -23,6 +31,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
 
         [SerializeField]
+        [Tooltip("The Text to display instructions to the user that face tracking is not supported")]
         Text m_InstructionsText;
 
         public Text instructionsText
@@ -32,6 +41,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
 
         [SerializeField]
+        [Tooltip("The GameObject to enable when face tracking is not available")]
         GameObject m_NotSupportedElement;
 
         public GameObject notSupportedElement
@@ -50,8 +60,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set => m_FaceControlledObject = value;
         }
 
-        ARSession m_Session;
-
         ARFaceManager m_FaceManager;
 
         ARCameraManager m_CameraManager;
@@ -64,8 +72,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void Awake()
         {
+            if (m_Session == null)
+#if UNITY_2023_1_OR_NEWER
+                m_Session = FindAnyObjectByType<ARSession>();
+#else
+                m_Session = FindObjectOfType<ARSession>();
+#endif
+
             m_FaceManager = GetComponent<ARFaceManager>();
-            m_Session = GetComponent<ARSession>();
             var camera = GetComponent<XROrigin>().Camera;
             m_CameraManager = camera ? camera.GetComponent<ARCameraManager>() : null;
         }

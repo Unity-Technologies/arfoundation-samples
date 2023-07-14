@@ -16,7 +16,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void Start()
         {
-            if (Application.CanStreamedLevelBeLoaded("Menu"))
+            if (Application.CanStreamedLevelBeLoaded(MenuLoader.GetMenuSceneName()))
                 m_BackButton.SetActive(true);
         }
 
@@ -29,8 +29,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public void BackButtonPressed()
         {
-            if (Application.CanStreamedLevelBeLoaded("Menu"))
-                SceneManager.LoadScene("Menu", LoadSceneMode.Single);
+            string menuSceneName = MenuLoader.GetMenuSceneName();
+            if (Application.CanStreamedLevelBeLoaded(menuSceneName))
+                SceneManager.LoadScene(menuSceneName, LoadSceneMode.Single);
         }
     }
 }

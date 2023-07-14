@@ -8,14 +8,14 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4381455002505794}
-  - component: {fileID: 114420653519937450}
-  - component: {fileID: 114505523171528268}
-  - component: {fileID: 64075061905826896}
-  - component: {fileID: 33940188020947210}
-  - component: {fileID: 23757564266038714}
-  - component: {fileID: 120517587746667212}
-  - component: {fileID: 6067490393605405756}
+  - component: {fileID: 1239403317283813928}
+  - component: {fileID: 518834582234634195}
+  - component: {fileID: 8986325881689316070}
+  - component: {fileID: 5954542135268469354}
+  - component: {fileID: 2022662828959295832}
+  - component: {fileID: 4618170337898382378}
+  - component: {fileID: 1997256417030624698}
+  - component: {fileID: 2693936868997613681}
   m_Layer: 0
   m_Name: AR Plane Debug Visualizer
   m_TagString: Untagged
@@ -23,7 +23,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4381455002505794
+--- !u!4 &1239403317283813928
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -38,7 +38,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114420653519937450
+--- !u!114 &518834582234634195
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -52,21 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_DestroyOnRemoval: 1
   m_VertexChangedThreshold: 0.01
---- !u!114 &114505523171528268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1568414836858200}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d180956a54db4646a1c6342921672ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TrackingStateVisibilityThreshold: 1
-  m_HideSubsumed: 1
---- !u!64 &64075061905826896
+--- !u!64 &8986325881689316070
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,7 +74,43 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!33 &33940188020947210
+--- !u!114 &5954542135268469354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568414836858200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd8e0297ff715436b9e6c3754e490a81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PlaneNormalPrefab: {fileID: 1362899771367802, guid: 48e43bbe3af404986bbdc5a552e5fefd,
+    type: 3}
+  m_ShowPlaneNormal: 1
+  m_ShowTrackingState: 1
+  m_ShowTrackableId: 1
+  m_ShowAlignment: 1
+  m_ShowClassification: 1
+  m_FontSize: 0.25
+  m_ARPlaneMeshVisualizer: {fileID: 2022662828959295832}
+  m_ARPlane: {fileID: 518834582234634195}
+--- !u!114 &2022662828959295832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568414836858200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d180956a54db4646a1c6342921672ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TrackingStateVisibilityThreshold: 1
+  m_HideSubsumed: 1
+--- !u!33 &4618170337898382378
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -96,7 +118,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1568414836858200}
   m_Mesh: {fileID: 0}
---- !u!23 &23757564266038714
+--- !u!23 &1997256417030624698
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,7 +160,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!120 &120517587746667212
+--- !u!120 &2693936868997613681
 LineRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 0
@@ -242,15 +264,3 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 1
   m_ApplyActiveColorSpace: 0
---- !u!114 &6067490393605405756
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1568414836858200}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68bde066fa5df46b0bbc8e3078f47031, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

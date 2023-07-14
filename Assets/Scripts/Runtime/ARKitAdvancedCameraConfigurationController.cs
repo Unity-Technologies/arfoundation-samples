@@ -42,8 +42,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
 #if UNITY_IOS
                 return m_LockedCamera != null;
-#endif
+#else
                 return false;
+#endif
             }
         }
 
