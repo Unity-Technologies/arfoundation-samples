@@ -17,6 +17,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         GameObject m_WorldSpaceObject;
 
+        [SerializeField]
+        ARSession m_Session;
+
         public GameObject worldSpaceObject
         {
             get => m_WorldSpaceObject;
@@ -43,6 +46,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     GetComponent<ARFaceManager>().enabled = true;
                     worldSpaceObject.SetActive(false);
                     Application.onBeforeRender -= OnBeforeRender;
+                    if (m_Session)
+                    {
+                        m_Session.requestedTrackingMode = TrackingMode.RotationOnly;
+                    }
                 }
                 else if (updatedCameraFacingDirection == CameraFacingDirection.World)
                 {
@@ -50,6 +57,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     GetComponent<ARFaceManager>().enabled = false;
                     worldSpaceObject.SetActive(true);
                     Application.onBeforeRender += OnBeforeRender;
+                    if (m_Session)
+                    {
+                        m_Session.requestedTrackingMode = TrackingMode.PositionAndRotation;
+                    }
                 }
             }
         }
@@ -66,6 +77,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (camera && worldSpaceObject)
             {
                 worldSpaceObject.transform.position = camera.transform.position + camera.transform.forward;
+            }
+        }
+
+        void Reset()
+        {
+            if (m_Session == null)
+            {
+#if UNITY_2023_1_OR_NEWER
+                m_Session = FindAnyObjectByType<ARSession>();
+#else
+                m_Session = FindObjectOfType<ARSession>();
+#endif
             }
         }
     }
