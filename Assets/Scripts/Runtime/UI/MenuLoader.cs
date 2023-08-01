@@ -20,7 +20,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public static string GetMenuSceneName()
         {
             var loader = LoaderUtility.GetActiveLoader();
-            var sessionSubsystem = loader.GetLoadedSubsystem<XRSessionSubsystem>();
+            var sessionSubsystem = loader != null ? loader.GetLoadedSubsystem<XRSessionSubsystem>() : null;
 
             if (sessionSubsystem == null)
             {
