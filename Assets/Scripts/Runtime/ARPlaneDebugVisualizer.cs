@@ -121,10 +121,10 @@ namespace UnityEngine.XR.ARFoundation
             m_ValuesBuilder.Clear();
 
             var textOffset = (m_DebugLabelTypes.preferredWidth / 2f) + k_ColumnWidthExtent;
-            m_DebugLabelTypes.transform.localPosition += new Vector3(textOffset, 0, 0);
+            m_DebugLabelTypes.transform.localPosition = new Vector3(textOffset, 0, 0);
             
             textOffset = (-m_DebugLabelValues.preferredWidth / 2f) - k_ColumnWidthExtent;
-            m_DebugLabelValues.transform.localPosition += new Vector3(textOffset, 0, 0);
+            m_DebugLabelValues.transform.localPosition = new Vector3(textOffset, 0, 0);
         }
 
         void FormatDebugText(string dataType, string value)

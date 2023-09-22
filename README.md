@@ -15,9 +15,10 @@ The `main` branch of this repository uses AR Foundation 5.1 and is compatible wi
 
 | Unity Version  | AR Foundation Version |
 | -------------- | --------------------- |
-| 2023.2 (alpha) | 5.1 (prerelease)      |
-| 2023.1 (beta)  | 5.1 (prerelease)      |
-| 2022.2         | [5.0](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.0) |
+| 2023.3 (alpha) | [5.1](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.1) |
+| 2023.2 (beta)  | [5.1](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.1) |
+| 2023.1         | [5.1](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.1) |
+| 2022.3         | [5.0](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.0) |
 | 2021.3         | [4.2](https://github.com/Unity-Technologies/arfoundation-samples/tree/4.2) |
 | 2020.3         | [4.1](https://github.com/Unity-Technologies/arfoundation-samples/tree/4.1) |
 
@@ -322,7 +323,7 @@ This sample requires iOS 12 or above.
 
 [ARKit's ARGeoAnchors](https://developer.apple.com/documentation/arkit/argeoanchor?language=objc) are not yet supported by ARFoundation, but you can still access this feature with a bit of Objective-C. This sample uses a custom [ConfigurationChooser](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.1/api/UnityEngine.XR.ARSubsystems.ConfigurationChooser.html) to instruct the Apple ARKit XR Plug-in to use an [ARGeoTrackingConfiguration](https://developer.apple.com/documentation/arkit/argeotrackingconfiguration?language=objc).
 
-This sample also shows how to interpret the [nativePtr](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.0/api/UnityEngine.XR.ARSubsystems.XRSessionSubsystem.html#UnityEngine_XR_ARSubsystems_XRSessionSubsystem_nativePtr) provided by the [XRSessionSubsystem](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.0/api/UnityEngine.XR.ARSubsystems.XRSessionSubsystem.html) as an ARKit [ARSession](https://developer.apple.com/documentation/arkit/arsession?language=objc) pointer.
+This sample also shows how to interpret the [nativePtr](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.1/api/UnityEngine.XR.ARSubsystems.XRSessionSubsystem.html#UnityEngine_XR_ARSubsystems_XRSessionSubsystem_nativePtr) provided by the [XRSessionSubsystem](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.1/api/UnityEngine.XR.ARSubsystems.XRSessionSubsystem.html) as an ARKit [ARSession](https://developer.apple.com/documentation/arkit/arsession?language=objc) pointer.
 
 This sample requires an iOS device running iOS 14.0 or later, an A12 chip or later, location services enabled, and cellular capability.
 
