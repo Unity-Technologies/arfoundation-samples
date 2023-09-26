@@ -13,7 +13,8 @@
         "Unity.XR.ARKit.FaceTracking",
         "Unity.XR.ARCore",
         "Unity.VisualScripting.Core",
-        "Unity.VisualScripting.Flow"
+        "Unity.VisualScripting.Flow",
+        "Unity.XR.MetaOpenXR"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -27,6 +28,11 @@
             "name": "com.unity.visualscripting",
             "expression": "1.8",
             "define": "VISUALSCRIPTING_1_8_OR_NEWER"
+        },
+        {
+            "name": "com.unity.xr.meta-openxr",
+            "expression": "0.2.0",
+            "define": "METAOPENXR_0_2_OR_NEWER"
         }
     ],
     "noEngineReferences": false

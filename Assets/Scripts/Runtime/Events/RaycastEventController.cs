@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Unity.XR.CoreUtils;
 using UnityEngine.InputSystem;
@@ -85,8 +84,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void ScreenTapped(InputAction.CallbackContext context)
         {
-            var pointer = context.control.device as Pointer;
-            if (pointer == null)
+            if (context.control.device is not Pointer pointer)
             {
                Debug.LogError("Input actions are incorrectly configured. Expected a Pointer binding ScreenTapped.", this);
                return;

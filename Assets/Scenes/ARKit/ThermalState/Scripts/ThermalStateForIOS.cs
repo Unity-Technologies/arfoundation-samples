@@ -32,31 +32,26 @@ namespace UnityEngine.XR.ARFoundation.Samples
             /// <summary>
             /// Thermal state is unknown.
             /// </summary>
-            [Description("Unknown")]
             Unknown = 0,
 
             /// <summary>
             /// The thermal state is at an acceptable level.
             /// </summary>
-            [Description("Nominal")]
             Nominal = 1,
 
             /// <summary>
             /// The thermal state is minimally elevated.
             /// </summary>
-            [Description("Fair")]
             Fair = 2,
 
             /// <summary>
             /// The thermal state is highly elevated.
             /// </summary>
-            [Description("Serious")]
             Serious = 3,
 
             /// <summary>
             /// The thermal state is significantly elevated.
             /// </summary>
-            [Description("Critical")]
             Critical = 4,
         }
 

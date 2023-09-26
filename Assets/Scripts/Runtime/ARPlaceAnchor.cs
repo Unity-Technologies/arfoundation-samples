@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using Unity.XR.CoreUtils;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -8,10 +8,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         [Tooltip("The enabled Anchor Manager in the scene.")]
         ARAnchorManager m_AnchorManager;
-
-        [SerializeField]
-        [Tooltip("The prefab to be instantiated for each anchor.")]
-        GameObject m_Prefab;
 
         [SerializeField]
         [Tooltip("The Scriptable Object Asset that contains the ARRaycastHit event.")]
@@ -23,12 +19,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             get => m_AnchorManager;
             set => m_AnchorManager = value;
-        }
-
-        public GameObject prefab
-        {
-            get => m_Prefab;
-            set => m_Prefab = value;
         }
 
         public void RemoveAllAnchors()
@@ -44,21 +34,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void Reset()
         {
             if (m_AnchorManager == null)
-#if UNITY_2023_1_OR_NEWER
                 m_AnchorManager = FindAnyObjectByType<ARAnchorManager>();
-#else
-                m_AnchorManager = FindObjectOfType<ARAnchorManager>();
-#endif
         }
 
         void OnEnable()
         {
             if (m_AnchorManager == null)
-#if UNITY_2023_1_OR_NEWER
                 m_AnchorManager = FindAnyObjectByType<ARAnchorManager>();
-#else
-                m_AnchorManager = FindObjectOfType<ARAnchorManager>();
-#endif
 
             if ((m_AnchorManager ? m_AnchorManager.subsystem : null) == null)
             {
@@ -83,44 +65,22 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_RaycastHitEvent.eventRaised -= CreateAnchor;
         }
 
-        void CreateAnchor(object sender, ARRaycastHit arRaycastHit)
+        /// <summary>
+        /// Attempts to attach a new anchor to a hit `ARPlane` if supported.
+        /// Otherwise, asynchronously creates a new anchor.
+        /// </summary>
+        async void CreateAnchor(object sender, ARRaycastHit hit)
         {
-            ARAnchor anchor;
-
-            // If we hit a plane, try to "attach" the anchor to the plane
-            if (m_AnchorManager.descriptor.supportsTrackableAttachments && arRaycastHit.trackable is ARPlane plane)
+            if (m_AnchorManager.descriptor.supportsTrackableAttachments && hit.trackable is ARPlane plane)
             {
-                if (m_Prefab != null)
-                {
-                    var oldPrefab = m_AnchorManager.anchorPrefab;
-                    m_AnchorManager.anchorPrefab = m_Prefab;
-                    anchor = m_AnchorManager.AttachAnchor(plane, arRaycastHit.pose);
-                    m_AnchorManager.anchorPrefab = oldPrefab;
-                }
-                else
-                {
-                    anchor = m_AnchorManager.AttachAnchor(plane, arRaycastHit.pose);
-                }
-
-                FinalizePlacedAnchor(anchor, $"Attached to plane {plane.trackableId}");
+                var attachedAnchor = m_AnchorManager.AttachAnchor(plane, hit.pose);
+                FinalizePlacedAnchor(attachedAnchor, $"Attached to plane {plane.trackableId}");
                 return;
             }
 
-            // Otherwise, just create a regular anchor at the hit pose
-            if (m_Prefab != null)
-            {
-                // Note: the anchor can be anywhere in the scene hierarchy
-                var anchorPrefab = Instantiate(m_Prefab, arRaycastHit.pose.position, arRaycastHit.pose.rotation);
-                anchor = ComponentUtils.GetOrAddIf<ARAnchor>(anchorPrefab, true);
-            }
-            else
-            {
-                var anchorPrefab = new GameObject("Anchor");
-                anchorPrefab.transform.SetPositionAndRotation(arRaycastHit.pose.position, arRaycastHit.pose.rotation);
-                anchor = anchorPrefab.AddComponent<ARAnchor>();
-            }
-
-            FinalizePlacedAnchor(anchor, $"Anchor (from {arRaycastHit.hitType})");
+            var result = await m_AnchorManager.TryAddAnchorAsync(hit.pose);
+            if (result.TryGetResult(out var anchor))
+                FinalizePlacedAnchor(anchor, $"Anchor (from {hit.hitType})");
         }
 
         void FinalizePlacedAnchor(ARAnchor anchor, string text)
@@ -130,6 +90,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 canvasTextManager.text = text;
             }
+
             m_Anchors.Add(anchor);
         }
     }
