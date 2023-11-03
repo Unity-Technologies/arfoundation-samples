@@ -16,9 +16,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         [SerializeField]
         bool m_RequiresCameraGrain;
-        
+
         [SerializeField]
         bool m_RequiresExifData;
+
+        [SerializeField]
+        bool m_RequiresImageStabilization;
 
         protected override IEnumerator Start()
         {
@@ -61,6 +64,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 ARSceneSelectUI.DisableButton(m_Button);
             
             if (m_RequiresExifData && !descriptor.supportsExifData)
+                ARSceneSelectUI.DisableButton(m_Button);
+
+            if (m_RequiresImageStabilization && descriptor.supportsImageStabilization != Supported.Supported)
                 ARSceneSelectUI.DisableButton(m_Button);
         }
     }

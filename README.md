@@ -57,11 +57,10 @@ All sample scenes in this project can be found in the `Assets/Scenes` folder. To
 | [Environment Probes](#environment-probes) | Demonstrates Environment Probes |
 | [Occlusion](#occlusion) | Scenes that demonstrate Occlusion |
 | [Check support](#check-support) | Demonstrates checking for AR support on device |
-| [Interation](#interaction) | Demonstrates AR Foundation paired with the [XR Interaction Toolkit](https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@latest) package |
 | [Configuration Chooser](#configuration-chooser) | Demonstrates AR Foundation's Configuration Chooser |
 | [Debug Menu](#debug-menu) | Visualize trackables and configurations on device |
-| [ARKit](#arkit) | iOS-specific sample scenes |
-| [ARCore Record Session](#arcore-record-session) | Demonstrates ARCore's session recording feature |
+| [ARKit](#arkit) | ARKit-specific sample scenes |
+| [ARCore session recording](#arcore-session-recording) | Demonstrates the session recording and playback functionality available in ARCore |
 
 ## Simple AR
 
@@ -110,17 +109,15 @@ This sample demonstrates the camera grain effect. Once a plane is detected, you 
 
 This sample requires a device running iOS 13 or later and Unity 2020.2 or later.
 
-### Image Stabilization
-
-This sample shows how to toggle the Image Stabilization feature on and off.
-
-This sample requires an ARCore supported device with _Google Play Services for AR_ v1.37 or newer.
-
 ### EXIF Data
 
 This sample demonstrates how to access camera frame's EXIF metadata. You should see values for all the supported EXIF tags on screen. Refer to `ExifDataLogger.cs` for more details.
 
 This sample requires iOS 16 or newer.
+
+### Image Stabilization (ARCore)
+
+This sample shows how to toggle the Image Stabilization feature on and off, and requires an ARCore-supported device with _Google Play Services for AR_ version 1.37 or newer.
 
 ## Plane Detection 
 
@@ -131,10 +128,6 @@ This sample demonstrates basic plane detection, but uses a better looking prefab
 ### Toggle Plane Detection
 
 This sample shows how to toggle plane detection on and off. When off, it will also hide all previously detected planes by disabling their GameObjects. See [`PlaneDetectionController.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/PlaneDetectionController.cs).
-
-### Plane Classification
-
-This sample shows how to query for a plane's classification. Some devices attempt to classify planes into categories such as "door", "seat", "window", and "floor". This scene enables plane detection using the `ARPlaneManager`, and uses a prefab which includes a component which displays the plane's classification, or "none" if it cannot be classified.
 
 ### Plane Masking
 
@@ -285,10 +278,6 @@ This sample demonstrates raw texture depth images from different methods.
 
 Demonstrates checking for AR support and logs the results to the screen. The relevant script is [`SupportChecker.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/SupportChecker.cs).
 
-## Interaction
-
-This sample scene demonstrates the functionality of the `XR Interaction Toolkit` package. In the scene, you are able to place a cube on a plane which you can translate, rotate and scale with gestures. See the [`XR Interaction Toolkit Documentation`](https://docs.unity3d.com/Packages/com.unity.xr.interaction.toolkit@latest) for more details.
-
 ## Configuration Chooser
 
 Demonstrates how to use the AR Foundation session's ConfigurationChooser to swap between rear and front-facing camera configurations.
@@ -367,7 +356,7 @@ This sample shows how to lock the device camera and set the camera focus mode an
 
 This sample requires iOS 16 or newer and a device with an ultra-wide camera.
 
-## ARCore Record Session
+## ARCore Session Recording
 
 This sample demonstrates the session recording and playback functionality available in ARCore. This feature allows you to record the sensor and camera telemetry during a live session, and then reply it at later time. When replayed, ARCore runs on the target device using the recorded telemetry rather than live data. See [ARCoreSessionRecorder.cs](https://github.com/Unity-Technologies/arfoundation-samples/blob/main/Assets/Scenes/ARCore/ARCoreSessionRecorder.cs) for example code.
 

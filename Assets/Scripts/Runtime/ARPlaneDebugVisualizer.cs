@@ -26,8 +26,8 @@ namespace UnityEngine.XR.ARFoundation
         bool m_ShowTrackableId = true;
 
         [SerializeField]
-        [Tooltip("Show classification visualizer.")]
-        bool m_ShowClassification = true;
+        [Tooltip("Show classifications visualizer.")]
+        bool m_ShowClassifications = true;
 
         [SerializeField]
         [Tooltip("Show alignment visualizer.")]
@@ -59,7 +59,7 @@ namespace UnityEngine.XR.ARFoundation
         StringBuilder m_TypesBuilder = new();
         StringBuilder m_ValuesBuilder = new();
         TrackableId m_TrackableId;
-        PlaneClassification m_Classification;
+        PlaneClassifications m_Classifications;
         PlaneAlignment m_Alignment;
         TrackingState m_TrackingState;
 
@@ -91,13 +91,13 @@ namespace UnityEngine.XR.ARFoundation
             m_DebugLabelOffset.LookAt(m_MainCameraTransform.transform);
 
             if (m_ARPlane.trackableId == m_TrackableId &&
-                m_ARPlane.classification == m_Classification &&
+                m_ARPlane.classifications == m_Classifications &&
                 m_ARPlane.alignment == m_Alignment &&
                 m_ARPlane.trackingState == m_TrackingState)
                 return;
 
             m_TrackableId = m_ARPlane.trackableId;
-            m_Classification = m_ARPlane.classification;
+            m_Classifications = m_ARPlane.classifications;
             m_Alignment = m_ARPlane.alignment;
             m_TrackingState = m_ARPlane.trackingState;
 
@@ -106,8 +106,8 @@ namespace UnityEngine.XR.ARFoundation
             if (m_ShowTrackableId)
                 FormatDebugText("TrackableId:", m_TrackableId.ToString());
 
-            if (m_ShowClassification)
-                FormatDebugText("Classification:", m_Classification.ToString());
+            if (m_ShowClassifications)
+                FormatDebugText("Classifications:", m_Classifications.ToString());
 
             if (m_ShowAlignment)
                 FormatDebugText("Alignment:", m_Alignment.ToString());

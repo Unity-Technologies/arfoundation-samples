@@ -161,6 +161,7 @@ SubShader {
 		float4 _OutlineTex_ST;
 		float _UIMaskSoftnessX;
         float _UIMaskSoftnessY;
+        int _UIVertexColorAlwaysGammaSpace;
 
 		pixel_t VertShader(vertex_t input)
 		{
@@ -221,6 +222,10 @@ SubShader {
 			float2 outlineUV = TRANSFORM_TEX(textureUV, _OutlineTex);
 
 
+            if (_UIVertexColorAlwaysGammaSpace && !IsGammaSpace())
+            {
+                input.color.rgb = UIGammaToLinear(input.color.rgb);
+            }
 			output.position = vPosition;
 			output.color = input.color;
 			output.atlas =	input.texcoord0;

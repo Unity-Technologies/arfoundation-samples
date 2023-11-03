@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
@@ -38,7 +39,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_ImageInfo.enabled = true;
 
             Debug.Assert(m_HumanBodyManager != null, "Human body manager is required.");
-            m_HumanBodyManager.humanBodiesChanged += OnHumanBodiesChanged;
+            m_HumanBodyManager.trackablesChanged.AddListener(OnHumanBodiesChanged);
         }
 
         void OnDisable()
@@ -47,14 +48,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_ImageInfo.enabled = false;
 
             Debug.Assert(m_HumanBodyManager != null, "Human body manager is required.");
-            m_HumanBodyManager.humanBodiesChanged -= OnHumanBodiesChanged;
+            m_HumanBodyManager.trackablesChanged.RemoveListener(OnHumanBodiesChanged);
         }
 
-        void OnHumanBodiesChanged(ARHumanBodiesChangedEventArgs eventArgs)
+        void OnHumanBodiesChanged(ARTrackablesChangedEventArgs<ARHumanBody> eventArgs)
         {
             // Currently, the ARKit provider only ever produces one body anchor, so just reference the first
-            float scale = ((eventArgs.added.Count > 0) ? eventArgs.added[0].estimatedHeightScaleFactor
-                        : ((eventArgs.updated.Count > 0) ? eventArgs.updated[0].estimatedHeightScaleFactor
+            float scale = ((eventArgs.added.Count > 0) ? eventArgs.added.First().estimatedHeightScaleFactor
+                        : ((eventArgs.updated.Count > 0) ? eventArgs.updated.First().estimatedHeightScaleFactor
                             : Single.NaN));
 
             Debug.Assert(m_ImageInfo != null, "text field is required");

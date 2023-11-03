@@ -28,15 +28,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void OnEnable()
         {
-            GetComponent<ARAnchorManager>().anchorsChanged += OnAnchorsChanged;
+            GetComponent<ARAnchorManager>().trackablesChanged.AddListener(OnAnchorsChanged);
         }
 
         void OnDisable()
         {
-            GetComponent<ARAnchorManager>().anchorsChanged -= OnAnchorsChanged;
+            GetComponent<ARAnchorManager>().trackablesChanged.RemoveListener(OnAnchorsChanged);
         }
 
-        void OnAnchorsChanged(ARAnchorsChangedEventArgs eventArgs)
+        void OnAnchorsChanged(ARTrackablesChangedEventArgs<ARAnchor> eventArgs)
         {
             foreach (var anchor in eventArgs.added)
             {

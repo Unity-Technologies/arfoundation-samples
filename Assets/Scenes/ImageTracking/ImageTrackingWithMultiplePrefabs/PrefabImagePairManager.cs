@@ -80,15 +80,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void OnEnable()
         {
-            m_TrackedImageManager.trackedImagesChanged += OnTrackedImagesChanged;
+            m_TrackedImageManager.trackablesChanged.AddListener(OnTrackedImagesChanged);
         }
 
         void OnDisable()
         {
-            m_TrackedImageManager.trackedImagesChanged -= OnTrackedImagesChanged;
+            m_TrackedImageManager.trackablesChanged.RemoveListener(OnTrackedImagesChanged);
         }
 
-        void OnTrackedImagesChanged(ARTrackedImagesChangedEventArgs eventArgs)
+        void OnTrackedImagesChanged(ARTrackablesChangedEventArgs<ARTrackedImage> eventArgs)
         {
             foreach (var trackedImage in eventArgs.added)
             {

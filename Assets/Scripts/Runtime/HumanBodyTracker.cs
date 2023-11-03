@@ -39,16 +39,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void OnEnable()
         {
             Debug.Assert(m_HumanBodyManager != null, "Human body manager is required.");
-            m_HumanBodyManager.humanBodiesChanged += OnHumanBodiesChanged;
+            m_HumanBodyManager.trackablesChanged.AddListener(OnHumanBodiesChanged);
         }
 
         void OnDisable()
         {
             if (m_HumanBodyManager != null)
-                m_HumanBodyManager.humanBodiesChanged -= OnHumanBodiesChanged;
+                m_HumanBodyManager.trackablesChanged.RemoveListener(OnHumanBodiesChanged);
         }
 
-        void OnHumanBodiesChanged(ARHumanBodiesChangedEventArgs eventArgs)
+        void OnHumanBodiesChanged(ARTrackablesChangedEventArgs<ARHumanBody> eventArgs)
         {
             BoneController boneController;
 

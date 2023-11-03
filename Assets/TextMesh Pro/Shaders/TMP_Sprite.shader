@@ -84,6 +84,7 @@ Shader "TextMeshPro/Sprite"
             float4 _MainTex_ST;
 		    float _UIMaskSoftnessX;
             float _UIMaskSoftnessY;
+            int _UIVertexColorAlwaysGammaSpace;
 
             v2f vert(appdata_t v)
 			{
@@ -101,6 +102,10 @@ Shader "TextMeshPro/Sprite"
                 OUT.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
                 OUT.mask = half4(v.vertex.xy * 2 - clampedRect.xy - clampedRect.zw, 0.25 / (0.25 * half2(_UIMaskSoftnessX, _UIMaskSoftnessY) + abs(pixelSize.xy)));
 
+                if (_UIVertexColorAlwaysGammaSpace && !IsGammaSpace())
+                {
+                    v.color.rgb = UIGammaToLinear(v.color.rgb);
+                }
                 OUT.color = v.color * _Color;
 				return OUT;
 			}

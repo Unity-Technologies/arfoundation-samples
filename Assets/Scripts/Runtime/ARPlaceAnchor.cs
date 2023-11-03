@@ -57,12 +57,25 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             m_RaycastHitEvent.eventRaised += CreateAnchor;
+            m_AnchorManager.trackablesChanged.AddListener(OnAnchorsChanged);
+        }
+
+        void OnAnchorsChanged(ARTrackablesChangedEventArgs<ARAnchor> eventArgs)
+        {
+            //remove any anchors that have been removed outside our control, such as during a session reset
+            foreach (var removedAnchor in eventArgs.removed)
+            {
+                Destroy(removedAnchor.gameObject);
+                m_Anchors.Remove(removedAnchor);
+            }
         }
 
         void OnDisable()
         {
             if (m_RaycastHitEvent != null)
                 m_RaycastHitEvent.eventRaised -= CreateAnchor;
+            if (m_AnchorManager != null)
+                m_AnchorManager.trackablesChanged.AddListener(OnAnchorsChanged);
         }
 
         /// <summary>

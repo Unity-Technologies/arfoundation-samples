@@ -6,7 +6,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
     public class RequiresPlaneDetection : RequiresARSubsystem<XRPlaneSubsystem, XRPlaneSubsystemDescriptor>
     {
         [SerializeField]
-        bool m_RequiresPlaneClassification;
+        bool m_RequiresPlaneClassifications;
 
         protected override IEnumerator Start()
         {
@@ -17,7 +17,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             var descriptor = s_LoadedSubsystem.subsystemDescriptor;
 
-            if (m_RequiresPlaneClassification && !descriptor.supportsClassification)
+            if (m_RequiresPlaneClassifications && !descriptor.supportsClassification)
                 ARSceneSelectUI.DisableButton(m_Button);
         }
     }
