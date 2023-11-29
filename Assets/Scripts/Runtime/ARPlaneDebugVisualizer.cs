@@ -23,7 +23,7 @@ namespace UnityEngine.XR.ARFoundation
 
         [SerializeField]
         [Tooltip("Show trackableId visualizer.")]
-        bool m_ShowTrackableId = true;
+        bool m_ShowTrackableId;
 
         [SerializeField]
         [Tooltip("Show classification visualizer.")]
