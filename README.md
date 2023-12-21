@@ -121,10 +121,6 @@ This sample shows how to toggle the Image Stabilization feature on and off, and 
 
 ## Plane Detection 
 
-### Feathered Planes
-
-This sample demonstrates basic plane detection, but uses a better looking prefab for the `ARPlane`. Rather than being drawn as exactly defined, the plane fades out towards the edges.
-
 ### Toggle Plane Detection
 
 This sample shows how to toggle plane detection on and off. When off, it will also hide all previously detected planes by disabling their GameObjects. See [`PlaneDetectionController.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/PlaneDetectionController.cs).
@@ -364,10 +360,18 @@ This sample demonstrates the session recording and playback functionality availa
 
 While no longer actively maintained, Unity has a separate [AR Foundation Demos](https://github.com/Unity-Technologies/arfoundation-demos) repository that contains some larger samples including localization, mesh placement, shadows, and user onboarding UX.
 
-# Community and Feedback
+# Community and feedback
 
-The intention of this reposititory is to provide a means for getting started with the features in AR Foundation. The samples are intentionally simplistic with a focus on teaching basic scene setup and APIs. If you you have a question, find a bug, or would like to request a new feature concerning any of the AR Foundation packages or these samples please [submit a GitHub issue](https://github.com/Unity-Technologies/arfoundation-samples/issues). New issues are reviewed regularly.
+Refer to sections below to understand how to provide different kinds of feedback to Unity.
 
-## Contributions and Pull Requests
+## AR Foundation bug reports
 
-We are not accepting pull requests at this time. If you find an issue with the samples, or would like to request a new sample, please [submit a GitHub issue](https://github.com/Unity-Technologies/arfoundation-samples/issues).
+To report a bug in AR Foundation, please [file a bug](https://unity3d.com/unity/qa/bug-reporting). You may also submit a GitHub issue, but we will close your GitHub issue if it does not contain an official bug ID number. The best way to ensure that your issue is addressed is to file a bug using Unity's official bug reporting process.
+
+## AR Foundation feature requests
+
+To request a new feature in AR Foundation or related packages, use Unity's [AR VR Roadmap](https://unity.com/roadmap/unity-platform/arvr). Click on the **AR Foundation** tab, then scroll down to **Submit a New Idea**.
+
+## Contributions to this repository
+
+We are not accepting pull requests at this time. If you find an issue with the samples or would like to request a new sample, please submit a [GitHub issue](https://github.com/Unity-Technologies/arfoundation-samples/issues).

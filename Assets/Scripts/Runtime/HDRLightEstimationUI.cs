@@ -20,8 +20,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public Text ambientIntensityText
         {
-            get { return m_AmbientIntensityText; }
-            set { m_AmbientIntensityText = ambientIntensityText; }
+            get => m_AmbientIntensityText;
+            set => m_AmbientIntensityText = ambientIntensityText;
         }
 
         [Tooltip("The UI Text element used to display the estimated ambient color in the physical environment.")]
@@ -33,8 +33,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public Text ambientColorText
         {
-            get { return m_AmbientColorText; }
-            set { m_AmbientColorText = value; }
+            get => m_AmbientColorText;
+            set => m_AmbientColorText = value;
         }
         
         [Tooltip("The UI Text element used to display the estimated direction of the main light for the physical environment.")]

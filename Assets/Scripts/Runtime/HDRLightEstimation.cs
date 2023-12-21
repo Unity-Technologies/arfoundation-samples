@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.XR.ARFoundation;
+﻿using UnityEngine.Rendering;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -29,7 +27,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public ARCameraManager cameraManager
         {
-            get { return m_CameraManager; }
+            get => m_CameraManager;
             set
             {
                 if (m_CameraManager == value)

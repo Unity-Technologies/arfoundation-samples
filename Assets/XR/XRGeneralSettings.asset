@@ -27,7 +27,7 @@ MonoBehaviour:
   m_Name: iPhone Settings
   m_EditorClassIdentifier: 
   m_LoaderManagerInstance: {fileID: -5700808019788505979}
-  m_InitManagerOnStart: 1
+  m_InitManagerOnStart: 0
 --- !u!114 &-6578646718636408846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44,6 +44,7 @@ MonoBehaviour:
   m_AutomaticLoading: 0
   m_AutomaticRunning: 0
   m_Loaders:
+  - {fileID: 11400000, guid: 053e3b467a9b1e44d88dbb5337fb3520, type: 2}
   - {fileID: 11400000, guid: 09de4a0f2c422314bb08f997dfdc2b69, type: 2}
 --- !u!114 &-6122771651556369562
 MonoBehaviour:
@@ -74,8 +75,7 @@ MonoBehaviour:
   m_RequiresSettingsUpdate: 0
   m_AutomaticLoading: 0
   m_AutomaticRunning: 0
-  m_Loaders:
-  - {fileID: 11400000, guid: 20bf1b0b7a603410881b56ab3e907540, type: 2}
+  m_Loaders: []
 --- !u!114 &-4513317593576149969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,7 +158,7 @@ MonoBehaviour:
   m_AutomaticLoading: 0
   m_AutomaticRunning: 0
   m_Loaders:
-  - {fileID: 11400000, guid: 04940b94cbab8444187b3217d4e40166, type: 2}
+  - {fileID: 11400000, guid: 053e3b467a9b1e44d88dbb5337fb3520, type: 2}
 --- !u!114 &9199417772918132285
 MonoBehaviour:
   m_ObjectHideFlags: 0
