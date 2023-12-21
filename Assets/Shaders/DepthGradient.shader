@@ -82,7 +82,7 @@ Shader "Unlit/DepthGradient"
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
                 o.position = TransformObjectToHClip(v.position);
-                o.texcoord = mul(float3(v.texcoord, 1.0f), _DisplayRotationPerFrame).xy;
+                o.texcoord = mul(float4(v.texcoord, 1.0f, 1.0f), _DisplayRotationPerFrame).xy;
                 return o;
             }
 

@@ -12,45 +12,50 @@ namespace UnityEngine.XR.ARFoundation
         static readonly Vector3 k_TextFlipVec = new(0, 180, 0);
         static readonly float k_ColumnWidthExtent = 0.005f;
 
-        [SerializeField]
-        [Tooltip("The prefab to visualize the plane orientation.")]
+        [Header("References")]
+        [SerializeField, Tooltip("The prefab to visualize the plane orientation.")]
         GameObject m_PlaneNormalPrefab;
 
         [Header("Debug Options")]
-        [SerializeField] 
-        [Tooltip("Show plane normal visualizer.")]
+        [SerializeField, Tooltip("Show plane normal visualizer.")]
         bool m_ShowPlaneNormal = true;
 
-        [SerializeField]
-        [Tooltip("Show trackableId visualizer.")]
+        [SerializeField, Tooltip("Show trackableId visualizer.")]
         bool m_ShowTrackableId = true;
 
-        [SerializeField]
-        [Tooltip("Show classifications visualizer.")]
+        [SerializeField, Tooltip("Show classifications visualizer.")]
         bool m_ShowClassifications = true;
 
-        [SerializeField]
-        [Tooltip("Show alignment visualizer.")]
+        [SerializeField, Tooltip("Show alignment visualizer.")]
         bool m_ShowAlignment = true;
 
-        [SerializeField]
-        [Tooltip("Show tracking state visualizer.")]
+        [SerializeField, Tooltip("Show tracking state visualizer.")]
         bool m_ShowTrackingState = true;
 
-        [SerializeField]
-        [Tooltip("The size of the font for the debug text.")]
+        [SerializeField, Tooltip("The size of the font for the debug text.")]
         float m_FontSize = 0.25f;
 
-        [SerializeField]
-        [HideInInspector]
+        [SerializeField, Tooltip("The mesh color used for planes in the Tracking state")]
+        Color trackingColor = new Color(253, 184, 19, 84);
+
+        [SerializeField, Tooltip("The mesh color used for planes in the Limited state")]
+        Color limitedColor = new Color(75, 75, 75, 84);
+        
+        [SerializeField, Tooltip("The mesh color used for planes in the None state")]
+        Color noneColor = new Color(75, 75, 75, 84);
+
+        [SerializeField, HideInInspector]
         ARPlaneMeshVisualizer m_ARPlaneMeshVisualizer;
 
-        [SerializeField]
-        [HideInInspector]
+        [SerializeField, HideInInspector]
         ARPlane m_ARPlane;
+
+        [SerializeField, HideInInspector]
+        MeshRenderer m_MeshRenderer;
 
         public ARPlaneMeshVisualizer arPlaneMeshVisualizer => m_ARPlaneMeshVisualizer;
 
+        GameObject m_PlaneNormalVisualizer;
         Transform m_MainCameraTransform;
         Transform m_DebugLabelOffset;
         TextMeshPro m_DebugLabelTypes;
@@ -63,13 +68,37 @@ namespace UnityEngine.XR.ARFoundation
         PlaneAlignment m_Alignment;
         TrackingState m_TrackingState;
 
+        void OnDestroy()
+        {
+            Destroy(m_DebugLabelValues.gameObject);
+            
+            if (m_PlaneNormalVisualizer != null)
+                Destroy(m_PlaneNormalVisualizer);
+        }
+
         void Awake()
         {
-            m_ARPlaneMeshVisualizer = GetComponent<ARPlaneMeshVisualizer>();
-            m_ARPlane = GetComponent<ARPlane>();
+            if (m_ARPlaneMeshVisualizer == null)
+                m_ARPlaneMeshVisualizer = GetComponent<ARPlaneMeshVisualizer>();
+
+            if (m_ARPlane == null)
+                m_ARPlane = GetComponent<ARPlane>();
+            
+            if (m_MeshRenderer == null)
+                m_MeshRenderer = GetComponent<MeshRenderer>();
+
             m_MainCameraTransform = Camera.main!.transform;
-            m_PlaneNormalPrefab = Instantiate(m_PlaneNormalPrefab, transform);
-            m_PlaneNormalPrefab.SetActive(false);
+
+            if (m_ShowPlaneNormal && m_PlaneNormalPrefab == null)
+            {
+                Debug.LogWarning($"{nameof(m_ShowPlaneNormal)} is enabled but {nameof(m_PlaneNormalPrefab)} is not assigned. To show the plane normal vector visualizer assign a prefab to the {nameof(m_PlaneNormalPrefab)} in the inspector.", this);
+            }
+            
+            if (m_PlaneNormalPrefab != null)
+            {
+                m_PlaneNormalVisualizer = Instantiate(m_PlaneNormalPrefab, transform);
+                m_PlaneNormalVisualizer.SetActive(false);
+            }
 
             m_DebugLabelOffset = new GameObject("Debug Label Offset").transform;
             m_DebugLabelOffset.SetParent(transform);
@@ -78,11 +107,31 @@ namespace UnityEngine.XR.ARFoundation
             SetupDebugLabelTypesText();
             SetupDebugLabelValuesText();
         }
+        
+        void Reset()
+        {
+            m_ARPlaneMeshVisualizer = GetComponent<ARPlaneMeshVisualizer>();
+            m_ARPlane = GetComponent<ARPlane>();
+            m_MeshRenderer = GetComponent<MeshRenderer>();
+        }
 
         void Update()
         {
             UpdateDebugInfo();
             UpdatePlaneNormal();
+            
+            switch (m_TrackingState)
+            {
+                case TrackingState.Tracking:
+                    m_MeshRenderer.material.color = trackingColor;
+                    break;
+                case TrackingState.Limited:
+                    m_MeshRenderer.material.color = limitedColor;
+                    break;
+                case TrackingState.None:
+                    m_MeshRenderer.material.color = noneColor;
+                    break;
+            }
         }
 
         void UpdateDebugInfo()
@@ -142,14 +191,14 @@ namespace UnityEngine.XR.ARFoundation
 
         void UpdatePlaneNormal()
         {
-            if (m_ShowPlaneNormal != m_PlaneNormalPrefab.activeSelf)
-                m_PlaneNormalPrefab.SetActive(m_ShowPlaneNormal);
+            if (m_PlaneNormalVisualizer != null && m_ShowPlaneNormal != m_PlaneNormalVisualizer.activeSelf)
+                m_PlaneNormalVisualizer.SetActive(m_ShowPlaneNormal);
 
-            if (!m_ShowPlaneNormal)
+            if (!m_ShowPlaneNormal || m_PlaneNormalVisualizer == null)
                 return;
 
-            m_PlaneNormalPrefab.transform.position = m_ARPlane.center;
-            m_PlaneNormalPrefab.transform.rotation = m_ARPlane.transform.rotation;
+            m_PlaneNormalVisualizer.transform.position = m_ARPlane.center;
+            m_PlaneNormalVisualizer.transform.rotation = m_ARPlane.transform.rotation;
         }
 
         void SetupDebugLabelTypesText()
@@ -174,18 +223,6 @@ namespace UnityEngine.XR.ARFoundation
             contentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
             m_DebugLabelValues.fontSize = m_FontSize;
             m_DebugLabelValues.alignment = TextAlignmentOptions.MidlineLeft;
-        }
-
-        void OnDestroy()
-        {
-            Destroy(m_DebugLabelValues.gameObject);
-            Destroy(m_PlaneNormalPrefab);
-        }
-
-        void Reset()
-        {
-            m_ARPlaneMeshVisualizer = GetComponent<ARPlaneMeshVisualizer>();
-            m_ARPlane = GetComponent<ARPlane>();
         }
     }
 }

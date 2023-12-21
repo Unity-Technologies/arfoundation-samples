@@ -1,8 +1,4 @@
-﻿using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.XR.ARFoundation;
-
-namespace UnityEngine.XR.ARFoundation.Samples
+﻿namespace UnityEngine.XR.ARFoundation.Samples
 {
     /// <summary>
     /// A component that can be used to access the most recently received basic light estimation information
@@ -20,7 +16,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public ARCameraManager cameraManager
         {
-            get { return m_CameraManager; }
+            get => m_CameraManager;
             set
             {
                 if (m_CameraManager == value)

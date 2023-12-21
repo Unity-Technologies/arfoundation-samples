@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.ARFoundation;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
     /// <summary>
     /// This plane visualizer demonstrates the use of a feathering effect
-    /// at the edge of the detected plane, which reduces the visual impression
+    /// at the edge of the detected convex polygon plane, which reduces the visual impression
     /// of a hard edge.
     /// </summary>
     [RequireComponent(typeof(ARPlaneMeshVisualizer), typeof(MeshRenderer), typeof(ARPlane))]

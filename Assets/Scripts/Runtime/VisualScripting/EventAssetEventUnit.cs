@@ -1,3 +1,4 @@
+#if VISUALSCRIPTING_1_8_OR_NEWER
 using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -99,3 +100,4 @@ namespace UnityEngine.XR.ARFoundation.Samples.VisualScripting
         }
     }
 }
+#endif // VISUALSCRIPTING_1_8_OR_NEWER

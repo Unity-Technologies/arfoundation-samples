@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.UI;
 
@@ -22,7 +21,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [Header("Settings")]
         [SerializeField, Tooltip("The dimensions the canvas well be set to for HMD in world space in meters.")]
         Vector2 m_HMDCanvasDimensionsInMeters = new(1.15f, 0.85f);
-        
+
         [SerializeField, Tooltip("Distance in front of the camera for the UI to be placed in world space."), Range(.3f, 3)]
         float m_DistanceFromCamera = 1.5f;
 
@@ -34,6 +33,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         [SerializeField, HideInInspector]
         Canvas m_Canvas;
+
+        // The canvas will get set to world space if either of these two are true.
+        // We can't check the canvas directly because it doesn't get set until the frame after start.
+        public bool isWorldSpaceCanvas => m_EnableInEditor || MenuLoader.IsHmdDevice();
 
         Vector2 m_HMDCanvasDimensionsScaled;
         const float k_CanvasWorldSpaceScale = 0.001f;
@@ -49,13 +52,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (m_Canvas == null)
                 m_Canvas = GetComponent<Canvas>();
 
-            if (!m_EnableInEditor && !MenuLoader.IsHmdDevice())
+            if (!isWorldSpaceCanvas)
                 return;
 
             // Since the canvas is scaled to preserve UI elements size on the canvas,
             // the values that get applied need to be updated by the scale the canvas will be set to
             m_HMDCanvasDimensionsScaled = m_HMDCanvasDimensionsInMeters / k_CanvasWorldSpaceScale;
 
+            // Wait until next frame when the transform values are updated for the UI since
+            // they get updated in the frame some point after Start
             await Awaitable.NextFrameAsync();
             SetToWorldSpace();
             PlaceInFrontOfCamera();
@@ -71,7 +76,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_Canvas.transform.localScale = Vector3.one * k_CanvasWorldSpaceScale;
 
             if (!m_Canvas.TryGetComponent(out TrackedDeviceGraphicRaycaster _))
-                m_Canvas.AddComponent<TrackedDeviceGraphicRaycaster>();
+                m_Canvas.gameObject.AddComponent<TrackedDeviceGraphicRaycaster>();
 
             if (m_CanvasBackground != null)
                 m_CanvasBackground.SetActive(m_ShowBackgroundForHMD);

@@ -1,5 +1,6 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.ARSubsystems;
+using UnityEngine.XR.OpenXR;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -11,6 +12,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
     {
         const string k_DefaultMenuScene = "Menu";
         const string k_MetaMenuScene = "MetaMenu";
+        const string k_HololensMenuScene = "HololensMenu";
 
         void Awake()
         {
@@ -19,6 +21,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public static string GetMenuSceneName()
         {
+            if (Application.platform == RuntimePlatform.WSAPlayerARM && OpenXRRuntime.name == "Windows Mixed Reality Runtime") 
+            {
+                return k_HololensMenuScene;
+            }
+
             var loader = LoaderUtility.GetActiveLoader();
             var sessionSubsystem = loader != null ? loader.GetLoadedSubsystem<XRSessionSubsystem>() : null;
 
@@ -40,14 +47,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 case "ARCore-Session":
                 case "XRSimulation-Session":
                 default:
-                    // Default case includes HoloLens and other third-party providers
+                    // Default case includes other third-party providers
                     return k_DefaultMenuScene;
             }
         }
 
         public static bool IsHmdDevice()
         {
-            return GetMenuSceneName() == k_MetaMenuScene;
+            var sceneName = GetMenuSceneName();
+            return (sceneName == k_MetaMenuScene) || (sceneName == k_HololensMenuScene);
         }
 
         public static void LoadMenuScene()
