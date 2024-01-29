@@ -40,7 +40,16 @@ namespace UnityEngine.XR.ARFoundation
         [SerializeField]
         [Tooltip("The size of the font for the debug text.")]
         float m_FontSize = 0.25f;
+        
+        [SerializeField, Tooltip("The mesh color used for planes in the Tracking state")]
+        Color trackingColor = new Color(253, 184, 19, 84);
 
+        [SerializeField, Tooltip("The mesh color used for planes in the Limited state")]
+        Color limitedColor = new Color(75, 75, 75, 84);
+        
+        [SerializeField, Tooltip("The mesh color used for planes in the None state")]
+        Color noneColor = new Color(75, 75, 75, 84);
+    
         [SerializeField]
         [HideInInspector]
         ARPlaneMeshVisualizer m_ARPlaneMeshVisualizer;
@@ -48,6 +57,9 @@ namespace UnityEngine.XR.ARFoundation
         [SerializeField]
         [HideInInspector]
         ARPlane m_ARPlane;
+
+        [SerializeField, HideInInspector]
+        MeshRenderer m_MeshRenderer;
 
         public ARPlaneMeshVisualizer arPlaneMeshVisualizer => m_ARPlaneMeshVisualizer;
 
@@ -67,6 +79,8 @@ namespace UnityEngine.XR.ARFoundation
         {
             m_ARPlaneMeshVisualizer = GetComponent<ARPlaneMeshVisualizer>();
             m_ARPlane = GetComponent<ARPlane>();
+            m_MeshRenderer = GetComponent<MeshRenderer>();
+
             m_MainCameraTransform = Camera.main!.transform;
             m_PlaneNormalPrefab = Instantiate(m_PlaneNormalPrefab, transform);
             m_PlaneNormalPrefab.SetActive(false);
@@ -83,6 +97,19 @@ namespace UnityEngine.XR.ARFoundation
         {
             UpdateDebugInfo();
             UpdatePlaneNormal();
+            
+            switch (m_TrackingState)
+            {
+                case TrackingState.Tracking:
+                    m_MeshRenderer.material.color = trackingColor;
+                    break;
+                case TrackingState.Limited:
+                    m_MeshRenderer.material.color = limitedColor;
+                    break;
+                case TrackingState.None:
+                    m_MeshRenderer.material.color = noneColor;
+                    break;
+            }
         }
 
         void UpdateDebugInfo()
@@ -186,6 +213,7 @@ namespace UnityEngine.XR.ARFoundation
         {
             m_ARPlaneMeshVisualizer = GetComponent<ARPlaneMeshVisualizer>();
             m_ARPlane = GetComponent<ARPlane>();
+            m_MeshRenderer = GetComponent<MeshRenderer>();
         }
     }
 }

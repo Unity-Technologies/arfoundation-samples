@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.UI;
 
@@ -76,7 +75,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_Canvas.transform.localScale = Vector3.one * k_CanvasWorldSpaceScale;
 
             if (!m_Canvas.TryGetComponent(out TrackedDeviceGraphicRaycaster _))
-                m_Canvas.AddComponent<TrackedDeviceGraphicRaycaster>();
+                m_Canvas.gameObject.AddComponent<TrackedDeviceGraphicRaycaster>();
 
             if (m_CanvasBackground != null)
                 m_CanvasBackground.SetActive(m_ShowBackgroundForHMD);
