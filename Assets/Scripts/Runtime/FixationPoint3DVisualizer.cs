@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using UnityEngine.XR.ARSubsystems;
+﻿using UnityEngine.XR.ARSubsystems;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -46,7 +45,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void OnEnable()
         {
-            var faceManager = FindObjectsUtility.FindAnyObjectByType<ARFaceManager>();
+            var faceManager = FindAnyObjectByType<ARFaceManager>();
             if (faceManager != null && faceManager.subsystem != null && faceManager.descriptor.supportsEyeTracking)
             {
                 m_Face.updated += OnUpdated;

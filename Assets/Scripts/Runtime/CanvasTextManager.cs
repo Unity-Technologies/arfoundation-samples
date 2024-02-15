@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 using Unity.XR.CoreUtils;
 
 namespace UnityEngine.XR.ARFoundation.Samples
@@ -37,7 +36,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (canvas == null)
                 return;
 
-            var xrOrigin = FindObjectsUtility.FindAnyObjectByType<XROrigin>();
+            var xrOrigin = FindAnyObjectByType<XROrigin>();
             if (xrOrigin == null || xrOrigin.Camera == null)
                 return;
 

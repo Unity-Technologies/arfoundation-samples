@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using TMPro;
 using UnityEngine.XR.ARSubsystems;
 
@@ -10,27 +10,41 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         TMP_Text m_Information;
 
+        [SerializeField]
         ARCameraManager m_CameraManager;
-        string m_SupportStatus;
+
+        Supported? m_Supported;
+        Supported? m_SupportedOnPrevFrame;
+        bool? m_EnabledOnPrevFrame;
 
         void OnEnable()
         {
-            m_CameraManager = GetComponent<ARCameraManager>();
-            StartCoroutine(UpdateSupportStatus());
+            if (m_Information == null)
+            {
+                Debug.LogError($"Null reference in {nameof(ImageStabilization)} Inspector.", this);
+                enabled = false;
+            }
+
+            if (ARSession.state == ARSessionState.SessionTracking)
+                m_Supported = m_CameraManager.descriptor.supportsImageStabilization;
+            else
+                ARSession.stateChanged += OnSessionStateChange;
         }
 
-        IEnumerator UpdateSupportStatus()
+        void OnSessionStateChange(ARSessionStateChangedEventArgs args)
         {
-            yield return null;
-            m_SupportStatus = m_CameraManager.subsystem.subsystemDescriptor.supportsImageStabilization.ToString();
+            if (args.state != ARSessionState.SessionTracking)
+                return;
+
+            m_Supported = m_CameraManager.descriptor.supportsImageStabilization;
+            ARSession.stateChanged -= OnSessionStateChange;
         }
 
         public void ToggleImageStabilization()
         {
-            var supportStatus = m_CameraManager.subsystem.subsystemDescriptor.supportsImageStabilization;
-            m_SupportStatus = supportStatus.ToString();
+            m_Supported = m_CameraManager.descriptor.supportsImageStabilization;
 
-            if (supportStatus == Supported.Supported)
+            if (m_Supported == Supported.Supported)
             {
                 m_CameraManager.imageStabilizationRequested = !m_CameraManager.imageStabilizationRequested;
             }
@@ -42,12 +56,26 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void Update()
         {
-            if (m_Information == null)
-                return;
+            var enabledThisFrame = m_CameraManager.imageStabilizationEnabled;
 
-            var stabilizationEnabled = m_CameraManager.imageStabilizationEnabled ? "On" : "Off";
-            m_Information.text = $"Support: {m_SupportStatus}\n" +
-                $"Stabilization: {stabilizationEnabled}";
+            if (m_SupportedOnPrevFrame != m_Supported || m_EnabledOnPrevFrame != enabledThisFrame)
+            {
+                var enabledString = m_CameraManager.imageStabilizationEnabled ? "On" : "Off";
+                m_Information.text = $"Support: {m_Supported.ToString()}\nStabilization: {enabledString}";
+                m_SupportedOnPrevFrame = m_Supported;
+                m_EnabledOnPrevFrame = enabledThisFrame;
+            }
+        }
+
+        void Reset()
+        {
+            InitializeSerializedFields();
+        }
+
+        [ContextMenu("Initialize Serialized Fields")]
+        void InitializeSerializedFields()
+        {
+            m_CameraManager = GetComponent<ARCameraManager>();
         }
     }
 }

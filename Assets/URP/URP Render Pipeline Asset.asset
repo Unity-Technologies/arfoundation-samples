@@ -35,7 +35,11 @@ MonoBehaviour:
   m_ShEvalMode: 0
   m_LightProbeSystem: 0
   m_ProbeVolumeMemoryBudget: 1024
-  m_SupportProbeVolumeStreaming: 0
+  m_ProbeVolumeBlendingMemoryBudget: 256
+  m_SupportProbeVolumeGPUStreaming: 0
+  m_SupportProbeVolumeDiskStreaming: 0
+  m_SupportProbeVolumeScenarios: 0
+  m_SupportProbeVolumeScenarioBlending: 0
   m_ProbeVolumeSHBands: 1
   m_MainLightRenderingMode: 1
   m_MainLightShadowsSupported: 1
@@ -71,13 +75,16 @@ MonoBehaviour:
   m_SupportsLightLayers: 0
   m_DebugLevel: 0
   m_StoreActionsOptimization: 0
-  m_EnableRenderGraph: 0
   m_UseAdaptivePerformance: 1
   m_ColorGradingMode: 0
   m_ColorGradingLutSize: 32
   m_UseFastSRGBLinearConversion: 0
   m_SupportDataDrivenLensFlare: 1
   m_SupportScreenSpaceLensFlare: 1
+  m_GPUResidentDrawerMode: 0
+  m_UseLegacyLightmaps: 0
+  m_SmallMeshScreenPercentage: 0
+  m_GPUResidentDrawerEnableOcclusionCullingInCameras: 0
   m_ShadowType: 1
   m_LocalShadowsSupported: 0
   m_LocalShadowsAtlasResolution: 256
@@ -85,23 +92,15 @@ MonoBehaviour:
   m_ShadowAtlasResolution: 256
   m_VolumeFrameworkUpdateMode: 0
   m_VolumeProfile: {fileID: 0}
-  m_Textures:
-    blueNoise64LTex: {fileID: 2800000, guid: e3d24661c1e055f45a7560c033dbb837, type: 3}
-    bayerMatrixTex: {fileID: 2800000, guid: f9ee4ed84c1d10c49aabb9b210b0fc44, type: 3}
   apvScenesData:
-    m_ObsoleteSerializedBakingSets: []
-    sceneToBakingSet:
+    obsoleteSceneBounds:
       m_Keys: []
       m_Values: []
-    bakingSets: []
-    sceneBounds:
-      m_Keys: []
-      m_Values: []
-    hasProbeVolumes:
+    obsoleteHasProbeVolumes:
       m_Keys: []
       m_Values: 
   m_PrefilteringModeMainLightShadows: 3
-  m_PrefilteringModeAdditionalLight: 4
+  m_PrefilteringModeAdditionalLight: 3
   m_PrefilteringModeAdditionalLightShadows: 2
   m_PrefilterXRKeywords: 0
   m_PrefilteringModeForwardPlus: 0
@@ -128,5 +127,9 @@ MonoBehaviour:
   m_PrefilterSoftShadows: 0
   m_PrefilterScreenCoord: 1
   m_PrefilterNativeRenderPass: 1
+  m_PrefilterUseLegacyLightmaps: 0
   m_ShaderVariantLogLevel: 0
   m_ShadowCascades: 0
+  m_Textures:
+    blueNoise64LTex: {fileID: 2800000, guid: e3d24661c1e055f45a7560c033dbb837, type: 3}
+    bayerMatrixTex: {fileID: 2800000, guid: f9ee4ed84c1d10c49aabb9b210b0fc44, type: 3}

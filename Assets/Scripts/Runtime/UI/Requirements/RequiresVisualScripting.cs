@@ -1,17 +1,17 @@
-using UnityEngine.UI;
+using System;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
-    [RequireComponent(typeof(Button))]
-    public class RequiresVisualScripting : MonoBehaviour
+    [Serializable]
+    public class RequiresVisualScripting : IBooleanExpression
     {
-        void Start()
+        public bool Evaluate()
         {
 #if VISUALSCRIPTING_1_8_OR_NEWER
-            return;
+            return true;
 #endif
 #pragma warning disable CS0162
-            ARSceneSelectUI.DisableButton(GetComponent<Button>());
+            return false;
 #pragma warning restore CS0162
         }
     }

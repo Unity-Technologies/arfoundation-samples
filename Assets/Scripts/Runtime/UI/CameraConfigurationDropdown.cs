@@ -75,7 +75,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [ContextMenu("Try Initialize Serialized Fields")]
         void TryInitializeSerializedFields()
         {
-            m_CameraManager = FindObjectsUtility.FindAnyObjectByType<ARCameraManager>();
+            m_CameraManager = FindAnyObjectByType<ARCameraManager>();
             m_CameraConfigurationDropdown = GetComponentInChildren<TMP_Dropdown>();
         }
     }

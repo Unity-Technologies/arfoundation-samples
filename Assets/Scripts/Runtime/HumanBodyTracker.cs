@@ -74,13 +74,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
             }
 
-            foreach (var humanBody in eventArgs.removed)
+            foreach (var (trackableId, _) in eventArgs.removed)
             {
-                Debug.Log($"Removing a skeleton [{humanBody.trackableId}].");
-                if (m_SkeletonTracker.TryGetValue(humanBody.trackableId, out boneController))
+                Debug.Log($"Removing a skeleton [{trackableId}].");
+                if (m_SkeletonTracker.TryGetValue(trackableId, out boneController))
                 {
                     Destroy(boneController.gameObject);
-                    m_SkeletonTracker.Remove(humanBody.trackableId);
+                    m_SkeletonTracker.Remove(trackableId);
                 }
             }
         }

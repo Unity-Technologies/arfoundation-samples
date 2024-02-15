@@ -1,12 +1,11 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine.SubsystemsImplementation;
-using UnityEngine.UI;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
-    [RequireComponent(typeof(Button))]
-    public abstract class RequiresARSubsystem<TSubsystem, TSubsystemDescriptor> : MonoBehaviour
+    [Serializable]
+    public abstract class RequiresARSubsystem<TSubsystem, TSubsystemDescriptor> : IBooleanExpression
         where TSubsystem : SubsystemWithProvider
         where TSubsystemDescriptor : ISubsystemDescriptor
     {
@@ -16,13 +15,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         protected static TSubsystem s_LoadedSubsystem;
 
-        protected Button m_Button;
-
-        protected virtual IEnumerator Start()
+        public virtual bool Evaluate()
         {
-            m_Button = GetComponent<Button>();
-            yield return null;
-
             if (!s_Initialized)
             {
                 s_Initialized = true;
@@ -30,8 +24,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 s_LoadedSubsystem = LoaderUtility.GetActiveLoader()?.GetLoadedSubsystem<TSubsystem>();
             }
 
-            if (s_LoadedSubsystem == null || s_Descriptors.Count == 0)
-                ARSceneSelectUI.DisableButton(m_Button);
+            return s_LoadedSubsystem != null && s_Descriptors.Count != 0;
         }
     }
 }

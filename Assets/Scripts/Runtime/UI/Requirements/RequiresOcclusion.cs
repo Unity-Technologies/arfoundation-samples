@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine.XR.ARSubsystems;
 
 namespace UnityEngine.XR.ARFoundation.Samples
@@ -8,12 +7,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         bool m_RequiresDepth;
 
-        protected override IEnumerator Start()
+        public override bool Evaluate()
         {
-            yield return base.Start();
-
-            if (m_Button.interactable == false)
-                yield break;
+            if (!base.Evaluate())
+                return false;
 
             var descriptor = s_LoadedSubsystem.subsystemDescriptor;
 
@@ -22,8 +19,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 descriptor.humanSegmentationDepthImageSupported == Supported.Unsupported &&
                 descriptor.humanSegmentationStencilImageSupported == Supported.Unsupported)
             {
-                ARSceneSelectUI.DisableButton(m_Button);
+                return false;
             }
+
+            return true;
         }
     }
 }

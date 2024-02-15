@@ -3,6 +3,7 @@ using System;
 namespace UnityEngine.XR.ARFoundation.Samples
 {
     [RequireComponent(typeof(RectTransform))]
+    [DisallowMultipleComponent]
     public class ScaleToSizeOfSafeArea : MonoBehaviour
     {
         [SerializeField, Tooltip("The canvas that this component is a part of.")]
@@ -22,6 +23,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         DeviceOrientation m_PreviousDeviceOrientation;
 
+        public static float widthRatio { get; private set; }
+        public static float heightRatio { get; private set; }
+        
         void Reset()
         {
             m_RectTransform = GetComponent<RectTransform>();
@@ -61,14 +65,19 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void UpdateSafeArea()
         {
+            // checking for situation where this code is run on a platform with no screen
+            // such as CI tests
+            if (Screen.width == 0 || Screen.height == 0)
+                return;
+
             var safeAreaSize = Screen.safeArea.size;
             var safeAreaCenter = Screen.safeArea.center;
             var scaleFactor = m_Canvas.scaleFactor;
             var scaledWidth = Screen.width / scaleFactor;
             var scaledHeight = Screen.height / scaleFactor;
 
-            var widthRatio = scaledWidth / Screen.width;
-            var heightRatio = scaledHeight / Screen.height;
+            widthRatio = scaledWidth / Screen.width;
+            heightRatio = scaledHeight / Screen.height;
 
             var scaledSafeAreaSize = safeAreaSize * new Vector2(widthRatio, heightRatio);
             m_RectTransform.sizeDelta = scaledSafeAreaSize;

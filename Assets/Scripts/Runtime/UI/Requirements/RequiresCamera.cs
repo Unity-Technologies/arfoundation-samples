@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine.XR.ARSubsystems;
 
 namespace UnityEngine.XR.ARFoundation.Samples
@@ -23,20 +22,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         bool m_RequiresImageStabilization;
 
-        protected override IEnumerator Start()
+        public override bool Evaluate()
         {
-            yield return base.Start();
-
-            if (m_Button.interactable == false)
-                yield break;
+            if (!base.Evaluate())
+                return false;
 
             var descriptor = s_LoadedSubsystem.subsystemDescriptor;
 
             if (m_RequiresCameraImages && !descriptor.supportsCameraImage)
-            {
-                ARSceneSelectUI.DisableButton(m_Button);
-                yield break;
-            }
+                return false;
 
             if (m_RequiresBasicLightEstimation)
             {
@@ -45,29 +39,25 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 bool supportsBrightness = descriptor.supportsAverageBrightness || descriptor.supportsAverageIntensityInLumens;
 
                 if (!(supportsBasics && supportsColor && supportsBrightness))
-                {
-                    ARSceneSelectUI.DisableButton(m_Button);
-                    yield break;
-                }
+                    return false;
             }
 
             if (m_RequiresHdrLightEstimation)
             {
                 if (!(descriptor.supportsFaceTrackingHDRLightEstimation || descriptor.supportsWorldTrackingHDRLightEstimation))
-                {
-                    ARSceneSelectUI.DisableButton(m_Button);
-                    yield break;
-                }
+                    return false;
             }
 
             if (m_RequiresCameraGrain && !descriptor.supportsCameraGrain)
-                ARSceneSelectUI.DisableButton(m_Button);
-            
-            if (m_RequiresExifData && !descriptor.supportsExifData)
-                ARSceneSelectUI.DisableButton(m_Button);
+                return false;
 
-            if (m_RequiresImageStabilization && descriptor.supportsImageStabilization != Supported.Supported)
-                ARSceneSelectUI.DisableButton(m_Button);
+            if (m_RequiresExifData && !descriptor.supportsExifData)
+                return false;
+
+            if (m_RequiresImageStabilization && descriptor.supportsImageStabilization == Supported.Unsupported)
+                return false;
+
+            return true;
         }
     }
 }

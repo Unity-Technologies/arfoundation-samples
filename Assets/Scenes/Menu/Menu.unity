@@ -239,33 +239,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 11739802}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: SelectMenu
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 715224457}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: SetTitleLabelMenuName
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Camera
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &11739802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,15 +300,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 11739799}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 554debc3f2b7f4fdba06c75541f8ccef, type: 3}
+  m_Script: {fileID: 11500000, guid: 645c16330fd24ac8b2088a8851ba11a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiresCameraImages: 0
-  m_RequiresBasicLightEstimation: 0
-  m_RequiresHdrLightEstimation: 0
-  m_RequiresCameraGrain: 0
-  m_RequiresExifData: 0
-  m_RequiresImageStabilization: 0
+  m_CategoryRootGameObject: {fileID: 715224457}
+  m_CategoryName: Camera
+  m_Button: {fileID: 11739801}
+  m_MenuSelector: {fileID: 1939243982}
 --- !u!1 &41577458
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,20 +404,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 41577463}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: CameraExposure
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &41577463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,13 +452,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 41577458}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36c9d6b1454ff451bbabc7f46bdd59a4, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiredPlatform: 0
-  m_RequiresMinimumVersion: 1
-  m_RequiredVersion: 16
-  m_AllowEditor: 0
+  m_SceneDescriptor: {fileID: 11400000, guid: 803bb8fc1f3a64d859aceb30eb5effd5, type: 2}
+  m_Button: {fileID: 41577462}
 --- !u!1 &41778014
 GameObject:
   m_ObjectHideFlags: 0
@@ -650,6 +607,7 @@ GameObject:
   - component: {fileID: 55193596}
   - component: {fileID: 55193595}
   - component: {fileID: 55193594}
+  - component: {fileID: 55193598}
   m_Layer: 5
   m_Name: Get Trackables User Facing
   m_TagString: Untagged
@@ -733,20 +691,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 55193596}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: VS_GetTrackablesUserFacing
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &55193596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -785,6 +730,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 55193592}
   m_CullTransparentMesh: 0
+--- !u!114 &55193598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55193592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneDescriptor: {fileID: 11400000, guid: 39978da5a2a23454c911a651efe3c4fa, type: 2}
+  m_Button: {fileID: 55193595}
 --- !u!1 &58478968
 GameObject:
   m_ObjectHideFlags: 0
@@ -798,7 +757,7 @@ GameObject:
   - component: {fileID: 58478973}
   - component: {fileID: 58478972}
   - component: {fileID: 58478971}
-  - component: {fileID: 58478970}
+  - component: {fileID: 58478975}
   m_Layer: 5
   m_Name: CameraWhiteBalance
   m_TagString: Untagged
@@ -826,22 +785,6 @@ RectTransform:
   m_AnchoredPosition: {x: -266, y: -711.5}
   m_SizeDelta: {x: 500, y: 175}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &58478970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 58478968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36c9d6b1454ff451bbabc7f46bdd59a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RequiredPlatform: 0
-  m_RequiresMinimumVersion: 1
-  m_RequiredVersion: 16
-  m_AllowEditor: 0
 --- !u!114 &58478971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -898,20 +841,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 58478973}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: CameraWhiteBalance
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &58478973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -950,6 +880,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 58478968}
   m_CullTransparentMesh: 0
+--- !u!114 &58478975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58478968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneDescriptor: {fileID: 11400000, guid: 11aadc09aca2c4a71b04dcc37824921a, type: 2}
+  m_Button: {fileID: 58478972}
 --- !u!1 &92576474
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,6 +906,7 @@ GameObject:
   - component: {fileID: 92576478}
   - component: {fileID: 92576477}
   - component: {fileID: 92576476}
+  - component: {fileID: 92576480}
   - component: {fileID: 92576479}
   m_Layer: 5
   m_Name: Depth Images
@@ -1033,20 +978,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 92576477}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: DepthImages
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &92576477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1094,10 +1026,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 92576474}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a76114b409f1149098afdc47e2ad0838, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiresDepth: 1
+  m_SceneDescriptor: {fileID: 11400000, guid: 872944084b36743b989acd35579abef7, type: 2}
+  m_Button: {fileID: 92576476}
+--- !u!114 &92576480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92576474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &98685986
 GameObject:
   m_ObjectHideFlags: 0
@@ -1696,6 +1642,7 @@ GameObject:
   - component: {fileID: 191336341}
   - component: {fileID: 191336340}
   - component: {fileID: 191336339}
+  - component: {fileID: 191336343}
   - component: {fileID: 191336342}
   m_Layer: 5
   m_Name: Toggle Plane Detection
@@ -1767,20 +1714,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 191336340}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: TogglePlaneDetection
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &191336340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1828,10 +1762,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 191336337}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14366ccbec5df480db79d56937a938f0, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiresPlaneClassifications: 0
+  m_SceneDescriptor: {fileID: 11400000, guid: 204f6bf645536442c9b2ebd4981ace4b, type: 2}
+  m_Button: {fileID: 191336339}
+--- !u!114 &191336343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191336337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &199817978
 GameObject:
   m_ObjectHideFlags: 0
@@ -2035,33 +1983,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 251164955}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: SelectMenu
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1017732099}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: S
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: SetTitleLabelMenuName
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Occlusion
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &251164955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2142,10 +2064,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 251164953}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a76114b409f1149098afdc47e2ad0838, type: 3}
+  m_Script: {fileID: 11500000, guid: 645c16330fd24ac8b2088a8851ba11a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiresDepth: 0
+  m_CategoryRootGameObject: {fileID: 1017732099}
+  m_CategoryName: Occlusion
+  m_Button: {fileID: 251164954}
+  m_MenuSelector: {fileID: 1939243982}
 --- !u!1 &256707486
 GameObject:
   m_ObjectHideFlags: 0
@@ -2285,6 +2210,156 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &275952656
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 275952657}
+  - component: {fileID: 275952662}
+  - component: {fileID: 275952661}
+  - component: {fileID: 275952660}
+  - component: {fileID: 275952659}
+  - component: {fileID: 275952658}
+  m_Layer: 5
+  m_Name: Plane Detection Mode
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &275952657
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275952656}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 872537601}
+  m_Father: {fileID: 881169047}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -266, y: -295.5}
+  m_SizeDelta: {x: 500, y: 175}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &275952658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275952656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneDescriptor: {fileID: 11400000, guid: b141475281c7e4224b6e2a2d49e0c890, type: 2}
+  m_Button: {fileID: 275952660}
+--- !u!114 &275952659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275952656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Tooltip: {fileID: 2094799242}
+--- !u!114 &275952660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275952656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 275952661}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &275952661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275952656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.18039216, g: 0.18039216, b: 0.18039216, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &275952662
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275952656}
+  m_CullTransparentMesh: 0
 --- !u!1 &278553688
 GameObject:
   m_ObjectHideFlags: 0
@@ -2298,7 +2373,7 @@ GameObject:
   - component: {fileID: 278553693}
   - component: {fileID: 278553692}
   - component: {fileID: 278553691}
-  - component: {fileID: 278553690}
+  - component: {fileID: 278553695}
   m_Layer: 5
   m_Name: Exif Data
   m_TagString: Untagged
@@ -2326,24 +2401,6 @@ RectTransform:
   m_AnchoredPosition: {x: 267, y: -503.5}
   m_SizeDelta: {x: 500, y: 175}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &278553690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 278553688}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 554debc3f2b7f4fdba06c75541f8ccef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RequiresCameraImages: 0
-  m_RequiresBasicLightEstimation: 0
-  m_RequiresHdrLightEstimation: 0
-  m_RequiresCameraGrain: 0
-  m_RequiresExifData: 1
-  m_RequiresImageStabilization: 0
 --- !u!114 &278553691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2400,20 +2457,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 278553693}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: ExifData
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &278553693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2452,6 +2496,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 278553688}
   m_CullTransparentMesh: 0
+--- !u!114 &278553695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278553688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneDescriptor: {fileID: 11400000, guid: 8b1670ec205424218ae168270d170a2c, type: 2}
+  m_Button: {fileID: 278553692}
 --- !u!1 &305012987
 GameObject:
   m_ObjectHideFlags: 0
@@ -2686,20 +2744,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 308644584}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: ImageStabilization
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &308644584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2747,15 +2792,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 308644579}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 554debc3f2b7f4fdba06c75541f8ccef, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiresCameraImages: 0
-  m_RequiresBasicLightEstimation: 0
-  m_RequiresHdrLightEstimation: 0
-  m_RequiresCameraGrain: 0
-  m_RequiresExifData: 0
-  m_RequiresImageStabilization: 1
+  m_SceneDescriptor: {fileID: 11400000, guid: 914686eeb453c43ad807c118cf207602, type: 2}
+  m_Button: {fileID: 308644583}
 --- !u!1 &320538451
 GameObject:
   m_ObjectHideFlags: 0
@@ -2769,7 +2810,7 @@ GameObject:
   - component: {fileID: 320538456}
   - component: {fileID: 320538455}
   - component: {fileID: 320538454}
-  - component: {fileID: 320538453}
+  - component: {fileID: 320538458}
   m_Layer: 5
   m_Name: Visual Scripting
   m_TagString: Untagged
@@ -2797,18 +2838,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &320538453
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 320538451}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7179764bda8241e0a9a87b6365486b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &320538454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2865,33 +2894,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 320538456}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: SelectMenu
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 668948356}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: SetTitleLabelMenuName
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Visual Scripting
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &320538456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2930,6 +2933,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 320538451}
   m_CullTransparentMesh: 0
+--- !u!114 &320538458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320538451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 645c16330fd24ac8b2088a8851ba11a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CategoryRootGameObject: {fileID: 668948356}
+  m_CategoryName: Visual Scripting
+  m_Button: {fileID: 320538455}
+  m_MenuSelector: {fileID: 1939243982}
 --- !u!1 &340560478
 GameObject:
   m_ObjectHideFlags: 0
@@ -3014,20 +3033,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 340560481}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: CpuImages
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &340560481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3088,15 +3094,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 340560478}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 554debc3f2b7f4fdba06c75541f8ccef, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiresCameraImages: 1
-  m_RequiresBasicLightEstimation: 0
-  m_RequiresHdrLightEstimation: 0
-  m_RequiresCameraGrain: 0
-  m_RequiresExifData: 0
-  m_RequiresImageStabilization: 0
+  m_SceneDescriptor: {fileID: 11400000, guid: 3020a13fb657c4c4dba5a0852a86ae4a, type: 2}
+  m_Button: {fileID: 340560480}
 --- !u!1 &356847837
 GameObject:
   m_ObjectHideFlags: 0
@@ -3331,33 +3333,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 362532375}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: SelectMenu
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1160973707}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: SetTitleLabelMenuName
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Body Tracking Menu
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &362532375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3405,11 +3381,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 362532371}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a28f4ffd054424fdaaa280480ef1a484, type: 3}
+  m_Script: {fileID: 11500000, guid: 645c16330fd24ac8b2088a8851ba11a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Requires2DTracking: 0
-  m_Requires3DTracking: 0
+  m_CategoryRootGameObject: {fileID: 1160973707}
+  m_CategoryName: Body Tracking
+  m_Button: {fileID: 362532374}
+  m_MenuSelector: {fileID: 1939243982}
 --- !u!1 &368937168
 GameObject:
   m_ObjectHideFlags: 0
@@ -3422,6 +3400,7 @@ GameObject:
   - component: {fileID: 368937172}
   - component: {fileID: 368937171}
   - component: {fileID: 368937170}
+  - component: {fileID: 368937174}
   - component: {fileID: 368937173}
   m_Layer: 5
   m_Name: Body Tracking 3D
@@ -3493,20 +3472,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 368937171}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: HumanBodyTracking3D
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &368937171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3554,11 +3520,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 368937168}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a28f4ffd054424fdaaa280480ef1a484, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Requires2DTracking: 0
-  m_Requires3DTracking: 1
+  m_SceneDescriptor: {fileID: 11400000, guid: d630817403e2d43368e0a0829bca7b1f, type: 2}
+  m_Button: {fileID: 368937170}
+--- !u!114 &368937174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368937168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &375968640
 GameObject:
   m_ObjectHideFlags: 0
@@ -3571,6 +3550,7 @@ GameObject:
   - component: {fileID: 375968644}
   - component: {fileID: 375968643}
   - component: {fileID: 375968642}
+  - component: {fileID: 375968646}
   - component: {fileID: 375968645}
   m_Layer: 5
   m_Name: Fixation Point
@@ -3642,20 +3622,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 375968643}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: FixationPoint
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &375968643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3703,10 +3670,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 375968640}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91c49eba589b94537a487c9b3c4b93a9, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiresEyeTracking: 1
+  m_SceneDescriptor: {fileID: 11400000, guid: fd8640e1a772f4412b703b0d06a0dbed, type: 2}
+  m_Button: {fileID: 375968642}
+--- !u!114 &375968646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375968640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Tooltip: {fileID: 2094799242}
+--- !u!224 &407859348 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2581305115919863542, guid: b8f7382051281456a93ced9c504c48c4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1234593041}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &426109368
 GameObject:
   m_ObjectHideFlags: 0
@@ -3804,33 +3791,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 426109372}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: SelectMenu
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1267198955}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: SetTitleLabelMenuName
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: ARKit
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &426109372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3878,13 +3839,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 426109368}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36c9d6b1454ff451bbabc7f46bdd59a4, type: 3}
+  m_Script: {fileID: 11500000, guid: 645c16330fd24ac8b2088a8851ba11a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiredPlatform: 0
-  m_RequiresMinimumVersion: 0
-  m_RequiredVersion: 0
-  m_AllowEditor: 0
+  m_CategoryRootGameObject: {fileID: 1267198955}
+  m_CategoryName: ARKit
+  m_Button: {fileID: 426109371}
+  m_MenuSelector: {fileID: 1939243982}
 --- !u!1 &450263470
 GameObject:
   m_ObjectHideFlags: 0
@@ -4174,7 +4135,6 @@ GameObject:
   - component: {fileID: 507951179}
   - component: {fileID: 507951178}
   - component: {fileID: 507951181}
-  - component: {fileID: 507951183}
   - component: {fileID: 507951182}
   m_Layer: 5
   m_Name: Blend Shapes (ARKit)
@@ -4246,20 +4206,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 507951179}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: ARKitFaceBlendShapes
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &507951179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4320,26 +4267,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 507951176}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36c9d6b1454ff451bbabc7f46bdd59a4, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiredPlatform: 0
-  m_RequiresMinimumVersion: 0
-  m_RequiredVersion: 0
-  m_AllowEditor: 0
---- !u!114 &507951183
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 507951176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91c49eba589b94537a487c9b3c4b93a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RequiresEyeTracking: 0
+  m_SceneDescriptor: {fileID: 11400000, guid: 151a0277e715c425b9176986a8b29e11, type: 2}
+  m_Button: {fileID: 507951178}
 --- !u!1 &508350358
 GameObject:
   m_ObjectHideFlags: 0
@@ -4698,20 +4630,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 531148339}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: WorldCameraWithUserFacingFaceTracking
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &531148339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4759,13 +4678,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 531148336}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36c9d6b1454ff451bbabc7f46bdd59a4, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiredPlatform: 0
-  m_RequiresMinimumVersion: 1
-  m_RequiredVersion: 13
-  m_AllowEditor: 0
+  m_SceneDescriptor: {fileID: 11400000, guid: 4587550314de941eda803e8832e5e043, type: 2}
+  m_Button: {fileID: 531148338}
 --- !u!114 &531148342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4775,10 +4692,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 531148336}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91c49eba589b94537a487c9b3c4b93a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiresEyeTracking: 0
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &533534993
 GameObject:
   m_ObjectHideFlags: 0
@@ -4791,6 +4708,7 @@ GameObject:
   - component: {fileID: 533534997}
   - component: {fileID: 533534996}
   - component: {fileID: 533534995}
+  - component: {fileID: 533534999}
   - component: {fileID: 533534998}
   m_Layer: 5
   m_Name: Simple Occlusion
@@ -4862,20 +4780,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 533534996}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: SimpleOcclusion
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &533534996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4923,10 +4828,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 533534993}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a76114b409f1149098afdc47e2ad0838, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiresDepth: 0
+  m_SceneDescriptor: {fileID: 11400000, guid: 263ee98990bf041239129c4c439c272e, type: 2}
+  m_Button: {fileID: 533534995}
+--- !u!114 &533534999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533534993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &541752377
 GameObject:
   m_ObjectHideFlags: 0
@@ -4939,6 +4858,7 @@ GameObject:
   - component: {fileID: 541752381}
   - component: {fileID: 541752380}
   - component: {fileID: 541752379}
+  - component: {fileID: 541752383}
   - component: {fileID: 541752382}
   m_Layer: 5
   m_Name: Occlusion Meshes
@@ -5010,20 +4930,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 541752380}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: OcclusionMeshes
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &541752380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5071,9 +4978,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 541752377}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 609510bf3ee9e404ca1f5e5307b26ad5, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SceneDescriptor: {fileID: 11400000, guid: 1a44686f718c445358614b8858863ff7, type: 2}
+  m_Button: {fileID: 541752379}
+--- !u!114 &541752383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541752377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &548196829
 GameObject:
   m_ObjectHideFlags: 0
@@ -5223,6 +5145,7 @@ GameObject:
   - component: {fileID: 550758922}
   - component: {fileID: 550758921}
   - component: {fileID: 550758920}
+  - component: {fileID: 550758924}
   - component: {fileID: 550758923}
   m_Layer: 5
   m_Name: Eye Poses
@@ -5294,20 +5217,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 550758921}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: EyePoses
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &550758921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5355,10 +5265,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 550758918}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91c49eba589b94537a487c9b3c4b93a9, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiresEyeTracking: 1
+  m_SceneDescriptor: {fileID: 11400000, guid: 8f2c3cbc9ce9b4accb575c5ec239d049, type: 2}
+  m_Button: {fileID: 550758920}
+--- !u!114 &550758924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 550758918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &601097769
 GameObject:
   m_ObjectHideFlags: 0
@@ -5509,6 +5433,7 @@ GameObject:
   - component: {fileID: 613006711}
   - component: {fileID: 613006710}
   - component: {fileID: 613006709}
+  - component: {fileID: 613006713}
   m_Layer: 5
   m_Name: Get Trackables
   m_TagString: Untagged
@@ -5592,20 +5517,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 613006711}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: VS_GetTrackables
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &613006711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5644,6 +5556,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 613006706}
   m_CullTransparentMesh: 0
+--- !u!114 &613006713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613006706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneDescriptor: {fileID: 11400000, guid: bb831e57930c24565bcf3f19505ee3ed, type: 2}
+  m_Button: {fileID: 613006710}
 --- !u!1 &622634201
 GameObject:
   m_ObjectHideFlags: 0
@@ -5849,7 +5775,6 @@ MonoBehaviour:
   m_TrackedDeviceDragThresholdMultiplier: 2
   m_TrackedScrollDeltaMultiplier: 5
   m_ActiveInputMode: 1
-  m_MaxTrackedDeviceRaycastDistance: 1000
   m_EnableXRInput: 1
   m_EnableMouseInput: 1
   m_EnableTouchInput: 1
@@ -6847,20 +6772,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 724437756}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: PlaneMasking
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &724437756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6921,10 +6833,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 724437753}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14366ccbec5df480db79d56937a938f0, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiresPlaneClassifications: 0
+  m_SceneDescriptor: {fileID: 11400000, guid: 46d4907b538c8492abf990f903c1b83a, type: 2}
+  m_Button: {fileID: 724437755}
 --- !u!1001 &725812581
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7355,7 +7268,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1978829072}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.24629219
+  m_Size: 0.571661
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -7812,6 +7725,7 @@ GameObject:
   - component: {fileID: 764999626}
   - component: {fileID: 764999625}
   - component: {fileID: 764999624}
+  - component: {fileID: 764999628}
   - component: {fileID: 764999627}
   m_Layer: 5
   m_Name: HDR Light Estimation
@@ -7883,20 +7797,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 764999625}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: HDRLightEstimation
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &764999625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7944,15 +7845,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 764999622}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 554debc3f2b7f4fdba06c75541f8ccef, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiresCameraImages: 0
-  m_RequiresBasicLightEstimation: 0
-  m_RequiresHdrLightEstimation: 1
-  m_RequiresCameraGrain: 0
-  m_RequiresExifData: 0
-  m_RequiresImageStabilization: 0
+  m_SceneDescriptor: {fileID: 11400000, guid: bf5e00af640494f96ba5c549f27cc028, type: 2}
+  m_Button: {fileID: 764999624}
+--- !u!114 &764999628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 764999622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &765495906
 GameObject:
   m_ObjectHideFlags: 0
@@ -7965,6 +7875,8 @@ GameObject:
   - component: {fileID: 765495910}
   - component: {fileID: 765495909}
   - component: {fileID: 765495908}
+  - component: {fileID: 765495912}
+  - component: {fileID: 765495911}
   m_Layer: 5
   m_Name: Face Pose
   m_TagString: Untagged
@@ -8035,20 +7947,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 765495909}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: FacePose
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &765495909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8087,6 +7986,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 765495906}
   m_CullTransparentMesh: 0
+--- !u!114 &765495911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765495906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneDescriptor: {fileID: 11400000, guid: cdf063591338e4f3bb25f070744e2bf2, type: 2}
+  m_Button: {fileID: 765495908}
+--- !u!114 &765495912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765495906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &786358435
 GameObject:
   m_ObjectHideFlags: 0
@@ -8171,20 +8097,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 786358438}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: AllPointCloudPoints
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &786358438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8245,9 +8158,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 786358435}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40d86858ef0d9421790d06a6f64a43b6, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SceneDescriptor: {fileID: 11400000, guid: 26ae93763ef1c4792a701fe7b4d00040, type: 2}
+  m_Button: {fileID: 786358437}
 --- !u!1 &806293114
 GameObject:
   m_ObjectHideFlags: 0
@@ -8331,20 +8246,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 806293117}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: BasicLightEstimation
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &806293117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8392,15 +8294,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 806293114}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 554debc3f2b7f4fdba06c75541f8ccef, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiresCameraImages: 0
-  m_RequiresBasicLightEstimation: 1
-  m_RequiresHdrLightEstimation: 0
-  m_RequiresCameraGrain: 0
-  m_RequiresExifData: 0
-  m_RequiresImageStabilization: 0
+  m_SceneDescriptor: {fileID: 11400000, guid: 414f1359808bb46b48f58b9efba9ea8a, type: 2}
+  m_Button: {fileID: 806293116}
 --- !u!1 &844963360
 GameObject:
   m_ObjectHideFlags: 0
@@ -8414,6 +8312,7 @@ GameObject:
   - component: {fileID: 844963365}
   - component: {fileID: 844963364}
   - component: {fileID: 844963363}
+  - component: {fileID: 844963367}
   m_Layer: 5
   m_Name: On Trackables Changed
   m_TagString: Untagged
@@ -8497,20 +8396,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 844963365}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: VS_OnTrackablesChanged
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &844963365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8548,6 +8434,157 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 844963360}
+  m_CullTransparentMesh: 0
+--- !u!114 &844963367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844963360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneDescriptor: {fileID: 11400000, guid: c267c2d0b857d43209e57325ac637b1d, type: 2}
+  m_Button: {fileID: 844963364}
+--- !u!1 &872537600
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 872537601}
+  - component: {fileID: 872537603}
+  - component: {fileID: 872537602}
+  m_Layer: 5
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &872537601
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 872537600}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 275952657}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &872537602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 872537600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Plane Detection Mode
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 39867e5449c844cbaa691f241ee9e41d, type: 2}
+  m_sharedMaterial: {fileID: 2119413175553802479, guid: 39867e5449c844cbaa691f241ee9e41d,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4293980400
+  m_fontColor: {r: 0.9411765, g: 0.9411765, b: 0.9411765, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 55
+  m_fontSizeBase: 55
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &872537603
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 872537600}
   m_CullTransparentMesh: 0
 --- !u!1 &876148837
 GameObject:
@@ -8633,20 +8670,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 876148840}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: ARCoreFaceRegions
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &876148840
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8694,13 +8718,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 876148837}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36c9d6b1454ff451bbabc7f46bdd59a4, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiredPlatform: 1
-  m_RequiresMinimumVersion: 0
-  m_RequiredVersion: 0
-  m_AllowEditor: 0
+  m_SceneDescriptor: {fileID: 11400000, guid: 40e4b418c3a124a62aa9d513e9c96a26, type: 2}
+  m_Button: {fileID: 876148839}
 --- !u!114 &876148843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8710,10 +8732,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 876148837}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91c49eba589b94537a487c9b3c4b93a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiresEyeTracking: 0
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &881169046
 GameObject:
   m_ObjectHideFlags: 0
@@ -8745,11 +8767,12 @@ RectTransform:
   m_Children:
   - {fileID: 191336338}
   - {fileID: 724437754}
+  - {fileID: 275952657}
   m_Father: {fileID: 1191508197}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -475}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 925.9334, y: -350}
   m_SizeDelta: {x: 1152, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &881169048
@@ -8767,6 +8790,7 @@ MonoBehaviour:
   m_Cells:
   - {fileID: 191336338}
   - {fileID: 724437754}
+  - {fileID: 275952657}
   m_Alignment: 1
   m_Columns: 2
   m_CellWidth: 500
@@ -8855,6 +8879,7 @@ GameObject:
   - component: {fileID: 881235201}
   - component: {fileID: 881235200}
   - component: {fileID: 881235199}
+  - component: {fileID: 881235203}
   m_Layer: 5
   m_Name: On Trackables Changed User Facing
   m_TagString: Untagged
@@ -8938,20 +8963,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 881235201}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: VS_OnTrackablesChangedUserFacing
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &881235201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8990,6 +9002,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 881235197}
   m_CullTransparentMesh: 0
+--- !u!114 &881235203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881235197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneDescriptor: {fileID: 11400000, guid: fc4c951e13ee14f648aaac74255cba48, type: 2}
+  m_Button: {fileID: 881235200}
 --- !u!1 &912198810
 GameObject:
   m_ObjectHideFlags: 0
@@ -9003,7 +9029,6 @@ GameObject:
   - component: {fileID: 912198814}
   - component: {fileID: 912198813}
   - component: {fileID: 912198812}
-  - component: {fileID: 912198817}
   - component: {fileID: 912198816}
   m_Layer: 5
   m_Name: Check Support
@@ -9088,20 +9113,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 912198814}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Check Support
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &912198814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9149,22 +9161,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 912198810}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b15ca82550f884eda8c39dfaa5167f04, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &912198817
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 912198810}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14366ccbec5df480db79d56937a938f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RequiresPlaneClassifications: 0
+  m_SceneDescriptor: {fileID: 11400000, guid: 3c4ff57f8f34d442e99395dc57243d9d, type: 2}
+  m_Button: {fileID: 912198813}
 --- !u!1 &930998844
 GameObject:
   m_ObjectHideFlags: 0
@@ -9589,7 +9590,7 @@ GameObject:
   - component: {fileID: 987482717}
   - component: {fileID: 987482716}
   - component: {fileID: 987482715}
-  - component: {fileID: 987482714}
+  - component: {fileID: 987482719}
   m_Layer: 5
   m_Name: CameraFocus
   m_TagString: Untagged
@@ -9617,22 +9618,6 @@ RectTransform:
   m_AnchoredPosition: {x: 267, y: -711.5}
   m_SizeDelta: {x: 500, y: 175}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &987482714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 987482712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36c9d6b1454ff451bbabc7f46bdd59a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RequiredPlatform: 0
-  m_RequiresMinimumVersion: 1
-  m_RequiredVersion: 16
-  m_AllowEditor: 0
 --- !u!114 &987482715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9689,20 +9674,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 987482717}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: CameraFocus
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &987482717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9741,6 +9713,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 987482712}
   m_CullTransparentMesh: 0
+--- !u!114 &987482719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987482712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneDescriptor: {fileID: 11400000, guid: 39b93a0ed76894b9884f4f4857d8342c, type: 2}
+  m_Button: {fileID: 987482716}
 --- !u!1 &1017732099
 GameObject:
   m_ObjectHideFlags: 0
@@ -9811,6 +9797,8 @@ GameObject:
   - component: {fileID: 1024207033}
   - component: {fileID: 1024207032}
   - component: {fileID: 1024207031}
+  - component: {fileID: 1024207035}
+  - component: {fileID: 1024207034}
   m_Layer: 5
   m_Name: Face Mesh
   m_TagString: Untagged
@@ -9881,20 +9869,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1024207032}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: FaceMesh
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1024207032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9933,6 +9908,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1024207029}
   m_CullTransparentMesh: 0
+--- !u!114 &1024207034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024207029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneDescriptor: {fileID: 11400000, guid: 2a1b97d001533408ba7b7f73b1b6b621, type: 2}
+  m_Button: {fileID: 1024207031}
+--- !u!114 &1024207035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024207029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &1034077652
 GameObject:
   m_ObjectHideFlags: 0
@@ -10030,20 +10032,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1034077656}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: ARCoreSessionRecording
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1034077656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10091,13 +10080,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1034077652}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36c9d6b1454ff451bbabc7f46bdd59a4, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiredPlatform: 1
-  m_RequiresMinimumVersion: 0
-  m_RequiredVersion: 12
-  m_AllowEditor: 0
+  m_SceneDescriptor: {fileID: 11400000, guid: 96466c580c9864a56a509e6aa594b68a, type: 2}
+  m_Button: {fileID: 1034077655}
 --- !u!1 &1045176550
 GameObject:
   m_ObjectHideFlags: 0
@@ -10108,6 +10095,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1045176552}
   - component: {fileID: 1045176551}
+  - component: {fileID: 1045176553}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -10174,8 +10162,12 @@ Light:
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
 --- !u!4 &1045176552
 Transform:
   m_ObjectHideFlags: 0
@@ -10191,6 +10183,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &1045176553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1045176550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &1066789245
 GameObject:
   m_ObjectHideFlags: 0
@@ -10203,6 +10218,7 @@ GameObject:
   - component: {fileID: 1066789249}
   - component: {fileID: 1066789248}
   - component: {fileID: 1066789247}
+  - component: {fileID: 1066789251}
   - component: {fileID: 1066789250}
   m_Layer: 5
   m_Name: Basic Image Tracking
@@ -10274,20 +10290,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1066789248}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: BasicImageTracking
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1066789248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10335,9 +10338,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1066789245}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 085d2e3d1f18442a594ed38334ea94d6, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SceneDescriptor: {fileID: 11400000, guid: c76257822dd734fb1b1b3eb9edda8a49, type: 2}
+  m_Button: {fileID: 1066789247}
+--- !u!114 &1066789251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1066789245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &1075890378
 GameObject:
   m_ObjectHideFlags: 0
@@ -10351,6 +10369,7 @@ GameObject:
   - component: {fileID: 1075890383}
   - component: {fileID: 1075890382}
   - component: {fileID: 1075890381}
+  - component: {fileID: 1075890385}
   m_Layer: 5
   m_Name: Simple AR
   m_TagString: Untagged
@@ -10434,20 +10453,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1075890383}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: VS_SimpleAR
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1075890383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10486,6 +10492,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1075890378}
   m_CullTransparentMesh: 0
+--- !u!114 &1075890385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1075890378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneDescriptor: {fileID: 11400000, guid: 568b3da95a3c9443e8beb9f1dd001b34, type: 2}
+  m_Button: {fileID: 1075890382}
 --- !u!1 &1091803569
 GameObject:
   m_ObjectHideFlags: 0
@@ -10570,20 +10590,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1091803572}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: ARKitCoachingOverlay
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1091803572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10644,13 +10651,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1091803569}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2eeed5fdcd2041e29df95d3f0e4f35d, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiresWorldMap: 0
-  m_RequiresGeoAnchors: 0
-  m_RequiresCollaborativeParticipants: 0
-  m_RequiresCoachingOverlay: 0
+  m_SceneDescriptor: {fileID: 11400000, guid: 68a27a5ce0f764a2e9993f287caf305a, type: 2}
+  m_Button: {fileID: 1091803571}
 --- !u!1 &1116959536
 GameObject:
   m_ObjectHideFlags: 0
@@ -10735,33 +10740,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1116959539}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: SelectMenu
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 881193863}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: SetTitleLabelMenuName
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Face Tracking
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1116959539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10822,10 +10801,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1116959536}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91c49eba589b94537a487c9b3c4b93a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 645c16330fd24ac8b2088a8851ba11a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiresEyeTracking: 0
+  m_CategoryRootGameObject: {fileID: 881193863}
+  m_CategoryName: Face Tracking
+  m_Button: {fileID: 1116959538}
+  m_MenuSelector: {fileID: 1939243982}
 --- !u!1 &1127783723
 GameObject:
   m_ObjectHideFlags: 0
@@ -11301,20 +11283,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1154514037}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: BackgroundRenderOrder
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1154514037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11395,15 +11364,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1154514035}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 554debc3f2b7f4fdba06c75541f8ccef, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiresCameraImages: 0
-  m_RequiresBasicLightEstimation: 0
-  m_RequiresHdrLightEstimation: 0
-  m_RequiresCameraGrain: 0
-  m_RequiresExifData: 0
-  m_RequiresImageStabilization: 0
+  m_SceneDescriptor: {fileID: 11400000, guid: 7b16388a5285342bbaed3c29294f431f, type: 2}
+  m_Button: {fileID: 1154514036}
 --- !u!1 &1156275369
 GameObject:
   m_ObjectHideFlags: 0
@@ -11820,33 +11785,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1172329692}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: SelectMenu
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 881169046}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: SetTitleLabelMenuName
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Plane Detection
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1172329692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11907,10 +11846,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1172329689}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14366ccbec5df480db79d56937a938f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 645c16330fd24ac8b2088a8851ba11a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiresPlaneClassifications: 0
+  m_CategoryRootGameObject: {fileID: 881169046}
+  m_CategoryName: Plane Detection
+  m_Button: {fileID: 1172329691}
+  m_MenuSelector: {fileID: 1939243982}
 --- !u!1 &1191508196
 GameObject:
   m_ObjectHideFlags: 0
@@ -12444,20 +12386,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1206894272}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: ObjectTracking
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1206894272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12518,9 +12447,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1206894269}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 156aac8a4181349e2ae9a91b371a1998, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SceneDescriptor: {fileID: 11400000, guid: a71f0ae407a42476597f8aa09cdcf9e1, type: 2}
+  m_Button: {fileID: 1206894271}
 --- !u!1 &1212694356
 GameObject:
   m_ObjectHideFlags: 0
@@ -12876,6 +12807,10 @@ PrefabInstance:
     - {fileID: 4742718608244375104, guid: b8f7382051281456a93ced9c504c48c4, type: 3}
     - {fileID: 3347552358982386010, guid: b8f7382051281456a93ced9c504c48c4, type: 3}
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2581305115919863542, guid: b8f7382051281456a93ced9c504c48c4,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2021790117}
     - targetCorrespondingSourceObject: {fileID: 7097418071025371750, guid: b8f7382051281456a93ced9c504c48c4,
         type: 3}
       insertIndex: -1
@@ -13392,33 +13327,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1311724827}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: SelectMenu
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 718694214}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: SetTitleLabelMenuName
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Image Tracking
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1311724827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13479,9 +13388,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1311724824}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 085d2e3d1f18442a594ed38334ea94d6, type: 3}
+  m_Script: {fileID: 11500000, guid: 645c16330fd24ac8b2088a8851ba11a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_CategoryRootGameObject: {fileID: 718694214}
+  m_CategoryName: Image Tracking
+  m_Button: {fileID: 1311724826}
+  m_MenuSelector: {fileID: 1939243982}
 --- !u!1 &1312879779
 GameObject:
   m_ObjectHideFlags: 0
@@ -13905,6 +13818,7 @@ GameObject:
   - component: {fileID: 1327219900}
   - component: {fileID: 1327219899}
   - component: {fileID: 1327219898}
+  - component: {fileID: 1327219902}
   - component: {fileID: 1327219901}
   m_Layer: 5
   m_Name: Normal Meshes
@@ -13976,20 +13890,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1327219899}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: NormalMeshes
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1327219899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14037,9 +13938,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1327219896}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 609510bf3ee9e404ca1f5e5307b26ad5, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SceneDescriptor: {fileID: 11400000, guid: 7555d077047a14829b9a0ee0eeaf5986, type: 2}
+  m_Button: {fileID: 1327219898}
+--- !u!114 &1327219902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1327219896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &1349725438
 GameObject:
   m_ObjectHideFlags: 0
@@ -14189,6 +14105,7 @@ GameObject:
   - component: {fileID: 1356389285}
   - component: {fileID: 1356389284}
   - component: {fileID: 1356389283}
+  - component: {fileID: 1356389287}
   - component: {fileID: 1356389286}
   m_Layer: 5
   m_Name: Body Tracking 2D
@@ -14260,20 +14177,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1356389284}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: HumanBodyTracking2D
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1356389284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14321,11 +14225,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1356389281}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a28f4ffd054424fdaaa280480ef1a484, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Requires2DTracking: 1
-  m_Requires3DTracking: 0
+  m_SceneDescriptor: {fileID: 11400000, guid: ba389a45676ee4063bc3df5244aaf289, type: 2}
+  m_Button: {fileID: 1356389283}
+--- !u!114 &1356389287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356389281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &1385680567
 GameObject:
   m_ObjectHideFlags: 0
@@ -14339,9 +14256,6 @@ GameObject:
   - component: {fileID: 1385680570}
   - component: {fileID: 1385680569}
   - component: {fileID: 1385680572}
-  - component: {fileID: 1385680576}
-  - component: {fileID: 1385680575}
-  - component: {fileID: 1385680574}
   - component: {fileID: 1385680573}
   m_Layer: 5
   m_Name: AR Collaboration Data
@@ -14413,20 +14327,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1385680570}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: ARCollaborationDataExample
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1385680570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14487,50 +14388,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1385680567}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0343d56a04647433ea3c9d3e43cbd12c, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1385680574
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1385680567}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14366ccbec5df480db79d56937a938f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RequiresPlaneClassifications: 0
---- !u!114 &1385680575
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1385680567}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b15ca82550f884eda8c39dfaa5167f04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1385680576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1385680567}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2eeed5fdcd2041e29df95d3f0e4f35d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RequiresWorldMap: 0
-  m_RequiresGeoAnchors: 0
-  m_RequiresCollaborativeParticipants: 0
-  m_RequiresCoachingOverlay: 0
+  m_SceneDescriptor: {fileID: 11400000, guid: b084020d2ff09484cbaa50b53953a470, type: 2}
+  m_Button: {fileID: 1385680569}
 --- !u!1 &1389518004
 GameObject:
   m_ObjectHideFlags: 0
@@ -14716,6 +14578,7 @@ GameObject:
   - component: {fileID: 1464644625}
   - component: {fileID: 1464644624}
   - component: {fileID: 1464644623}
+  - component: {fileID: 1464644627}
   - component: {fileID: 1464644626}
   m_Layer: 5
   m_Name: Image Tracking With Multiple Prefabs
@@ -14787,20 +14650,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1464644624}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: ImageTrackingWithMultiplePrefabs
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1464644624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14848,9 +14698,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1464644621}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 085d2e3d1f18442a594ed38334ea94d6, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SceneDescriptor: {fileID: 11400000, guid: fadbd0121441447bea45298dc04c75dd, type: 2}
+  m_Button: {fileID: 1464644623}
+--- !u!114 &1464644627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1464644621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &1466748456
 GameObject:
   m_ObjectHideFlags: 0
@@ -14948,33 +14813,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1466748460}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: SelectMenu
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 2008080040}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: SetTitleLabelMenuName
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Meshing
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1466748460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15022,9 +14861,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1466748456}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 609510bf3ee9e404ca1f5e5307b26ad5, type: 3}
+  m_Script: {fileID: 11500000, guid: 645c16330fd24ac8b2088a8851ba11a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_CategoryRootGameObject: {fileID: 2008080040}
+  m_CategoryName: Meshing
+  m_Button: {fileID: 1466748459}
+  m_MenuSelector: {fileID: 1939243982}
 --- !u!1 &1473691831
 GameObject:
   m_ObjectHideFlags: 0
@@ -15174,6 +15017,7 @@ GameObject:
   - component: {fileID: 1494272050}
   - component: {fileID: 1494272049}
   - component: {fileID: 1494272048}
+  - component: {fileID: 1494272052}
   - component: {fileID: 1494272051}
   m_Layer: 5
   m_Name: Classification Meshes
@@ -15245,20 +15089,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1494272049}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: ClassificationMeshes
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1494272049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15306,9 +15137,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1494272046}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 609510bf3ee9e404ca1f5e5307b26ad5, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SceneDescriptor: {fileID: 11400000, guid: 9c1ac9ce71d6e4fe192642107201ca2c, type: 2}
+  m_Button: {fileID: 1494272048}
+--- !u!114 &1494272052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494272046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &1507995257
 GameObject:
   m_ObjectHideFlags: 0
@@ -15321,6 +15167,7 @@ GameObject:
   - component: {fileID: 1507995261}
   - component: {fileID: 1507995260}
   - component: {fileID: 1507995259}
+  - component: {fileID: 1507995263}
   - component: {fileID: 1507995262}
   m_Layer: 5
   m_Name: Eye Lasers
@@ -15392,20 +15239,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1507995260}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: EyeLasers
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1507995260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15453,10 +15287,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1507995257}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91c49eba589b94537a487c9b3c4b93a9, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiresEyeTracking: 1
+  m_SceneDescriptor: {fileID: 11400000, guid: fb2e6b18fdd81416daea680449e210a7, type: 2}
+  m_Button: {fileID: 1507995259}
+--- !u!114 &1507995263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1507995257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16733cd6749cf4d96be9df0329c6938a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Tooltip: {fileID: 2094799242}
 --- !u!1 &1512604866
 GameObject:
   m_ObjectHideFlags: 0
@@ -15686,7 +15534,6 @@ GameObject:
   - component: {fileID: 1539006403}
   - component: {fileID: 1539006402}
   - component: {fileID: 1539006401}
-  - component: {fileID: 1539006400}
   - component: {fileID: 1539006405}
   m_Layer: 5
   m_Name: High Resolution CPU Image
@@ -15715,22 +15562,6 @@ RectTransform:
   m_AnchoredPosition: {x: -266, y: -919.5}
   m_SizeDelta: {x: 500, y: 175}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1539006400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1539006398}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36c9d6b1454ff451bbabc7f46bdd59a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RequiredPlatform: 0
-  m_RequiresMinimumVersion: 1
-  m_RequiredVersion: 16
-  m_AllowEditor: 0
 --- !u!114 &1539006401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15787,20 +15618,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1539006403}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: HighResolutionCpuImage
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1539006403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15848,15 +15666,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1539006398}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 554debc3f2b7f4fdba06c75541f8ccef, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiresCameraImages: 0
-  m_RequiresBasicLightEstimation: 0
-  m_RequiresHdrLightEstimation: 0
-  m_RequiresCameraGrain: 0
-  m_RequiresExifData: 0
-  m_RequiresImageStabilization: 0
+  m_SceneDescriptor: {fileID: 11400000, guid: ff895e3b82ece435986e5d082d0a85ed, type: 2}
+  m_Button: {fileID: 1539006402}
 --- !u!1 &1555465365
 GameObject:
   m_ObjectHideFlags: 0
@@ -16091,20 +15905,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1604105017}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: ARKitGeoAnchors
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1604105017
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16152,13 +15953,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1604105013}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2eeed5fdcd2041e29df95d3f0e4f35d, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiresWorldMap: 0
-  m_RequiresGeoAnchors: 0
-  m_RequiresCollaborativeParticipants: 0
-  m_RequiresCoachingOverlay: 0
+  m_SceneDescriptor: {fileID: 11400000, guid: f152f3b0bb29a4dd2be15b2e2dd193e6, type: 2}
+  m_Button: {fileID: 1604105016}
 --- !u!1 &1635433357
 GameObject:
   m_ObjectHideFlags: 0
@@ -16776,20 +16575,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1726760295}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: CameraGrain
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1726760295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16837,15 +16623,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1726760291}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 554debc3f2b7f4fdba06c75541f8ccef, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiresCameraImages: 0
-  m_RequiresBasicLightEstimation: 0
-  m_RequiresHdrLightEstimation: 0
-  m_RequiresCameraGrain: 1
-  m_RequiresExifData: 0
-  m_RequiresImageStabilization: 0
+  m_SceneDescriptor: {fileID: 11400000, guid: 8121bc5308a194fe4a5cdd2e79479f45, type: 2}
+  m_Button: {fileID: 1726760294}
 --- !u!1 &1742233074
 GameObject:
   m_ObjectHideFlags: 0
@@ -17279,20 +17061,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1761617833}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: EnvironmentProbes
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1761617833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17353,9 +17122,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1761617830}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 396427124b6e6488081eda1d820f2424, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SceneDescriptor: {fileID: 11400000, guid: 900172a749def42e7aba803a64675ce5, type: 2}
+  m_Button: {fileID: 1761617832}
 --- !u!1 &1765440890
 GameObject:
   m_ObjectHideFlags: 0
@@ -17506,7 +17277,6 @@ GameObject:
   - component: {fileID: 1790425530}
   - component: {fileID: 1790425529}
   - component: {fileID: 1790425532}
-  - component: {fileID: 1790425534}
   - component: {fileID: 1790425533}
   m_Layer: 5
   m_Name: Simple AR
@@ -17578,20 +17348,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1790425530}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: SimpleAR
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1790425530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17652,22 +17409,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1790425527}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b15ca82550f884eda8c39dfaa5167f04, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1790425534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1790425527}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14366ccbec5df480db79d56937a938f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RequiresPlaneClassifications: 0
+  m_SceneDescriptor: {fileID: 11400000, guid: 9eb289ac332a04ceea62d5322db7ff4d, type: 2}
+  m_Button: {fileID: 1790425529}
 --- !u!1 &1790665931
 GameObject:
   m_ObjectHideFlags: 0
@@ -18047,20 +17793,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1817576788}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: ARWorldMap
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1817576788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18121,13 +17854,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1817576785}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2eeed5fdcd2041e29df95d3f0e4f35d, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiresWorldMap: 0
-  m_RequiresGeoAnchors: 0
-  m_RequiresCollaborativeParticipants: 0
-  m_RequiresCoachingOverlay: 0
+  m_SceneDescriptor: {fileID: 11400000, guid: 801fed5bbfa7e4b339820cb6162c288a, type: 2}
+  m_Button: {fileID: 1817576787}
 --- !u!1 &1831158596
 GameObject:
   m_ObjectHideFlags: 0
@@ -18192,20 +17923,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1831158598}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: ThermalState
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1831158598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18286,13 +18004,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1831158596}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36c9d6b1454ff451bbabc7f46bdd59a4, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiredPlatform: 0
-  m_RequiresMinimumVersion: 0
-  m_RequiredVersion: 0
-  m_AllowEditor: 0
+  m_SceneDescriptor: {fileID: 11400000, guid: 9953f1645e2cd488a891fb4441b27b74, type: 2}
+  m_Button: {fileID: 1831158597}
 --- !u!1 &1895153661
 GameObject:
   m_ObjectHideFlags: 0
@@ -18653,20 +18369,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1905833467}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Anchors
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1905833467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18727,9 +18430,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1905833464}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4c88408882c84730b748615f7afeaa8, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SceneDescriptor: {fileID: 11400000, guid: ef4ce864d4aa5494dac01f9e7d088e37, type: 2}
+  m_Button: {fileID: 1905833466}
 --- !u!1 &1915168239
 GameObject:
   m_ObjectHideFlags: 0
@@ -18922,7 +18627,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 338, y: 0}
+  m_AnchoredPosition: {x: 1140.672, y: 0}
   m_SizeDelta: {x: 1020, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1939243978
@@ -19407,7 +19112,6 @@ GameObject:
   - component: {fileID: 2011106402}
   - component: {fileID: 2011106401}
   - component: {fileID: 2011106400}
-  - component: {fileID: 2011106405}
   - component: {fileID: 2011106404}
   m_Layer: 5
   m_Name: Configuration Chooser
@@ -19492,20 +19196,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2011106402}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: ConfigurationChooser
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2011106402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19553,22 +19244,59 @@ MonoBehaviour:
   m_GameObject: {fileID: 2011106398}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b15ca82550f884eda8c39dfaa5167f04, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2011106405
+  m_SceneDescriptor: {fileID: 11400000, guid: 088af52d851c8488fb76012795a4d951, type: 2}
+  m_Button: {fileID: 2011106401}
+--- !u!1 &2021790116
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2021790117}
+  - component: {fileID: 2021790118}
+  m_Layer: 5
+  m_Name: ScreenSpaceUIWorkaround
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2021790117
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2021790116}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 407859348}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2021790118
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2011106398}
+  m_GameObject: {fileID: 2021790116}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14366ccbec5df480db79d56937a938f0, type: 3}
+  m_Script: {fileID: 11500000, guid: e3bf89230b534fb40b1069f8944a48be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RequiresPlaneClassifications: 0
 --- !u!1 &2026763857
 GameObject:
   m_ObjectHideFlags: 0
@@ -20125,20 +19853,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2135211032}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1939243982}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.ARSceneSelectUI,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: DebugMenu
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2135211032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20186,9 +19901,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2135211028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3dfc2e75b2c44b1689f0d0895b0d528, type: 3}
+  m_Script: {fileID: 11500000, guid: e950fc6e83464e5d8331e626c2036ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SceneDescriptor: {fileID: 11400000, guid: ff1c30abf84bf4e71b864d529dc44bd6, type: 2}
+  m_Button: {fileID: 2135211031}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine.XR.ARSubsystems;
 
 namespace UnityEngine.XR.ARFoundation.Samples
@@ -11,25 +10,20 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         bool m_Requires3DTracking;
 
-        protected override IEnumerator Start()
+        public override bool Evaluate()
         {
-            yield return base.Start();
-
-            if (m_Button.interactable == false)
-                yield break;
+            if (!base.Evaluate())
+                return false;
 
             var descriptor = s_LoadedSubsystem.subsystemDescriptor;
 
             if (m_Requires2DTracking && !descriptor.supportsHumanBody2D)
-            {
-                ARSceneSelectUI.DisableButton(m_Button);
-                yield break;
-            }
+                return false;
 
             if (m_Requires3DTracking && !descriptor.supportsHumanBody3D)
-            {
-                ARSceneSelectUI.DisableButton(m_Button);
-            }
+                return false;
+
+            return true;
         }
     }
 }

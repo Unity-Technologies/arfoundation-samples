@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.XR.ARFoundation;
+﻿using UnityEngine.UI;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -21,8 +18,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public Text togglePlaneDetectionText
         {
-            get { return m_TogglePlaneDetectionText; }
-            set { m_TogglePlaneDetectionText = value; }
+            get => m_TogglePlaneDetectionText;
+            set => m_TogglePlaneDetectionText = value;
         }
 
         /// <summary>

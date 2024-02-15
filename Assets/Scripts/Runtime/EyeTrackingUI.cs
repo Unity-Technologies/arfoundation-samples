@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using Text = UnityEngine.UI.Text;
+﻿using Text = UnityEngine.UI.Text;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -13,7 +12,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             if (m_Manager == null)
             {
-                m_Manager = FindObjectsUtility.FindAnyObjectByType<ARFaceManager>();
+                m_Manager = FindAnyObjectByType<ARFaceManager>();
             }
             if (m_Manager != null && m_Manager.subsystem != null && m_Manager.descriptor.supportsEyeTracking)
             {

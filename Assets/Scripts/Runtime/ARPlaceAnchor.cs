@@ -65,8 +65,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             //remove any anchors that have been removed outside our control, such as during a session reset
             foreach (var removedAnchor in eventArgs.removed)
             {
-                Destroy(removedAnchor.gameObject);
-                m_Anchors.Remove(removedAnchor);
+                if (removedAnchor.Value != null)
+                {
+                    m_Anchors.Remove(removedAnchor.Value);
+                    Destroy(removedAnchor.Value.gameObject);
+                }
             }
         }
 
@@ -92,8 +95,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             var result = await m_AnchorManager.TryAddAnchorAsync(hit.pose);
-            if (result.TryGetResult(out var anchor))
-                FinalizePlacedAnchor(anchor, $"Anchor (from {hit.hitType})");
+            if (result.status.IsSuccess())
+                FinalizePlacedAnchor(result.value, $"Anchor (from {hit.hitType})");
         }
 
         void FinalizePlacedAnchor(ARAnchor anchor, string text)

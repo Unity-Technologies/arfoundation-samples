@@ -15,12 +15,10 @@ The `main` branch of this repository uses AR Foundation 6.0 and is compatible wi
 
 | Unity Version  | AR Foundation Version |
 | -------------- | --------------------- |
-| 2023.3 (alpha) | [6.0](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.0) |
-| 2023.2 (beta)  | [5.1](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.1) |
-| 2023.1         | [5.1](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.1) |
-| 2022.3         | [5.0](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.0) |
+| 2023.3 (beta)  | 6.0 (main) |
+| 2023.2         | [5.1](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.1) |
+| 2022.3         | [5.1](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.1) |
 | 2021.3         | [4.2](https://github.com/Unity-Technologies/arfoundation-samples/tree/4.2) |
-| 2020.3         | [4.1](https://github.com/Unity-Technologies/arfoundation-samples/tree/4.1) |
 
 ## How to use these samples
 
@@ -370,7 +368,7 @@ To report a bug in AR Foundation, please [file a bug](https://unity3d.com/unity/
 
 ## AR Foundation feature requests
 
-To request a new feature in AR Foundation or related packages, use Unity's [AR VR Roadmap](https://unity.com/roadmap/unity-platform/arvr). Click on the **AR Foundation** tab, then scroll down to **Submit a New Idea**.
+To request a new feature in AR Foundation or related packages, use Unity's [XR Roadmap](https://unity.com/roadmap/unity-platform/xr). Click on the **AR Foundation** tab, then scroll down to **Submit a New Idea**.
 
 ## Contributions to this repository
 

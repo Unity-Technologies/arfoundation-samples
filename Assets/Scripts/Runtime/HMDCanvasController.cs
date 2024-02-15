@@ -34,9 +34,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField, HideInInspector]
         Canvas m_Canvas;
 
+        [SerializeField, HideInInspector]
+        RectTransform m_CanvasRT;
+
         // The canvas will get set to world space if either of these two are true.
         // We can't check the canvas directly because it doesn't get set until the frame after start.
         public bool isWorldSpaceCanvas => m_EnableInEditor || MenuLoader.IsHmdDevice();
+
+        // The dimensions of the canvas in pixels
+        public Vector2 canvasDimensions => m_CanvasRT.sizeDelta;
 
         Vector2 m_HMDCanvasDimensionsScaled;
         const float k_CanvasWorldSpaceScale = 0.001f;
@@ -45,6 +51,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             m_Camera = Camera.main;
             m_Canvas = GetComponent<Canvas>();
+            m_CanvasRT = m_Canvas.GetComponent<RectTransform>();
         }
 
         async void Start()
@@ -54,6 +61,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if (!isWorldSpaceCanvas)
                 return;
+            
+            if (m_CanvasRT == null)
+                m_CanvasRT = m_Canvas.GetComponent<RectTransform>();
 
             // Since the canvas is scaled to preserve UI elements size on the canvas,
             // the values that get applied need to be updated by the scale the canvas will be set to
