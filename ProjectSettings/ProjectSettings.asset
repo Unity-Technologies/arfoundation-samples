@@ -12,8 +12,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: Unity Technologies
-  productName: AR Foundation Samples
+  companyName: Sunshine Lab
+  productName: AR Template
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -138,17 +138,21 @@ PlayerSettings:
   vulkanEnableLateAcquireNextImage: 0
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
+  visionOSBundleVersion: 1.0
+  tvOSBundleVersion: 1.0
   bundleVersion: 0.1
   preloadedAssets:
   - {fileID: 6330145236446009696, guid: 00000000000000002000000000000000, type: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 4800000, guid: e7c77f6eaab324a819efdc13b8125a39, type: 3}
   - {fileID: 4800000, guid: 6743a50a812740be8c0aa3fccc46fae9, type: 3}
-  - {fileID: 0}
-  - {fileID: -7479341934665344595, guid: e2f869774b12e400996eb546603602e3, type: 2}
-  - {fileID: 11400000, guid: 4eb5b5e3a90bd404a94041c4281406e3, type: 2}
-  - {fileID: 1035248729174804591, guid: 2d2dec64879445247bb34603b4469c6c, type: 2}
   - {fileID: 11400000, guid: 302e9f36808117f4184b07b05ca5bb47, type: 2}
+  - {fileID: -7479341934665344595, guid: e2f869774b12e400996eb546603602e3, type: 2}
+  - {fileID: 1035248729174804591, guid: 2d2dec64879445247bb34603b4469c6c, type: 2}
+  - {fileID: 11400000, guid: 47675424d629749adb23122dda7a4893, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -172,7 +176,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.unity.arfoundation.samples
     Standalone: com.unity.arfoundation.samples
-    iPhone: com.unity.arfoundation.samples
+    iPhone: com.sunshine.template
   buildNumber:
     Bratwurst: 0
     Standalone: 0
@@ -246,7 +250,7 @@ PlayerSettings:
   metalCompileShaderBinary: 0
   iOSRenderExtraFrameOnPause: 0
   iosCopyPluginsCodeInsteadOfSymlink: 0
-  appleDeveloperTeamID: 
+  appleDeveloperTeamID: 9H3437C32U
   iOSManualSigningProvisioningProfileID: 
   tvOSManualSigningProvisioningProfileID: 
   VisionOSManualSigningProvisioningProfileID: 
@@ -295,6 +299,7 @@ PlayerSettings:
   AndroidValidateAppBundleSize: 1
   AndroidAppBundleSizeToValidate: 150
   AndroidReportGooglePlayAppDependencies: 1
+  androidSymbolsSizeThreshold: 800
   m_BuildTargetIcons: []
   m_BuildTargetPlatformIcons:
   - m_BuildTarget: Android
@@ -722,7 +727,7 @@ PlayerSettings:
     WebGL: UNITY_POST_PROCESSING_STACK_V2
     Windows Store Apps: UNITY_POST_PROCESSING_STACK_V2;USE_INPUT_SYSTEM_POSE_CONTROL;USE_STICK_CONTROL_THUMBSTICKS
     XboxOne: UNITY_POST_PROCESSING_STACK_V2
-    iPhone: UNITY_POST_PROCESSING_STACK_V2;UNITY_XR_ARKIT_LOADER_ENABLED;UNITY_XR_ARKIT_FACE_TRACKING_ENABLED
+    iPhone: UNITY_POST_PROCESSING_STACK_V2;UNITY_XR_ARKIT_LOADER_ENABLED;UNITY_XR_ARKIT_FACE_TRACKING_ENABLED;ARCORE_EXTENSIONS_IOS_SUPPORT;SEMANTICS_IOS_SUPPORT;GEOSPATIAL_IOS_SUPPORT
     tvOS: UNITY_POST_PROCESSING_STACK_V2
   additionalCompilerArguments: {}
   platformArchitecture:

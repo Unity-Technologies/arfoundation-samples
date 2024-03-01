@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Samples/GeospatialArf5Replay.unity
+    guid: fbe56f375857a4e3c969d27d61de2e79
+  - enabled: 0
+    path: Assets/Samples/ARCore Extensions/1.41.0/Geospatial Sample/Scenes/GeospatialArf5.unity
+    guid: 1e5d96b9ed94e442dbbfddf2475baf5c
+  - enabled: 1
     path: Assets/Scenes/Menu/MenuLoader.unity
     guid: 6688ff74f56714cfeb7c919bcdbfe269
   - enabled: 1
@@ -174,6 +180,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Meta/MetaDisplayRefreshRate.unity
     guid: 07970a1a9455f4309b8e99b1c88daa98
   m_configObjects:
+    ARFoundationReplay.ARFoundationReplaySettings: {fileID: 11400000, guid: e773f5ef9a2fb4201a9a19f67e3ce319,
+      type: 2}
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: c52d3bb36b4c86f47af54ab9c7a02589,
       type: 2}
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: f8ce26fe3bc69499b9be4b2378e97a94,
