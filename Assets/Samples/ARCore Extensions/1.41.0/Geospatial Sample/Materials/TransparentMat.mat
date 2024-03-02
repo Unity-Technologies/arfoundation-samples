@@ -22,9 +22,9 @@ Material:
   stringTagMap:
     RenderType: Transparent
   disabledShaderPasses:
+  - MOTIONVECTORS
   - DepthOnly
   - SHADOWCASTER
-  - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -87,6 +87,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AddPrecomputedVelocity: 0
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _Blend: 0
@@ -121,8 +122,8 @@ Material:
     - _UVSec: 0
     - _ZWrite: 0
     m_Colors:
-    - _BaseColor: {r: 0, g: 0.7019608, b: 0, a: 0.34117648}
-    - _Color: {r: 0, g: 0.7019608, b: 0, a: 0.34117648}
+    - _BaseColor: {r: 0.15395388, g: 1, b: 0, a: 0.84313726}
+    - _Color: {r: 0.15395385, g: 1, b: 0, a: 0.84313726}
     - _EmissionColor: {r: 0, g: 0.48235294, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []
