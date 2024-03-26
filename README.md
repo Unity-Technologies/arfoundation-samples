@@ -2,25 +2,24 @@
 
 Example AR scenes that use [AR Foundation 5.1](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.1/manual/index.html) and demonstrate its features. Each feature is used in a minimal sample scene with example code that you can modify or copy into your project.
 
-This sample project depends on four Unity packages:
+This sample project primarily depends on five Unity packages:
 
 * [AR Foundation](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@5.1/manual/index.html)
 * [Google ARCore XR Plug-in](https://docs.unity3d.com/Packages/com.unity.xr.arcore@5.1/manual/index.html) on Android
 * [Apple ARKit XR Plug-in](https://docs.unity3d.com/Packages/com.unity.xr.arkit@5.1/manual/index.html) on iOS
 * [OpenXR Plug-in](https://docs.unity3d.com/Packages/com.unity.xr.openxr@1.5/manual/index.html) on HoloLens 2
+* [Unity OpenXR: Meta](https://docs.unity3d.com/Packages/com.unity.xr.meta-openxr@1.0/manual/index.html) on Meta Quest
 
 ## Which version should I use?
 
-The `main` branch of this repository uses AR Foundation 5.1 and is compatible with Unity 2021.2 and later. To access sample scenes for previous versions of AR Foundation, refer to the table below for links to other branches.
+This branch uses AR Foundation 5.1 and is compatible with Unity 2021.2 and later. To access sample scenes for other versions of AR Foundation, refer to the table below:
 
 | Unity Version  | AR Foundation Version |
 | -------------- | --------------------- |
-| 2023.3 (alpha) | [5.1](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.1) |
-| 2023.2 (beta)  | [5.1](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.1) |
-| 2023.1         | [5.1](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.1) |
-| 2022.3         | [5.0](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.0) |
+| 2023.3 (beta)  | [6.0](https://github.com/Unity-Technologies/arfoundation-samples/) |
+| 2023.2         | [5.1](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.1) |
+| 2022.3         | [5.1](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.1) |
 | 2021.3         | [4.2](https://github.com/Unity-Technologies/arfoundation-samples/tree/4.2) |
-| 2020.3         | [4.1](https://github.com/Unity-Technologies/arfoundation-samples/tree/4.1) |
 
 ## How to use these samples
 
@@ -35,6 +34,10 @@ To build to device, follow the steps below:
 2. Open the Unity project at the root of this repository.
 
 3. As with any other Unity project, go to [Build Settings](https://docs.unity3d.com/Manual/BuildSettings.html), select your target platform, and build this project.
+
+#### Meta Quest
+
+This repository is configured with the Google ARCore XR Plug-in enabled by default on the Android platform. To build for Meta Quest, disable the **Google ARCore** provider in the Android tab of **Project Settings** > **XR Plug-in Management**, then follow the Meta Quest [Project setup](https://docs.unity3d.com/Packages/com.unity.xr.meta-openxr@1.0/manual/project-setup.html) instructions.
 
 ### Understand the sample code
 
