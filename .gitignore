@@ -8,6 +8,17 @@
 Assets/AssetStoreTools*
 Packages/packages-lock.json
 
+# Simulation assets
+Assets/XR/UserSimulationSettings/*
+Assets/XR/UserSimulationSettings.meta
+
+# Ignore sample simulation environments, which should be installed manually
+samples/Assets/UnityXRContent/*
+samples/Assets/UnityXRContent.meta
+
+# Don't commit internal scoped registries
+ProjectSettings/PackageManagerSettings.asset
+
 # Visual Studio 2015 cache directory
 /.vs/
 .vscode
@@ -44,4 +55,14 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
+# Misc dot files
 .DS_Store
+
+# Build artifacts
+[Aa]rtifacts/
+create.exe
+/*.dll
+*_BackUpThisFolder_ButDontShipItWithYourGame
+
+# Generated Visual Scripting assets
+Assets/Unity.VisualScripting.Generated*
