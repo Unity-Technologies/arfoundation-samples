@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Collections;
-#if METAOPENXR_0_2_OR_NEWER
+#if METAOPENXR_0_2_OR_NEWER && UNITY_ANDROID
 using UnityEngine.XR.OpenXR.Features.Meta;
 #endif
 
@@ -61,7 +61,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             m_Dropdown.onValueChanged.AddListener(delegate { OnDropdownValueChanged(m_Dropdown); });
             StartCoroutine(PopulateDropdown());
-            
+
 #else
             Debug.LogError($"{nameof(MetaDisplayRefreshRateDropdown)} requires the package com.unity.xr.meta-openxr", this);
             enabled = false;
@@ -79,7 +79,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void OnDropdownValueChanged(TMP_Dropdown dropdown)
         {
-#if METAOPENXR_0_2_OR_NEWER
+#if METAOPENXR_0_2_OR_NEWER && UNITY_ANDROID
             if (!enabled)
                 return;
 
@@ -102,7 +102,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             yield return null;
 
-#if METAOPENXR_0_2_OR_NEWER
+#if METAOPENXR_0_2_OR_NEWER && UNITY_ANDROID
             if (!m_DisplaySubsystem.TryGetSupportedDisplayRefreshRates(Allocator.Persistent, out m_DisplayRefreshRates))
                 yield break;
 
