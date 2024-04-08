@@ -6,6 +6,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
     /// </summary>
     public class ARPlaceObject : MonoBehaviour
     {
+        const float k_PrefabHalfSize = 0.025f;
+
         [SerializeField]
         [Tooltip("The prefab to be placed or moved.")]
         GameObject m_PrefabToPlace;
@@ -56,13 +58,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             if (m_SpawnedObject == null)
             {
-                m_SpawnedObject = Instantiate(m_PrefabToPlace, hitPose.pose.position, hitPose.pose.rotation, hitPose.trackable.transform.parent);
+                m_SpawnedObject = Instantiate(m_PrefabToPlace, hitPose.trackable.transform.parent);
             }
-            else
-            {
-                m_SpawnedObject.transform.position = hitPose.pose.position;
-                m_SpawnedObject.transform.parent = hitPose.trackable.transform.parent;
-            }
+
+            var forward = hitPose.pose.rotation * Vector3.up;
+            var offset = forward * k_PrefabHalfSize;
+            m_SpawnedObject.transform.position = hitPose.pose.position + offset;
+            m_SpawnedObject.transform.parent = hitPose.trackable.transform.parent;
         }
     }
 }

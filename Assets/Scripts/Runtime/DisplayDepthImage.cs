@@ -199,10 +199,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void OnDisable()
         {
-            // Unsubscribe to the camera frame received event, and initialize the display rotation matrix.
-            Debug.Assert(m_CameraManager != null, "no camera manager");
-            m_CameraManager.frameReceived -= OnCameraFrameEventReceived;
+            // Unsubscribe from the camera frame received event, and initialize the display rotation matrix.
             m_DisplayRotationMatrix = Matrix4x4.identity;
+            if (m_CameraManager != null)
+                m_CameraManager.frameReceived -= OnCameraFrameEventReceived;
         }
 
         void Update()

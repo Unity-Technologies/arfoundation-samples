@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine.XR.ARSubsystems;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -25,7 +26,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             foreach (var anchor in m_Anchors)
             {
-                Destroy(anchor.gameObject);
+                m_AnchorManager.TryRemoveAnchor(anchor);
             }
             m_Anchors.Clear();
         }
@@ -85,29 +86,43 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// Attempts to attach a new anchor to a hit `ARPlane` if supported.
         /// Otherwise, asynchronously creates a new anchor.
         /// </summary>
-        async void CreateAnchor(object sender, ARRaycastHit hit)
+        void CreateAnchor(object sender, ARRaycastHit hit)
         {
             if (m_AnchorManager.descriptor.supportsTrackableAttachments && hit.trackable is ARPlane plane)
             {
-                var attachedAnchor = m_AnchorManager.AttachAnchor(plane, hit.pose);
-                FinalizePlacedAnchor(attachedAnchor, $"Attached to plane {plane.trackableId}");
-                return;
+                AttachAnchorToTrackable(plane, hit);
             }
-
-            var result = await m_AnchorManager.TryAddAnchorAsync(hit.pose);
-            if (result.status.IsSuccess())
-                FinalizePlacedAnchor(result.value, $"Anchor (from {hit.hitType})");
+            else
+            {
+                CreateAnchorAsync(hit);
+            }
         }
 
-        void FinalizePlacedAnchor(ARAnchor anchor, string text)
+        void AttachAnchorToTrackable(ARPlane plane, ARRaycastHit hit)
         {
-            var canvasTextManager = anchor.GetComponent<CanvasTextManager>();
-            if (canvasTextManager != null)
+            var anchor = m_AnchorManager.AttachAnchor(plane, hit.pose);
+            var arAnchorDebugVisualizer = anchor.GetComponent<ARAnchorDebugVisualizer>();
+            if (arAnchorDebugVisualizer != null)
             {
-                canvasTextManager.text = text;
+                arAnchorDebugVisualizer.IsAnchorAttachedToTrackable = true;
+                arAnchorDebugVisualizer.SetAnchorCreationMethod(true, hit.hitType);
             }
 
             m_Anchors.Add(anchor);
+        }
+
+        async void CreateAnchorAsync(ARRaycastHit hit)
+        {
+            var result = await m_AnchorManager.TryAddAnchorAsync(hit.pose);
+            if (result.status.IsSuccess())
+            {
+                var anchor = result.value as ARAnchor;
+                var arAnchorDebugVisualizer = anchor.GetComponent<ARAnchorDebugVisualizer>();
+                if (arAnchorDebugVisualizer != null)
+                    arAnchorDebugVisualizer.SetAnchorCreationMethod(true, hit.hitType);
+
+                m_Anchors.Add(anchor);
+            }
         }
     }
 }

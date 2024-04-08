@@ -15,7 +15,7 @@ The `main` branch of this repository uses AR Foundation 6.0 and is compatible wi
 
 | Unity Version  | AR Foundation Version |
 | -------------- | --------------------- |
-| 2023.3 (beta)  | 6.0 (main) |
+| Unity 6 (6000.0)  | 6.0 (main) |
 | 2023.2         | [5.1](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.1) |
 | 2022.3         | [5.1](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.1) |
 | 2021.3         | [4.2](https://github.com/Unity-Technologies/arfoundation-samples/tree/4.2) |

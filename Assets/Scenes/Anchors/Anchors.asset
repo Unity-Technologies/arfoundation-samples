@@ -15,9 +15,19 @@ MonoBehaviour:
   m_SceneName: Anchors
   m_Requirements:
   - rid: 4788940866556788922
+  - rid: 2862248137945776348
+  - rid: 2862248137945776349
   references:
     version: 2
     RefIds:
+    - rid: 2862248137945776348
+      type: {class: RequiresPlaneDetection, ns: UnityEngine.XR.ARFoundation.Samples,
+        asm: Unity.XR.ARFoundation.Samples}
+      data:
+        m_RequiresPlaneClassifications: 0
+    - rid: 2862248137945776349
+      type: {class: RequiresRaycasts, ns: UnityEngine.XR.ARFoundation.Samples, asm: Unity.XR.ARFoundation.Samples}
+      data: 
     - rid: 4788940866556788922
       type: {class: RequiresAnchors, ns: UnityEngine.XR.ARFoundation.Samples, asm: Unity.XR.ARFoundation.Samples}
       data: 

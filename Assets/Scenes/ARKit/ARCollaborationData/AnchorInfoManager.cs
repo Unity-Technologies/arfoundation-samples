@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.XR.ARFoundation;
+﻿using UnityEngine;
 using Unity.XR.CoreUtils;
 
 namespace UnityEngine.XR.ARFoundation.Samples
@@ -49,34 +45,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
-        unsafe struct byte128
-        {
-            public fixed byte data[16];
-        }
-
         void UpdateAnchor(ARAnchor anchor)
         {
-            var sessionId = anchor.sessionId;
-
-            var textManager = anchor.GetComponent<CanvasTextManager>();
-            if (textManager)
+            var arAnchorDebugVisualizer = anchor.GetComponent<ARAnchorDebugVisualizer>();
+            if (arAnchorDebugVisualizer != null)
             {
-                textManager.text = sessionId.Equals(session.subsystem.sessionId) ? "Local" : "Remote";
-            }
-
-            var colorizer = anchor.GetComponent<Colorizer>();
-            if (colorizer)
-            {
-                // Generate a color from the sessionId
-                unsafe
-                {
-                    var bytes = *(byte128*)&sessionId;
-                    colorizer.color = new Color(
-                        bytes.data[0] / 255f,
-                        bytes.data[4] / 255f,
-                        bytes.data[8] / 255f,
-                        bytes.data[12] / 255f);
-                }
+                arAnchorDebugVisualizer.CurrentSubsystemSessionId = session.subsystem.sessionId;
             }
         }
     }

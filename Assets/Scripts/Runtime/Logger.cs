@@ -1,17 +1,16 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
     public class Logger : MonoBehaviour
     {
         [SerializeField]
-        Text m_LogText;
-        public Text logText
+        TextMeshProUGUI m_LogText;
+        public TextMeshProUGUI logText
         {
             get => m_LogText;
             set => m_LogText = value;
@@ -35,7 +34,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             if (m_LogText == null)
             {
-                m_LogText = GetComponent<Text>();
+                m_LogText = GetComponent<TextMeshProUGUI>();
             }
 
             lock (s_Log)

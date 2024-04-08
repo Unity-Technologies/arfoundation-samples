@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-#if METAOPENXR_0_2_OR_NEWER
+#if METAOPENXR_0_2_OR_NEWER && UNITY_ANDROID
 using UnityEngine.XR.OpenXR.Features.Meta;
 #endif
 
@@ -28,7 +28,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 return;
             }
-            
+
             if (m_ARSession.subsystem == null)
             {
                 Debug.LogError("Session subsystem is null, so scene capture cannot be requested. Are your XR Plug-in Management settings correct?");
@@ -36,7 +36,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 return;
             }
 
-#if METAOPENXR_0_2_OR_NEWER
+#if METAOPENXR_0_2_OR_NEWER && UNITY_ANDROID
             var success = (m_ARSession.subsystem as MetaOpenXRSessionSubsystem)?.TryRequestSceneCapture() ?? false;
             Debug.Log($"Meta OpenXR scene capture completed request with result: {success}");
 #else
