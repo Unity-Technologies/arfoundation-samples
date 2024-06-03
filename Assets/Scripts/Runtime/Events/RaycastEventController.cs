@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.XR.CoreUtils;
 using UnityEngine.InputSystem;
@@ -49,6 +50,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set => m_TrackableType = value;
         }
 
+        Camera m_Camera;
+        LayerMask m_UILayerMask;
+        RaycastHit[] m_UIRaycastHits = new RaycastHit[1];
+
+        void Awake()
+        {
+            m_Camera = Camera.main;
+            var uiLayer = LayerMask.NameToLayer("UI");
+            m_UILayerMask = 1 << uiLayer;
+        }
+
         void OnEnable()
         {
             if (m_RaycastManager == null || m_XROrigin == null || m_InputActionReferences == null)
@@ -91,7 +103,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             var tapPosition = pointer.position.ReadValue();
-
             if (m_ARRaycastHitEvent != null &&
                 m_RaycastManager.Raycast(tapPosition, s_Hits, m_TrackableType))
             {
@@ -116,6 +127,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void RaycastFromHandPose(Pose handPose)
         {
             s_RaycastRay = new Ray(handPose.position, handPose.forward);
+            var size = Physics.RaycastNonAlloc(s_RaycastRay, m_UIRaycastHits, float.PositiveInfinity, m_UILayerMask);
+            if (size > 0)
+                return;
+
             if (m_ARRaycastHitEvent != null &&
                 m_RaycastManager.Raycast(s_RaycastRay, s_Hits, m_TrackableType))
             {

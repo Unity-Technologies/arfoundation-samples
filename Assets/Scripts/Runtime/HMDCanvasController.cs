@@ -18,6 +18,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField, Tooltip("The background image of the UI to optionally display for HMD.")]
         GameObject m_CanvasBackground;
 
+        [SerializeField]
+        BoxCollider m_UIBoxCollider;
+        
         [Header("Settings")]
         [SerializeField, Tooltip("The dimensions the canvas well be set to for HMD in world space in meters.")]
         Vector2 m_HMDCanvasDimensionsInMeters = new(1.15f, 0.85f);
@@ -92,6 +95,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_CanvasBackground.SetActive(m_ShowBackgroundForHMD);
 
             m_Canvas.GetComponent<RectTransform>().sizeDelta = m_HMDCanvasDimensionsScaled;
+            m_UIBoxCollider.size = m_HMDCanvasDimensionsScaled;
         }
 
         void PlaceInFrontOfCamera()

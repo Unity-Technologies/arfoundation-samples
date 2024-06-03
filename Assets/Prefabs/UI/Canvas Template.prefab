@@ -272,6 +272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Camera: {fileID: 0}
   m_CanvasBackground: {fileID: 5740495543103849742}
+  m_UIBoxCollider: {fileID: 3390538180544466016}
   m_HMDCanvasDimensionsInMeters: {x: 1.15, y: 0.85}
   m_DistanceFromCamera: 1.5
   m_ShowBackgroundForHMD: 1
@@ -426,6 +427,7 @@ GameObject:
   - component: {fileID: 8751331450757137175}
   - component: {fileID: 2274420115640051842}
   - component: {fileID: 1759378627143623787}
+  - component: {fileID: 3390538180544466016}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -490,6 +492,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 2
+--- !u!65 &3390538180544466016
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5740495543103849742}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1473, y: 2009, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7278093142110821250
 GameObject:
   m_ObjectHideFlags: 0
@@ -593,7 +616,6 @@ GameObject:
   - component: {fileID: 1406819451971201881}
   - component: {fileID: 1619089360135982611}
   - component: {fileID: 8725182372003459067}
-  - component: {fileID: 2770555460090360004}
   m_Layer: 5
   m_Name: Bottom Region
   m_TagString: Untagged
@@ -658,21 +680,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2770555460090360004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8146104854219513081}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 691b8f955726446c2b0dff6a8593f03f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HMDCanvasController: {fileID: 2742089223469533462}
-  m_NavigationBarRT: {fileID: 4699212162594395307}
-  m_RectTransform: {fileID: 1406819451971201881}
 --- !u!1 &8294181615588029179
 GameObject:
   m_ObjectHideFlags: 0
