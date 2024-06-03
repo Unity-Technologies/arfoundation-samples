@@ -5,17 +5,19 @@ namespace UnityEngine.XR.ARFoundation.Samples
 {
     public static class ButtonUtils
     {
-        static readonly Color s_DisabledButtonTextColor = new(228f / 255, 228f / 255, 228f / 255, .5f);
+        public static readonly Color enabledButtonTextColor = new(228f / 255, 228f / 255, 228f / 255, 1.0f);
 
-        public static void DisableButton(Button button)
+        public static readonly Color disabledButtonTextColor = new(228f / 255, 228f / 255, 228f / 255, 0.1f);
+
+        public static void SetEnabled(this Button button, bool isOn)
         {
-            button.interactable = false;
+            button.interactable = isOn;
 
             var text = button.GetComponentInChildren<TextMeshProUGUI>();
             if (text == null)
                 return;
 
-            text.color = s_DisabledButtonTextColor;
+            text.color = isOn ? enabledButtonTextColor : disabledButtonTextColor;
         }
     }
 }

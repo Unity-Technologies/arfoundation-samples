@@ -52,7 +52,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
             }
 
-            ButtonUtils.DisableButton(m_Button);
+            m_Button.SetEnabled(false);
         }
 
         void OnDisable()

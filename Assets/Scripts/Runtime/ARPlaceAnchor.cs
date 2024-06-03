@@ -14,7 +14,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [Tooltip("The Scriptable Object Asset that contains the ARRaycastHit event.")]
         ARRaycastHitEventAsset m_RaycastHitEvent;
 
-        List<ARAnchor> m_Anchors = new();
+        Dictionary<TrackableId, ARAnchor> m_AnchorsByTrackableId = new();
 
         public ARAnchorManager anchorManager
         {
@@ -24,18 +24,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public void RemoveAllAnchors()
         {
-            foreach (var anchor in m_Anchors)
+            foreach (var anchor in m_AnchorsByTrackableId.Values)
             {
                 m_AnchorManager.TryRemoveAnchor(anchor);
             }
-            m_Anchors.Clear();
+            m_AnchorsByTrackableId.Clear();
         }
 
         // Runs when the reset option is called in the context menu in-editor, or when first created.
         void Reset()
         {
-            if (m_AnchorManager == null)
-                m_AnchorManager = FindAnyObjectByType<ARAnchorManager>();
+            m_AnchorManager = FindAnyObjectByType<ARAnchorManager>();
         }
 
         void OnEnable()
@@ -63,12 +62,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void OnAnchorsChanged(ARTrackablesChangedEventArgs<ARAnchor> eventArgs)
         {
-            //remove any anchors that have been removed outside our control, such as during a session reset
+            // add any anchors that have been added outside our control, such as loading from storage
+            foreach (var addedAnchor in eventArgs.added)
+            {
+                m_AnchorsByTrackableId.Add(addedAnchor.trackableId, addedAnchor);
+            }
+
+            // remove any anchors that have been removed outside our control, such as during a session reset
             foreach (var removedAnchor in eventArgs.removed)
             {
                 if (removedAnchor.Value != null)
                 {
-                    m_Anchors.Remove(removedAnchor.Value);
+                    m_AnchorsByTrackableId.Remove(removedAnchor.Key);
                     Destroy(removedAnchor.Value.gameObject);
                 }
             }
@@ -78,6 +83,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             if (m_RaycastHitEvent != null)
                 m_RaycastHitEvent.eventRaised -= CreateAnchor;
+
             if (m_AnchorManager != null)
                 m_AnchorManager.trackablesChanged.AddListener(OnAnchorsChanged);
         }
@@ -107,8 +113,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 arAnchorDebugVisualizer.IsAnchorAttachedToTrackable = true;
                 arAnchorDebugVisualizer.SetAnchorCreationMethod(true, hit.hitType);
             }
-
-            m_Anchors.Add(anchor);
         }
 
         async void CreateAnchorAsync(ARRaycastHit hit)
@@ -116,12 +120,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
             var result = await m_AnchorManager.TryAddAnchorAsync(hit.pose);
             if (result.status.IsSuccess())
             {
-                var anchor = result.value as ARAnchor;
+                var anchor = result.value;
                 var arAnchorDebugVisualizer = anchor.GetComponent<ARAnchorDebugVisualizer>();
                 if (arAnchorDebugVisualizer != null)
                     arAnchorDebugVisualizer.SetAnchorCreationMethod(true, hit.hitType);
-
-                m_Anchors.Add(anchor);
             }
         }
     }

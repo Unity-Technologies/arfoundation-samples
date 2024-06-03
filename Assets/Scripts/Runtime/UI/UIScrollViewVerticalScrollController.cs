@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace UnityEngine.XR.ARFoundation.Samples
 {
     [RequireComponent(typeof(ScrollRect))]
-    public class UIScrollViewController : MonoBehaviour
+    public class UIScrollViewVerticalScrollController : MonoBehaviour
     {
         [SerializeField, HideInInspector]
         ScrollRect m_ScrollView;
