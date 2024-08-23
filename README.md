@@ -40,7 +40,7 @@ This repository is configured with the Google ARCore XR Plug-in enabled by defau
 
 ### Understand the sample code
 
-All sample scenes in this project can be found in the `Assets/Scenes` folder. To learn more about the AR Foundation components used in each scene, see the [AR Foundation Documentation](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@6.0/manual/index.html). Each scene is explained in more detail below.
+All sample scenes in this project can be found in the `Assets/Scenes` folder. To learn more about the AR Foundation components used in each scene, refer to the [AR Foundation Documentation](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@6.0/manual/index.html). Each scene is explained in more detail below.
 
 # Table of Contents
 
@@ -91,11 +91,11 @@ Where available (currently iOS 13+ only), the human depth and human stencil text
 
 ### Basic Light Estimation
 
-Demonstrates basic light estimation information from the camera frame. You should see values for "Ambient Intensity" and "Ambient Color" on screen. The relevant script is [`BasicLightEstimation.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/BasicLightEstimation.cs) script.
+Demonstrates basic light estimation information from the camera frame. You should find values for "Ambient Intensity" and "Ambient Color" on screen. The relevant script is [`BasicLightEstimation.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/BasicLightEstimation.cs) script.
 
 ### HDR Light Estimation
 
-This sample attempts to read HDR lighting information. You should see values for "Ambient Intensity", "Ambient Color", "Main Light Direction", "Main Light Intensity Lumens", "Main Light Color", and "Spherical Harmonics". Most devices only support a subset of these 6, so some will be listed as "Unavailable." The relevant script is [`HDRLightEstimation.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/HDRLightEstimation.cs) script.
+This sample attempts to read HDR lighting information. You should find values for "Ambient Intensity", "Ambient Color", "Main Light Direction", "Main Light Intensity Lumens", "Main Light Color", and "Spherical Harmonics". Most devices only support a subset of these 6, so some will be listed as "Unavailable." The relevant script is [`HDRLightEstimation.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/HDRLightEstimation.cs) script.
 
 On iOS, this is only available when face tracking is enabled and requires a device that supports face tracking (such as an iPhone X, XS or 11). When available, a virtual arrow appears in front of the camera which indicates the estimated main light direction. The virtual light direction is also updated, so that virtual content appears to be lit from the direction of the real light source.
 
@@ -107,13 +107,13 @@ Produces a visual example of how changing the background rendering between `Befo
 
 ### Camera Grain (ARKit)
 
-This sample demonstrates the camera grain effect. Once a plane is detected, you can place a cube on it with a material that simulates the camera grain noise in the camera feed. See the `CameraGrain.cs` script. Also see  `CameraGrain.shader` which animates and applies the camera grain texture (through linear interpolation) in screenspace.
+This sample demonstrates the camera grain effect. Once a plane is detected, you can place a cube on it with a material that simulates the camera grain noise in the camera feed. Refer to the `CameraGrain.cs` script. Also check  `CameraGrain.shader` which animates and applies the camera grain texture (through linear interpolation) in screenspace.
 
 This sample requires a device running iOS 13 or later and Unity 2020.2 or later.
 
 ### EXIF Data
 
-This sample demonstrates how to access camera frame's EXIF metadata. You should see values for all the supported EXIF tags on screen. Refer to `ExifDataLogger.cs` for more details.
+This sample demonstrates how to access camera frame's EXIF metadata. You should find values for all the supported EXIF tags on screen. Refer to `ExifDataLogger.cs` for more details.
 
 This sample requires iOS 16 or newer.
 
@@ -125,7 +125,7 @@ This sample shows how to toggle the Image Stabilization feature on and off, and 
 
 ### Toggle Plane Detection
 
-This sample shows how to toggle plane detection on and off. When off, it will also hide all previously detected planes by disabling their GameObjects. See [`PlaneDetectionController.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/PlaneDetectionController.cs).
+This sample shows how to toggle plane detection on and off. When off, it will also hide all previously detected planes by disabling their GameObjects. Refer to [`PlaneDetectionController.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/PlaneDetectionController.cs).
 
 ### Plane Masking
 
@@ -141,7 +141,7 @@ This sample shows how to change the plane detection mode flags. Each type of pla
 
 There are two samples demonstrating image tracking. The image tracking samples are supported on ARCore and ARKit. To enable image tracking, you must first create an `XRReferenceImageLibrary`. This is the set of images to look for in the environment. [Click here](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@6.0/manual/features/image-tracking.html) for instructions on creating one.
 
-You can also add images to the reference image library at runtime. This sample includes a button that adds the images `one.png` and `two.png` to the reference image library. See the script `DynamicLibrary.cs` for example code.
+You can also add images to the reference image library at runtime. This sample includes a button that adds the images `one.png` and `two.png` to the reference image library. Refer to the script `DynamicLibrary.cs` for example code.
 
 Run the sample on an ARCore or ARKit-capable device and point your device at one of the images in [`Assets/Scenes/ImageTracking/Images`](https://github.com/Unity-Technologies/arfoundation-samples/tree/master/Assets/Scenes/ImageTracking/Images). They can be displayed on a computer monitor; they do not need to be printed out.
 
@@ -153,7 +153,7 @@ At runtime, ARFoundation will generate an `ARTrackedImage` for each detected ref
 
 With [`PrefabImagePairManager.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ImageTracking/ImageTrackingWithMultiplePrefabs/PrefabImagePairManager.cs) script, you can assign different prefabs for each image in the reference image library.
 
-You can also change prefabs at runtime. This sample includes a button that switch between the original and alternative prefab for the first image in the reference image library. See the script [`DynamicPrefab.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ImageTracking/ImageTrackingWithMultiplePrefabs/DynamicPrefab.cs) for example code.
+You can also change prefabs at runtime. This sample includes a button that switch between the original and alternative prefab for the first image in the reference image library. Refer to the script [`DynamicPrefab.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ImageTracking/ImageTrackingWithMultiplePrefabs/DynamicPrefab.cs) for example code.
 
 ## Object Tracking
 
@@ -183,13 +183,13 @@ This sample uses the front-facing (i.e., selfie) camera.
 
 ### Face Regions (ARCore)
 
-"Face regions" are an ARCore-specific feature which provides pose information for specific "regions" on the detected face, e.g., left eyebrow. In this example, axes are drawn at each face region. See the [`ARCoreFaceRegionManager.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/ARCoreFaceRegionManager.cs).
+"Face regions" are an ARCore-specific feature which provides pose information for specific "regions" on the detected face, e.g., left eyebrow. In this example, axes are drawn at each face region. Refer to the [`ARCoreFaceRegionManager.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/ARCoreFaceRegionManager.cs).
 
 This sample uses the front-facing (i.e., selfie) camera.
 
 ### Blend Shapes (ARKit)
 
-"Blend shapes" are an ARKit-specific feature which provides information about various facial features on a scale of 0..1. For instance, "wink" and "frown". In this sample, blend shapes are used to puppet a cartoon face which is displayed over the detected face. See the [`ARKitBlendShapeVisualizer.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/ARKitBlendShapeVisualizer.cs).
+"Blend shapes" are an ARKit-specific feature which provides information about various facial features on a scale of 0..1. For instance, "wink" and "frown". In this sample, blend shapes are used to puppet a cartoon face which is displayed over the detected face. Refer to the [`ARKitBlendShapeVisualizer.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/ARKitBlendShapeVisualizer.cs).
 
 This sample uses the front-facing (i.e., selfie) camera.
 
@@ -213,13 +213,13 @@ This feature requires a device with a TrueDepth camera and an A12 bionic chip ru
 
 ### Body Tracking 2D
 
-This sample demonstrates 2D screen space body tracking. A 2D skeleton is generated when a person is detected. See the [`ScreenSpaceJointVisualizer.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/ScreenSpaceJointVisualizer.cs) script.
+This sample demonstrates 2D screen space body tracking. A 2D skeleton is generated when a person is detected. Refer to the [`ScreenSpaceJointVisualizer.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/ScreenSpaceJointVisualizer.cs) script.
 
 This sample requires a device with an A12 bionic chip running iOS 13 or above.
 
 ### Body Tracking 3D
 
-This sample demonstrates 3D world space body tracking. A 3D skeleton is generated when a person is detected. See the [`HumanBodyTracker.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/HumanBodyTracker.cs) script.
+This sample demonstrates 3D world space body tracking. A 3D skeleton is generated when a person is detected. Refer to the [`HumanBodyTracker.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/HumanBodyTracker.cs) script.
 
 This sample requires a device with an A12 bionic chip running iOS 13 or above.
 
@@ -233,7 +233,7 @@ This sample has two UI components:
 
 ## Anchors
 
-This sample shows how to create anchors as the result of a raycast hit. The "Clear Anchors" button removes all created anchors. See the [`AnchorCreator.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/AnchorCreator.cs) script.
+This sample shows how to create anchors as the result of a raycast hit. The "Clear Anchors" button removes all created anchors. Refer to the [`AnchorCreator.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scripts/AnchorCreator.cs) script.
 
 This script can create two kinds of anchors:
 1. If a feature point is hit, it creates a normal anchor at the hit pose using the `GameObject.AddComponent<ARAnchor>()` method.
@@ -257,7 +257,7 @@ This scene renders an overlay on top of the real world scanned geometry illustra
 
 ### Occlusion Meshes
 
-At first, this scene may appear to be doing nothing. However, it is rendering a depth texture on top of the scene based on the real world geometry. This allows for the real world to occlude virtual content. The scene has a script on it that fires a red ball into the scene when you tap. You will see the occlusion working by firing the red balls into a space which you can then move the iPad camera behind some other real world object to see that the virtual red balls are occluded by the real world object.
+At first, this scene may appear to be doing nothing. However, it is rendering a depth texture on top of the scene based on the real world geometry. This allows for the real world to occlude virtual content. The scene has a script on it that fires a red ball into the scene when you tap. To see occlusion working, fire the red balls into a space and move the iPad camera behind a real world object. You will see that the virtual red balls are occluded by the real world object.
 
 ## Environment Probes
 
@@ -298,9 +298,9 @@ The coaching overlay is an ARKit-specific feature which will overlay a helpful U
 
 The coaching overlay can be activated automatically or manually, and you can set its goal. In this sample, we've set the goal to be "Any plane", and for it to activate automatically. This will display a special UI on the screen until a plane is found. There is also a button to activate it manually.
 
-The sample includes a MonoBehavior to define the settings of the coaching overlay. See [`ARKitCoachingOverlay.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ARKit/ARKitCoachingOverlay/ARKitCoachingOverlay.cs).
+The sample includes a MonoBehavior to define the settings of the coaching overlay. Refer to [`ARKitCoachingOverlay.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ARKit/ARKitCoachingOverlay/ARKitCoachingOverlay.cs).
 
-This sample also shows how to subscribe to ARKit session callbacks. See [CustomSessionDelegate](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ARKit/ARKitCoachingOverlay/CustomSessionDelegate.cs).
+This sample also shows how to subscribe to ARKit session callbacks. Refer to [CustomSessionDelegate](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ARKit/ARKitCoachingOverlay/CustomSessionDelegate.cs).
 
 This sample requires iOS 13 or above.
 
@@ -328,7 +328,7 @@ This sample requires an iOS device running iOS 14.0 or later, an A12 chip or lat
 
 Similar to an `ARWorldMap`, a "collaborative session" is an ARKit-specific feature which allows multiple devices to share session information in real time. Each device will periodically produce `ARCollaborationData` which should be sent to all other devices in the collaborative session. ARKit will share each participant's pose and all reference points. Other types of trackables, such as detected planes, are not shared.
 
-See [`CollaborativeSession.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ARKit/ARCollaborationData/CollaborativeSession.cs). Note there are two types of collaboration data: "Critical" and "Optional". "Critical" data is available periodically and should be sent to all other devices reliably. "Optional" data is available nearly every frame and may be sent unreliably. Data marked as "optional" includes data about the device's location, which is why it is produced very frequently (i.e., every frame).
+Refer to [`CollaborativeSession.cs`](https://github.com/Unity-Technologies/arfoundation-samples/blob/master/Assets/Scenes/ARKit/ARCollaborationData/CollaborativeSession.cs). Note there are two types of collaboration data: "Critical" and "Optional". "Critical" data is available periodically and should be sent to all other devices reliably. "Optional" data is available nearly every frame and may be sent unreliably. Data marked as "optional" includes data about the device's location, which is why it is produced very frequently (i.e., every frame).
 
 Note that ARKit's support for collaborative sessions does not include any networking; it is up to the developer to manage the connection and send data to other participants in the collaborative session. For this sample, we used Apple's [MultipeerConnectivity Framework](https://developer.apple.com/documentation/multipeerconnectivity). Our implementation can be found [here](https://github.com/Unity-Technologies/arfoundation-samples/tree/master/Assets/Scripts/Multipeer).
 
@@ -338,29 +338,29 @@ This sample requires iOS 13 or above.
 
 ### High Resolution CPU Image
 
-This sample demonstrates high resolution CPU image capture on iOS 16 and newer. See the [High Resolution CPU Image](https://docs.unity3d.com/Packages/com.unity.xr.arkit@6.0/manual/arkit-camera.html#high-resolution-cpu-image) package documentation to learn more about this feature.
+This sample demonstrates high resolution CPU image capture on iOS 16 and newer. Check the [High Resolution CPU Image](https://docs.unity3d.com/Packages/com.unity.xr.arkit@6.0/manual/arkit-camera.html#high-resolution-cpu-image) package documentation to learn more about this feature.
 
 ### Camera Exposure
 
-This sample shows how to lock the device camera and set the camera exposure mode, duration, and ISO. See [CameraExposureController.cs](https://github.com/Unity-Technologies/arfoundation-samples/blob/main/Assets/Scenes/ARKit/CameraExposure/CameraExposureController.cs) for example code.
+This sample shows how to lock the device camera and set the camera exposure mode, duration, and ISO. Refer to [CameraExposureController.cs](https://github.com/Unity-Technologies/arfoundation-samples/blob/main/Assets/Scenes/ARKit/CameraExposure/CameraExposureController.cs) for example code.
 
 This sample requires iOS 16 or newer and a device with an ultra-wide camera.
 
 ### Camera White Balance
 
-This sample shows how to lock the device camera and set the camera white balance mode and gains. See [CameraWhiteBalanceController.cs](https://github.com/Unity-Technologies/arfoundation-samples/blob/main/Assets/Scenes/ARKit/CameraWhiteBalance/CameraWhiteBalanceController.cs) for example code.
+This sample shows how to lock the device camera and set the camera white balance mode and gains. Refer to [CameraWhiteBalanceController.cs](https://github.com/Unity-Technologies/arfoundation-samples/blob/main/Assets/Scenes/ARKit/CameraWhiteBalance/CameraWhiteBalanceController.cs) for example code.
 
 This sample requires iOS 16 or newer and a device with an ultra-wide camera.
 
 ### Camera Focus
 
-This sample shows how to lock the device camera and set the camera focus mode and lens position. See [CameraFocusController.cs](https://github.com/Unity-Technologies/arfoundation-samples/blob/main/Assets/Scenes/ARKit/CameraFocus/CameraFocusController.cs) for example code.
+This sample shows how to lock the device camera and set the camera focus mode and lens position. Refer to [CameraFocusController.cs](https://github.com/Unity-Technologies/arfoundation-samples/blob/main/Assets/Scenes/ARKit/CameraFocus/CameraFocusController.cs) for example code.
 
 This sample requires iOS 16 or newer and a device with an ultra-wide camera.
 
 ## ARCore Session Recording
 
-This sample demonstrates the session recording and playback functionality available in ARCore. This feature allows you to record the sensor and camera telemetry during a live session, and then reply it at later time. When replayed, ARCore runs on the target device using the recorded telemetry rather than live data. See [ARCoreSessionRecorder.cs](https://github.com/Unity-Technologies/arfoundation-samples/blob/main/Assets/Scenes/ARCore/ARCoreSessionRecorder.cs) for example code.
+This sample demonstrates the session recording and playback functionality available in ARCore. This feature allows you to record the sensor and camera telemetry during a live session, and then reply it at later time. When replayed, ARCore runs on the target device using the recorded telemetry rather than live data. Refer to [ARCoreSessionRecorder.cs](https://github.com/Unity-Technologies/arfoundation-samples/blob/main/Assets/Scenes/ARCore/ARCoreSessionRecorder.cs) for example code.
 
 ## Additional demos
 
