@@ -1,6 +1,8 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.XR.ARSubsystems;
+#if OPENXR_1_13_OR_NEWER
 using UnityEngine.XR.OpenXR;
+#endif // OPENXR_1_13_OR_NEWER
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -21,10 +23,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public static string GetMenuSceneName()
         {
+#if OPENXR_1_13_OR_NEWER
             if (Application.platform == RuntimePlatform.WSAPlayerARM && OpenXRRuntime.name == "Windows Mixed Reality Runtime") 
             {
                 return k_HololensMenuScene;
             }
+#endif // OPENXR_1_13_OR_NEWER
 
             var loader = LoaderUtility.GetActiveLoader();
             var sessionSubsystem = loader != null ? loader.GetLoadedSubsystem<XRSessionSubsystem>() : null;

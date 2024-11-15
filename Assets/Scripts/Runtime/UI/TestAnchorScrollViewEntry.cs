@@ -9,9 +9,20 @@ using UnityEngine.XR.ARSubsystems;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
+    /// <summary>
+    /// This class provides functionality to test persistent anchors in valid and invalid
+    /// contexts. For example, loading and erasing an anchor that was never saved or saving
+    /// an anchor that has already been saved.
+    /// </summary>
     public class TestAnchorScrollViewEntry : MonoBehaviour
     {
         [Header("Entry References")]
+        [SerializeField]
+        Button m_SaveAndLeaveButton;
+
+        [SerializeField]
+        Button m_LoadAndLeaveButton;
+
         [SerializeField]
         Button m_SaveButton;
 
@@ -24,6 +35,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         TextMeshProUGUI m_AnchorDisplayLabel;
         public string AnchorDisplayText => m_AnchorDisplayLabel.text;
+
+        [SerializeField]
+        TextMeshProUGUI m_AnchorSavedDateLabel;
 
         [Header("Save Button References")]
         [SerializeField]
@@ -47,7 +61,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         [SerializeField]
         GameObject m_LoadButtonIcon;
-        
+
         [SerializeField]
         LoadingVisualizer m_LoadLoadingVisualizer;
 
@@ -63,7 +77,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         [SerializeField]
         LoadingVisualizer m_EraseLoadingVisualizer;
-        
+
         [SerializeField]
         GameObject m_EraseSuccessVisualizer;
 
@@ -74,6 +88,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public SerializableGuid persistentAnchorGuid { get; set; }
 
+        UnityEvent<TestAnchorScrollViewEntry> m_RequestSaveAndLeave = new();
+        public UnityEvent<TestAnchorScrollViewEntry> requestSaveAndLeave => m_RequestSaveAndLeave;
+
+        UnityEvent<TestAnchorScrollViewEntry> m_RequestLoadAndLeave = new();
+        public UnityEvent<TestAnchorScrollViewEntry> requestLoadAndLeave => m_RequestLoadAndLeave;
+
         [SerializeField, Tooltip("The event raised when the action button is clicked.")]
         UnityEvent<TestAnchorScrollViewEntry> m_RequestSave = new();
         public UnityEvent<TestAnchorScrollViewEntry> requestSave => m_RequestSave;
@@ -81,7 +101,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField, Tooltip("The event raised when the action button is clicked.")]
         UnityEvent<TestAnchorScrollViewEntry> m_RequestLoad = new();
         public UnityEvent<TestAnchorScrollViewEntry> requestLoad => m_RequestLoad;
-        
+
         [SerializeField, Tooltip("The event raised when the erase button is clicked.")]
         UnityEvent<TestAnchorScrollViewEntry> m_RrequestEraseAnchor = new();
         public UnityEvent<TestAnchorScrollViewEntry> requestEraseAnchor => m_RrequestEraseAnchor;
@@ -101,7 +121,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_SaveButtonIcon.SetActive(true);
             m_SaveButtonText.SetActive(true);
         }
-        
+
         public void StartLoadLoadingAnimation()
         {
             m_LoadButtonText.SetActive(false);
@@ -115,7 +135,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_LoadButtonIcon.SetActive(true);
             m_LoadButtonText.SetActive(true);
         }
-        
+
         public void StartEraseLoadingAnimation()
         {
             m_EraseButtonIcon.SetActive(false);
@@ -148,7 +168,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_SaveButtonText.SetActive(true);
             m_SaveButtonIcon.SetActive(true);
         }
-        
+
         public async Task ShowLoadResult(bool isSuccessful, float durationInSeconds)
         {
             var visualizer = isSuccessful ? m_LoadSuccessVisualizer : m_LoadErrorVisualizer;
@@ -194,9 +214,20 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_AnchorDisplayLabel.text = label;
         }
 
+        public void SetAnchorSavedDateTime(DateTime dateTime)
+        {
+            var formattedDateTime = string.Format(
+                "{0:d}\n<color=#bbb>{0:t}</color>",
+                dateTime);
+
+            m_AnchorSavedDateLabel.text = formattedDateTime;
+        }
+
         void OnEnable()
         {
             m_CancellationTokenSource = new();
+            m_SaveAndLeaveButton.onClick.AddListener(RequestSaveAndLeaveButtonClicked);
+            m_LoadAndLeaveButton.onClick.AddListener(RequestLoadAndLeaveButtonClicked);
             m_SaveButton.onClick.AddListener(OnRequestSaveButtonClicked);
             m_LoadButton.onClick.AddListener(OnRequestLoadButtonClicked);
             m_EraseButton.onClick.AddListener(OnEraseAnchorButtonClicked);
@@ -204,6 +235,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void OnDisable()
         {
+            m_SaveAndLeaveButton.onClick.RemoveListener(RequestSaveAndLeaveButtonClicked);
+            m_LoadAndLeaveButton.onClick.AddListener(RequestLoadAndLeaveButtonClicked);
             m_SaveButton.onClick.RemoveListener(OnRequestSaveButtonClicked);
             m_LoadButton.onClick.RemoveListener(OnRequestLoadButtonClicked);
             m_EraseButton.onClick.RemoveListener(OnEraseAnchorButtonClicked);
@@ -215,6 +248,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_SaveButton.onClick.RemoveAllListeners();
             m_LoadButton.onClick.RemoveAllListeners();
             m_EraseButton.onClick.RemoveAllListeners();
+        }
+
+        void RequestSaveAndLeaveButtonClicked()
+        {
+            m_RequestSaveAndLeave?.Invoke(this);
+        }
+
+        void RequestLoadAndLeaveButtonClicked()
+        {
+            m_RequestLoadAndLeave?.Invoke(this);
         }
 
         void OnRequestSaveButtonClicked()

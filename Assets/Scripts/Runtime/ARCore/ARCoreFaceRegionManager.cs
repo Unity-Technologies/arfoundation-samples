@@ -3,7 +3,7 @@ using Unity.Collections;
 using UnityEngine;
 using UnityEngine.XR.ARSubsystems;
 using Unity.XR.CoreUtils;
-#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && ARCORE_4_2_OR_NEWER && !UNITY_EDITOR
 using UnityEngine.XR.ARCore;
 #endif
 
@@ -35,7 +35,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         XROrigin m_Origin;
 
-#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && ARCORE_4_2_OR_NEWER && !UNITY_EDITOR
         NativeArray<ARCoreFaceRegionData> m_FaceRegions;
 
         Dictionary<TrackableId, Dictionary<ARCoreFaceRegion, GameObject>> m_InstantiatedPrefabs;
@@ -46,7 +46,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             m_FaceManager = GetComponent<ARFaceManager>();
             m_Origin = GetComponent<XROrigin>();
-#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && ARCORE_4_2_OR_NEWER && !UNITY_EDITOR
             m_InstantiatedPrefabs = new Dictionary<TrackableId, Dictionary<ARCoreFaceRegion, GameObject>>();
 #endif
         }
@@ -54,7 +54,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         // Update is called once per frame
         void Update()
         {
-#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && ARCORE_4_2_OR_NEWER && !UNITY_EDITOR
             var subsystem = (ARCoreFaceSubsystem)m_FaceManager.subsystem;
             if (subsystem == null)
                 return;
@@ -89,7 +89,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void OnDestroy()
         {
-#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && ARCORE_4_2_OR_NEWER && !UNITY_EDITOR
             if (m_FaceRegions.IsCreated)
                 m_FaceRegions.Dispose();
 #endif

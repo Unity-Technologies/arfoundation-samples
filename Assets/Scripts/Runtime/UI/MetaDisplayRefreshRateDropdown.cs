@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Collections;
-#if METAOPENXR_0_2_OR_NEWER && UNITY_ANDROID
+
+// Ensure that dropdown works on Windows standalone for Meta Quest Link
+#if METAOPENXR_0_2_OR_NEWER && (UNITY_ANDROID || UNITY_EDITOR_WIN)
 using UnityEngine.XR.OpenXR.Features.Meta;
 #endif
 
@@ -79,7 +81,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void OnDropdownValueChanged(TMP_Dropdown dropdown)
         {
-#if METAOPENXR_0_2_OR_NEWER && UNITY_ANDROID
+#if METAOPENXR_0_2_OR_NEWER && (UNITY_ANDROID || UNITY_EDITOR_WIN)
             if (!enabled)
                 return;
 
@@ -102,7 +104,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             yield return null;
 
-#if METAOPENXR_0_2_OR_NEWER && UNITY_ANDROID
+#if METAOPENXR_0_2_OR_NEWER && (UNITY_ANDROID || UNITY_EDITOR_WIN)
             if (!m_DisplaySubsystem.TryGetSupportedDisplayRefreshRates(Allocator.Persistent, out m_DisplayRefreshRates))
                 yield break;
 

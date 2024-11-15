@@ -1,0 +1,54 @@
+{
+    "name": "AR Foundation Input Actions",
+    "maps": [
+        {
+            "name": "Pointer",
+            "id": "10e27884-5a7a-46c9-925c-37ae8b8a8294",
+            "actions": [
+                {
+                    "name": "Press",
+                    "type": "Button",
+                    "id": "190ad64b-721e-4a04-946c-322fba863a6b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Position",
+                    "type": "Value",
+                    "id": "595656a9-608e-4a95-ad22-ef5fc68ee688",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "356a3ed1-ce11-42c7-b8b9-a63b0653663c",
+                    "path": "<Pointer>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bfabf671-5180-4532-a8e1-ac475aa9e9fd",
+                    "path": "<Pointer>/Position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

@@ -21,8 +21,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField, HideInInspector]
         RectTransform m_RectTransform;
 
-        DeviceOrientation m_PreviousDeviceOrientation;
-
         public static float widthRatio { get; private set; }
         public static float heightRatio { get; private set; }
         

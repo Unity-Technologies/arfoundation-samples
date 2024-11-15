@@ -2,23 +2,23 @@
 
 Example AR scenes that use [AR Foundation 6.0](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@6.0/manual/index.html) and demonstrate its features. Each feature is used in a minimal sample scene with example code that you can modify or copy into your project.
 
-This sample project primarily depends on five Unity packages:
+This sample project depends on four Unity packages:
 
 * [AR Foundation](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@6.0/manual/index.html)
 * [Google ARCore XR Plug-in](https://docs.unity3d.com/Packages/com.unity.xr.arcore@6.0/manual/index.html) on Android
 * [Apple ARKit XR Plug-in](https://docs.unity3d.com/Packages/com.unity.xr.arkit@6.0/manual/index.html) on iOS
 * [OpenXR Plug-in](https://docs.unity3d.com/Packages/com.unity.xr.openxr@1.8/manual/index.html) on HoloLens 2
-* [Unity OpenXR: Meta](https://docs.unity3d.com/Packages/com.unity.xr.meta-openxr@2.0/manual/index.html) on Meta Quest
 
 ## Which version should I use?
 
 The `main` branch of this repository uses AR Foundation 6.0 and is compatible with Unity 2023.2 and newer. To access sample scenes for previous versions of AR Foundation, refer to the table below for links to other branches.
 
-| Unity Version    | AR Foundation Version |
-| ---------------- | --------------------- |
-| Unity 6 (6000.0) | 6.0 (main) |
-| 2022.3           | [5.1](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.1) |
-| 2021.3           | [4.2](https://github.com/Unity-Technologies/arfoundation-samples/tree/4.2) |
+| Unity Version  | AR Foundation Version |
+| -------------- | --------------------- |
+| Unity 6 (6000.0)  | 6.0 (main) |
+| 2023.2         | [5.1](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.1) |
+| 2022.3         | [5.1](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.1) |
+| 2021.3         | [4.2](https://github.com/Unity-Technologies/arfoundation-samples/tree/4.2) |
 
 ## How to use these samples
 
@@ -33,10 +33,6 @@ To build to device, follow the steps below:
 2. Open the Unity project at the root of this repository.
 
 3. As with any other Unity project, go to [Build Settings](https://docs.unity3d.com/Manual/BuildSettings.html), select your target platform, and build this project.
-
-#### Meta Quest
-
-This repository is configured with the Google ARCore XR Plug-in enabled by default on the Android platform. To build for Meta Quest, disable the **Google ARCore** provider in the Android tab of **Project Settings** > **XR Plug-in Management**, then follow the Meta Quest [Project setup](https://docs.unity3d.com/Packages/com.unity.xr.meta-openxr@2.0/manual/project-setup.html) instructions.
 
 ### Understand the sample code
 
@@ -360,7 +356,7 @@ This sample requires iOS 16 or newer and a device with an ultra-wide camera.
 
 ## ARCore Session Recording
 
-This sample demonstrates the session recording and playback functionality available in ARCore. This feature allows you to record the sensor and camera telemetry during a live session, and then reply it at later time. When replayed, ARCore runs on the target device using the recorded telemetry rather than live data. Refer to [ARCoreSessionRecorder.cs](https://github.com/Unity-Technologies/arfoundation-samples/blob/main/Assets/Scenes/ARCore/ARCoreSessionRecorder.cs) for example code.
+This sample demonstrates the session recording and playback functionality available in ARCore. This feature allows you to record the sensor and camera telemetry during a live session, and then reply it at later time. When replayed, ARCore runs on the target device using the recorded telemetry rather than live data. Refer to [ARCoreSessionRecorder.cs](https://github.com/Unity-Technologies/arfoundation-samples/blob/main/Assets/Scripts/Runtime/ARCore/ARCoreSessionRecorder.cs) for example code.
 
 ## Additional demos
 

@@ -2763,54 +2763,6 @@
                     "isPartOfComposite": true
                 }
             ]
-        },
-        {
-            "name": "Pointer",
-            "id": "ce02313a-584d-43a5-9f5f-e2246bedd9ef",
-            "actions": [
-                {
-                    "name": "Press",
-                    "type": "Button",
-                    "id": "dc7236fb-fc17-4bc7-80f3-2156028a1e70",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Position",
-                    "type": "Value",
-                    "id": "8acdbce2-22dc-4e98-ac9b-d2653dafde16",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "5546c804-b7f3-44a5-adf0-b8724ac01668",
-                    "path": "<Pointer>/Press",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Press",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "cda6326b-cf93-46a2-a059-c38bc80506e7",
-                    "path": "<Pointer>/Position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Position",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
         }
     ],
     "controlSchemes": []

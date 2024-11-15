@@ -22,6 +22,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         bool m_RequiresImageStabilization;
 
+        [SerializeField]
+        bool m_RequiresCameraTorchMode;
+
         public override bool Evaluate()
         {
             if (!base.Evaluate())
@@ -55,6 +58,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 return false;
 
             if (m_RequiresImageStabilization && descriptor.supportsImageStabilization == Supported.Unsupported)
+                return false;
+
+            if (m_RequiresCameraTorchMode && !descriptor.supportsCameraTorchMode)
                 return false;
 
             return true;

@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.XR.ARSubsystems;
@@ -8,6 +10,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
     public class TestAnchorsScrollView : MonoBehaviour
     {
         [Header("References")]
+        [SerializeField]
+        BackButton m_BackButton;
+
         [SerializeField]
         ARAnchorManager m_AnchorManager;
 
@@ -31,7 +36,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         bool m_SupportsSaveAndLoadAnchors;
         bool m_SupportsEraseAnchors;
 
-        SaveAndLoadAnchorIdsToFile m_SaveAndLoadAnchorIdsToFile;
+        SaveAndLoadAnchorDataToFile m_SaveAndLoadAnchorDataToFile;
 
         void Awake()
         {
@@ -51,23 +56,34 @@ namespace UnityEngine.XR.ARFoundation.Samples
         async void Start()
         {
             IEnumerable<SerializableGuid> persistentAnchorGuids = new List<SerializableGuid>();
+            IEnumerable<DateTime> persistentAnchorSavedDateTimes = new List<DateTime>();
+
             if (m_SupportsGetSavedAnchorIds)
             {
                 var result = await m_AnchorManager.TryGetSavedAnchorIdsAsync(Allocator.Temp);
                 if (result.status.IsSuccess())
                 {
                     persistentAnchorGuids = result.value;
+                    persistentAnchorSavedDateTimes = new List<DateTime>(persistentAnchorGuids.Count());
                 }
             }
             else
             {
-                m_SaveAndLoadAnchorIdsToFile ??= new SaveAndLoadAnchorIdsToFile();
-                persistentAnchorGuids = await m_SaveAndLoadAnchorIdsToFile.LoadSavedAnchorIdsAsync();
+                m_SaveAndLoadAnchorDataToFile ??= new SaveAndLoadAnchorDataToFile();
+                var savedAnchorData = await m_SaveAndLoadAnchorDataToFile.LoadSavedAnchorsDataAsync();
+                persistentAnchorGuids = savedAnchorData.Keys;
+                persistentAnchorSavedDateTimes = savedAnchorData.Values;
             }
 
+            using var savedDateTimesItr = persistentAnchorSavedDateTimes.GetEnumerator();
             foreach (var persistentAnchorGuid in persistentAnchorGuids)
             {
-                AddAnchorEntry(null, persistentAnchorGuid);
+                savedDateTimesItr.MoveNext();
+                var entry = AddAnchorEntry(null, persistentAnchorGuid);
+                if (savedDateTimesItr.Current != default)
+                {
+                    entry.SetAnchorSavedDateTime(savedDateTimesItr.Current);
+                }
             }
         }
 
@@ -103,7 +119,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
-        void AddAnchorEntry(ARAnchor anchor = null, SerializableGuid persistentAnchorGuid = default)
+        TestAnchorScrollViewEntry AddAnchorEntry(ARAnchor anchor = null, SerializableGuid persistentAnchorGuid = default)
         {
             var anchorEntry = Instantiate(m_TestAnchorEntryPrefab, m_ContentTransform);
             
@@ -114,10 +130,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
             anchorEntry.requestSave.AddListener(RequestSaveAnchor);
             anchorEntry.requestLoad.AddListener(RequestLoadAnchor);
 
+            anchorEntry.requestSaveAndLeave.AddListener(RequestSaveAnchorAndLeave);
+            anchorEntry.requestLoadAndLeave.AddListener(RequestLoadAnchorAndLeave);
+
             if (m_SupportsEraseAnchors)
                 anchorEntry.requestEraseAnchor.AddListener(RequestEraseAnchor);
 
             m_EntryCount += 1;
+            return anchorEntry;
         }
 
         async void RequestSaveAnchor(TestAnchorScrollViewEntry entry)
@@ -133,18 +153,31 @@ namespace UnityEngine.XR.ARFoundation.Samples
             var result = await m_AnchorManager.TrySaveAnchorAsync(entry.representedAnchor);
             if (!m_SupportsGetSavedAnchorIds)
             {
-                m_SaveAndLoadAnchorIdsToFile ??= new SaveAndLoadAnchorIdsToFile();
-                await m_SaveAndLoadAnchorIdsToFile.SaveAnchorIdAsync(entry.representedAnchor.trackableId);
+                m_SaveAndLoadAnchorDataToFile ??= new SaveAndLoadAnchorDataToFile();
+                await m_SaveAndLoadAnchorDataToFile.SaveAnchorIdAsync(entry.representedAnchor.trackableId, DateTime.Now);
             }
 
             var wasSaveSuccessful = result.status.IsSuccess();
             if (wasSaveSuccessful)
             {
                 entry.persistentAnchorGuid = result.value;
+                entry.SetAnchorSavedDateTime(DateTime.Now);
             }
 
             entry.StopSaveLoadingAnimation();
             await entry.ShowSaveResult(wasSaveSuccessful, m_ResultDurationInSeconds);
+        }
+
+        void RequestSaveAnchorAndLeave(TestAnchorScrollViewEntry entry)
+        {
+            var result = m_AnchorManager.TrySaveAnchorAsync(entry.representedAnchor);
+            m_BackButton.BackButtonPressed();
+        }
+        
+        void RequestLoadAnchorAndLeave(TestAnchorScrollViewEntry entry)
+        {
+            var result = m_AnchorManager.TryLoadAnchorAsync(entry.persistentAnchorGuid);
+            m_BackButton.BackButtonPressed();
         }
 
         async void RequestLoadAnchor(TestAnchorScrollViewEntry entry)

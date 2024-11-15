@@ -1,8 +1,4 @@
-﻿using System;
-using System.Text;
-using UnityEngine;
-using UnityEngine.XR.ARFoundation;
-using UnityEngine.XR.ARSubsystems;
+﻿using UnityEngine.UI;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -16,6 +12,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         [SerializeField]
         GameObject m_AlternativePrefab;
+
+        [SerializeField]
+        Text m_textField;
 
         public GameObject alternativePrefab
         {
@@ -36,52 +35,44 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         string m_ErrorMessage = "";
 
-        void OnGUI()
+        public void ChangePrefab()
         {
-            var fontSize = 50;
-            GUI.skin.button.fontSize = fontSize;
-            GUI.skin.label.fontSize = fontSize;
+            switch (m_State)
+            {
+                case State.OriginalPrefab: 
+                    m_State = State.ChangeToAlternativePrefab;
+                    break;
+                case State.AlternativePrefab:
+                    m_State = State.ChangeToOriginalPrefab;
+                    break;
+                default:
+                    break;
+            }
+        }
 
-            float margin = 100;
-
-            GUILayout.BeginArea(new Rect(margin, margin, Screen.width - margin * 2, Screen.height - margin * 2));
-
+        void UpdateMessage()
+        {
             switch (m_State)
             {
                 case State.OriginalPrefab:
                 {
-                    if (GUILayout.Button($"Alternative Prefab for {GetComponent<PrefabImagePairManager>().imageLibrary[0].name}"))
-                    {
-                        m_State = State.ChangeToAlternativePrefab;
-                    }
-
+                    m_textField.text = $"Alternative Prefab for {GetComponent<PrefabImagePairManager>().imageLibrary[0].name}";
                     break;
                 }
                 case State.AlternativePrefab:
                 {
-                    if (GUILayout.Button($"Original Prefab for {GetComponent<PrefabImagePairManager>().imageLibrary[0].name}"))
-                    {
-                        m_State = State.ChangeToOriginalPrefab;
-                    }
-
+                    m_textField.text = $"Original Prefab for {GetComponent<PrefabImagePairManager>().imageLibrary[0].name}";
                     break;
                 }
                 case State.Error:
                 {
-                    GUILayout.Label(m_ErrorMessage);
+                    m_textField.text = m_ErrorMessage;
                     break;
                 }
             }
-            GUILayout.EndArea();
         }
 
-        void SetError(string errorMessage)
-        {
-            m_State = State.Error;
-            m_ErrorMessage = $"Error: {errorMessage}";
-        }
-
-        void Update()
+        void UpdatePrefab()
         {
             switch (m_State)
             {
@@ -142,6 +133,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     break;
                 }
             }
+        }
+
+        void SetError(string errorMessage)
+        {
+            m_State = State.Error;
+            m_ErrorMessage = $"Error: {errorMessage}";
+        }
+
+        void Update()
+        {
+            UpdatePrefab();
+            UpdateMessage();
         }
     }
 }

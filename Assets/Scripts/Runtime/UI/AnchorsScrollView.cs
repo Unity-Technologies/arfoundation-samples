@@ -45,7 +45,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         bool m_SupportsSaveAndLoadAnchors;
         bool m_SupportsEraseAnchors;
 
-        SaveAndLoadAnchorIdsToFile m_SaveAndLoadAnchorIdsToFile;
+        SaveAndLoadAnchorDataToFile m_SaveAndLoadAnchorDataToFile;
 
         void Awake()
         {
@@ -101,11 +101,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
             else
             {
-                m_SaveAndLoadAnchorIdsToFile ??= new SaveAndLoadAnchorIdsToFile();
-                var persistentAnchorGuids = await m_SaveAndLoadAnchorIdsToFile.LoadSavedAnchorIdsAsync();
-                foreach (var persistentAnchorGuid in persistentAnchorGuids)
+                m_SaveAndLoadAnchorDataToFile ??= new SaveAndLoadAnchorDataToFile();
+                var persistentAnchorData = await m_SaveAndLoadAnchorDataToFile.LoadSavedAnchorsDataAsync();
+                foreach (var persistentAnchorDataEntry in persistentAnchorData)
                 {
-                    AddSavedAnchorEntry(persistentAnchorGuid, false);
+                    AddSavedAnchorEntry(persistentAnchorDataEntry.Key, false, persistentAnchorDataEntry.Value);
                 }
             }
 
@@ -137,7 +137,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
             }
 
-            foreach ((TrackableId anchorId, _) in changes.removed)
+            foreach (var (anchorId, _) in changes.removed)
             {
                 if (m_SavedAnchorEntriesByAnchorId.TryGetValue(anchorId, out var savedAnchorEntry))
                 {
@@ -174,12 +174,22 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_NewAnchorEntriesByAnchorId.Remove(entry.representedAnchor.trackableId);
         }
 
-        AnchorScrollViewEntry AddSavedAnchorEntry(SerializableGuid persistentAnchorGuid, bool isAnchorActive, string displayLabelText = null)
+        AnchorScrollViewEntry AddSavedAnchorEntry(
+            SerializableGuid persistentAnchorGuid,
+            bool isAnchorActive,
+            DateTime savedDateTime = default,
+            string displayLabelText = null)
         {
             var savedAnchorEntry = Instantiate(m_SavedAnchorEntryPrefab, m_ContentTransform);
 
             savedAnchorEntry.transform.SetAsLastSibling();
             savedAnchorEntry.SetDisplayedAnchorLabel(displayLabelText ?? $"Anchor {m_EntryCount}");
+
+            if (savedDateTime != default)
+            {
+                savedAnchorEntry.SetAnchorSavedDateTime(savedDateTime);
+            }
+
             savedAnchorEntry.persistentAnchorGuid = persistentAnchorGuid;
             savedAnchorEntry.requestAction.AddListener(RequestLoadAnchor);
             savedAnchorEntry.EnableActionButton(!isAnchorActive);
@@ -219,10 +229,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             var representedAnchorTrackableId = entry.representedAnchor.trackableId;
             var displayLabelText = entry.AnchorDisplayText;
             var result = await m_AnchorManager.TrySaveAnchorAsync(representedAnchor);
+            var savedDateTime = DateTime.Now;
             if (!m_SupportsGetSavedAnchorIds)
             {
-                m_SaveAndLoadAnchorIdsToFile ??= new SaveAndLoadAnchorIdsToFile();
-                await m_SaveAndLoadAnchorIdsToFile.SaveAnchorIdAsync(representedAnchorTrackableId);
+                m_SaveAndLoadAnchorDataToFile ??= new SaveAndLoadAnchorDataToFile();
+                await m_SaveAndLoadAnchorDataToFile.SaveAnchorIdAsync(representedAnchorTrackableId, savedDateTime);
             }
 
             var wasSaveSuccessful = result.status.IsSuccess();
@@ -232,7 +243,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 var savedAnchorId = result.value;
                 var isAnchorActive = representedAnchor != null;
-                savedAnchorEntry = AddSavedAnchorEntry(savedAnchorId, isAnchorActive, displayLabelText);
+                savedAnchorEntry = AddSavedAnchorEntry(
+                    savedAnchorId,
+                    isAnchorActive,
+                    savedDateTime,
+                    displayLabelText);
+
                 // disabling to allow to show result before revealing the new entry
                 // in the saved anchor section in the scroll view
                 savedAnchorEntry.gameObject.SetActive(false);
@@ -298,7 +314,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if (!m_SupportsGetSavedAnchorIds)
             {
-                await m_SaveAndLoadAnchorIdsToFile.EraseAnchorIdAsync(entry.persistentAnchorGuid);
+                await m_SaveAndLoadAnchorDataToFile.EraseAnchorIdAsync(entry.persistentAnchorGuid);
             }
 
             entry.StopEraseLoadingAnimation();

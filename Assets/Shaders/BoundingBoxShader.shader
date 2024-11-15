@@ -28,12 +28,16 @@ Shader "Custom/BoundingBoxShader"
             {
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
+
+                UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
             struct v2f
             {
                 float2 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
+
+                UNITY_VERTEX_OUTPUT_STEREO
             };
 
             sampler2D _MainTex;
@@ -44,6 +48,11 @@ Shader "Custom/BoundingBoxShader"
             v2f vert (appdata v)
             {
                 v2f o;
+
+                UNITY_SETUP_INSTANCE_ID(v);
+                ZERO_INITIALIZE(v2f, o);
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+
                 o.vertex = mul(UNITY_MATRIX_MVP, float4(v.vertex.xyz, 1.0));
                 o.uv = v.uv * _MainTex_ST.xy + _MainTex_ST.zw;
                 return o;
@@ -80,12 +89,16 @@ Shader "Custom/BoundingBoxShader"
             {
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
+
+                UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
             struct v2f
             {
                 float2 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
+
+                UNITY_VERTEX_OUTPUT_STEREO
             };
 
             sampler2D _MainTex;
@@ -96,6 +109,11 @@ Shader "Custom/BoundingBoxShader"
             v2f vert (appdata v)
             {
                 v2f o;
+
+                UNITY_SETUP_INSTANCE_ID(v);
+                UNITY_INITIALIZE_OUTPUT(v2f, o);
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o); 
+
                 o.vertex = mul(UNITY_MATRIX_MVP, float4(v.vertex.xyz, 1.0));
                 o.uv = v.uv * _MainTex_ST.xy + _MainTex_ST.zw;
                 return o;

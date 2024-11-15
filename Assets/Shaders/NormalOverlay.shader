@@ -14,6 +14,8 @@ Shader "Unlit/NormalOverlay"
 
         Blend SrcAlpha OneMinusSrcAlpha
 
+        Offset -1, 0
+
         Tags
         {
             "Queue" = "AlphaTest"
@@ -97,6 +99,7 @@ Shader "Unlit/NormalOverlay"
     SubShader
     {
         Blend SrcAlpha OneMinusSrcAlpha
+        Offset -1, 0
 
         Tags
         {
@@ -111,6 +114,7 @@ Shader "Unlit/NormalOverlay"
             ZWrite On
             Lighting Off
             LOD 100
+
             Tags
             {
                 "LightMode" = "Always"
