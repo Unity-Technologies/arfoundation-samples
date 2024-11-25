@@ -32,13 +32,19 @@ float4 DebugDepthDistance(const float depth)
     //return colors[colIndex];
 }
 
-void SetOcclusionVertOutputs(float4 positionOS, inout float4 positionCS, inout float runtimeDepth, inout float4 depthSpaceScreenPosition)
+void SetOcclusionVertOutputs(float4 positionOS, inout float4 positionCS, inout float runtimeDepth,
+    inout float4 depthSpaceScreenPosition)
 {
     const float4 objectPositionWS = mul(unity_ObjectToWorld, float4(positionOS.xyz, 1.0));
     positionCS = mul(UNITY_MATRIX_VP, objectPositionWS);
     const float4 depthHCS = mul(_DepthVPMatrices[unity_StereoEyeIndex], objectPositionWS);
     runtimeDepth = 1 - positionCS.z / positionCS.w;
     depthSpaceScreenPosition = ComputeScreenPos(depthHCS);
+}
+
+float NormalizeWithinBounds(const float v, const float min, const float max)
+{
+    return clamp((v - min) / (max - min), 0, 1);
 }
 
 void SetOcclusion(float4 depthSpaceScreenPosition, float runtimeDepth, inout float4 color)
@@ -49,22 +55,35 @@ void SetOcclusion(float4 depthSpaceScreenPosition, float runtimeDepth, inout flo
     {
         return;
     }
-    
-    const float4 passthroughDepth = SAMPLE_TEXTURE2D_ARRAY(_PassthroughDepthTexture, sampler_PassthroughDepthTexture, uv, unity_StereoEyeIndex);
-    const float4 confidenceBothEyes = SAMPLE_TEXTURE2D(_PassthroughConfidenceTexture, sampler_PassthroughConfidenceTexture, uv);
-    const float confidenceCurrentEye = (1 - unity_StereoEyeIndex) * confidenceBothEyes.r + unity_StereoEyeIndex * confidenceBothEyes.g;
+
     const float near = _ProjectionParams.y;
     const float far = _ProjectionParams.z;
+    const float depthNearMin = 0.0;
+    const float depthNearMax = 0.05;
+    const float depthFarMin = 3.0;
+    const float depthFarMax = 5.5;
+    const float tolerance = 0.02;
+    const float passthroughDepth = SAMPLE_TEXTURE2D_ARRAY(_PassthroughDepthTexture, sampler_PassthroughDepthTexture,
+                                                           uv, unity_StereoEyeIndex).r;
+
+    if (passthroughDepth < depthNearMin || passthroughDepth > depthFarMax)
+    {
+        return;
+    }
+
     const float runtimeLinearDepth = near * far / (far - runtimeDepth * (far - near));
+    const float delta = runtimeLinearDepth - passthroughDepth;
 
-    const float delta = runtimeLinearDepth - passthroughDepth.r;
+    // |____|_______|____________|_____|
+    // 0  nMin   nMax         fmin   fmax
+    //d                            ^
 
-    if(abs(delta) < 0.05)
-    {
-        color.a = lerp(0.5, 0, delta / 0.05) * (1 - confidenceCurrentEye);
-    }
-    else if(delta > 0)
-    {
-        color.a = 0;
-    }
+    const float trustDepthNear = NormalizeWithinBounds(passthroughDepth, depthNearMin, depthNearMax);
+    const float trustDepthFar = 1 - NormalizeWithinBounds(passthroughDepth, depthFarMin, depthFarMax);
+    const float trustDepth = min(trustDepthNear, trustDepthFar);
+
+    //gradually change visibility 0 to 1 on depth delta values <= tolerance.
+    const float visibility = 1 - trustDepth;
+    const float closeProximityVisibility = clamp(1 - (delta + tolerance) / (2 * tolerance) * trustDepth, 0, 1);
+    color.a *= max(max(closeProximityVisibility, 0), visibility);
 }

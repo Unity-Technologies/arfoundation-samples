@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
@@ -63,12 +61,19 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         string m_RecordingStatusMessage;
 
-        string m_Mp4Path;
+        string m_Mp4LocalFilePath;
+        string m_Mp4PathUri;
 
         void Awake()
         {
             m_Session = GetComponent<ARSession>();
-            m_Mp4Path = Path.Combine(Application.persistentDataPath, "arcore-session.mp4");
+            m_Mp4LocalFilePath = Path.Combine(Application.persistentDataPath, "arcore-session.mp4");
+            // NOTE: The Uri class with C# does NOT correctly format the URI needed for 
+            // native Android APIs that require a "Uri as string" parameter.
+            // However, so long as the path does not require escaping, or slash separator
+            // modification, then prepending "file://" is sufficient.
+            m_Mp4PathUri = $"file://{m_Mp4LocalFilePath}";
+            Log($"Setting recording Uri to [{m_Mp4PathUri}]");
         }
 
         static int GetRotation() => Screen.orientation switch
@@ -131,17 +136,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     {
                         using (var config = new ArRecordingConfig(session))
                         {
-                            config.SetMp4DatasetFilePath(session, m_Mp4Path);
+                            config.SetMp4DatasetUri(session, m_Mp4PathUri);
                             config.SetRecordingRotation(session, GetRotation());
                             var status = subsystem.StartRecording(config);
-                            Log($"StartRecording to {config.GetMp4DatasetFilePath(session)} => {status}");
+                            Log($"StartRecording to {config.GetMp4DatasetUri(session)} => {status}");
                         }
                     }
 
-                    if (File.Exists(m_Mp4Path) && GUILayout.Button("Start playback"))
+                    if (File.Exists(m_Mp4LocalFilePath) && GUILayout.Button("Start playback"))
                     {
-                        var status = subsystem.StartPlayback(m_Mp4Path);
-                        Log($"StartPlayback({m_Mp4Path}) => {status}");
+                        var status = subsystem.StartPlaybackUri(m_Mp4PathUri);
+                        Log($"StartPlayback({m_Mp4PathUri}) => {status}");
                     }
                 }
 
@@ -149,14 +154,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     !recordingStatus.Recording() &&
                     GUILayout.Button("Stop playback"))
                 {
-                    var status = subsystem.StopPlayback();
+                    var status = subsystem.StopPlaybackUri();
                     Log($"StopPlayback() => {status}");
                 }
 
                 if (playbackStatus == ArPlaybackStatus.Finished &&
                     GUILayout.Button("Return to live feed"))
                 {
-                    var status = subsystem.StopPlayback();
+                    var status = subsystem.StopPlaybackUri();
                     Log($"StopPlayback() => {status}");
                 }
 
@@ -168,8 +173,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                     if (status == ArStatus.Success)
                     {
-                        Log(File.Exists(m_Mp4Path)
-                            ? $"ARCore session saved to {m_Mp4Path} ({GetFileSize(m_Mp4Path)})"
+                        Log(File.Exists(m_Mp4LocalFilePath)
+                            ? $"ARCore session saved to {m_Mp4LocalFilePath} ({GetFileSize(m_Mp4LocalFilePath)})"
                             : "Recording completed, but no file was produced.");
                     }
                 }

@@ -78,14 +78,15 @@ namespace UnityEditor.XR.ARFoundation.Samples
 
                 EditorGUILayout.PropertyField(childEnumerator.Current as SerializedProperty);
             }
+            ((IDisposable)childEnumerator).Dispose();
         }
-    }
-
-    class TypenameComparer : IComparer<Type>
-    {
-        int IComparer<Type>.Compare(Type x, Type y)
+        
+        class TypenameComparer : IComparer<Type>
         {
-            return string.Compare(x?.FullName, y?.FullName);
+            int IComparer<Type>.Compare(Type x, Type y)
+            {
+                return string.Compare(x?.FullName, y?.FullName);
+            }
         }
     }
 }

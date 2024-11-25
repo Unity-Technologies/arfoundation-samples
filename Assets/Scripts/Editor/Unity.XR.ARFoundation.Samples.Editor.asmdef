@@ -3,7 +3,9 @@
     "rootNamespace": "UnityEditor.XR.ARFoundation.Samples",
     "references": [
         "Unity.XR.ARFoundation.Samples",
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "Unity.XR.OpenXR.Editor",
+        "Unity.XR.OpenXR"
     ],
     "includePlatforms": [
         "Editor"
@@ -14,6 +16,12 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.xr.openxr",
+            "expression": "1.13.0",
+            "define": "OPENXR_1_13_OR_NEWER"
+        }
+    ],
     "noEngineReferences": false
 }

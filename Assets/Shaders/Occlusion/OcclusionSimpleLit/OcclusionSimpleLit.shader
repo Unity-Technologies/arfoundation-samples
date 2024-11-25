@@ -73,7 +73,8 @@ Shader "Occlusion/OcclusionSimpleLit"
             // -------------------------------------
             // Render State Commands
             // Use same blending / depth states as Standard shader
-            Blend[_SrcBlend][_DstBlend], [_SrcBlendAlpha][_DstBlendAlpha]
+            // Blend[_SrcBlend][_DstBlend], [_SrcBlendAlpha][_DstBlendAlpha]
+            Blend SrcAlpha OneMinusSrcAlpha
             ZWrite[_ZWrite]
             Cull[_Cull]
             AlphaToMask[_AlphaToMask]
