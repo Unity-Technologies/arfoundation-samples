@@ -208,17 +208,21 @@ namespace UnityEngine.XR.ARFoundation.Samples
             // When enabled, get the current screen orientation, and update the raw image UI.
             m_CurrentScreenOrientation = Screen.orientation;
             UpdateRawImage();
+
+            Application.onBeforeRender += OnBeforeRender;
         }
 
         void OnDisable()
         {
+            Application.onBeforeRender -= OnBeforeRender;
+
             // Unsubscribe from the camera frame received event, and initialize the display rotation matrix.
             m_DisplayRotationMatrix = Matrix4x4.identity;
             if (m_CameraManager != null)
                 m_CameraManager.frameReceived -= OnCameraFrameEventReceived;
         }
 
-        void Update()
+        void OnBeforeRender()
         {
             // If we are on a device that does supports neither human stencil, human depth, nor environment depth,
             // display a message about unsupported functionality and return.

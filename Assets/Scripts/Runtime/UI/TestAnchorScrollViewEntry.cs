@@ -1,6 +1,5 @@
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -44,9 +43,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
         GameObject m_SaveButtonText;
 
         [SerializeField]
-        GameObject m_SaveButtonIcon;
-
-        [SerializeField]
         LoadingVisualizer m_SaveLoadingVisualizer;
 
         [SerializeField]
@@ -58,9 +54,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [Header("Lopad Button References")]
         [SerializeField]
         GameObject m_LoadButtonText;
-
-        [SerializeField]
-        GameObject m_LoadButtonIcon;
 
         [SerializeField]
         LoadingVisualizer m_LoadLoadingVisualizer;
@@ -86,7 +79,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public ARAnchor representedAnchor { get; set; }
 
-        public SerializableGuid persistentAnchorGuid { get; set; }
+        public SerializableGuid savedAnchorGuid { get; set; }
 
         UnityEvent<TestAnchorScrollViewEntry> m_RequestSaveAndLeave = new();
         public UnityEvent<TestAnchorScrollViewEntry> requestSaveAndLeave => m_RequestSaveAndLeave;
@@ -108,56 +101,51 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         CancellationTokenSource m_CancellationTokenSource = new();
 
-        public void StartSaveLoadingAnimation()
+        public void StartSaveInProgressAnimation()
         {
             m_SaveButtonText.SetActive(false);
-            m_SaveButtonIcon.SetActive(false);
             m_SaveLoadingVisualizer.StartAnimating();
         }
 
-        public void StopSaveLoadingAnimation()
+        public void StopSaveInProgressAnimation()
         {
             m_SaveLoadingVisualizer.StopAnimating();
-            m_SaveButtonIcon.SetActive(true);
             m_SaveButtonText.SetActive(true);
         }
 
-        public void StartLoadLoadingAnimation()
+        public void StartLoadInProgressAnimation()
         {
             m_LoadButtonText.SetActive(false);
-            m_LoadButtonIcon.SetActive(false);
             m_LoadLoadingVisualizer.StartAnimating();
         }
 
-        public void StopLoadLoadingAnimation()
+        public void StopLoadInProgressAnimation()
         {
             m_LoadLoadingVisualizer.StopAnimating();
-            m_LoadButtonIcon.SetActive(true);
             m_LoadButtonText.SetActive(true);
         }
 
-        public void StartEraseLoadingAnimation()
+        public void StartEraseInProgressAnimation()
         {
             m_EraseButtonIcon.SetActive(false);
             m_EraseLoadingVisualizer.StartAnimating();
         }
 
-        public void StopEraseLoadingAnimation()
+        public void StopEraseInProgressAnimation()
         {
             m_EraseLoadingVisualizer.StopAnimating();
             m_EraseButtonIcon.SetActive(true);
         }
 
-        public async Task ShowSaveResult(bool isSuccessful, float durationInSeconds)
+        public async Awaitable ShowSaveResult(bool isSuccessful, float durationInSeconds)
         {
             var visualizer = isSuccessful ? m_SaveSuccessVisualizer : m_SaveErrorVisualizer;
             visualizer.SetActive(true);
             m_SaveButtonText.SetActive(false);
-            m_SaveButtonIcon.SetActive(false);
 
             try
             {
-                await Task.Delay((int)(durationInSeconds * 1000), m_CancellationTokenSource.Token);
+                await Awaitable.WaitForSecondsAsync(durationInSeconds, m_CancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
             {
@@ -166,19 +154,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             visualizer.SetActive(false);
             m_SaveButtonText.SetActive(true);
-            m_SaveButtonIcon.SetActive(true);
         }
 
-        public async Task ShowLoadResult(bool isSuccessful, float durationInSeconds)
+        public async Awaitable ShowLoadResult(bool isSuccessful, float durationInSeconds)
         {
             var visualizer = isSuccessful ? m_LoadSuccessVisualizer : m_LoadErrorVisualizer;
             visualizer.SetActive(true);
             m_LoadButtonText.SetActive(false);
-            m_LoadButtonIcon.SetActive(false);
 
             try
             {
-                await Task.Delay((int)(durationInSeconds * 1000), m_CancellationTokenSource.Token);
+                await Awaitable.WaitForSecondsAsync(durationInSeconds, m_CancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
             {
@@ -187,10 +173,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             visualizer.SetActive(false);
             m_LoadButtonText.SetActive(true);
-            m_LoadButtonIcon.SetActive(true);
         }
 
-        public async Task ShowEraseResult(bool isSuccessful, float durationInSeconds)
+        public async Awaitable ShowEraseResult(bool isSuccessful, float durationInSeconds)
         {
             var visualizer = isSuccessful ? m_EraseSuccessVisualizer : m_EraseErrorVisualizer;
             visualizer.SetActive(true);
@@ -198,7 +183,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             try
             {
-                await Task.Delay((int)(durationInSeconds * 1000), m_CancellationTokenSource.Token);
+                await Awaitable.WaitForSecondsAsync(durationInSeconds, m_CancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
             {

@@ -7,6 +7,9 @@ using UnityEngine.XR.ARSubsystems;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
+    /// <summary>
+    /// Saves and loads SerializableGuids and DateTimes to a file on the devices local storage.
+    /// </summary>
     public class SaveAndLoadAnchorDataToFile
     {
         readonly string m_FilePath = Path.Combine(Application.persistentDataPath, "SavedAnchorIds.json");
@@ -62,7 +65,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         /// <returns>The set of `SerializableGuid`s that were saved to the file.
         /// If no file exists or the file is unreadable, an an empty set is returned.</returns>
-        public async Awaitable<Dictionary<SerializableGuid, DateTime>> LoadSavedAnchorsDataAsync()
+        public async Awaitable<Dictionary<SerializableGuid, DateTime>> GetSavedAnchorsDataAsync()
         {
             if (!m_Initialized)
                 await m_InitializeAwaitable;

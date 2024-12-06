@@ -5,8 +5,9 @@ using UnityEngine.XR.Interaction.Toolkit.UI;
 namespace UnityEngine.XR.ARFoundation.Samples
 {
     /// <summary>
-    /// Used for any UI that is intended to be used on an HMDs. Can convert from screen space
-    /// to world space UI and place world space UI in front of the camera.
+    /// Used for any UI that is intended to be used on an HMD. Converts from screen space
+    /// to world space UI and places world space UI in front of the camera. Also adds a
+    /// UI Window Handle to allow UI to be moved around.
     /// </summary>
     [RequireComponent(typeof(Canvas))]
     public class HMDCanvasController : MonoBehaviour
@@ -20,7 +21,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         [SerializeField]
         BoxCollider m_UIBoxCollider;
-        
+
+        [SerializeField]
+        GameObject m_UIWindowHandlePrefab;
+
         [Header("Settings")]
         [SerializeField, Tooltip("The dimensions the canvas well be set to for HMD in world space in meters.")]
         Vector2 m_HMDCanvasDimensionsInMeters = new(1.15f, 0.85f);
@@ -47,8 +51,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
         // The dimensions of the canvas in pixels
         public Vector2 canvasDimensions => m_CanvasRT.sizeDelta;
 
-        Vector2 m_HMDCanvasDimensionsScaled;
+        Vector2 m_HMDCanvasTargetSize;
         const float k_CanvasWorldSpaceScale = 0.001f;
+        const float k_UIHandleSpacing = 0.05f;
+
 
         void Reset()
         {
@@ -64,19 +70,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if (!isWorldSpaceCanvas)
                 return;
-            
+
             if (m_CanvasRT == null)
                 m_CanvasRT = m_Canvas.GetComponent<RectTransform>();
 
-            // Since the canvas is scaled to preserve UI elements size on the canvas,
-            // the values that get applied need to be updated by the scale the canvas will be set to
-            m_HMDCanvasDimensionsScaled = m_HMDCanvasDimensionsInMeters / k_CanvasWorldSpaceScale;
+            m_HMDCanvasTargetSize = m_HMDCanvasDimensionsInMeters / k_CanvasWorldSpaceScale;
 
             // Wait until next frame when the transform values are updated for the UI since
             // they get updated in the frame some point after Start
             await Awaitable.NextFrameAsync();
             SetToWorldSpace();
             PlaceInFrontOfCamera();
+            AddUIWindowHandle();
         }
 
         void SetToWorldSpace()
@@ -86,16 +91,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             m_Canvas.renderMode = RenderMode.WorldSpace;
             m_Canvas.worldCamera = m_Camera;
+
             m_Canvas.transform.localScale = Vector3.one * k_CanvasWorldSpaceScale;
+            m_Canvas.GetComponent<RectTransform>().sizeDelta = m_HMDCanvasTargetSize;
+            m_UIBoxCollider.size = m_HMDCanvasTargetSize;
 
             if (!m_Canvas.TryGetComponent(out TrackedDeviceGraphicRaycaster _))
                 m_Canvas.gameObject.AddComponent<TrackedDeviceGraphicRaycaster>();
 
             if (m_CanvasBackground != null)
                 m_CanvasBackground.SetActive(m_ShowBackgroundForHMD);
-
-            m_Canvas.GetComponent<RectTransform>().sizeDelta = m_HMDCanvasDimensionsScaled;
-            m_UIBoxCollider.size = m_HMDCanvasDimensionsScaled;
         }
 
         void PlaceInFrontOfCamera()
@@ -111,6 +116,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
             transform.position = cameraPosition + cameraForward * m_DistanceFromCamera;
             var lookAtPosition = transform.position + (transform.position - cameraPosition);
             transform.LookAt(lookAtPosition);
+        }
+
+        void AddUIWindowHandle()
+        {
+            var handleVerticalOffset = -m_CanvasRT.sizeDelta.y * transform.localScale.x * 0.5f - k_UIHandleSpacing;
+            var handlePosition = transform.position + (Vector3.up * handleVerticalOffset);
+            var handle = Instantiate(m_UIWindowHandlePrefab);
+            handle.transform.position = handlePosition;
+            handle.transform.rotation = transform.rotation;
+            transform.SetParent(handle.transform);
         }
     }
 }

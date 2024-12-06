@@ -21,7 +21,7 @@ float4 DebugDepthDistance(const float depth)
     float step = 1;
     float tempD = step;
 
-    while (tempD < depth)
+    while (tempD < depth && tempD < 10)
     {
         tempD += step;
     }
@@ -60,16 +60,15 @@ void SetOcclusion(float4 depthSpaceScreenPosition, float runtimeDepth, inout flo
     const float far = _ProjectionParams.z;
     const float depthNearMin = 0.0;
     const float depthNearMax = 0.05;
-    const float depthFarMin = 3.0;
-    const float depthFarMax = 5.5;
-    const float tolerance = 0.02;
+    const float depthFarMin = 5.5;
+    const float depthFarMax = 7.5;
+    const float depthCloseToleranceThreshold = 1.5;
+    const float depthFarToleranceThreshold = 5.5;
+    const float toleranceClose = 0.02;
+    const float toleranceFurthest = 0.5;
+    const float toleranceGamma = 1;
     const float passthroughDepth = SAMPLE_TEXTURE2D_ARRAY(_PassthroughDepthTexture, sampler_PassthroughDepthTexture,
                                                            uv, unity_StereoEyeIndex).r;
-
-    if (passthroughDepth < depthNearMin || passthroughDepth > depthFarMax)
-    {
-        return;
-    }
 
     const float runtimeLinearDepth = near * far / (far - runtimeDepth * (far - near));
     const float delta = runtimeLinearDepth - passthroughDepth;
@@ -80,10 +79,12 @@ void SetOcclusion(float4 depthSpaceScreenPosition, float runtimeDepth, inout flo
 
     const float trustDepthNear = NormalizeWithinBounds(passthroughDepth, depthNearMin, depthNearMax);
     const float trustDepthFar = 1 - NormalizeWithinBounds(passthroughDepth, depthFarMin, depthFarMax);
-    const float trustDepth = min(trustDepthNear, trustDepthFar);
+    const float sceneAssetVisibility = 1 - NormalizeWithinBounds(runtimeLinearDepth, depthFarMin, depthFarMax);
+    const float tolerance_t = NormalizeWithinBounds(passthroughDepth, depthCloseToleranceThreshold, depthFarToleranceThreshold);
+    const float tolerance = toleranceClose + pow(tolerance_t, toleranceGamma) * (toleranceFurthest - toleranceClose);
 
     //gradually change visibility 0 to 1 on depth delta values <= tolerance.
-    const float visibility = 1 - trustDepth;
-    const float closeProximityVisibility = clamp(1 - (delta + tolerance) / (2 * tolerance) * trustDepth, 0, 1);
-    color.a *= max(max(closeProximityVisibility, 0), visibility);
+    const float closeProximityVisibility = clamp(1 - (delta + tolerance) / (2 * tolerance) * trustDepthFar, 0, 1);
+    color.a *= sceneAssetVisibility * max(max(closeProximityVisibility, 0), 1 - trustDepthNear);
+    color.rgb *= color.a;
 }

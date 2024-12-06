@@ -42,8 +42,7 @@ Shader "Occlusion/OcclusionUnlit"
 
         // -------------------------------------
         // Render State Commands
-        // Blend [_SrcBlend][_DstBlend], [_SrcBlendAlpha][_DstBlendAlpha]
-        Blend SrcAlpha OneMinusSrcAlpha
+        Blend [_SrcBlend][_DstBlend], [_SrcBlendAlpha][_DstBlendAlpha]
         ZWrite [_ZWrite]
         Cull [_Cull]
 

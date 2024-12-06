@@ -42,7 +42,8 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -665,13 +666,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CameraManager: {fileID: 1990558792}
   m_NotSupportedLabel: {fileID: 2005152438}
-  onTorchModeSupported:
-    m_PersistentCalls:
-      m_Calls: []
-  onTorchModeNotSupported:
-    m_PersistentCalls:
-      m_Calls: []
-  TorchModeSupported:
+  torchModeSupported:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 554474123}

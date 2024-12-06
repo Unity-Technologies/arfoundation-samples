@@ -25,7 +25,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set => m_CameraManager = value;
         }
 
-        public UnityEvent<bool> TorchModeSupported;
+        public UnityEvent<bool> torchModeSupported;
 
         void Reset()
         {
@@ -34,11 +34,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         private void OnEnable()
         {
-            if (m_CameraManager != null) {
+            if (m_CameraManager != null)
+            {
                 m_CameraManager = FindAnyObjectByType<ARCameraManager>();
             }
-            if (m_CameraManager == null) {
-                Debug.LogError("Failed to find ARCameraManager in current scene. As a result, this component will be disabled.",this);
+            if (m_CameraManager == null)
+            {
+                Debug.LogError("Failed to find ARCameraManager in current scene. As a result, this component will be disabled.", this);
                 enabled = false;
             }
         }
@@ -47,9 +49,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             m_Dropdown = GetComponent<Dropdown>();
             m_Dropdown.ClearOptions();
-            m_Dropdown.onValueChanged.AddListener( 
-                _ => {
-                    OnDropdownValueChanged(m_Dropdown); 
+            m_Dropdown.onValueChanged.AddListener(
+                _ =>
+                {
+                    OnDropdownValueChanged(m_Dropdown);
                 }
             );
             ARSession.stateChanged += SessionChanged;
@@ -91,13 +94,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 || change.state == ARSessionState.SessionTracking)
                 && m_CameraManager.DoesCurrentCameraSupportTorch())
             {
-                TorchModeSupported?.Invoke(true);
-                m_NotSupportedLabel?.SetActive(false);
+                if (torchModeSupported != null)
+                    torchModeSupported.Invoke(true);
+                if (m_NotSupportedLabel != null)
+                    m_NotSupportedLabel.SetActive(false);
             }
             else
             {
-                TorchModeSupported?.Invoke(false);
-                m_NotSupportedLabel?.SetActive(true);
+                if (torchModeSupported != null)
+                    torchModeSupported.Invoke(false);
+                if (m_NotSupportedLabel != null)
+                    m_NotSupportedLabel.SetActive(true);
             }
         }
     }

@@ -35,7 +35,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         [SerializeField]
         GameObject m_ActionButtonIcon;
-        
+
         [SerializeField]
         LoadingVisualizer m_ActionLoadingVisualizer;
 
@@ -44,14 +44,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         [SerializeField]
         GameObject m_ActionErrorVisualizer;
-        
+
         [Header("Erase Button References")]
         [SerializeField]
         GameObject m_EraseButtonIcon;
 
         [SerializeField]
         LoadingVisualizer m_EraseLoadingVisualizer;
-        
+
         [SerializeField]
         GameObject m_EraseSuccessVisualizer;
 
@@ -60,7 +60,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public ARAnchor representedAnchor { get; set; }
 
-        public SerializableGuid persistentAnchorGuid { get; set; }
+        public SerializableGuid savedAnchorGuid { get; set; }
 
         [SerializeField, Tooltip("The event raised when the action button is clicked.")]
         UnityEvent<AnchorScrollViewEntry> m_RequestAction = new();
@@ -85,7 +85,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_ActionButtonIcon.SetActive(true);
             m_ActionButtonText.SetActive(true);
         }
-        
+
         public void StartEraseLoadingAnimation()
         {
             m_EraseButtonIcon.SetActive(false);

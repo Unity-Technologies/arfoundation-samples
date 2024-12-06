@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Unity.XR.CoreUtils;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using UnityEngine.XR.ARSubsystems;
 
 namespace UnityEngine.XR.ARFoundation.Samples
@@ -36,6 +38,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [Tooltip("The type of trackable the raycast will hit.")]
         TrackableType m_TrackableType = TrackableType.PlaneWithinPolygon;
 
+        [SerializeField]
+        [Tooltip("Optional event system to check for UI hits before emitting raycast events.")]
+        EventSystem m_EventSystem;
+
+        [SerializeField]
+        [Tooltip("Optional graphic raycaster to check for UI hits before emitting raycast events.")]
+        GraphicRaycaster m_GraphicRaycaster;
+
         public InputActionReferences inputActions => m_InputActionReferences;
 
         public ARRaycastHitEventAsset raycastHitEventAsset
@@ -53,12 +63,30 @@ namespace UnityEngine.XR.ARFoundation.Samples
         Camera m_Camera;
         LayerMask m_UILayerMask;
         RaycastHit[] m_UIRaycastHits = new RaycastHit[1];
+        bool m_HasGraphicRaycaster;
+        List<RaycastResult> m_GraphicRaycastResults = new();
+        PointerEventData m_PointerEventData;
 
         void Awake()
         {
             m_Camera = Camera.main;
             var uiLayer = LayerMask.NameToLayer("UI");
             m_UILayerMask = 1 << uiLayer;
+
+            // if a GraphicRaycaster has been assigned, but not an EventSystem, try to
+            // find one.  If one cannot be found, then we clear out the GraphicRaycaster
+            // since an EventSystem is required to do the UI raycast.
+            if (m_GraphicRaycaster != null && m_EventSystem == null)
+            {
+                m_EventSystem = FindAnyObjectByType<EventSystem>();
+                if (m_EventSystem == null)
+                {
+                    m_GraphicRaycaster = null;
+                }
+            }
+            
+            m_HasGraphicRaycaster = m_GraphicRaycaster != null;
+            m_PointerEventData = new PointerEventData(m_EventSystem);
         }
 
         void OnEnable()
@@ -100,6 +128,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                Debug.LogError("Input actions are incorrectly configured. Expected a Pointer binding ScreenTapped.", this);
                return;
+            }
+
+            if (m_HasGraphicRaycaster)
+            {
+                m_GraphicRaycastResults.Clear();
+                m_PointerEventData.Reset();
+                m_PointerEventData.position = pointer.position.ReadValue();
+                m_GraphicRaycaster.Raycast(m_PointerEventData, m_GraphicRaycastResults);
+                if (m_GraphicRaycastResults.Count > 0)
+                {
+                    return;
+                }
             }
 
             var tapPosition = pointer.position.ReadValue();
