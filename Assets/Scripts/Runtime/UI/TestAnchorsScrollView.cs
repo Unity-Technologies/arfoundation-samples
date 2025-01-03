@@ -40,7 +40,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         Dictionary<TrackableId, TestAnchorScrollViewEntry> m_ActiveTestAnchorEntriesByAnchorId = new();
         SerializableGuid m_InvalidAnchorGuid = default;
 
-        List<ARAnchorSaveOrLoadResult> m_OutputSavedAnchorResults = new();
+        List<ARSaveOrLoadAnchorResult> m_OutputSavedAnchorResults = new();
 
         void Awake()
         {
@@ -215,7 +215,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
 
                 anchorEntries[i].StopSaveInProgressAnimation();
+#pragma warning disable CS4014
                 anchorEntries[i].ShowSaveResult(wasSaveSuccessful, m_ResultDurationInSeconds);
+#pragma warning restore CS4014
             }
         }
 
@@ -453,7 +455,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         async void LoadAnchorsAsync(List<SerializableGuid> savedAnchorGuids)
         {
-            var loadAnchorResults = new List<ARAnchorSaveOrLoadResult>();
+            var loadAnchorResults = new List<ARSaveOrLoadAnchorResult>();
             await m_AnchorManager.TryLoadAnchorsAsync(
                 savedAnchorGuids,
                 loadAnchorResults,

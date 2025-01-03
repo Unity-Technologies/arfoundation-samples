@@ -21,9 +21,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField, HideInInspector]
         RectTransform m_RectTransform;
 
-        public static float widthRatio { get; private set; }
-        public static float heightRatio { get; private set; }
-        
+        public static float sizeRatio { get; private set; }
+
         void Reset()
         {
             m_RectTransform = GetComponent<RectTransform>();
@@ -65,22 +64,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             // checking for situation where this code is run on a platform with no screen
             // such as CI tests
-            if (Screen.width == 0 || Screen.height == 0)
+            if (Screen.width == 0 || Screen.height == 0 || m_Canvas.scaleFactor == 0)
                 return;
 
-            var safeAreaSize = Screen.safeArea.size;
-            var safeAreaCenter = Screen.safeArea.center;
-            var scaleFactor = m_Canvas.scaleFactor;
-            var scaledWidth = Screen.width / scaleFactor;
-            var scaledHeight = Screen.height / scaleFactor;
+            sizeRatio = 1 / m_Canvas.scaleFactor;
 
-            widthRatio = scaledWidth / Screen.width;
-            heightRatio = scaledHeight / Screen.height;
-
-            var scaledSafeAreaSize = safeAreaSize * new Vector2(widthRatio, heightRatio);
+            var scaledSafeAreaSize = Screen.safeArea.size / m_Canvas.scaleFactor;
             m_RectTransform.sizeDelta = scaledSafeAreaSize;
 
-            var scaledSafeAreaCenter = safeAreaCenter * new Vector2(widthRatio, heightRatio);
+            var scaledSafeAreaCenter = Screen.safeArea.center / m_Canvas.scaleFactor;
             m_RectTransform.anchoredPosition = scaledSafeAreaCenter;
         }
     }

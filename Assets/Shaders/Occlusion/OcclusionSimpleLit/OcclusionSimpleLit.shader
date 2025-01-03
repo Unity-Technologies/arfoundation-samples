@@ -131,6 +131,10 @@ Shader "Occlusion/OcclusionSimpleLit"
             #pragma instancing_options renderinglayer
             #include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
 
+            // Occlusion features
+            #pragma multi_compile _ XR_LINEAR_DEPTH
+            #pragma multi_compile _ XR_HARD_OCCLUSION XR_SOFT_OCCLUSION
+
             //--------------------------------------
             // Defines
             #define BUMP_SCALE_NOT_SUPPORTED 1

@@ -20,8 +20,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             defaultCapacity: 8,
             maxSize: 1024);
 
-        static readonly Pool.ObjectPool<Dictionary<AsyncInstantiateOperation<AnchorScrollViewEntry>, ARAnchorSaveOrLoadResult>> s_AsyncInstantiateMaps = new(
-            createFunc: () => new Dictionary<AsyncInstantiateOperation<AnchorScrollViewEntry>, ARAnchorSaveOrLoadResult>(),
+        static readonly Pool.ObjectPool<Dictionary<AsyncInstantiateOperation<AnchorScrollViewEntry>, ARSaveOrLoadAnchorResult>> s_AsyncInstantiateMaps = new(
+            createFunc: () => new Dictionary<AsyncInstantiateOperation<AnchorScrollViewEntry>, ARSaveOrLoadAnchorResult>(),
             actionOnGet: null,
             actionOnRelease: null,
             actionOnDestroy: null,
@@ -89,7 +89,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         Dictionary<SerializableGuid, AnchorScrollViewEntry> m_SavedAnchorEntriesBySavedAnchorGuid = new();
         Dictionary<TrackableId, SerializableGuid> m_SavedAnchorGuidByAnchorId = new();
 
-        List<ARAnchorSaveOrLoadResult> m_SaveAnchorResults = new();
+        List<ARSaveOrLoadAnchorResult> m_SaveAnchorResults = new();
         List<XREraseAnchorResult> m_OutputEraseAnchorResults = new();
 
         bool m_SupportsGetSavedAnchorIds;
@@ -232,14 +232,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 anchorEntry.StartActionLoadingAnimation();
             }
 
-            var loadedAnchorResults = new List<ARAnchorSaveOrLoadResult>();
+            var loadAnchorResults = new List<ARSaveOrLoadAnchorResult>();
             await m_AnchorManager.TryLoadAnchorsAsync(
                 anchorGuidsToLoad,
-                loadedAnchorResults,
+                loadAnchorResults,
                 OnIncrementalLoadResultsAvailable);
 
             var awaitables = new List<Awaitable>();
-            foreach (var loadAnchorResult in loadedAnchorResults)
+            foreach (var loadAnchorResult in loadAnchorResults)
             {
                 var entry = m_SavedAnchorEntriesBySavedAnchorGuid[loadAnchorResult.savedAnchorGuid];
                 if (loadAnchorResult.resultStatus.IsSuccess())
@@ -258,7 +258,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
-        async void OnIncrementalLoadResultsAvailable(ReadOnlyListSpan<ARAnchorSaveOrLoadResult> loadAnchorResults)
+        async void OnIncrementalLoadResultsAvailable(ReadOnlyListSpan<ARSaveOrLoadAnchorResult> loadAnchorResults)
         {
             var showResultAwaitables = s_VoidAwaitableLists.Get();
             foreach (var loadAnchorResult in loadAnchorResults)

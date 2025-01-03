@@ -82,6 +82,10 @@ Shader "Occlusion/OcclusionUnlit"
             #pragma multi_compile_instancing
             #include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
 
+            // Occlusion features
+            #pragma multi_compile _ XR_LINEAR_DEPTH
+            #pragma multi_compile _ XR_HARD_OCCLUSION XR_SOFT_OCCLUSION
+
             // -------------------------------------
             // Includes
             #include "Packages/com.unity.render-pipelines.universal/Shaders/UnlitInput.hlsl"

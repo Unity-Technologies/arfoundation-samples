@@ -15,6 +15,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         const string k_DefaultMenuScene = "Menu";
         const string k_MetaMenuScene = "MetaMenu";
         const string k_HololensMenuScene = "HololensMenu";
+        const string k_AndroidXRMenuScene = "AndroidXRMenu";
 
         void Awake()
         {
@@ -47,6 +48,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 case "Meta-Session":
                     return k_MetaMenuScene;
+                case "Android-Session":
+                    return k_AndroidXRMenuScene;
                 case "ARKit-Session":
                 case "ARCore-Session":
                 case "XRSimulation-Session":
@@ -59,7 +62,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public static bool IsHmdDevice()
         {
             var sceneName = GetMenuSceneName();
-            return (sceneName == k_MetaMenuScene) || (sceneName == k_HololensMenuScene);
+            return (sceneName == k_MetaMenuScene) || (sceneName == k_HololensMenuScene) || (sceneName == k_AndroidXRMenuScene);
         }
 
         public static void LoadMenuScene()

@@ -70,7 +70,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         /// <summary>
         /// The display rotation matrix for the shader.
-        /// </summary.
+        /// </summary>
         Matrix4x4 m_DisplayRotationMatrix = Matrix4x4.identity;
 
 #if UNITY_ANDROID

@@ -21,7 +21,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         [SerializeField, HideInInspector]
         Image m_Image;
-        
+
         void Reset()
         {
             m_RectTransform = GetComponent<RectTransform>();
@@ -45,7 +45,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (m_RectTransform == null || m_BottomRegionSafeAreaRT == null)
                 return;
 
-            var safeAreaBottomHeight = Screen.safeArea.yMin * ScaleToSizeOfSafeArea.heightRatio;
+            var safeAreaBottomHeight = Screen.safeArea.yMin * ScaleToSizeOfSafeArea.sizeRatio;
             var backgroundHeight = m_BottomRegionSafeAreaRT.sizeDelta.y + safeAreaBottomHeight;
             if (Mathf.Approximately(m_RectTransform.sizeDelta.y, backgroundHeight))
                 return;

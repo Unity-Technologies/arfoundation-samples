@@ -27,7 +27,6 @@ Shader "Unlit/Transparent Color"
 
             struct v2f
             {
-                float2 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
             };
 
@@ -37,8 +36,6 @@ Shader "Unlit/Transparent Color"
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                // o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                UNITY_TRANSFER_FOG(o,o.vertex);
                 return o;
             }
 
