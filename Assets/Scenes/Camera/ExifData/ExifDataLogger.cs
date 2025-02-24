@@ -30,11 +30,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void OnEnable()
         {
             if (m_CameraManager == null)
-#if UNITY_2023_1_OR_NEWER
                 m_CameraManager = FindAnyObjectByType<ARCameraManager>();
-#else
-                m_CameraManager = FindObjectOfType<ARCameraManager>();
-#endif
             
             if (m_CameraManager != null)
             {

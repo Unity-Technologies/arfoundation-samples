@@ -1,4 +1,4 @@
-#if METAOPENXR_2_1_OR_NEWER
+#if METAOPENXR_2_1_OR_NEWER && (UNITY_EDITOR || UNITY_ANDROID)
 using TMPro;
 using UnityEngine.XR.OpenXR;
 using UnityEngine.XR.OpenXR.Features.Meta;
@@ -75,4 +75,4 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
     }
 }
-#endif // METAOPENXR_2_1_OR_NEWER
+#endif // METAOPENXR_2_1_OR_NEWER && (UNITY_EDITOR || UNITY_ANDROID)

@@ -73,11 +73,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void Awake()
         {
             if (m_Session == null)
-#if UNITY_2023_1_OR_NEWER
                 m_Session = FindAnyObjectByType<ARSession>();
-#else
-                m_Session = FindObjectOfType<ARSession>();
-#endif
 
             m_FaceManager = GetComponent<ARFaceManager>();
             var camera = GetComponent<XROrigin>().Camera;

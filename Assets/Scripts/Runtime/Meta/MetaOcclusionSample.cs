@@ -1,9 +1,8 @@
 using TMPro;
-using UnityEngine;
+#if METAOPENXR_2_1_OR_NEWER && (UNITY_EDITOR || UNITY_ANDROID)
 using UnityEngine.XR.ARSubsystems;
-#if METAOPENXR_2_1_OR_NEWER
 using UnityEngine.XR.OpenXR.Features.Meta;
-#endif // METAOPENXR_2_1_OR_NEWER
+#endif // METAOPENXR_2_1_OR_NEWER && (UNITY_EDITOR || UNITY_ANDROID)
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -16,7 +15,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField, Tooltip("Writes whether hand removal is supported.")]
         TextMeshProUGUI m_DebugText;
 
-#if METAOPENXR_2_1_OR_NEWER
+#if METAOPENXR_2_1_OR_NEWER && (UNITY_EDITOR || UNITY_ANDROID)
         MetaOpenXROcclusionSubsystem m_OcclusionSubsystem;
 
         void OnEnable()
@@ -49,15 +48,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 _ => m_DebugText.text
             };
         }
+#endif // METAOPENXR_2_1_OR_NEWER && (UNITY_EDITOR || UNITY_ANDROID)
 
         public void ToggleHandRemoval()
         {
+#if METAOPENXR_2_1_OR_NEWER && (UNITY_EDITOR || UNITY_ANDROID)
             var result = m_OcclusionSubsystem.TrySetHandRemovalEnabled(!m_OcclusionSubsystem.isHandRemovalEnabled);
             if (result < 0)
                 Debug.LogError($"Setting hand removal failed with error: {result.ToString()}");
             else
                 UpdateDebugText();
+#endif // METAOPENXR_2_1_OR_NEWER && (UNITY_EDITOR || UNITY_ANDROID)
+
         }
-#endif // METAOPENXR_2_1_OR_NEWER
     }
 }

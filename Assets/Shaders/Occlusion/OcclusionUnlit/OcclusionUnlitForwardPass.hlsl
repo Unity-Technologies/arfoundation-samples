@@ -24,13 +24,13 @@ struct Attributes : OcclusionAttributes
 
 struct Varyings : OcclusionVaryings
 {
-    float2 uv : TEXCOORD3;
-    float fogCoord : TEXCOORD4;
+    float2 uv : TEXCOORD1;
+    float fogCoord : TEXCOORD2;
 
     #if defined(DEBUG_DISPLAY)
-    float3 positionWS : TEXCOORD5;
-    float3 normalWS : TEXCOORD6;
-    float3 viewDirWS : TEXCOORD7;
+    float3 positionWS : TEXCOORD3;
+    float3 normalWS : TEXCOORD4;
+    float3 viewDirWS : TEXCOORD5;
     #endif
 
     UNITY_VERTEX_INPUT_INSTANCE_ID
@@ -90,7 +90,7 @@ Varyings UnlitPassVertex(Attributes input)
     output.viewDirWS = viewDirWS;
     #endif
 
-    SetOcclusionVertOutputs(input.positionOS, output.positionCS, output.runtimeDepth, output.depthSpaceScreenPosition);
+    SetOcclusionVertOutputs(input.positionOS, output.positionCS, output.objectPositionWS);
 
     return output;
 }
@@ -148,7 +148,7 @@ void UnlitPassFragment(
     finalColor.rgb = MixFog(finalColor.rgb, fogFactor);
     finalColor.a = OutputAlpha(finalColor.a, IsSurfaceTypeTransparent(_Surface));
 
-    SetOcclusion(input.depthSpaceScreenPosition, input.runtimeDepth, finalColor);
+    SetOcclusion(input.objectPositionWS, finalColor);
 
     outColor = finalColor;
 

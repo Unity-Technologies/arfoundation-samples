@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.XR.ARFoundation;
-using Unity.XR.CoreUtils;
+﻿using Unity.XR.CoreUtils;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -82,14 +78,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void Reset()
         {
-            if (m_Session == null)
-            {
-#if UNITY_2023_1_OR_NEWER
-                m_Session = FindAnyObjectByType<ARSession>();
-#else
-                m_Session = FindObjectOfType<ARSession>();
-#endif
-            }
+            m_Session = FindAnyObjectByType<ARSession>();
         }
     }
 }

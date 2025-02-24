@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.ARSubsystems;
 
@@ -19,7 +18,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         Text m_CurrentRenderModeText;
 
         bool m_FrameTimingSupported;
-        double m_MaxGPUFrameTime = 0.0;
+        double m_MaxGPUFrameTime;
         double m_MinGPUFrameTime = 1000.0;
 
         string m_BackgroundRenderString;
@@ -102,11 +101,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             if (obj == null)
             {
-#if UNITY_2023_1_OR_NEWER
                 obj = FindAnyObjectByType<T>();
-#else
-                obj = FindObjectOfType<T>();
-#endif
                 return obj != null;
             }
 

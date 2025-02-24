@@ -1,6 +1,4 @@
-using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 #if UNITY_IOS && !UNITY_EDITOR
 using UnityEngine.XR.ARKit;
@@ -156,7 +154,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void Awake()
         {
-#if UNITY_2023_1_OR_NEWER
             m_CameraManager = FindAnyObjectByType<ARCameraManager>();
             m_EnvironmentProbeManager = FindAnyObjectByType<AREnvironmentProbeManager>();
             m_FaceManager = FindAnyObjectByType<ARFaceManager>();
@@ -165,16 +162,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_PlaneManager = FindAnyObjectByType<ARPlaneManager>();
             m_RaycastManager = FindAnyObjectByType<ARRaycastManager>();
             m_Session = FindAnyObjectByType<ARSession>();
-#else
-            m_CameraManager = FindObjectOfType<ARCameraManager>();
-            m_EnvironmentProbeManager = FindObjectOfType<AREnvironmentProbeManager>();
-            m_FaceManager = FindObjectOfType<ARFaceManager>();
-            m_MeshManager = FindObjectOfType<ARMeshManager>();
-            m_OcclusionManager = FindObjectOfType<AROcclusionManager>();
-            m_PlaneManager = FindObjectOfType<ARPlaneManager>();
-            m_RaycastManager = FindObjectOfType<ARRaycastManager>();
-            m_Session = FindObjectOfType<ARSession>();
-#endif
         }
 
         void Update()
@@ -215,7 +202,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_SessionFpsText.text = $"AR Session FPS: {arFrameRate}";
         }
 
-        void SetFeatureDisplayState(Text textUI, bool isActive)
+        static void SetFeatureDisplayState(Text textUI, bool isActive)
         {
             textUI.color = isActive ? Color.green : Color.red;
         }

@@ -129,14 +129,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void Reset()
         {
             m_XROrigin = GetComponent<XROrigin>();
-
             if (m_XROrigin == null)
             {
-#if UNITY_2023_1_OR_NEWER
                 m_XROrigin = FindAnyObjectByType<XROrigin>();
-#else
-                m_XROrigin = FindObjectOfType<XROrigin>();
-#endif
             }
         }
     }

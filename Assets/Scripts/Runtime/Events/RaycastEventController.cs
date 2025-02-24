@@ -183,25 +183,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         void Reset()
         {
-            m_RaycastManager = GetComponent<ARRaycastManager>();
             m_XROrigin = GetComponent<XROrigin>();
-
             if (m_XROrigin == null)
             {
-#if UNITY_2023_1_OR_NEWER
                 m_XROrigin = FindAnyObjectByType<XROrigin>();
-#else
-                m_XROrigin = FindObjectOfType<XROrigin>();
-#endif
             }
 
+            m_RaycastManager = GetComponent<ARRaycastManager>();
             if (m_RaycastManager == null)
             {
-#if UNITY_2023_1_OR_NEWER
                 m_RaycastManager = FindAnyObjectByType<ARRaycastManager>();
-#else
-                m_RaycastManager = FindObjectOfType<ARRaycastManager>();
-#endif
             }
         }
     }

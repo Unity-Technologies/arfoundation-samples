@@ -20,36 +20,36 @@ struct Attributes : OcclusionAttributes
 
 struct Varyings : OcclusionVaryings
 {
-    float2 uv                       : TEXCOORD3;
+    float2 uv                       : TEXCOORD1;
 
-    float3 positionWS                  : TEXCOORD4;    // xyz: posWS
+    float3 positionWS                  : TEXCOORD2;    // xyz: posWS
 
     #ifdef _NORMALMAP
-        half4 normalWS                 : TEXCOORD2;    // xyz: normal, w: viewDir.x
-        half4 tangentWS                : TEXCOORD3;    // xyz: tangent, w: viewDir.y
-        half4 bitangentWS              : TEXCOORD4;    // xyz: bitangent, w: viewDir.z
+        half4 normalWS                 : TEXCOORD3;    // xyz: normal, w: viewDir.x
+        half4 tangentWS                : TEXCOORD4;    // xyz: tangent, w: viewDir.y
+        half4 bitangentWS              : TEXCOORD5;    // xyz: bitangent, w: viewDir.z
     #else
-        half3  normalWS                : TEXCOORD5;
+        half3  normalWS                : TEXCOORD6;
     #endif
 
     #ifdef _ADDITIONAL_LIGHTS_VERTEX
-        half4 fogFactorAndVertexLight  : TEXCOORD5; // x: fogFactor, yzw: vertex light
+        half4 fogFactorAndVertexLight  : TEXCOORD7; // x: fogFactor, yzw: vertex light
     #else
-        half  fogFactor                 : TEXCOORD6;
+        half  fogFactor                 : TEXCOORD8;
     #endif
 
     #if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
-        float4 shadowCoord             : TEXCOORD7;
+        float4 shadowCoord             : TEXCOORD9;
     #endif
 
-    DECLARE_LIGHTMAP_OR_SH(staticLightmapUV, vertexSH, 8);
+    DECLARE_LIGHTMAP_OR_SH(staticLightmapUV, vertexSH, 10);
 
 #ifdef DYNAMICLIGHTMAP_ON
-    float2  dynamicLightmapUV : TEXCOORD9; // Dynamic lightmap UVs
+    float2  dynamicLightmapUV : TEXCOORD11; // Dynamic lightmap UVs
 #endif
 
 #ifdef USE_APV_PROBE_OCCLUSION
-    float4 probeOcclusion : TEXCOORD10;
+    float4 probeOcclusion : TEXCOORD12;
 #endif
     
     UNITY_VERTEX_INPUT_INSTANCE_ID
@@ -183,7 +183,7 @@ Varyings LitPassVertexSimple(Attributes input)
         output.shadowCoord = GetShadowCoord(vertexInput);
     #endif
 
-    SetOcclusionVertOutputs(input.positionOS, output.positionCS, output.runtimeDepth, output.depthSpaceScreenPosition);
+    SetOcclusionVertOutputs(input.positionOS, output.positionCS, output.objectPositionWS);
 
     return output;
 }
@@ -221,7 +221,7 @@ void LitPassFragmentSimple(
     color.rgb = MixFog(color.rgb, inputData.fogCoord);
     color.a = OutputAlpha(color.a, IsSurfaceTypeTransparent(_Surface));
 
-    SetOcclusion(input.depthSpaceScreenPosition, input.runtimeDepth, color);
+    SetOcclusion(input.objectPositionWS, color);
 
     outColor = color;
 

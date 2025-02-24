@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace UnityEngine.XR.ARFoundation.Samples
+﻿namespace UnityEngine.XR.ARFoundation.Samples
 {
     [RequireComponent(typeof(Renderer))]
     public class CameraGrain : MonoBehaviour
@@ -18,11 +16,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void Start()
         {
             if (cameraManager == null)
-#if UNITY_2023_1_OR_NEWER
                 cameraManager = FindAnyObjectByType<ARCameraManager>();
-#else
-                cameraManager = FindObjectOfType<ARCameraManager>();
-#endif
 
             m_Renderer = GetComponent<Renderer>();
             m_CameraManager.frameReceived += OnReceivedFrame;
