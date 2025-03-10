@@ -51,7 +51,7 @@ Shader "Unlit/CustomBottomEdgeGradient"
                 v2f o;
                 o.vertex = mul(UNITY_MATRIX_MVP, float4(v.vertex.xyz, 1.0));
                 o.uv = v.uv * _MainTex_ST.xy + _MainTex_ST.zw;
-                o.localPos = v.vertex; // 0 - 1
+                o.localPos = v.vertex.xyz; // 0 - 1
                 return o;
             }
 
