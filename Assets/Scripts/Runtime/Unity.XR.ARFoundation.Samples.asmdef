@@ -12,11 +12,14 @@
         "Unity.XR.ARKit",
         "Unity.XR.ARKit.FaceTracking",
         "Unity.XR.ARCore",
-        "Unity.VisualScripting.Core",
-        "Unity.VisualScripting.Flow",
         "Unity.XR.MetaOpenXR",
         "Unity.XR.OpenXR",
-        "Unity.XR.Simulation"
+        "Unity.XR.Simulation",
+        "Unity.XR.AndroidOpenXR",
+        "Unity.Netcode.Runtime",
+        "Unity.Networking.Transport",
+        "Unity.Collections",
+        "Unity.XR.Hands"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -50,6 +53,16 @@
             "name": "com.unity.xr.openxr",
             "expression": "1.13.0",
             "define": "OPENXR_1_13_OR_NEWER"
+        },
+        {
+            "name": "com.unity.xr.androidxr-openxr",
+            "expression": "0.0.1",
+            "define": "ANDROIDOPENXR_0_0_1_OR_NEWER"
+        },
+        {
+            "name": "com.unity.xr.meta-openxr",
+            "expression": "2.2.0-pre.1",
+            "define": "METAOPENXR_2_2_OR_NEWER"
         }
     ],
     "noEngineReferences": false

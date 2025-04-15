@@ -11,9 +11,16 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: adf2a45713b8498389fc5c57560f14d1, type: 3}
   m_Name: MetaSceneCapture
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   m_SceneName: MetaSceneCapture
-  m_Requirements: []
+  m_Requirements:
+  - rid: 9206641978344997148
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 9206641978344997148
+      type: {class: RequiresOpenXRFeature, ns: UnityEngine.XR.ARFoundation.Samples,
+        asm: Unity.XR.ARFoundation.Samples}
+      data:
+        m_RequiredFeature: UnityEngine.XR.OpenXR.Features.Meta.ARSessionFeature,
+          Unity.XR.MetaOpenXR, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null

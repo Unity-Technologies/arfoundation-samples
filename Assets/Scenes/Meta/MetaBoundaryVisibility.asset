@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SceneName: MetaBoundaryVisibility
   m_Requirements:
-  - rid: 8196434880707690711
+  - rid: 1024468945353834572
   references:
     version: 2
     RefIds:
-    - rid: 8196434880707690711
-      type: {class: RequiresBoundaryVisibilityMeta, ns: UnityEngine.XR.ARFoundation.Samples,
+    - rid: 1024468945353834572
+      type: {class: RequiresOpenXRFeature, ns: UnityEngine.XR.ARFoundation.Samples,
         asm: Unity.XR.ARFoundation.Samples}
-      data: 
+      data:
+        m_RequiredFeature: UnityEngine.XR.OpenXR.Features.Meta.BoundaryVisibilityFeature,
+          Unity.XR.MetaOpenXR, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null

@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5d80f45fb5f4418a5e84a476e517628, type: 3}
+  m_Name: PokeSphereColor
+  m_EditorClassIdentifier: 
+  m_Comments: 'For each state in the list, there are 2 values (Start and End).
+
+    Default
+    => End value is chosen | Hovering => Blend between [Start,End] with input
+
+    Select
+    => Value can be animated between [Start,End] for click anim.'
+  m_ReadOnly: 1
+  m_Value:
+    m_StateAnimationCurve:
+      m_UseConstant: 1
+      m_ConstantValue:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_Variable: {fileID: 0}
+    m_List:
+    - stateName: disabled
+      animationStateStartValue: {r: 0.90196085, g: 0.90196085, b: 0.90196085, a: 0.21568628}
+      animationStateEndValue: {r: 0.90196085, g: 0.90196085, b: 0.90196085, a: 0.21568628}
+    - stateName: idle
+      animationStateStartValue: {r: 0.90196085, g: 0.90196085, b: 0.90196085, a: 1}
+      animationStateEndValue: {r: 0.90196085, g: 0.90196085, b: 0.90196085, a: 1}
+    - stateName: hovered
+      animationStateStartValue: {r: 1, g: 0.7843138, b: 0.5686275, a: 1}
+      animationStateEndValue: {r: 1, g: 0.7843138, b: 0.5686275, a: 1}
+    - stateName: hoveredPriority
+      animationStateStartValue: {r: 1, g: 0.7843138, b: 0.5686275, a: 1}
+      animationStateEndValue: {r: 1, g: 0.7843138, b: 0.5686275, a: 1}
+    - stateName: selected
+      animationStateStartValue: {r: 0.5686275, g: 0.7843138, b: 1, a: 1}
+      animationStateEndValue: {r: 0.5686275, g: 0.7843138, b: 1, a: 1}
+    - stateName: activated
+      animationStateStartValue: {r: 0.90196085, g: 0.90196085, b: 0.90196085, a: 1}
+      animationStateEndValue: {r: 0.90196085, g: 0.90196085, b: 0.90196085, a: 1}
+    - stateName: focused
+      animationStateStartValue: {r: 0.90196085, g: 0.90196085, b: 0.90196085, a: 1}
+      animationStateEndValue: {r: 0.90196085, g: 0.90196085, b: 0.90196085, a: 1}
+    m_ColorBlendMode: 0
+    m_BlendAmount: 1

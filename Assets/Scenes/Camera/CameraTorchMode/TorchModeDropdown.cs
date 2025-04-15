@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -32,7 +33,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_CameraManager = FindAnyObjectByType<ARCameraManager>();
         }
 
-        private void OnEnable()
+        void OnEnable()
         {
             if (m_CameraManager != null)
             {
@@ -55,7 +56,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     OnDropdownValueChanged(m_Dropdown);
                 }
             );
+
             ARSession.stateChanged += SessionChanged;
+        }
+
+        void OnDestroy()
+        {
+            ARSession.stateChanged -= SessionChanged;
         }
 
         void Start()
@@ -90,8 +97,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (m_CameraManager == null)
                 return;
 
-            if ((change.state == ARSessionState.Ready
-                || change.state == ARSessionState.SessionTracking)
+            if (change.state is ARSessionState.Ready or ARSessionState.SessionTracking
                 && m_CameraManager.DoesCurrentCameraSupportTorch())
             {
                 if (torchModeSupported != null)

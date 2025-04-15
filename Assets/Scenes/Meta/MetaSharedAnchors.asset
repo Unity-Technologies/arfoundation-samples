@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adf2a45713b8498389fc5c57560f14d1, type: 3}
+  m_Name: MetaSharedAnchors
+  m_EditorClassIdentifier: 
+  m_SceneName: MetaSharedAnchors
+  m_Requirements:
+  - rid: 5145623472158540244
+  - rid: 4788940866556788922
+  - rid: 2862248137945776348
+  - rid: 2862248137945776349
+  - rid: 9206641917974020535
+  references:
+    version: 2
+    RefIds:
+    - rid: 2862248137945776348
+      type: {class: RequiresPlaneDetection, ns: UnityEngine.XR.ARFoundation.Samples,
+        asm: Unity.XR.ARFoundation.Samples}
+      data:
+        m_RequiresPlaneClassifications: 0
+    - rid: 2862248137945776349
+      type: {class: RequiresRaycasts, ns: UnityEngine.XR.ARFoundation.Samples, asm: Unity.XR.ARFoundation.Samples}
+      data: 
+    - rid: 4788940866556788922
+      type: {class: RequiresAnchors, ns: UnityEngine.XR.ARFoundation.Samples, asm: Unity.XR.ARFoundation.Samples}
+      data:
+        m_RequiresSaveAnchor: 0
+        m_RequiresLoadAnchor: 0
+        m_RequiresEraseAnchor: 0
+        m_RequiresGetSavedAnchorIds: 0
+        m_RequiresAsyncCancellation: 0
+    - rid: 5145623472158540244
+      type: {class: RequiresOpenXRFeature, ns: UnityEngine.XR.ARFoundation.Samples,
+        asm: Unity.XR.ARFoundation.Samples}
+      data:
+        m_RequiredFeature: UnityEngine.XR.OpenXR.Features.Meta.ARAnchorFeature, Unity.XR.MetaOpenXR,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    - rid: 9206641917974020535
+      type: {class: RequiresMetaSharedAnchors, ns: UnityEngine.XR.ARFoundation.Samples,
+        asm: Unity.XR.ARFoundation.Samples}
+      data: 

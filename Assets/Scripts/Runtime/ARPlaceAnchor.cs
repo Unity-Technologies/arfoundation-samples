@@ -15,6 +15,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         ARRaycastHitEventAsset m_RaycastHitEvent;
 
         Dictionary<TrackableId, ARAnchor> m_AnchorsByTrackableId = new();
+        List<TrackableId> m_RemovedAnchorIds = new();
 
         public ARAnchorManager anchorManager
         {
@@ -26,9 +27,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             foreach (var anchor in m_AnchorsByTrackableId.Values)
             {
-                m_AnchorManager.TryRemoveAnchor(anchor);
+                var wasRemoved = m_AnchorManager.TryRemoveAnchor(anchor);
+                if (wasRemoved)
+                    m_RemovedAnchorIds.Add(anchor.trackableId);
             }
-            m_AnchorsByTrackableId.Clear();
+
+            foreach (var anchor in m_RemovedAnchorIds)
+            {
+                m_AnchorsByTrackableId.Remove(anchor);
+            }
+
+            m_RemovedAnchorIds.Clear();
         }
 
         // Runs when the reset option is called in the context menu in-editor, or when first created.
@@ -85,7 +94,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_RaycastHitEvent.eventRaised -= CreateAnchor;
 
             if (m_AnchorManager != null)
-                m_AnchorManager.trackablesChanged.AddListener(OnAnchorsChanged);
+                m_AnchorManager.trackablesChanged.RemoveListener(OnAnchorsChanged);
         }
 
         /// <summary>
@@ -110,7 +119,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             var arAnchorDebugVisualizer = anchor.GetComponent<ARAnchorDebugVisualizer>();
             if (arAnchorDebugVisualizer != null)
             {
-                arAnchorDebugVisualizer.IsAnchorAttachedToTrackable = true;
+                arAnchorDebugVisualizer.isAnchorAttachedToTrackable = true;
                 arAnchorDebugVisualizer.SetAnchorCreationMethod(true, hit.hitType);
             }
         }

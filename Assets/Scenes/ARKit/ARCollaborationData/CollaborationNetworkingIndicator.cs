@@ -1,21 +1,23 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using UnityEngine;
 using UnityEngine.UI;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
     public class CollaborationNetworkingIndicator : MonoBehaviour
     {
+#pragma warning disable UDR0001 // Requires further investigation. Disable warning for now.
+        static bool s_IncomingDataReceived;
+        static bool s_OutgoingDataSent;
+        static bool s_HasCollaborationData;
+#pragma warning restore UDR0001
+
         [SerializeField]
         Image m_IncomingDataImage;
 
         public Image incomingDataImage
         {
-            get { return m_IncomingDataImage; }
-            set { m_IncomingDataImage = value; }
+            get => m_IncomingDataImage;
+            set => m_IncomingDataImage = value;
         }
 
         [SerializeField]
@@ -23,8 +25,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public Image outgoingDataImage
         {
-            get { return m_OutgoingDataImage; }
-            set { m_OutgoingDataImage = value; }
+            get => m_OutgoingDataImage;
+            set => m_OutgoingDataImage = value;
         }
 
         [SerializeField]
@@ -32,15 +34,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public Image hasCollaborationDataImage
         {
-            get { return m_HasCollaborationDataImage; }
-            set { m_HasCollaborationDataImage = value; }
+            get => m_HasCollaborationDataImage;
+            set => m_HasCollaborationDataImage = value;
         }
-
-        static bool s_IncomingDataReceived;
-
-        static bool s_OutgoingDataSent;
-
-        static bool s_HasCollaborationData;
 
         void Update()
         {

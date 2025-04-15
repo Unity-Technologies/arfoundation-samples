@@ -52,7 +52,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     m_CurrentCameraFacingDirection = updatedCameraFacingDirection;
                     GetComponent<ARFaceManager>().enabled = false;
                     worldSpaceObject.SetActive(true);
+#pragma warning disable UDR0005 // Unsubscribing in OnDisable is valid
                     Application.onBeforeRender += OnBeforeRender;
+#pragma warning restore UDR0005
                     if (m_Session)
                     {
                         m_Session.requestedTrackingMode = TrackingMode.PositionAndRotation;

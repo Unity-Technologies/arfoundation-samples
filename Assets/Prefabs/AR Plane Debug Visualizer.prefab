@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1239403317283813928}
   - component: {fileID: 518834582234634195}
-  - component: {fileID: 8986325881689316070}
   - component: {fileID: 5954542135268469354}
   - component: {fileID: 2022662828959295832}
   - component: {fileID: 7731245749350285424}
@@ -54,28 +53,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_DestroyOnRemoval: 1
   m_VertexChangedThreshold: 0.01
---- !u!64 &8986325881689316070
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1568414836858200}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!114 &5954542135268469354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,7 +377,6 @@ GameObject:
   - component: {fileID: 7384126549356014263}
   - component: {fileID: 9165315132787293126}
   - component: {fileID: 243492699292073304}
-  - component: {fileID: 1448868074571866840}
   m_Layer: 0
   m_Name: Debug Canvas
   m_TagString: Untagged
@@ -474,23 +450,6 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 1
---- !u!114 &1448868074571866840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5476187334413124446}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!1 &5905650353743308310
 GameObject:
   m_ObjectHideFlags: 0

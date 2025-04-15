@@ -1,0 +1,34 @@
+{
+    "name": "Unity.XR.Interaction.Toolkit.Samples.SpatialKeyboard.Editor",
+    "rootNamespace": "UnityEditor.XR.Interaction.Toolkit.Samples.SpatialKeyboard.Editor",
+    "references": [
+        "Unity.TextMeshPro",
+        "Unity.XR.Interaction.Toolkit",
+        "Unity.XR.Interaction.Toolkit.Editor",
+        "Unity.XR.Interaction.Toolkit.Samples.SpatialKeyboard",
+        "Unity.XR.CoreUtils",
+        "Unity.XR.CoreUtils.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.textmeshpro",
+            "expression": "3.0.6",
+            "define": "TEXT_MESH_PRO_PRESENT"
+        },
+        {
+            "name": "com.unity.ugui",
+            "expression": "2.0.0",
+            "define": "UGUI_2_0_PRESENT"
+        }
+    ],
+    "noEngineReferences": false
+}

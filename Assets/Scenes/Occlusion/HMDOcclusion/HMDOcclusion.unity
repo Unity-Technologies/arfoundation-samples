@@ -616,12 +616,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!20 &1030168293 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 8766024634595469703, guid: 8f2c1ffdafd49a943ac79dc0ff480220,
-    type: 3}
-  m_PrefabInstance: {fileID: 1512850612}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1252770246
 GameObject:
   m_ObjectHideFlags: 0
@@ -678,7 +672,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 735488b2e65b4bc42963e02029a764cb, type: 2}
+  - {fileID: 2100000, guid: 640d0a2333599464dabc74e25dd7ca79, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -947,7 +941,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_OcclusionManager: {fileID: 1512850618}
-  m_XRCamera: {fileID: 1030168293}
+  m_OcclusionShaderMode: 1
+  m_SoftOcclusionPreprocessShader: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

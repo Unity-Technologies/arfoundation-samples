@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 53
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0997278c24a4f4d9d916b84ac4d34b87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Rules:
+    m_Rules: []
+  DiagnosticParams:
+    m_ParamsStack:
+    - PlatformGroup: 0
+      m_SerializedParams:
+      - Key: SpriteAtlasEmptySpaceLimit
+        Value: 50
+      - Key: StreamingAssetsFolderSizeLimit
+        Value: 50
+      - Key: StreamingClipThresholdBytes
+        Value: 218294
+      - Key: LongDecompressedClipThresholdBytes
+        Value: 204800
+      - Key: LongCompressedMobileClipThresholdBytes
+        Value: 204800
+      - Key: LoadInBackGroundClipSizeThresholdBytes
+        Value: 204800
+      - Key: TextureStreamingMipmapsSizeLimit
+        Value: 4000
+    CurrentParamsIndex: 0

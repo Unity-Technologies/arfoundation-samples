@@ -3,7 +3,6 @@
 
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 #include "../OcclusionComputation.hlsl"
-#include "../OcclusionInputOutput.hlsl"
 
 #if defined(LOD_FADE_CROSSFADE)
     #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LODCrossFade.hlsl"
@@ -19,8 +18,9 @@
 
 // keep this file in sync with LitGBufferPass.hlsl
 
-struct Attributes : OcclusionAttributes
+struct Attributes
 {
+    float4 positionOS : POSITION;
     float3 normalOS : NORMAL;
     float4 tangentOS : TANGENT;
     float2 texcoord : TEXCOORD0;
@@ -29,40 +29,39 @@ struct Attributes : OcclusionAttributes
     UNITY_VERTEX_INPUT_INSTANCE_ID
 };
 
-struct Varyings : OcclusionVaryings
+struct Varyings
 {
+    float4 positionCS : SV_POSITION;
+    float3 positionWS : TEXCOORD0;
+
     float2 uv : TEXCOORD1;
 
-    #if defined(REQUIRES_WORLD_SPACE_POS_INTERPOLATOR)
-    float3 positionWS : TEXCOORD2;
-    #endif
-
-    float3 normalWS : TEXCOORD3;
+    float3 normalWS : TEXCOORD2;
     #if defined(REQUIRES_WORLD_SPACE_TANGENT_INTERPOLATOR)
-    half4 tangentWS                : TEXCOORD4;    // xyz: tangent, w: sign
+    half4 tangentWS                : TEXCOORD3;    // xyz: tangent, w: sign
     #endif
 
     #ifdef _ADDITIONAL_LIGHTS_VERTEX
-    half4 fogFactorAndVertexLight   : TEXCOORD5; // x: fogFactor, yzw: vertex light
+    half4 fogFactorAndVertexLight   : TEXCOORD4; // x: fogFactor, yzw: vertex light
     #else
-    half fogFactor : TEXCOORD5;
+    half fogFactor : TEXCOORD4;
     #endif
 
     #if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
-    float4 shadowCoord              : TEXCOORD6;
+    float4 shadowCoord              : TEXCOORD5;
     #endif
 
     #if defined(REQUIRES_TANGENT_SPACE_VIEW_DIR_INTERPOLATOR)
-    half3 viewDirTS                : TEXCOORD7;
+    half3 viewDirTS                : TEXCOORD6;
     #endif
 
-    DECLARE_LIGHTMAP_OR_SH(staticLightmapUV, vertexSH, 8);
+    DECLARE_LIGHTMAP_OR_SH(staticLightmapUV, vertexSH, 7);
     #ifdef DYNAMICLIGHTMAP_ON
-    float2  dynamicLightmapUV : TEXCOORD9; // Dynamic lightmap UVs
+    float2  dynamicLightmapUV : TEXCOORD8; // Dynamic lightmap UVs
     #endif
 
     #ifdef USE_APV_PROBE_OCCLUSION
-    float4 probeOcclusion : TEXCOORD10;
+    float4 probeOcclusion : TEXCOORD9;
     #endif
     
     UNITY_VERTEX_INPUT_INSTANCE_ID
@@ -204,15 +203,11 @@ Varyings LitPassVertex(Attributes input)
     output.fogFactor = fogFactor;
 #endif
 
-#if defined(REQUIRES_WORLD_SPACE_POS_INTERPOLATOR)
-    output.positionWS = vertexInput.positionWS;
-#endif
-
 #if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
     output.shadowCoord = GetShadowCoord(vertexInput);
-    SetOcclusionVertOutputs(input.positionOS, output.positionCS, output.objectPositionWS);
 #endif
 
+    output.positionWS = vertexInput.positionWS;
     output.positionCS = vertexInput.positionCS;
 
     return output;
@@ -261,9 +256,7 @@ void LitPassFragment(
     color.rgb = MixFog(color.rgb, inputData.fogCoord);
     color.a = OutputAlpha(color.a, IsSurfaceTypeTransparent(_Surface));
 
-    SetOcclusion(input.objectPositionWS, color);
-
-    outColor = color;
+    SetOcclusion_float(input.positionWS, color, outColor);
 
 #ifdef _WRITE_RENDERING_LAYERS
     uint renderingLayers = GetMeshRenderingLayer();

@@ -37,11 +37,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if (m_RequiresBasicLightEstimation)
             {
-                bool supportsBasics = descriptor.supportsCameraConfigurations && descriptor.supportsCameraImage;
                 bool supportsColor = descriptor.supportsAverageColorTemperature || descriptor.supportsColorCorrection;
                 bool supportsBrightness = descriptor.supportsAverageBrightness || descriptor.supportsAverageIntensityInLumens;
 
-                if (!(supportsBasics && supportsColor && supportsBrightness))
+                if (!(supportsColor && supportsBrightness))
                     return false;
             }
 

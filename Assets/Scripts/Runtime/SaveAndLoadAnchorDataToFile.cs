@@ -35,7 +35,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 if (!m_Initialized)
                     await m_InitializeAwaitable;
 
-                m_SavedAnchorsData.Add(savedAnchorId, dateTime);
+                if (!m_SavedAnchorsData.TryAdd(savedAnchorId, dateTime))
+                    m_SavedAnchorsData[savedAnchorId] = dateTime;
+
                 await WriteSavedAnchorIdsToFile();
             }
             catch (Exception e)
@@ -106,8 +108,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         async Awaitable WriteSavedAnchorIdsToFile()
         {
-            var jsonString = JsonConvert.SerializeObject(m_SavedAnchorsData, Formatting.Indented);
-            await File.WriteAllTextAsync(m_FilePath, jsonString);
+            await using var fileStream = new FileStream(m_FilePath, FileMode.Create, FileAccess.Write);
+            await using var writer = new StreamWriter(fileStream);
+            using var jsonWriter = new JsonTextWriter(writer);
+            var serializer = new JsonSerializer();
+            serializer.Serialize(jsonWriter, m_SavedAnchorsData);
         }
     }
 }

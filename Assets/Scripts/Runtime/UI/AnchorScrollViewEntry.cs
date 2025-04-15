@@ -71,6 +71,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public UnityEvent<AnchorScrollViewEntry> requestEraseAnchor => m_RequestEraseAnchor;
 
         CancellationTokenSource m_CancellationTokenSource = new();
+        public CancellationTokenSource cancellationTokenSource => m_CancellationTokenSource;
 
         public void StartActionLoadingAnimation()
         {
@@ -189,12 +190,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void OnRequestActionButtonClicked()
         {
-            m_RequestAction?.Invoke(this);
+            m_RequestAction.Invoke(this);
         }
 
         void OnEraseAnchorButtonClicked()
         {
-            m_RequestEraseAnchor?.Invoke(this);
+            m_RequestEraseAnchor.Invoke(this);
         }
     }
 }

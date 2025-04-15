@@ -7,6 +7,10 @@ using UnityEngine.UI;
 using UnityEngine.XR.ARSubsystems;
 using SerializableGuid = UnityEngine.XR.ARSubsystems.SerializableGuid;
 
+#if UNITY_ANDROID && ARCORE_4_2_OR_NEWER && !UNITY_EDITOR
+using UnityEngine.XR.ARCore;
+#endif
+
 namespace UnityEngine.XR.ARFoundation.Samples
 {
     public class AnchorsScrollView : MonoBehaviour
@@ -162,10 +166,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 if (result.resultStatus.IsError())
                     continue;
 
-                var newAnchorEntry = m_NewAnchorEntriesByAnchorId[result.anchor.trackableId];
                 var saveToFileAwaitable = SavePersistentAnchorGuidToFile(
                     result.resultStatus,
-                    newAnchorEntry.representedAnchor);
+                    result.savedAnchorGuid);
 
                 if (saveToFileAwaitable != null)
                     saveToFileAwaitables.Add(saveToFileAwaitable);
@@ -557,12 +560,35 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         async void RequestSaveAnchor(AnchorScrollViewEntry newAnchorEntry)
         {
+            var representedAnchor = newAnchorEntry.representedAnchor;
+
+#if UNITY_ANDROID && ARCORE_4_2_OR_NEWER && !UNITY_EDITOR
+            if (m_AnchorManager.subsystem is ARCoreAnchorSubsystem arCoreAnchorSubsystem)
+            {
+                var quality = ArFeatureMapQuality.AR_FEATURE_MAP_QUALITY_INSUFFICIENT;
+                var resultStatus = arCoreAnchorSubsystem.EstimateFeatureMapQualityForHosting(representedAnchor.trackableId, ref quality);
+
+                if (!resultStatus.IsSuccess())
+                {
+                    Debug.LogError("An error occurred while attempting to check the feature map quality of the anchor.");
+                    return;
+                }
+
+                if (quality == ArFeatureMapQuality.AR_FEATURE_MAP_QUALITY_INSUFFICIENT)
+                {
+                    Debug.LogWarning("Anchor map quality is insufficient. Save the anchor when the quality improves.");
+                    return;
+                }
+            }
+#endif
+
             newAnchorEntry.EnableActionButton(false);
             newAnchorEntry.StartActionLoadingAnimation();
 
-            var result = await m_AnchorManager.TrySaveAnchorAsync(newAnchorEntry.representedAnchor);
-            var saveToFileAwaitable = SavePersistentAnchorGuidToFile(result.status, newAnchorEntry.representedAnchor);
+            var result = await m_AnchorManager.TrySaveAnchorAsync(newAnchorEntry.representedAnchor, newAnchorEntry.cancellationTokenSource.Token);
             var savedAnchorGuid = result.value;
+            var saveToFileAwaitable = SavePersistentAnchorGuidToFile(result.status, savedAnchorGuid);
+
             AsyncInstantiateOperation<AnchorScrollViewEntry> saveEntryAwaitable = null;
             if (result.status.IsSuccess() && !m_SavedAnchorEntriesBySavedAnchorGuid.ContainsKey(savedAnchorGuid))
             {
@@ -589,7 +615,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             await ShowEntryActionResult(newAnchorEntry, result.status, result.value);
         }
 
-        Awaitable SavePersistentAnchorGuidToFile(XRResultStatus resultStatus, ARAnchor anchor)
+        Awaitable SavePersistentAnchorGuidToFile(XRResultStatus resultStatus, TrackableId guid)
         {
             var wasSaveSuccessful = resultStatus.IsSuccess();
             if (m_SupportsGetSavedAnchorIds || !wasSaveSuccessful)
@@ -598,7 +624,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             m_SaveAndLoadAnchorDataToFile ??= new SaveAndLoadAnchorDataToFile();
-            return m_SaveAndLoadAnchorDataToFile.SaveAnchorIdAsync(anchor.trackableId, DateTime.Now);
+            return m_SaveAndLoadAnchorDataToFile.SaveAnchorIdAsync(guid, DateTime.Now);
         }
 
         void UpdateSavedAnchorEntry(
@@ -641,14 +667,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
             entry.EnableActionButton(false);
             entry.StartActionLoadingAnimation();
 
-            var result = await m_AnchorManager.TryLoadAnchorAsync(entry.savedAnchorGuid);
+            var result = await m_AnchorManager.TryLoadAnchorAsync(entry.savedAnchorGuid, entry.cancellationTokenSource.Token);
             var wasLoadSuccessful = result.status.IsSuccess();
             if (wasLoadSuccessful)
             {
                 entry.representedAnchor = result.value;
                 entry.EnableActionButton(false);
-                // add anchor id to the load request list so when the added anchor change event
-                // is raised from the anchor trackable manager, we can know if an entry for this anchor already exists
+                // add anchor id to load request list so when the added anchor change event
+                // is raised, we can know an entry for this anchor already exists
                 m_LoadRequests.Add(entry.representedAnchor.trackableId);
                 m_SavedAnchorGuidByAnchorId.TryAdd(entry.representedAnchor.trackableId, entry.savedAnchorGuid);
             }

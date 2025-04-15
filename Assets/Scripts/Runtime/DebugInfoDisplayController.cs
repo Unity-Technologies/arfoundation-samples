@@ -20,7 +20,7 @@ namespace UnityEngine.XR.ARFoundation
 
         [SerializeField, Tooltip("")]
         TextMeshProUGUI m_DebugLabelTypes;
-        
+
         [SerializeField, Tooltip("")]
         TextMeshProUGUI m_DebugLabelValues;
 
@@ -74,7 +74,15 @@ namespace UnityEngine.XR.ARFoundation
 
         public void AppendDebugEntry(string dataType, string dataValue)
         {
-            FormatDebugText(dataType, dataValue);
+            if (m_TypesBuilder.Length != 0)
+                m_TypesBuilder.AppendLine();
+
+            m_TypesBuilder.Append($"<b>{dataType}</b>");
+
+            if (m_ValuesBuilder.Length != 0)
+                m_ValuesBuilder.AppendLine();
+
+            m_ValuesBuilder.Append(dataValue);
         }
 
         public void RefreshDisplayInfo()
@@ -138,19 +146,6 @@ namespace UnityEngine.XR.ARFoundation
         void OnDestroy()
         {
             Destroy(m_DebugLabelValues.gameObject);
-        }
-
-        void FormatDebugText(string dataType, string value)
-        {
-            if (m_TypesBuilder.Length != 0)
-                m_TypesBuilder.AppendLine();
-
-            m_TypesBuilder.Append($"<b>{dataType}</b>");
-
-            if (m_ValuesBuilder.Length != 0)
-                m_ValuesBuilder.AppendLine();
-
-            m_ValuesBuilder.Append(value);
         }
     }
 }

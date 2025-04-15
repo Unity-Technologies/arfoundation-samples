@@ -1,6 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace UnityEngine.XR.ARFoundation.Samples
@@ -17,45 +18,88 @@ namespace UnityEngine.XR.ARFoundation.Samples
         float m_SecondsToFade = 2;
 
         List<Color> m_StartColors = new();
-
-        WaitForSeconds m_WaitForSeconds;
         float m_FadeBeginTime;
 
-        void OnEnable()
+        [SerializeField]
+        UnityEvent m_FadeComplete = new();
+        public UnityEvent FadeComplete => m_FadeComplete;
+
+        CancellationTokenSource m_CancellationTokenSource = new();
+
+        public void ResetFade()
+        {
+            m_CancellationTokenSource.Cancel();
+            m_CancellationTokenSource = new();
+        }
+
+        void Awake()
         {
             foreach (var g in m_GraphicsToFade)
             {
                 m_StartColors.Add(g.color);
             }
-
-            m_WaitForSeconds ??= new WaitForSeconds(m_SecondsBeforeFade);
-            StartCoroutine(Fade());
         }
 
-        IEnumerator Fade()
+        void OnEnable()
         {
-            yield return m_WaitForSeconds;
+            Fade(m_CancellationTokenSource.Token);
+        }
 
-            m_FadeBeginTime = Time.time;
-            var fadePercent = (Time.time - m_FadeBeginTime) / m_SecondsToFade;
-            while (fadePercent < 1)
+        async void Fade(CancellationToken cancellationToken)
+        {
+            try
             {
-                for (var i = 0; i < m_GraphicsToFade.Count; i++)
+                try
                 {
-                    var c = m_StartColors[i];
-                    m_GraphicsToFade[i].color = new Color(c.r, c.g, c.b, c.a * (1 - fadePercent));
+                    await Awaitable.WaitForSecondsAsync(m_SecondsBeforeFade, cancellationToken);
+                }
+                catch
+                {
+                    return;
                 }
 
-                fadePercent = (Time.time - m_FadeBeginTime) / m_SecondsToFade;
-                yield return null;
-            }
+                m_FadeBeginTime = Time.time;
+                var fadePercent = (Time.time - m_FadeBeginTime) / m_SecondsToFade;
+                while (fadePercent < 1)
+                {
+                    if (cancellationToken.IsCancellationRequested)
+                        return;
 
-            for (var i = 0; i < m_GraphicsToFade.Count; i++)
+                    for (var i = 0; i < m_GraphicsToFade.Count; i++)
+                    {
+                        var c = m_StartColors[i];
+                        m_GraphicsToFade[i].color = new Color(c.r, c.g, c.b, c.a * (1 - fadePercent));
+                    }
+
+                    fadePercent = (Time.time - m_FadeBeginTime) / m_SecondsToFade;
+
+                    try
+                    {
+                        await Awaitable.NextFrameAsync(cancellationToken);
+                    }
+                    catch
+                    {
+                        return;
+                    }
+                }
+
+                for (var i = 0; i < m_GraphicsToFade.Count; i++)
+                {
+                    m_GraphicsToFade[i].color = m_StartColors[i];
+                }
+
+                gameObject.SetActive(false);
+                m_FadeComplete?.Invoke();
+            }
+            catch (Exception e)
             {
-                m_GraphicsToFade[i].color = m_StartColors[i];
+                Debug.LogException(e);
             }
+        }
 
-            gameObject.SetActive(false);
+        void OnDestroy()
+        {
+            m_CancellationTokenSource.Cancel();
         }
     }
 }

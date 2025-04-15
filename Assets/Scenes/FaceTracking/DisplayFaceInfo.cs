@@ -82,7 +82,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void OnEnable()
         {
+#pragma warning disable UDR0005 // Subscribing in OnEnable and unsubscribing in OnDisable is valid
             Application.onBeforeRender += OnBeforeRender;
+#pragma warning restore UDR0005
 
             // Detect face tracking with world-facing camera support
             var subsystem = m_Session ? m_Session.subsystem : null;

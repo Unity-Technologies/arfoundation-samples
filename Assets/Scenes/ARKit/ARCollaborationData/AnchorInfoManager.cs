@@ -50,7 +50,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             var arAnchorDebugVisualizer = anchor.GetComponent<ARAnchorDebugVisualizer>();
             if (arAnchorDebugVisualizer != null)
             {
-                arAnchorDebugVisualizer.CurrentSubsystemSessionId = session.subsystem.sessionId;
+                arAnchorDebugVisualizer.currentSubsystemSessionId = session.subsystem.sessionId;
             }
         }
     }

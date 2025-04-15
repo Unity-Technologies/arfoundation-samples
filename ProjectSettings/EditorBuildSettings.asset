@@ -39,6 +39,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Anchors/Anchors.unity
     guid: 5cba9114a192a46a7aef31da62316e39
   - enabled: 1
+    path: Assets/Scenes/Meta/MetaPersistentAnchors.unity
+    guid: 1effa307351b84badb202ab85ec82ab8
+  - enabled: 1
+    path: Assets/Scenes/Anchors/TestAnchors.unity
+    guid: 59827dbbb0f3741848771ee28a1081d3
+  - enabled: 1
     path: Assets/Scenes/Camera/CameraGrain/CameraGrain.unity
     guid: 68237ded327024ec39c1317a214ad56f
   - enabled: 1
@@ -59,6 +65,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Occlusion/HMDOcclusion/HMDOcclusion.unity
     guid: a7e4b7ddb1e5d824596f8e18b9eaea09
+  - enabled: 1
+    path: Assets/Scenes/Occlusion/HandsOcclusion/HandsOcclusion.unity
+    guid: ab7acf0d9677fbe4db51bc36647d4fcb
   - enabled: 1
     path: Assets/Scenes/EnvironmentProbes/EnvironmentProbes.unity
     guid: d568d188cadf141e38769dbabd3fe385
@@ -168,7 +177,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Meta/MetaSceneCapture.unity
     guid: 8d6a8fd41189d4105b00ec3d1b95330d
   - enabled: 1
-    path: Assets/Scenes/Meta/MetaDisplayRefreshRate.unity
+    path: Assets/Scenes/RefreshRate/OpenXRDisplayRefreshRate.unity
     guid: 07970a1a9455f4309b8e99b1c88daa98
   - enabled: 1
     path: Assets/Scenes/Meta/MetaBoundaryVisibility.unity
@@ -177,8 +186,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Camera/CameraTorchMode/CameraTorchMode.unity
     guid: ee0cc5dcbc42d5044a743cc572c4f8f1
   - enabled: 1
-    path: Assets/Scenes/Anchors/TestAnchors.unity
-    guid: 59827dbbb0f3741848771ee28a1081d3
+    path: Assets/Scenes/Meta/MetaSharedAnchors.unity
+    guid: 378abe601e1ed4f21b730a80c6caead9
   m_configObjects:
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: c52d3bb36b4c86f47af54ab9c7a02589,
       type: 2}

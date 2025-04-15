@@ -9,6 +9,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
     {
         static readonly Vector3 k_CanvasVerticalOffset = new(0, 0.1f, 0);
 
+        internal event Func<TrackableId, ARAnchorManager, bool> hasDebugInfoChanged;
+
+        internal event Action<ARAnchorManager, DebugInfoDisplayController> debugInfoChanged;
+
         [Header("Debug Options")]
         [SerializeField, Tooltip("Show trackableId visualizer.")]
         bool m_ShowTrackableId;
@@ -31,19 +35,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField, HideInInspector]
         DebugInfoDisplayController m_DebugInfoDisplayController;
 
-        Guid m_CurrentSubsystemSessionId;
-        public Guid CurrentSubsystemSessionId
-        {
-            get => m_CurrentSubsystemSessionId;
-            set => m_CurrentSubsystemSessionId = value;
-        }
+        public Guid currentSubsystemSessionId { get; set; }
 
-        bool m_IsAnchorAttachedToTrackable;
-        public bool IsAnchorAttachedToTrackable
-        {
-            get => m_IsAnchorAttachedToTrackable;
-            set => m_IsAnchorAttachedToTrackable = value;
-        }
+        public bool isAnchorAttachedToTrackable { get; set; }
+
+        public bool showEntryId { get; set; }
+
+        public int entryId { get; set; } = -1;
 
         TrackableId m_TrackableId;
         Guid m_AnchorSessionId;
@@ -51,6 +49,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         TrackingState m_TrackingState;
         bool m_IsPlacedWithRaycast;
         TrackableType m_RaycastTrackableHitType;
+        static ARAnchorManager s_AnchorManager;
 
         /// <summary>
         /// Sets the flag for visualizing if the anchor was placed using an ARRaycast.
@@ -80,6 +79,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if (!m_ShowTrackableId && !m_ShowSessionIdType && !m_ShowTrackingState && !m_ShowTrackableAttachedTo && !m_ShowRaycastTrackableHitType)
                 m_DebugInfoDisplayController.Show(false);
+
+            if (s_AnchorManager == null)
+                s_AnchorManager = FindAnyObjectByType<ARAnchorManager>();
         }
 
         void Start()
@@ -98,22 +100,26 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if (m_ARAnchor.trackableId == m_TrackableId &&
                 m_ARAnchor.sessionId == m_AnchorSessionId &&
-                m_CurrentSubsystemSessionId == m_PreviousSubsystemSessionId &&
-                m_ARAnchor.trackingState == m_TrackingState)
+                currentSubsystemSessionId == m_PreviousSubsystemSessionId &&
+                m_ARAnchor.trackingState == m_TrackingState &&
+                (hasDebugInfoChanged?.Invoke(m_ARAnchor.trackableId, s_AnchorManager) ?? false))
                 return;
 
             m_TrackableId = m_ARAnchor.trackableId;
             m_AnchorSessionId = m_ARAnchor.sessionId;
-            m_PreviousSubsystemSessionId = m_CurrentSubsystemSessionId;
+            m_PreviousSubsystemSessionId = currentSubsystemSessionId;
             m_TrackingState = m_ARAnchor.trackingState;
+
+            if (showEntryId)
+                m_DebugInfoDisplayController.AppendDebugEntry("Entry Id:", entryId.ToString());
 
             if (m_ShowTrackableId)
                 m_DebugInfoDisplayController.AppendDebugEntry("TrackableId:", m_TrackableId.ToString());
 
             if (m_ShowSessionIdType)
             {
-                var sessionIdType = m_CurrentSubsystemSessionId == Guid.Empty ||
-                    m_AnchorSessionId.Equals(m_CurrentSubsystemSessionId) ? "Local" : "Remote";
+                var sessionIdType = currentSubsystemSessionId == Guid.Empty ||
+                    m_AnchorSessionId.Equals(currentSubsystemSessionId) ? "Local" : "Remote";
                 m_DebugInfoDisplayController.AppendDebugEntry("SessionId Type:", sessionIdType);
             }
 
@@ -129,9 +135,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             if (m_ShowTrackableAttachedTo)
-            {
-                m_DebugInfoDisplayController.AppendDebugEntry("Attached:", m_IsAnchorAttachedToTrackable.ToString());
-            }
+                m_DebugInfoDisplayController.AppendDebugEntry("Attached:", isAnchorAttachedToTrackable.ToString());
+
+            debugInfoChanged?.Invoke(s_AnchorManager, m_DebugInfoDisplayController);
 
             m_DebugInfoDisplayController.RefreshDisplayInfo();
         }

@@ -60,7 +60,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             set => m_TrackableType = value;
         }
 
-        Camera m_Camera;
         LayerMask m_UILayerMask;
         RaycastHit[] m_UIRaycastHits = new RaycastHit[1];
         bool m_HasGraphicRaycaster;
@@ -69,7 +68,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void Awake()
         {
-            m_Camera = Camera.main;
             var uiLayer = LayerMask.NameToLayer("UI");
             m_UILayerMask = 1 << uiLayer;
 

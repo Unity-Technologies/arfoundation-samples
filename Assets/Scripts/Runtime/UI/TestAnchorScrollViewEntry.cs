@@ -32,6 +32,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
         Button m_EraseButton;
 
         [SerializeField]
+        Button m_SaveAndCancelButton;
+        
+        [SerializeField]
+        Button m_LoadAndCancelButton;
+
+        [SerializeField]
         TextMeshProUGUI m_AnchorDisplayLabel;
         public string AnchorDisplayText => m_AnchorDisplayLabel.text;
 
@@ -86,6 +92,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         UnityEvent<TestAnchorScrollViewEntry> m_RequestLoadAndLeave = new();
         public UnityEvent<TestAnchorScrollViewEntry> requestLoadAndLeave => m_RequestLoadAndLeave;
+        
+        UnityEvent<TestAnchorScrollViewEntry> m_RequestSaveAndCancel = new();
+        public UnityEvent<TestAnchorScrollViewEntry> requestSaveAndCancel => m_RequestSaveAndCancel;
+        
+        UnityEvent<TestAnchorScrollViewEntry> m_RequestLoadAndCancel = new();
+        public UnityEvent<TestAnchorScrollViewEntry> requestLoadAndCancel => m_RequestLoadAndCancel;
 
         [SerializeField, Tooltip("The event raised when the action button is clicked.")]
         UnityEvent<TestAnchorScrollViewEntry> m_RequestSave = new();
@@ -96,8 +108,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public UnityEvent<TestAnchorScrollViewEntry> requestLoad => m_RequestLoad;
 
         [SerializeField, Tooltip("The event raised when the erase button is clicked.")]
-        UnityEvent<TestAnchorScrollViewEntry> m_RrequestEraseAnchor = new();
-        public UnityEvent<TestAnchorScrollViewEntry> requestEraseAnchor => m_RrequestEraseAnchor;
+        UnityEvent<TestAnchorScrollViewEntry> m_RequestEraseAnchor = new();
+        public UnityEvent<TestAnchorScrollViewEntry> requestEraseAnchor => m_RequestEraseAnchor;
 
         CancellationTokenSource m_CancellationTokenSource = new();
 
@@ -216,6 +228,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_SaveButton.onClick.AddListener(OnRequestSaveButtonClicked);
             m_LoadButton.onClick.AddListener(OnRequestLoadButtonClicked);
             m_EraseButton.onClick.AddListener(OnEraseAnchorButtonClicked);
+            m_SaveAndCancelButton.onClick.AddListener(OnSaveAndCancelButtonClicked);
+            m_LoadAndCancelButton.onClick.AddListener(OnLoadAndCancelButtonClicked);
         }
 
         void OnDisable()
@@ -225,6 +239,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_SaveButton.onClick.RemoveListener(OnRequestSaveButtonClicked);
             m_LoadButton.onClick.RemoveListener(OnRequestLoadButtonClicked);
             m_EraseButton.onClick.RemoveListener(OnEraseAnchorButtonClicked);
+            m_SaveAndCancelButton.onClick.RemoveListener(OnSaveAndCancelButtonClicked);
+            m_LoadAndCancelButton.onClick.RemoveListener(OnLoadAndCancelButtonClicked);
             m_CancellationTokenSource.Cancel();
         }
 
@@ -233,6 +249,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_SaveButton.onClick.RemoveAllListeners();
             m_LoadButton.onClick.RemoveAllListeners();
             m_EraseButton.onClick.RemoveAllListeners();
+            m_SaveAndCancelButton.onClick.RemoveAllListeners();
+            m_LoadAndCancelButton.onClick.RemoveAllListeners();
         }
 
         void RequestSaveAndLeaveButtonClicked()
@@ -257,7 +275,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void OnEraseAnchorButtonClicked()
         {
-            m_RrequestEraseAnchor?.Invoke(this);
+            m_RequestEraseAnchor?.Invoke(this);
+        }
+
+        void OnSaveAndCancelButtonClicked()
+        {
+            m_RequestSaveAndCancel?.Invoke(this);
+        }
+
+        void OnLoadAndCancelButtonClicked()
+        {
+            m_RequestLoadAndCancel?.Invoke(this);
         }
     }
 }

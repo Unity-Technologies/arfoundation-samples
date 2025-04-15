@@ -20,12 +20,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public void DisableText(TextMeshProUGUI text)
         {
-            text.color = ButtonUtils.disabledButtonTextColor;
+            text.color = ButtonUtils.disabledButtonGraphicColor;
         }
 
         public void EnableText(TextMeshProUGUI text)
         {
-            text.color = ButtonUtils.enabledButtonTextColor;
+            text.color = ButtonUtils.enabledButtonGraphicColor;
         }
     }
 }

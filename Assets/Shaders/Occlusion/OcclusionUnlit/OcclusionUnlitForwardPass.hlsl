@@ -5,13 +5,13 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Unlit.hlsl"
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 #include "../OcclusionComputation.hlsl"
-#include "../OcclusionInputOutput.hlsl"
 #if defined(LOD_FADE_CROSSFADE)
     #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LODCrossFade.hlsl"
 #endif
 
-struct Attributes : OcclusionAttributes
+struct Attributes
 {
+    float4 positionOS : POSITION;
     float2 uv : TEXCOORD0;
 
     #if defined(DEBUG_DISPLAY)
@@ -22,8 +22,10 @@ struct Attributes : OcclusionAttributes
     UNITY_VERTEX_INPUT_INSTANCE_ID
 };
 
-struct Varyings : OcclusionVaryings
+struct Varyings
 {
+    float4 positionCS : SV_POSITION;
+    float3 positionWS : TEXCOORD0;
     float2 uv : TEXCOORD1;
     float fogCoord : TEXCOORD2;
 
@@ -69,7 +71,6 @@ Varyings UnlitPassVertex(Attributes input)
 
     VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz);
 
-    output.positionCS = vertexInput.positionCS;
     output.uv = TRANSFORM_TEX(input.uv, _BaseMap);
     #if defined(_FOG_FRAGMENT)
     output.fogCoord = vertexInput.positionVS.z;
@@ -85,12 +86,13 @@ Varyings UnlitPassVertex(Attributes input)
     half3 viewDirWS = GetWorldSpaceViewDir(vertexInput.positionWS);
 
     // already normalized from normal transform to WS.
-    output.positionWS = vertexInput.positionWS;
+
     output.normalWS = normalInput.normalWS;
     output.viewDirWS = viewDirWS;
     #endif
 
-    SetOcclusionVertOutputs(input.positionOS, output.positionCS, output.objectPositionWS);
+    output.positionWS = vertexInput.positionWS;
+    output.positionCS = vertexInput.positionCS;
 
     return output;
 }
@@ -148,9 +150,7 @@ void UnlitPassFragment(
     finalColor.rgb = MixFog(finalColor.rgb, fogFactor);
     finalColor.a = OutputAlpha(finalColor.a, IsSurfaceTypeTransparent(_Surface));
 
-    SetOcclusion(input.objectPositionWS, finalColor);
-
-    outColor = finalColor;
+    SetOcclusion_float(input.positionWS, finalColor, outColor);
 
 #ifdef _WRITE_RENDERING_LAYERS
     uint renderingLayers = GetMeshRenderingLayer();

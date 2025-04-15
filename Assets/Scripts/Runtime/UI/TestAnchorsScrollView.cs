@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.XR.ARSubsystems;
@@ -459,21 +460,28 @@ namespace UnityEngine.XR.ARFoundation.Samples
             await m_AnchorManager.TryLoadAnchorsAsync(
                 savedAnchorGuids,
                 loadAnchorResults,
-                (incrementalResults) =>
+                incrementalResults =>
                 {
                     foreach (var loadAnchorResult in incrementalResults)
                     {
-                        if (loadAnchorResult.resultStatus.IsSuccess())
-                        {
-                            m_LoadRequest.Add(loadAnchorResult.anchor.trackableId);
-                        }
-
+                        m_LoadRequest.Add(loadAnchorResult.anchor.trackableId);
                         Debug.Log(
                             $"ARF_Anchors_TestAnchorsScrollView.LoadAnchorsAsync:  " +
                             $"serializableGuid: {loadAnchorResult.savedAnchorGuid} " +
-                            $"result status: {loadAnchorResult.resultStatus.statusCode} ");
+                            $"result status: {loadAnchorResult.resultStatus.statusCode}");
                     }
                 });
+
+            foreach (var loadAnchorResult in loadAnchorResults)
+            {
+                if (loadAnchorResult.resultStatus.IsError())
+                {
+                    Debug.Log(
+                        $"ARF_Anchors_TestAnchorsScrollView.LoadAnchorsAsync:  " +
+                        $"serializableGuid: {loadAnchorResult.savedAnchorGuid} " +
+                        $"result status: {loadAnchorResult.resultStatus.statusCode}");
+                }
+            }
         }
 
         public async void EraseInvalidAnchor()
@@ -659,7 +667,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 Debug.Log(
                     $"ARF_Anchors_TestAnchorsScrollView.EraseAnchorsAsync:  " +
                     $"serializableGuid: {eraseAnchorResult.savedAnchorGuid} " +
-                    $"result status: {eraseAnchorResult.resultStatus.statusCode} ");
+                    $"result status: {eraseAnchorResult.resultStatus.statusCode}, " +
+                    $"native code: {eraseAnchorResult.resultStatus.nativeStatusCode}");
 
                 if (eraseAnchorResult.resultStatus.IsSuccess())
                 {
@@ -703,6 +712,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             anchorEntry.requestSaveAndLeave.AddListener(RequestSaveAnchorAndLeave);
             anchorEntry.requestLoadAndLeave.AddListener(RequestLoadAnchorAndLeave);
+            anchorEntry.requestSaveAndCancel.AddListener(RequestSaveAndCancel);
+            anchorEntry.requestLoadAndCancel.AddListener(RequestLoadAndCancel);
 
             if (m_SupportsEraseAnchors)
                 anchorEntry.requestEraseAnchor.AddListener(RequestEraseAnchor);
@@ -711,7 +722,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
             return anchorEntry;
         }
 
-        async void RequestSaveAnchor(TestAnchorScrollViewEntry entry)
+        void RequestSaveAnchor(TestAnchorScrollViewEntry entry)
+        {
+            RequestSaveAnchor(entry, CancellationToken.None);
+        }
+
+        async void RequestSaveAnchor(TestAnchorScrollViewEntry entry, CancellationToken cancellationToken)
         {
             if (entry.representedAnchor == null)
             {
@@ -721,7 +737,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             entry.StartSaveInProgressAnimation();
 
-            var result = await m_AnchorManager.TrySaveAnchorAsync(entry.representedAnchor);
+            var result = await m_AnchorManager.TrySaveAnchorAsync(entry.representedAnchor, cancellationToken);
             Debug.Log($"ARF_Anchors_TestAnchorsScrollView.RequestSaveAnchor: {result.status.statusCode}");
 
             var wasSaveSuccessful = result.status.IsSuccess();
@@ -753,11 +769,40 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_BackButton.BackButtonPressed();
         }
 
-        async void RequestLoadAnchor(TestAnchorScrollViewEntry entry)
+        void RequestSaveAndCancel(TestAnchorScrollViewEntry entry)
+        {
+            if (!m_SupportsSaveAndLoadAnchors)
+            {
+                return;
+            }
+
+            var cts = new CancellationTokenSource();
+            RequestSaveAnchor(entry, cts.Token);
+            cts.Cancel();
+        }
+
+        void RequestLoadAndCancel(TestAnchorScrollViewEntry entry)
+        {
+            if (!m_SupportsSaveAndLoadAnchors)
+            {
+                return;
+            }
+
+            var cts = new CancellationTokenSource();
+            RequestLoadAnchor(entry, cts.Token);
+            cts.Cancel();
+        }
+
+        void RequestLoadAnchor(TestAnchorScrollViewEntry entry)
+        {
+            RequestLoadAnchor(entry, CancellationToken.None);
+        }
+
+        async void RequestLoadAnchor(TestAnchorScrollViewEntry entry, CancellationToken cancellationToken)
         {
             entry.StartLoadInProgressAnimation();
 
-            var result = await m_AnchorManager.TryLoadAnchorAsync(entry.savedAnchorGuid);
+            var result = await m_AnchorManager.TryLoadAnchorAsync(entry.savedAnchorGuid, cancellationToken);
             var wasLoadSuccessful = result.status.IsSuccess();
             if (wasLoadSuccessful)
             {
@@ -765,7 +810,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 // add anchor id to load request list so when the added anchor change event
                 // is raised, we can know an entry for this anchor already exists
                 m_LoadRequest.Add(entry.representedAnchor.trackableId);
-                m_ActiveTestAnchorEntriesByAnchorId.Add(entry.representedAnchor.trackableId, entry);
+                m_ActiveTestAnchorEntriesByAnchorId.TryAdd(entry.representedAnchor.trackableId, entry);
             }
 
             entry.StopLoadInProgressAnimation();
