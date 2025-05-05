@@ -20,6 +20,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
     /// </summary>
     public class CpuImageSample : MonoBehaviour
     {
+        CameraDirection m_CameraDirection;
         Texture2D m_CameraTexture;
         XRCpuImage.Transformation m_Transformation = XRCpuImage.Transformation.MirrorY;
 
@@ -30,6 +31,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         [Tooltip("The AROcclusionManager which will produce human depth and stencil textures.")]
         AROcclusionManager m_OcclusionManager;
+
+        [SerializeField]
+        [Tooltip("The ARSession will select the camera configuration chooser.")]
+        ARSession m_Session;
 
         [SerializeField]
         RawImage m_RawCameraImage;
@@ -115,8 +120,23 @@ namespace UnityEngine.XR.ARFoundation.Samples
             get => m_TransformationButton;
             set => m_TransformationButton = value;
         }
+        
+        [HideInInspector]
+        [SerializeField]
+        Button m_SwapCameraButton;
 
+        /// <summary>
+        /// The button that controls camera swapping.
+        /// </summary>
+        public Button swapCameraButton
+        {
+            get => m_SwapCameraButton;
+            set => m_SwapCameraButton = value;
+        }
+        
         delegate bool TryAcquireDepthImageDelegate(out XRCpuImage image);
+        
+        static readonly ConfigurationChooser s_PreferCameraConfigurationChooser = new PreferCameraConfigurationChooser();
 
         /// <summary>
         /// Cycles the image transformation to the next case.
@@ -137,6 +157,29 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
+        /// <summary>
+        /// Swaps the CPU Camera between World (back) and User (front). 
+        /// </summary>
+        public void SwapCamera()
+        {
+            m_CameraDirection.Toggle();
+
+            if (m_SwapCameraButton)
+            {
+                UpdateSwapCameraButtonText();
+            }
+        }
+
+        void UpdateSwapCameraButtonText()
+        {
+            m_SwapCameraButton.GetComponentInChildren<Text>().text = m_CameraDirection.cameraManager.requestedFacingDirection.ToString();
+        }
+        
+        void Reset()
+        { 
+            m_Session = FindAnyObjectByType<ARSession>(); 
+        }
+
         void OnEnable()
         {
             if (m_CameraManager == null)
@@ -147,7 +190,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             m_CameraManager.frameReceived += OnCameraFrameReceived;
+            
+            m_Session.subsystem.configurationChooser = s_PreferCameraConfigurationChooser;
+            
+            m_CameraDirection = new CameraDirection(m_CameraManager);
+            UpdateSwapCameraButtonText();   
         }
+        
 
         void OnDisable()
         {

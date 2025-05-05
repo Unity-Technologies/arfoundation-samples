@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5d80f45fb5f4418a5e84a476e517628, type: 3}
+  m_Name: ChessPieceColor
+  m_EditorClassIdentifier: 
+  m_Comments: 
+  m_ReadOnly: 1
+  m_Value:
+    m_StateAnimationCurve:
+      m_UseConstant: 1
+      m_ConstantValue:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_Variable: {fileID: 0}
+    m_List:
+    - stateName: disabled
+      animationStateStartValue: {r: 0, g: 0, b: 0, a: 0}
+      animationStateEndValue: {r: 0, g: 0, b: 0, a: 0}
+    - stateName: idle
+      animationStateStartValue: {r: 1, g: 1, b: 1, a: 1}
+      animationStateEndValue: {r: 1, g: 1, b: 1, a: 1}
+    - stateName: hovered
+      animationStateStartValue: {r: 0.92156863, g: 0.9490196, b: 1, a: 1}
+      animationStateEndValue: {r: 0.9215687, g: 0.9490197, b: 1, a: 1}
+    - stateName: hoveredPriority
+      animationStateStartValue: {r: 0.9215687, g: 0.9490197, b: 1, a: 1}
+      animationStateEndValue: {r: 0.9215687, g: 0.9490197, b: 1, a: 1}
+    - stateName: selected
+      animationStateStartValue: {r: 0.86274517, g: 0.90196085, b: 1, a: 1}
+      animationStateEndValue: {r: 0.7843138, g: 0.8431373, b: 1, a: 1}
+    - stateName: activated
+      animationStateStartValue: {r: 0.8627451, g: 0.9019608, b: 1, a: 1}
+      animationStateEndValue: {r: 0.78431374, g: 0.84313726, b: 1, a: 1}
+    - stateName: focused
+      animationStateStartValue: {r: 0.86274517, g: 0.90196085, b: 1, a: 1}
+      animationStateEndValue: {r: 0.86274517, g: 0.90196085, b: 1, a: 1}
+    m_ColorBlendMode: 0
+    m_BlendAmount: 1

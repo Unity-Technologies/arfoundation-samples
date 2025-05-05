@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9846808ef0fb41b39630338c123c9269, type: 3}
+  m_Name: Menu Hands Follow Preset
+  m_EditorClassIdentifier: 
+  m_Comments: 
+  m_ReadOnly: 1
+  m_Value:
+    rightHandLocalPosition: {x: 0.17, y: 0, z: 0.1}
+    leftHandLocalPosition: {x: -0.17, y: 0, z: 0.1}
+    rightHandLocalRotation: {x: 270, y: 180, z: 0}
+    leftHandLocalRotation: {x: 270, y: 180, z: 0}
+    palmReferenceAxis: 4
+    invertAxisForRightHand: 0
+    requirePalmFacingUser: 1
+    palmFacingUserDegreeAngleThreshold: 95.74
+    requirePalmFacingUp: 1
+    palmFacingUpDegreeAngleThreshold: 95.74
+    snapToGaze: 1
+    snapToGazeAngleThreshold: 49.46
+    hideDelaySeconds: 0.05
+    allowSmoothing: 1
+    followLowerSmoothingValue: 12
+    followUpperSmoothingValue: 16

@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.ARSubsystems;
-
-#if METAOPENXR_2_2_OR_NEWER && UNITY_ANDROID
+#if METAOPENXR_2_2_OR_NEWER && (UNITY_ANDROID || UNITY_EDITOR)
 using UnityEngine.XR.OpenXR.Features.Meta;
 #endif
 
@@ -39,7 +37,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         int m_NextEntryId = 1;
         bool m_IsSharedAnchorsSupported;
 
-#if METAOPENXR_2_2_OR_NEWER && UNITY_ANDROID
+#if METAOPENXR_2_2_OR_NEWER && (UNITY_ANDROID || UNITY_EDITOR)
         /// <summary>
         /// Shares the ARAnchors associated with the <see cref="MetaSharedAnchorEntry"/> from
         /// <see cref="MetaBatchSharedAnchors.selectedEntries"/>.
@@ -87,11 +85,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public async void LoadAllSharedAnchorsFromGroup()
         {
+            if (!m_IsSharedAnchorsSupported)
+                return;
+
             try
             {
-                if (!m_IsSharedAnchorsSupported)
-                    return;
-
                 m_SyncAnchorRequested?.Invoke();
                 var outputLoadedAnchors = new List<XRAnchor>();
                 var resultStatus = await m_AnchorManager.TryLoadAllSharedAnchorsAsync(
@@ -161,7 +159,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             m_AnchorManager.trackablesChanged.AddListener(OnTrackablesChanged);
 
-#if METAOPENXR_2_2_OR_NEWER && UNITY_ANDROID
+#if METAOPENXR_2_2_OR_NEWER && (UNITY_ANDROID || UNITY_EDITOR)
             if (m_AnchorManager.subsystem is MetaOpenXRAnchorSubsystem metaAnchorSubsystem)
                 m_IsSharedAnchorsSupported = metaAnchorSubsystem.isSharedAnchorsSupported == Supported.Supported;
 #endif
@@ -173,7 +171,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 if (m_LoadedSharedAnchors.ContainsKey(anchor.trackableId))
                 {
-                    m_AddLoadedSharedAnchorEntry(anchor);
+                    AddLoadedSharedAnchorEntry(anchor);
                     m_LoadedSharedAnchors.Remove(anchor.trackableId);
                 }
                 else
@@ -189,7 +187,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
-        void m_AddLoadedSharedAnchorEntry(ARAnchor anchor)
+        void AddLoadedSharedAnchorEntry(ARAnchor anchor)
         {
             if (m_EntryIdByTrackableId.ContainsKey(anchor.trackableId))
                 return;
@@ -241,14 +239,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
             Destroy(entry.gameObject);
         }
 
+#if METAOPENXR_2_2_OR_NEWER && (UNITY_ANDROID || UNITY_EDITOR)
         async void ShareAnchor(MetaSharedAnchorEntry entry)
         {
-#if METAOPENXR_2_2_OR_NEWER && UNITY_ANDROID
+            if (!m_IsSharedAnchorsSupported || entry == null)
+                return;
+
             try
             {
-                if (!m_IsSharedAnchorsSupported || entry == null)
-                    return;
-
                 entry.ShowInProgress();
                 var resultStatus = await m_AnchorManager.TryShareAnchorAsync(entry.anchor);
                 entry.ShowResult(resultStatus);
@@ -260,8 +258,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 // ignore
             }
-#endif
         }
+#else
+        void ShareAnchor(MetaSharedAnchorEntry entry)
+        {
+            // unsupported, do nothing
+        }
+#endif
 
         void RemoveAnchor(MetaSharedAnchorEntry entry)
         {

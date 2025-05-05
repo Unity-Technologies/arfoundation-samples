@@ -48,6 +48,84 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "ARFoundation Left Input",
+            "id": "d9b37871-628a-48f3-b95d-7b526bd04b4f",
+            "actions": [
+                {
+                    "name": "Activate",
+                    "type": "Button",
+                    "id": "6c0b5248-d448-4885-884e-c521d8a20d7a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "0a509963-cc6a-4eae-abc2-6ad6075055eb",
+                    "path": "<XRController>{LeftHand}/{TriggerButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Activate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "22e6f149-1b14-4000-966c-d2d2e234247a",
+                    "path": "<XRController>{LeftHand}/{PinchTouched}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Activate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "ARFoundation Right Input",
+            "id": "ad3a160f-aaef-4b49-9991-7ec34db3f715",
+            "actions": [
+                {
+                    "name": "Activate",
+                    "type": "Button",
+                    "id": "113345af-4bf7-4f4f-9427-201265317355",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f054ed02-820d-4979-9d01-069d3f6d21e0",
+                    "path": "<XRController>{RightHand}/{TriggerButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Activate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "48d5d68b-0969-4e47-aa03-46233a0240dc",
+                    "path": "<XRController>{RightHand}/{PinchTouched}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Activate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

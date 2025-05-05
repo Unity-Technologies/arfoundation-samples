@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.6784314, g: 0.6784314, b: 0.6784314, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
@@ -269,6 +269,8 @@ MonoBehaviour:
   m_OcclusionShaderMode: 2
   m_SoftOcclusionPreprocessShader: {fileID: 4800000, guid: 0ad967c9b039c4c5db35830a2211d12b,
     type: 3}
+  m_AROcclusionSources: 1
+  m_HandsOcclusionMaterial: {fileID: 0}
 --- !u!114 &487602285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,6 +318,8 @@ MonoBehaviour:
   m_SpawnHeight: 0.4
   m_GridRows: 12
   m_GridColumns: 12
+  m_Layers: 1
+  m_Scale: 0.2
   m_GridPadding: 0.6
   m_DistanceToClosestObject: 0.66
   m_SpawnedCopies: []

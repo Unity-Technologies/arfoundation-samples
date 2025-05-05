@@ -1,6 +1,5 @@
 using System;
 using TMPro;
-using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.XR.ARSubsystems;

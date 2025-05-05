@@ -30,12 +30,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 while (!token.IsCancellationRequested)
                 {
-                    var rotation = transform.rotation;
+                    var localRotation = transform.localRotation;
                     var zAxisOffset = (-k_LoadingVisualizerSpinRateInDegPerSecond * Time.deltaTime) % 360f;
-                    rotation = Quaternion.Euler(
-                        rotation.eulerAngles.x,
-                        rotation.eulerAngles.y,
-                        rotation.eulerAngles.z + zAxisOffset);
+                    localRotation = Quaternion.Euler(
+                        localRotation.eulerAngles.x,
+                        localRotation.eulerAngles.y,
+                        localRotation.eulerAngles.z + zAxisOffset);
 
                     try
                     {
@@ -46,7 +46,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         // do nothing
                     }
 
-                    transform.rotation = rotation;
+                    transform.localRotation = localRotation;
                 }
             }
             catch (OperationCanceledException)
