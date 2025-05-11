@@ -1,8 +1,9 @@
 using System;
 using TMPro;
-using UnityEngine;
 using UnityEngine.UI;
+#if METAOPENXR_2_2_OR_NEWER && (UNITY_ANDROID || UNITY_EDITOR)
 using UnityEngine.XR.ARSubsystems;
+#endif
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -32,7 +33,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         TextMeshProUGUI m_ResultMessageLabel;
 
-#if METAOPENXR_2_2_OR_NEWER && UNITY_ANDROID
+#if METAOPENXR_2_2_OR_NEWER && (UNITY_ANDROID || UNITY_EDITOR)
         public void SyncAnchors()
         {
             m_MetaSharedAnchorsMenu.LoadAllSharedAnchorsFromGroup();
@@ -103,6 +104,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             m_SyncAnchorsButton.interactable = true;
         }
-#endif
+#endif // METAOPENXR_2_2_OR_NEWER && (UNITY_ANDROID || UNITY_EDITOR)
     }
 }

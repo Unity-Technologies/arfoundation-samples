@@ -236,7 +236,7 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 0
   ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
+  SceneMigrationSynchronization: 0
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
@@ -248,6 +248,18 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 244670056}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &232944784 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5217724995524561599, guid: 52e38e0b0e0204341b8307daaf51686b,
+    type: 3}
+  m_PrefabInstance: {fileID: 6153617213672101079}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d47dab0d82de4302b8b81417d57cad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &244670056
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -485,6 +497,59 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 244670056}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &585957789
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 585957790}
+  - component: {fileID: 585957791}
+  m_Layer: 0
+  m_Name: Colocation Discovery
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &585957790
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585957789}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.02161, y: -0.04679, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &585957791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585957789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abcf87c8555694094bd0bb1a7a5453f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AdvertisementStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DiscoveryStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_HostIPAddressDiscovered:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &725359614
 GameObject:
   m_ObjectHideFlags: 0
@@ -1009,6 +1074,21 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1470823647424503859, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 232944784}
+    - target: {fileID: 1470823647424503859, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: JoinSession
+      objectReference: {fileID: 0}
+    - target: {fileID: 1470823647424503859, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.XR.ARFoundation.Samples.NetworkSessionSetupUI, Unity.XR.ARFoundation.Samples
+      objectReference: {fileID: 0}
     - target: {fileID: 1751289774443192213, guid: 52e38e0b0e0204341b8307daaf51686b,
         type: 3}
       propertyPath: m_IsActive
@@ -1019,6 +1099,41 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 172208171}
+    - target: {fileID: 2358664059263294690, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2358664059263294690, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2358664059263294690, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 585957791}
+    - target: {fileID: 2358664059263294690, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2358664059263294690, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: StopDiscovery
+      objectReference: {fileID: 0}
+    - target: {fileID: 2358664059263294690, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.XR.ARFoundation.Samples.MetaColocationDiscovery, Unity.XR.ARFoundation.Samples
+      objectReference: {fileID: 0}
+    - target: {fileID: 2358664059263294690, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3018378991652449309, guid: 52e38e0b0e0204341b8307daaf51686b,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -1037,22 +1152,22 @@ PrefabInstance:
     - target: {fileID: 5004332466455187668, guid: 52e38e0b0e0204341b8307daaf51686b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5004332466455187668, guid: 52e38e0b0e0204341b8307daaf51686b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5004332466455187668, guid: 52e38e0b0e0204341b8307daaf51686b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 125
       objectReference: {fileID: 0}
     - target: {fileID: 5004332466455187668, guid: 52e38e0b0e0204341b8307daaf51686b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -52
       objectReference: {fileID: 0}
     - target: {fileID: 5004332466455187669, guid: 52e38e0b0e0204341b8307daaf51686b,
         type: 3}
@@ -1136,9 +1251,84 @@ PrefabInstance:
       objectReference: {fileID: 244670058}
     - target: {fileID: 5217724995524561599, guid: 52e38e0b0e0204341b8307daaf51686b,
         type: 3}
+      propertyPath: m_MetaColocationDiscovery
+      value: 
+      objectReference: {fileID: 585957791}
+    - target: {fileID: 5217724995524561599, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
       propertyPath: m_NetworkSessionController
       value: 
       objectReference: {fileID: 1389842297}
+    - target: {fileID: 5400396011817934428, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400396011817934428, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400396011817934428, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 585957791}
+    - target: {fileID: 5400396011817934428, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400396011817934428, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: StopAdvertisement
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400396011817934428, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.XR.ARFoundation.Samples.MetaColocationDiscovery, Unity.XR.ARFoundation.Samples
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400396011817934428, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5847286495160908442, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5847286495160908442, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5847286495160908442, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 585957791}
+    - target: {fileID: 5847286495160908442, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5847286495160908442, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: StartDiscovery
+      objectReference: {fileID: 0}
+    - target: {fileID: 5847286495160908442, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.XR.ARFoundation.Samples.MetaColocationDiscovery, Unity.XR.ARFoundation.Samples
+      objectReference: {fileID: 0}
+    - target: {fileID: 5847286495160908442, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5903831684366311902, guid: 52e38e0b0e0204341b8307daaf51686b,
         type: 3}
       propertyPath: m_IsActive
@@ -1152,13 +1342,23 @@ PrefabInstance:
     - target: {fileID: 5950826753668386632, guid: 52e38e0b0e0204341b8307daaf51686b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 6
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5950826753668386632, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5950826753668386632, guid: 52e38e0b0e0204341b8307daaf51686b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 83914287}
+      objectReference: {fileID: 232944784}
+    - target: {fileID: 5950826753668386632, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 585957791}
     - target: {fileID: 5950826753668386632, guid: 52e38e0b0e0204341b8307daaf51686b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -1166,13 +1366,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5950826753668386632, guid: 52e38e0b0e0204341b8307daaf51686b,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5950826753668386632, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: StartNetworkSession
+      value: HostSession
+      objectReference: {fileID: 0}
+    - target: {fileID: 5950826753668386632, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: StartAdvertisement
       objectReference: {fileID: 0}
     - target: {fileID: 5950826753668386632, guid: 52e38e0b0e0204341b8307daaf51686b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UnityEngine.XR.ARFoundation.Samples.NetworkStarter, Unity.XR.ARFoundation.Samples
+      value: UnityEngine.XR.ARFoundation.Samples.NetworkSessionSetupUI, Unity.XR.ARFoundation.Samples
+      objectReference: {fileID: 0}
+    - target: {fileID: 5950826753668386632, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UnityEngine.XR.ARFoundation.Samples.MetaColocationDiscovery, Unity.XR.ARFoundation.Samples
       objectReference: {fileID: 0}
     - target: {fileID: 5950826753668386632, guid: 52e38e0b0e0204341b8307daaf51686b,
         type: 3}
@@ -1181,7 +1396,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5950826753668386632, guid: 52e38e0b0e0204341b8307daaf51686b,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5950826753668386632, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5950826753668386632, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6763825963046869013, guid: 52e38e0b0e0204341b8307daaf51686b,
@@ -1199,6 +1424,41 @@ PrefabInstance:
       propertyPath: m_AnchorManager
       value: 
       objectReference: {fileID: 244670058}
+    - target: {fileID: 7397865839319596372, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397865839319596372, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397865839319596372, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 585957791}
+    - target: {fileID: 7397865839319596372, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397865839319596372, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: StartAdvertisement
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397865839319596372, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.XR.ARFoundation.Samples.MetaColocationDiscovery, Unity.XR.ARFoundation.Samples
+      objectReference: {fileID: 0}
+    - target: {fileID: 7397865839319596372, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7679201489211127174, guid: 52e38e0b0e0204341b8307daaf51686b,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -1314,10 +1574,15 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8615678554789062104, guid: 52e38e0b0e0204341b8307daaf51686b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8615678554789062112, guid: 52e38e0b0e0204341b8307daaf51686b,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 108
       objectReference: {fileID: 0}
     - target: {fileID: 9012248255685877431, guid: 52e38e0b0e0204341b8307daaf51686b,
         type: 3}
@@ -1356,3 +1621,4 @@ SceneRoots:
   - {fileID: 83914288}
   - {fileID: 1570470338}
   - {fileID: 1100334084}
+  - {fileID: 585957790}

@@ -1,11 +1,19 @@
 using System;
+
+#if METAOPENXR_2_2_OR_NEWER && (UNITY_ANDROID || UNITY_EDITOR)
 using TMPro;
 using Unity.Netcode;
+using UnityEngine.XR.ARSubsystems;
+using UnityEngine.XR.OpenXR.Features.Meta;
+#endif
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
     public class NetworkSessionSetupUI : MonoBehaviour
     {
+#if METAOPENXR_2_2_OR_NEWER && (UNITY_ANDROID || UNITY_EDITOR)
+        const int k_ReattemptsLimit = 3;
+
         [Header("Class References")]
         [SerializeField]
         ARAnchorManager m_ARAnchorManager;
@@ -15,6 +23,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         [SerializeField]
         NetworkStarter m_NetworkStarter;
+
+        [SerializeField]
+        MetaColocationDiscovery m_MetaColocationDiscovery;
+
+        [SerializeField]
+        ColocationAdvertisementIndicator m_ColocationAdvertisementIndicator;
 
         [SerializeField]
         ARPlaceAnchor m_ARPlaceAnchor;
@@ -38,7 +52,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         [Header("Notifications")]
         [SerializeField]
-        GameObject m_InProgressNotification;
+        UIToastNotification m_InProgressNotification;
 
         [SerializeField]
         LoadingVisualizer m_LoadingVisualizer;
@@ -53,6 +67,40 @@ namespace UnityEngine.XR.ARFoundation.Samples
         FadeAfterDuration m_ErrorNotificationFadeAfterDuration;
 
         bool m_DidConnect;
+        int m_AdvertisementReattemptsCount;
+
+        public async void HostSession()
+        {
+            if (!m_MetaColocationDiscovery.IsColocationDiscoverySupported)
+                return;
+
+            m_ColocationAdvertisementIndicator.ShowIndicator();
+
+            ShowSessionSetupConnectingPage();
+            var result = await m_MetaColocationDiscovery.StartIPAddressAdvertisement();
+
+            if (result.status.IsError())
+            {
+                ShowDisconnectionReason($"Failed to start host discovery: {result.status.ToString()}");
+                return;
+            }
+
+            m_NetworkStarter.StartNetworkSession(true);
+        }
+
+        public async void JoinSession()
+        {
+            if (!m_MetaColocationDiscovery.IsColocationDiscoverySupported)
+                return;
+
+            m_ColocationAdvertisementIndicator.HideIndicator();
+
+            ShowSessionSetupConnectingPage();
+            var resultStatus = await m_MetaColocationDiscovery.StartDiscoveryForHostIPAddress();
+
+            if (resultStatus.IsError())
+                ShowDisconnectionReason($"Failed to start host discovery: {resultStatus.statusCode.ToString()}");
+        }
 
         void Reset()
         {
@@ -60,9 +108,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_ARPlaceAnchor = FindAnyObjectByType<ARPlaceAnchor>();
         }
 
-        void Start()
+        void Awake()
         {
-
             if (m_ARAnchorManager == null)
                 Debug.LogException(new NullReferenceException($"{nameof(m_ARAnchorManager)} is null."), this);
 
@@ -74,13 +121,20 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if (m_ARPlaceAnchor == null)
                 Debug.LogException(new NullReferenceException($"{nameof(m_ARPlaceAnchor)} is null."), this);
+        }
 
+        void Start()
+        {
             m_NetworkStarter.startNetworkRequested.AddListener(OnStartNetworkRequested);
             m_NetworkStarter.networkFailedToStart.AddListener(OnNetworkFailedToStart);
 
             NetworkManager.Singleton.OnConnectionEvent += OnConnectionEvent;
 
             m_ErrorNotificationFadeAfterDuration.FadeComplete.AddListener(ShowSessionSetupFrontPage);
+
+            m_MetaColocationDiscovery.advertisementStateChanged.AddListener(OnAdvertisementStateChanged);
+            m_MetaColocationDiscovery.discoveryStateChanged.AddListener(OnDiscoveryStateChanged);
+            m_MetaColocationDiscovery.hostIPAddressDiscovered.AddListener(OnHostIPAddressDiscovered);
         }
 
         void OnDestroy()
@@ -96,6 +150,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if (m_ErrorNotification != null)
                 m_ErrorNotificationFadeAfterDuration.FadeComplete.RemoveListener(ShowSessionSetupFrontPage);
+
+            if (m_MetaColocationDiscovery != null)
+            {
+                m_MetaColocationDiscovery.advertisementStateChanged.RemoveListener(OnAdvertisementStateChanged);
+                m_MetaColocationDiscovery.discoveryStateChanged.RemoveListener(OnDiscoveryStateChanged);
+                m_MetaColocationDiscovery.hostIPAddressDiscovered.RemoveListener(OnHostIPAddressDiscovered);
+            }
         }
 
         void OnStartNetworkRequested()
@@ -145,6 +206,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (clientId != networkManager.LocalClientId)
                 return;
 
+            StopAdvertisementAndDiscovery();
+
+            foreach (var anchor in m_ARAnchorManager.trackables)
+            {
+                m_ARAnchorManager.TryRemoveAnchor(anchor);
+            }
+
             ShowSessionSetupConnectingPage();
 
             if (m_DidConnect)
@@ -166,6 +234,65 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void OnPeerConnectionEvent(NetworkManager networkManager)
         {
             m_PlayerCountLabel.text = networkManager.ConnectedClients.Count.ToString();
+        }
+
+        async void OnAdvertisementStateChanged(XRResultStatus resultStatus, ColocationState state)
+        {
+            m_ColocationAdvertisementIndicator.SetStatus(state);
+            switch (state)
+            {
+                case ColocationState.Active:
+                    m_AdvertisementReattemptsCount = 0;
+                    break;
+                case ColocationState.Inactive:
+                    while (resultStatus.IsError() && m_AdvertisementReattemptsCount < k_ReattemptsLimit)
+                    {
+                        m_AdvertisementReattemptsCount += 1;
+                        var result = await m_MetaColocationDiscovery.StartIPAddressAdvertisement();
+                        resultStatus = result.status;
+                    }
+                    break;
+                case ColocationState.Starting:
+                case ColocationState.Stopping:
+                    break;
+            }
+        }
+
+        void OnDiscoveryStateChanged(XRResultStatus resultStatus, ColocationState state)
+        {
+            switch (state)
+            {
+                case ColocationState.Starting:
+                    ShowSessionSetupConnectingPage();
+                    ShowDiscoveringHostInProgress();
+                    break;
+                case ColocationState.Inactive:
+                    if (resultStatus.IsError())
+                        ShowDisconnectionReason($"Failed to discover the host: {resultStatus.statusCode.ToString()}");
+                    break;
+                case ColocationState.Active:
+                case ColocationState.Stopping:
+                    break;
+            }
+        }
+
+        async void OnHostIPAddressDiscovered(SerializableGuid advertisementId, string ipAddress)
+        {
+            await m_MetaColocationDiscovery.StopDiscoveryForHostIPAddress();
+            m_NetworkStarter.SetConnectionIPAddress(ipAddress);
+            m_NetworkStarter.StartNetworkSession(false);
+            ShowStartingNetworkSessionInProgress();
+        }
+
+        async void StopAdvertisementAndDiscovery()
+        {
+            if (m_MetaColocationDiscovery != null &&
+                m_MetaColocationDiscovery.discoveryState is not ColocationState.Inactive)
+                await m_MetaColocationDiscovery.StopDiscoveryForHostIPAddress();
+
+            if (m_MetaColocationDiscovery != null &&
+                m_MetaColocationDiscovery.advertisementState is not ColocationState.Inactive)
+                await m_MetaColocationDiscovery.StopIPAddressAdvertisement();
         }
 
         void ShowSessionSetupFrontPage()
@@ -192,9 +319,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_AnchorsList.SetActive(true);
         }
 
+        void ShowDiscoveringHostInProgress()
+        {
+            m_InProgressNotification.SetNotificationLabel("Searching for host...");
+            m_InProgressNotification.gameObject.SetActive(true);
+            m_ErrorNotification.SetActive(false);
+            m_LoadingVisualizer.StartAnimating();
+        }
+
         void ShowStartingNetworkSessionInProgress()
         {
-            m_InProgressNotification.SetActive(true);
+            m_InProgressNotification.SetNotificationLabel("Connecting to host...");
+            m_InProgressNotification.gameObject.SetActive(true);
             m_ErrorNotification.SetActive(false);
             m_LoadingVisualizer.StartAnimating();
         }
@@ -202,9 +338,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void ShowDisconnectionReason(string errorMessage)
         {
             m_LoadingVisualizer.StopAnimating();
-            m_InProgressNotification.SetActive(false);
+            m_InProgressNotification.gameObject.SetActive(false);
             m_ErrorNotification.SetActive(true);
             m_ErrorLabel.text = errorMessage;
         }
+#endif
     }
 }

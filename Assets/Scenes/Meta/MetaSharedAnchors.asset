@@ -19,6 +19,7 @@ MonoBehaviour:
   - rid: 2862248137945776348
   - rid: 2862248137945776349
   - rid: 9206641917974020535
+  - rid: 9206642367775899938
   references:
     version: 2
     RefIds:
@@ -48,3 +49,9 @@ MonoBehaviour:
       type: {class: RequiresMetaSharedAnchors, ns: UnityEngine.XR.ARFoundation.Samples,
         asm: Unity.XR.ARFoundation.Samples}
       data: 
+    - rid: 9206642367775899938
+      type: {class: RequiresOpenXRFeature, ns: UnityEngine.XR.ARFoundation.Samples,
+        asm: Unity.XR.ARFoundation.Samples}
+      data:
+        m_RequiredFeature: UnityEngine.XR.OpenXR.Features.Meta.ColocationDiscoveryFeature,
+          Unity.XR.MetaOpenXR, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
