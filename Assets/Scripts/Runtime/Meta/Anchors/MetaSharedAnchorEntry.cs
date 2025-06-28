@@ -95,7 +95,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public void ShowResult(XRResultStatus resultStatus)
         {
             m_ToastNotification.ShowResult(resultStatus.IsSuccess(), resultStatus.statusCode.ToString());
-            m_ShareButton.SetEnabled(m_IsSharedAnchorsSupported && !isSynced);
+            m_ShareButton.SetEnabled(resultStatus.IsError() && m_IsSharedAnchorsSupported && !isSynced);
             m_RemoveButton.SetEnabled(true);
         }
 
@@ -106,7 +106,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public void ShowResult(bool success)
         {
             m_ToastNotification.ShowResult(success, success ? "Success" : "Failed");
-            m_ShareButton.SetEnabled(m_IsSharedAnchorsSupported && !isSynced);
+            m_ShareButton.SetEnabled(!success && m_IsSharedAnchorsSupported && !isSynced);
             m_RemoveButton.SetEnabled(true);
         }
 

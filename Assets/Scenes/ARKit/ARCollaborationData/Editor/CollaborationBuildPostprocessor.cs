@@ -17,6 +17,10 @@ namespace UnityEditor.XR.ARFoundation.Samples
     /// </summary>
     class CollaborationBuildProcessor : IPostprocessBuildWithReport, IPreprocessBuildWithReport
     {
+#pragma warning disable UDR0001
+        static List<CollaborativeSession> s_CollaborativeSessions = new();
+#pragma warning restore UDR0001
+
         public int callbackOrder => 2;
 
         void IPreprocessBuildWithReport.OnPreprocessBuild(BuildReport report)
@@ -97,8 +101,6 @@ namespace UnityEditor.XR.ARFoundation.Samples
                 s_CollaborativeSessions.Add(collaborativeSession);
             }
         }
-
-        static List<CollaborativeSession> s_CollaborativeSessions = new();
     }
 }
 #endif

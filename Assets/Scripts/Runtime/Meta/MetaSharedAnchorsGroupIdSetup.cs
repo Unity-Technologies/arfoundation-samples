@@ -1,6 +1,6 @@
 using System;
 using TMPro;
-#if METAOPENXR_2_2_OR_NEWER && UNITY_ANDROID
+#if METAOPENXR_2_2_OR_NEWER && (UNITY_ANDROID || UNITY_EDITOR)
 using Unity.Netcode;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.XR.OpenXR.Features.Meta;
@@ -23,7 +23,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         TextMeshProUGUI m_GroupIdLabel;
 
-#if METAOPENXR_2_2_OR_NEWER && UNITY_ANDROID
+#if METAOPENXR_2_2_OR_NEWER && (UNITY_ANDROID || UNITY_EDITOR)
         MetaOpenXRAnchorSubsystem m_MetaOpenXRAnchorSubsystem;
         bool m_IsSharedAnchorsSupported;
 
@@ -131,6 +131,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
         }
-#endif // METAOPENXR_2_2_OR_NEWER && UNITY_ANDROID
+#endif // METAOPENXR_2_2_OR_NEWER && (UNITY_ANDROID || UNITY_EDITOR)
     }
 }

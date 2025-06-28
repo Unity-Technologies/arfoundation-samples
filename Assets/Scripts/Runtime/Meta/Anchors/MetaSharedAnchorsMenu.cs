@@ -4,6 +4,7 @@ using UnityEngine.Events;
 using UnityEngine.XR.ARSubsystems;
 #if METAOPENXR_2_2_OR_NEWER && (UNITY_ANDROID || UNITY_EDITOR)
 using UnityEngine.XR.OpenXR.Features.Meta;
+using UnityEngine.XR.OpenXR.NativeTypes;
 #endif
 
 namespace UnityEngine.XR.ARFoundation.Samples
@@ -29,6 +30,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         UnityEvent<XRResultStatus, int> m_SyncAnchorCompleted = new();
         public UnityEvent<XRResultStatus, int> syncAnchorCompleted => m_SyncAnchorCompleted;
+
+        [Header("Debug Options")]
+        [SerializeField]
+        bool m_VerboseLogging;
 
         Dictionary<int, MetaSharedAnchorEntry> m_AnchorEntryByEntryId = new();
         Dictionary<TrackableId, int> m_EntryIdByTrackableId = new();
@@ -60,8 +65,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     anchorsToShare.Add(entry.anchor);
                 }
 
+                var subsystem = m_AnchorManager.subsystem as MetaOpenXRAnchorSubsystem;
                 var results = new List<XRShareAnchorResult>();
+
+                if (m_VerboseLogging)
+                    Debug.Log($"Sharing anchors to group {subsystem!.sharedAnchorsGroupId}:\n{anchorsToShare}", this);
+
                 await m_AnchorManager.TryShareAnchorsAsync(anchorsToShare, results);
+
+                if (m_VerboseLogging)
+                    Debug.Log($"Anchor share results:\n{results}", this);
 
                 foreach (var result in results)
                 {
@@ -91,7 +104,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
             try
             {
                 m_SyncAnchorRequested?.Invoke();
+                var subsystem = m_AnchorManager.subsystem as MetaOpenXRAnchorSubsystem;
                 var outputLoadedAnchors = new List<XRAnchor>();
+
+                if (m_VerboseLogging)
+                    Debug.Log($"Loading anchors from group {subsystem!.sharedAnchorsGroupId}", this);
+
                 var resultStatus = await m_AnchorManager.TryLoadAllSharedAnchorsAsync(
                     outputLoadedAnchors,
                     loadedAnchors =>
@@ -101,6 +119,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                             m_LoadedSharedAnchors[xrAnchor.trackableId] = xrAnchor;
                         }
                     });
+
+                if (m_VerboseLogging)
+                    Debug.Log($"Loaded {outputLoadedAnchors.Count} anchors:\n{outputLoadedAnchors}", this);
 
                 m_SyncAnchorCompleted?.Invoke(resultStatus, outputLoadedAnchors.Count);
             }
@@ -135,25 +156,25 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             if (m_AnchorManager == null)
             {
-                Debug.LogError($"{nameof(m_AnchorManager)} is null.");
+                Debug.LogError($"{nameof(m_AnchorManager)} is null.", this);
                 return;
             }
 
             if (m_MetaBatchSharedAnchors == null)
             {
-                Debug.LogError($"{nameof(m_MetaBatchSharedAnchors)} is null.");
+                Debug.LogError($"{nameof(m_MetaBatchSharedAnchors)} is null.", this);
                 return;
             }
 
             if (m_MetaSharedAnchorEntryPrefab == null)
             {
-                Debug.LogError($"{nameof(m_MetaSharedAnchorEntryPrefab)} is null.");
+                Debug.LogError($"{nameof(m_MetaSharedAnchorEntryPrefab)} is null.", this);
                 return;
             }
 
             if (m_ContentTransform == null)
             {
-                Debug.LogError($"{nameof(m_ContentTransform)} is null.");
+                Debug.LogError($"{nameof(m_ContentTransform)} is null.", this);
                 return;
             }
 
@@ -248,7 +269,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
             try
             {
                 entry.ShowInProgress();
+                var subsystem = m_AnchorManager.subsystem as MetaOpenXRAnchorSubsystem;
+
+                if (m_VerboseLogging)
+                    Debug.Log($"Sharing anchor to group {subsystem!.sharedAnchorsGroupId}:\n{entry.anchor}", this);
+
                 var resultStatus = await m_AnchorManager.TryShareAnchorAsync(entry.anchor);
+
+                if (m_VerboseLogging)
+                    Debug.Log($"Share result: ({resultStatus.statusCode}, {(XrResult)resultStatus.nativeStatusCode}", this);
+
                 entry.ShowResult(resultStatus);
 
                 if (resultStatus.IsSuccess())

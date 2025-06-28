@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine.XR.ARSubsystems;
+#if METAOPENXR_2_2_OR_NEWER && (UNITY_ANDROID || UNITY_EDITOR)
+using UnityEngine.XR.OpenXR.NativeTypes;
+#endif
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -17,6 +20,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         [SerializeField]
         Transform m_ContentTransform;
+
+        [Header("Debug Options")]
+        [SerializeField]
+        bool m_VerboseLogging;
 
         SaveAndLoadAnchorDataToFile m_SaveAndLoadAnchorDataToFile;
 
@@ -46,7 +53,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             var results = new List<ARSaveOrLoadAnchorResult>();
+
+            if (m_VerboseLogging)
+                Debug.Log($"Saving anchors:\n{anchorsToSave}", this);
+
             await m_AnchorManager.TrySaveAnchorsAsync(anchorsToSave, results);
+
+            if (m_VerboseLogging)
+                Debug.Log($"Save results:\n{results}", this);
 
             var dateTime = DateTime.Now;
             foreach (var result in results)
@@ -88,6 +102,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             var results = new List<ARSaveOrLoadAnchorResult>();
+
+            if (m_VerboseLogging)
+                Debug.Log($"Loading anchors:\n{savedAnchorGuidsToLoad}", this);
+
             await m_AnchorManager.TryLoadAnchorsAsync(
                 savedAnchorGuidsToLoad,
                 results,
@@ -103,6 +121,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         m_EntryIdByTrackableId.TryAdd(result.anchor.trackableId, entryId);
                     }
                 });
+
+            if (m_VerboseLogging)
+                Debug.Log($"Load results:\n{results}", this);
         }
 
         /// <summary>
@@ -125,7 +146,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             var results = new List<XREraseAnchorResult>();
+
+            if (m_VerboseLogging)
+                Debug.Log($"Erasing anchors:\n{savedAnchorGuidsToErase}");
+
             await m_AnchorManager.TryEraseAnchorsAsync(savedAnchorGuidsToErase, results);
+
+            if (m_VerboseLogging)
+                Debug.Log($"Erase results:\n{results}");
 
             var removedAnchorsEntryIds = new List<int>();
             foreach (var result in results)
@@ -161,7 +189,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 if (!entry.isInScene)
                     continue;
 
+                if (m_VerboseLogging)
+                    Debug.Log($"Removing anchor:\n{entry.anchor}", this);
+
                 var success = m_AnchorManager.TryRemoveAnchor(entry.anchor);
+
+                if (m_VerboseLogging)
+                    Debug.Log($"Remove result: {success.ToString()}", this);
+
                 entry.ShowResult(success);
             }
         }
@@ -193,25 +228,25 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             if (m_AnchorManager == null)
             {
-                Debug.LogError($"{nameof(m_AnchorManager)} is null.");
+                Debug.LogError($"{nameof(m_AnchorManager)} is null.", this);
                 return;
             }
 
             if (m_MetaBatchPersistentAnchors == null)
             {
-                Debug.LogError($"{nameof(m_MetaBatchPersistentAnchors)} is null.");
+                Debug.LogError($"{nameof(m_MetaBatchPersistentAnchors)} is null.", this);
                 return;
             }
 
             if (m_MetaPersistentAnchorEntryPrefab == null)
             {
-                Debug.LogError($"{nameof(m_MetaPersistentAnchorEntryPrefab)} is null.");
+                Debug.LogError($"{nameof(m_MetaPersistentAnchorEntryPrefab)} is null.", this);
                 return;
             }
 
             if (m_ContentTransform == null)
             {
-                Debug.LogError($"{nameof(m_ContentTransform)} is null.");
+                Debug.LogError($"{nameof(m_ContentTransform)} is null.", this);
                 return;
             }
 
@@ -342,7 +377,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     return;
 
                 entry.ShowInProgress();
+
+                if (m_VerboseLogging)
+                    Debug.Log($"Saving anchor:\n{entry.anchor}", this);
+
                 var result = await m_AnchorManager.TrySaveAnchorAsync(entry.anchor);
+
+#if METAOPENXR_2_2_OR_NEWER && (UNITY_ANDROID || UNITY_EDITOR)
+                if (m_VerboseLogging)
+                    Debug.Log($"Save result: ({result.status.statusCode}, {(XrResult)result.status.nativeStatusCode})", this);
+#endif
 
                 if (result.status.IsSuccess())
                 {
@@ -352,6 +396,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
 
                 entry.ShowResult(result.status);
+            }
+            catch (OperationCanceledException)
+            {
+                // todo: need a UI state for canceled
             }
             catch (Exception e)
             {
@@ -370,7 +418,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     return;
 
                 entry.ShowInProgress();
+
+                if (m_VerboseLogging)
+                    Debug.Log($"Loading anchor: {entry.savedAnchorGuid}", this);
+
                 var result = await m_AnchorManager.TryLoadAnchorAsync(entry.savedAnchorGuid);
+
+#if METAOPENXR_2_2_OR_NEWER && (UNITY_ANDROID || UNITY_EDITOR)
+                if (m_VerboseLogging)
+                    Debug.Log($"Load result: ({result.status.statusCode}, {(XrResult)result.status.nativeStatusCode})", this);
+#endif
+
                 entry.ShowResult(result.status);
 
                 if (result.status.IsSuccess())
@@ -378,6 +436,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     entry.UpdateInSceneStatus(result.value);
                     m_EntryIdByTrackableId.TryAdd(entry.anchor.trackableId, entry.entryId);
                 }
+            }
+            catch (OperationCanceledException)
+            {
+                // todo: need a UI state for canceled
             }
             catch (Exception e)
             {
@@ -396,7 +458,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     return;
 
                 entry.ShowInProgress();
+
+                if (m_VerboseLogging)
+                    Debug.Log($"Erasing anchor: {entry.savedAnchorGuid}", this);
+
                 var resultStatus = await m_AnchorManager.TryEraseAnchorAsync(entry.savedAnchorGuid);
+
+#if METAOPENXR_2_2_OR_NEWER && (UNITY_ANDROID || UNITY_EDITOR)
+                if (m_VerboseLogging)
+                    Debug.Log($"Save result: ({resultStatus.statusCode}, {(XrResult)resultStatus.nativeStatusCode})", this);
+#endif
 
                 if (resultStatus.IsSuccess())
                 {
@@ -407,6 +478,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 }
 
                 entry.ShowResult(resultStatus);
+            }
+            catch (OperationCanceledException)
+            {
+                // todo: need a UI state for canceled
             }
             catch (Exception e)
             {
@@ -419,7 +494,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (entry == null || !entry.isInScene)
                 return;
 
+            if (m_VerboseLogging)
+                Debug.Log($"Removing anchor:\n{entry.anchor}", this);
+
             var success = m_AnchorManager.TryRemoveAnchor(entry.anchor);
+
+            if (m_VerboseLogging)
+                Debug.Log($"Remove result: {success.ToString()}", this);
+
             entry.ShowResult(success);
         }
     }
