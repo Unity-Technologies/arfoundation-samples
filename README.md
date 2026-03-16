@@ -8,7 +8,7 @@ This project demonstrates the following AR Foundation implementations:
 | :------------- | :---------- |
 | **Android**    | [Google ARCore XR Plug-in](https://docs.unity3d.com/Packages/com.unity.xr.arcore@6.3/manual/index.html) |
 | **iOS**        | [Apple ARKit XR Plug-in](https://docs.unity3d.com/Packages/com.unity.xr.arkit@6.3/manual/index.html) |
-| **Meta Quest** | [Unity OpenXR: Meta](https://docs.unity3d.com/Packages/com.unity.xr.meta-openxr@2.2/manual/index.html) |
+| **Meta Quest** | [Unity OpenXR: Meta](https://docs.unity3d.com/Packages/com.unity.xr.meta-openxr@2.3/manual/index.html) |
 | **Android XR** | [Unity OpenXR: Android XR](https://docs.unity3d.com/Packages/com.unity.xr.androidxr-openxr@1.0/manual/index.html) |
 
 Each AR Foundation feature is used in a minimal sample scene with example code that you can modify or copy into your project.
@@ -19,8 +19,8 @@ The `main` branch of this repository uses AR Foundation 6.2 and is compatible wi
 
 | Unity version  | AR Foundation version |
 | -------------- | --------------------- |
-| Unity 6.3 alpha (6000.3) | [6.3](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.3) |
-| Unity 6.2 (6000.2) | 6.2 ([main](https://github.com/Unity-Technologies/arfoundation-samples)) |
+| Unity 6.3 beta (6000.3) | 6.3 ([main](https://github.com/Unity-Technologies/arfoundation-samples/) branch) |
+| Unity 6.2 (6000.2) | 6.2 ([main](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.2)) |
 | Unity 6 (6000.0) | [6.0](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.0) |
 | 2022.3 (Enterprise license only) | [5.2](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.2) |
 

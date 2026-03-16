@@ -64,6 +64,7 @@ MonoBehaviour:
       - rid: 1902727375677030428
       - rid: 3349439625158197248
       - rid: 3349439625158197249
+      - rid: 9215613442131492864
     m_RuntimeSettings:
       m_List: []
   m_AssetVersion: 9
@@ -113,10 +114,6 @@ MonoBehaviour:
           type: 2}
         m_DefaultMesh2DLitMaterial: {fileID: 2100000, guid: 9452ae1262a74094f8a68013fbcd1834,
           type: 2}
-        m_DefaultRenderAs2DMaterial: {fileID: 2100000, guid: b697f6a938056384e968ccf6527dac83,
-          type: 2}
-        m_RenderAs2DFlatteningShader: {fileID: 4800000, guid: 74659692f6350ba46b88180d9c826630,
-          type: 3}
     - rid: 1902727375677030401
       type: {class: PostProcessData/ShaderResources, ns: UnityEngine.Rendering.Universal,
         asm: Unity.RenderPipelines.Universal.Runtime}
@@ -515,3 +512,10 @@ MonoBehaviour:
       data:
         version: 1
         useReflectionProbeRotation: 0
+    - rid: 9215613442131492864
+      type: {class: OnTilePostProcessResource, ns: UnityEngine.Rendering.Universal,
+        asm: Unity.RenderPipelines.Universal.Runtime}
+      data:
+        m_Version: 0
+        m_UberPostShader: {fileID: 4800000, guid: fe4f13c1004a07d4ea1e30bfd0326d9e,
+          type: 3}
