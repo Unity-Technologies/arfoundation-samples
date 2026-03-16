@@ -89,11 +89,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void OnEnable()
         {
-            if (m_RaycastManager == null || m_XROrigin == null || m_InputActionReferences == null)
+            if (m_XROrigin == null || m_InputActionReferences == null)
             {
                 Debug.LogWarning($"{nameof(RaycastEventController)} component on {name} has null inputs and will have no effect in this scene.", this);
                 return;
             }
+
+            if (m_RaycastManager == null)
+                Debug.LogWarning($"{nameof(RaycastEventController)} component on {name} has no raycast manager assigned and will not work.", this);
 
             if (m_InputActionReferences.screenTap.action != null)
                 m_InputActionReferences.screenTap.action.performed += ScreenTapped;
@@ -142,7 +145,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             var tapPosition = pointer.position.ReadValue();
             if (m_ARRaycastHitEvent != null &&
-                m_RaycastManager.Raycast(tapPosition, s_Hits, m_TrackableType))
+                (m_RaycastManager?.Raycast(tapPosition, s_Hits, m_TrackableType) ?? false))
             {
                 m_ARRaycastHitEvent.Raise(s_Hits[0]);
             }
@@ -170,7 +173,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 return;
 
             if (m_ARRaycastHitEvent != null &&
-                m_RaycastManager.Raycast(s_RaycastRay, s_Hits, m_TrackableType))
+                (m_RaycastManager?.Raycast(s_RaycastRay, s_Hits, m_TrackableType) ?? false))
             {
                 m_ARRaycastHitEvent.Raise(s_Hits[0]);
             }

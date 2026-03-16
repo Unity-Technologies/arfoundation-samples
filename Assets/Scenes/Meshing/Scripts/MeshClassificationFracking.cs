@@ -433,6 +433,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     var classifiedMeshFilter = meshFilters[i];
                     if (classifiedMeshFilter != null)
                     {
+                        classifiedMeshFilter.transform.localPosition = meshFilter.transform.localPosition;
+                        classifiedMeshFilter.transform.localRotation = meshFilter.transform.localRotation;
+
                         NativeArray<XRMeshClassification> faceClassifications = default;
                         if (elementsPerVector == 0 || elementsPerVector == 3)
                         {

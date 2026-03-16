@@ -18,9 +18,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void OnEnable()
         {
             if (sceneDescriptor.EvaluateRequirements())
+            {
                 m_Button.onClick.AddListener(LaunchScene);
+                m_Button.SetEnabled(true);
+            }
             else
+            {
                 m_Button.SetEnabled(false);
+            }
         }
 
         void OnDisable()
