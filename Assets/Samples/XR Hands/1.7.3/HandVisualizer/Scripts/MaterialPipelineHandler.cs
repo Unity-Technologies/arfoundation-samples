@@ -12,8 +12,14 @@ namespace UnityEngine.XR.Hands.Samples.VisualizerSample
     {
         static RenderPipelineValidation()
         {
-            foreach (var pipelineHandler in GetAllInstances())
-                pipelineHandler.AutoRefreshPipelineShaders();
+            // Use delayCall to ensure this runs after the editor is fully initialized and all assets are imported.
+            // Without delayCall, this script may execute before new assets (such as newly imported samples)
+            // are registered in the AssetDatabase, so they won't be found or converted.
+            EditorApplication.delayCall += () =>
+            {
+                foreach (var pipelineHandler in GetAllInstances())
+                    pipelineHandler.AutoRefreshPipelineShaders();
+            };
         }
 
         static List<MaterialPipelineHandler> GetAllInstances()
@@ -52,10 +58,10 @@ namespace UnityEngine.XR.Hands.Samples.VisualizerSample
 
     /// <summary>
     /// Scriptable object that allows for setting the shader on a material based on the current render pipeline.
-    /// Will run automatically OnEnable in the editor to set the shaders on project bootup. Can be refreshed manually with editor button.
+    /// Will run automatically OnEnable in the editor to set the shaders on project boot up. Can be refreshed manually with editor button.
     /// This exists because while objects render correctly using shadergraph shaders, others do not and using the standard shader resolves various rendering issues.
     /// </summary>
-    [CreateAssetMenu(fileName = "MaterialPipelineHandler", menuName = "XR/MaterialPipelineHandler", order = 0)]
+    [CreateAssetMenu(fileName = "MaterialPipelineHandler", menuName = "XR/Material Pipeline Handler", order = 0)]
     public class MaterialPipelineHandler : ScriptableObject
     {
         [SerializeField]
@@ -91,6 +97,8 @@ namespace UnityEngine.XR.Hands.Samples.VisualizerSample
 
             bool isBuiltinRenderPipeline = GraphicsSettings.currentRenderPipeline == null;
 
+            bool isModified = false;
+
             foreach (var info in m_ShaderContainers)
             {
                 if (info.material == null)
@@ -114,13 +122,24 @@ namespace UnityEngine.XR.Hands.Samples.VisualizerSample
                     info.material.shader = birpShader;
                     info.material.SetColor("_Color", originalColor);
                     MarkMaterialModified(info.material);
+                    isModified = true;
                 }
                 else if (!isBuiltinRenderPipeline && srpShader != null && currentShader != srpShader)
                 {
                     info.material.shader = srpShader;
                     info.material.SetColor("_BaseColor", originalColor);
                     MarkMaterialModified(info.material);
+                    isModified = true;
                 }
+            }
+
+            if (isModified)
+            {
+#if UNITY_EDITOR
+                // This ensures the material changes are saved immediately,
+                // otherwise they won't be saved until the next domain reload.
+                AssetDatabase.SaveAssets();
+#endif
             }
         }
 
