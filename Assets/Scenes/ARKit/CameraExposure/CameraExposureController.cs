@@ -53,23 +53,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
         protected override void PopulateSupportedModes(ARKitLockedCamera lockedCamera)
         {
             var supportedModes = lockedCamera.supportedExposureModes;
-            m_SupportedModes = new();
-
             if ((supportedModes & ARKitExposureMode.Locked) != ARKitExposureMode.None)
             {
                 m_SupportedModes.Add(ARKitExposureMode.Locked);
             }
-
             if ((supportedModes & ARKitExposureMode.Auto) != ARKitExposureMode.None)
             {
                 m_SupportedModes.Add(ARKitExposureMode.Auto);
             }
-
             if ((supportedModes & ARKitExposureMode.ContinuousAuto) != ARKitExposureMode.None)
             {
                 m_SupportedModes.Add(ARKitExposureMode.ContinuousAuto);
             }
-
             if ((supportedModes & ARKitExposureMode.Custom) != ARKitExposureMode.None)
             {
                 m_SupportedModes.Add(ARKitExposureMode.Custom);

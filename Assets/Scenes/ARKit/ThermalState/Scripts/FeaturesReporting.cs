@@ -1,8 +1,8 @@
 using UnityEngine.UI;
 using UnityEngine.XR.ARSubsystems;
-#if UNITY_IOS && !UNITY_EDITOR
+#if !UNITY_6000_4_OR_NEWER && UNITY_IOS
 using UnityEngine.XR.ARKit;
-#endif // UNITY_IOS && !UNITY_EDITOR
+#endif
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -184,14 +184,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
             SetFeatureDisplayState(m_LightEstimationColorText, isCameraManagerEnabled && ((m_CameraManager.currentLightEstimation & LightEstimation.AmbientColor) == LightEstimation.AmbientColor));
             SetFeatureDisplayState(m_LightEstimationIntensityText, isCameraManagerEnabled && ((m_CameraManager.currentLightEstimation & LightEstimation.AmbientIntensity) == LightEstimation.AmbientIntensity));
             SetFeatureDisplayState(m_MeshingText, isMeshManagerEnabled);
-#if UNITY_IOS && !UNITY_EDITOR
+#if UNITY_6000_4_OR_NEWER
+            SetFeatureDisplayState(m_MeshingClassificationText, isMeshManagerEnabled && (m_MeshManager.subsystem?.submeshClassificationEnabled ?? false));
+#elif UNITY_IOS
             {
                 XRMeshSubsystem meshSubsystem = m_MeshManager?.subsystem as XRMeshSubsystem;
                 SetFeatureDisplayState(m_MeshingClassificationText, isMeshManagerEnabled && meshSubsystem.GetClassificationEnabled());
             }
-#else // UNITY_IOS && !UNITY_EDITOR
+#else
             SetFeatureDisplayState(m_MeshingClassificationText, false);
-#endif // UNITY_IOS && !UNITY_EDITOR
+#endif
             SetFeatureDisplayState(m_PlaneTrackingText, isPlaneManagerEnabled && (m_PlaneManager.currentDetectionMode != PlaneDetectionMode.None));
             SetFeatureDisplayState(m_RaycastingText, isRaycastManagerEnabled);
             SetFeatureDisplayState(m_RotationAndOrientationText, isARSessionEnabled && (m_Session.currentTrackingMode == TrackingMode.PositionAndRotation));

@@ -33,7 +33,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         ARKitCameraSubsystem m_Subsystem;
         ARKitLockedCamera m_LockedCamera;
 
-        protected List<TMode> m_SupportedModes;
+        protected List<TMode> m_SupportedModes = new();
 #endif
 
         public bool cameraLocked
@@ -168,10 +168,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void UpdateCurrentState()
         {
             if (!m_Subsystem.TryGetLockedCamera(out var lockedCamera))
-            {
-                Debug.LogError("Couldn't acquire lock on the camera.");
                 return;
-            }
 
             using (lockedCamera)
             {
@@ -223,6 +220,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void RefreshCurrentMode()
         {
+            if (m_SupportedModes.Count == 0)
+                return;
+
             var mode = currentMode;
             if (m_SupportedModes[m_ModeDropdown.value].Equals(mode))
                 return;

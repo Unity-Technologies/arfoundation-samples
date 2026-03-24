@@ -38,12 +38,12 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -130,7 +130,6 @@ GameObject:
   - component: {fileID: 341047656}
   - component: {fileID: 341047657}
   - component: {fileID: 341047658}
-  - component: {fileID: 341047659}
   m_Layer: 0
   m_Name: Meshing
   m_TagString: Untagged
@@ -163,8 +162,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 968053edfd89749c48f4ea5d444abf64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_MeshPrefab: {fileID: 6427989023023856471, guid: fedb7292b0fca45fb8cd1185135b9511,
     type: 3}
   m_Density: 0.5
@@ -172,7 +171,11 @@ MonoBehaviour:
   m_Tangents: 0
   m_TextureCoordinates: 0
   m_Colors: 0
+  m_Classification: 1
   m_ConcurrentQueueSize: 4
+  meshInfosChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &341047658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,25 +185,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 341047655}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32fef7e77fd9d4442bda74d2d1d0d71d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MeshManager: {fileID: 341047657}
+  m_Script: {fileID: 11500000, guid: ee447b484813b4812abd5f79f0511ab8, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::UnityEngine.XR.ARFoundation.Samples.MeshClassificationFracking
   m_ClassificationEnabled: 1
---- !u!114 &341047659
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 341047655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 238bab1e4cd1947dfb0a347f3eee7b1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   m_MeshManager: {fileID: 341047657}
   m_NoneMeshPrefab: {fileID: 6202378973700837002, guid: fddcd62d97fac4370b32ed91c45494fd,
+    type: 3}
+  m_OtherMeshPrefab: {fileID: 1113424142426548330, guid: ebdd3757ad7824074a6f2fa9b6fb990c,
     type: 3}
   m_WallMeshPrefab: {fileID: 3474271192428087024, guid: 79b6de234a9a44eb2a481947a184a204,
     type: 3}
@@ -326,8 +318,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e0cb9aa70a22847b5925ee5f067c10a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
 --- !u!1 &544018338 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7957942351869948125, guid: 8f2c1ffdafd49a943ac79dc0ff480220,
@@ -344,8 +336,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cee0d4bc41d7b8b4cb9c2ae342542881, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_XROrigin: {fileID: 544018337}
   m_InputActionReferences: {fileID: 11400000, guid: 0601a0c2bd60343458dc7aca9d61251a,
     type: 2}
@@ -360,8 +352,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33fd3b7fabf257b4eb27c579d4fa8b95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_PoseEvent: {fileID: 11400000, guid: b4c22be57749c834fb731b76b2e2e0d2, type: 2}
   m_ProjectilePrefab: {fileID: 9183901874634772596, guid: 133f41d7c73924e42a428ccaa1975ea6,
     type: 3}
@@ -376,8 +368,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b15f82cc229284894964d2d30806969d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_HumanSegmentationStencilMode: 3
   m_HumanSegmentationDepthMode: 2
   m_EnvironmentDepthMode: 0
@@ -393,8 +385,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1760703bbd54c04488a8d10600262ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   <trackablesChanged>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
@@ -536,7 +528,7 @@ PrefabInstance:
     - target: {fileID: 3475649454728415075, guid: 4ee22c1f54b174122b6a766fe09e0de8,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
+      value:
       objectReference: {fileID: 746876711}
     - target: {fileID: 3475649454728415075, guid: 4ee22c1f54b174122b6a766fe09e0de8,
         type: 3}
@@ -579,8 +571,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9909048d5fe6c41468a28c79b85916d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
 --- !u!1 &870156088
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,8 +699,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_IgnoreReversedGraphics: 1
   m_BlockingObjects: 0
   m_BlockingMask:
@@ -724,8 +716,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1

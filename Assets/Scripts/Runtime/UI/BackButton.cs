@@ -8,6 +8,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         GameObject m_BackButton;
 
+        [SerializeField]
+        string m_MenuSceneNameOverride;
+
         public GameObject backButton
         {
             get => m_BackButton;
@@ -29,7 +32,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public void BackButtonPressed()
         {
-            string menuSceneName = MenuLoader.GetMenuSceneName();
+            string menuSceneName = m_MenuSceneNameOverride;
+            if (string.IsNullOrEmpty(menuSceneName) || !Application.CanStreamedLevelBeLoaded(menuSceneName))
+                menuSceneName = MenuLoader.GetMenuSceneName();
             if (Application.CanStreamedLevelBeLoaded(menuSceneName))
                 SceneManager.LoadScene(menuSceneName, LoadSceneMode.Single);
         }

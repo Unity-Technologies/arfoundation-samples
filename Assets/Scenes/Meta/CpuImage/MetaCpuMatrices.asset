@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adf2a45713b8498389fc5c57560f14d1, type: 3}
+  m_Name: MetaCpuMatrices
+  m_EditorClassIdentifier: 
+  m_SceneName: MetaCpuMatrices
+  m_Requirements:
+  - rid: 3006186322434981966
+  references:
+    version: 2
+    RefIds:
+    - rid: 3006186322434981966
+      type: {class: RequiresOpenXRFeature, ns: UnityEngine.XR.ARFoundation.Samples,
+        asm: Unity.XR.ARFoundation.Samples}
+      data:
+        m_RequiredFeature: UnityEngine.XR.OpenXR.Features.Meta.ARCameraFeature, Unity.XR.MetaOpenXR,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
