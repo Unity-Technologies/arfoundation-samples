@@ -100,6 +100,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
         bool m_SupportsSaveAndLoadAnchors;
         bool m_SupportsEraseAnchors;
 
+        bool m_IsSaveAllInProgress;
+        bool m_IsLoadAllInProgress;
+        bool m_IsEraseAllInProgress;
+
         SaveAndLoadAnchorDataToFile m_SaveAndLoadAnchorDataToFile;
 
         void Awake()
@@ -146,116 +150,149 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public async void SaveAllAnchors()
         {
-            if (!m_SupportsSaveAndLoadAnchors)
+            if (!m_SupportsSaveAndLoadAnchors || m_IsSaveAllInProgress)
                 return;
 
-            var anchorsToSave = new List<ARAnchor>();
-            foreach (var newAnchorEntry in m_NewAnchorEntriesByAnchorId.Values)
+            m_IsSaveAllInProgress = true;
+            m_SaveAllAnchorsButton.interactable = false;
+            List<Awaitable> saveToFileAwaitables = null;
+            List<Awaitable> showResultAwaitables = null;
+
+            try
             {
-                anchorsToSave.Add(newAnchorEntry.representedAnchor);
-                newAnchorEntry.EnableActionButton(false);
-                newAnchorEntry.StartActionLoadingAnimation();
-            }
-
-            await m_AnchorManager.TrySaveAnchorsAsync(anchorsToSave, m_SaveAnchorResults);
-
-            var saveToFileAwaitables = s_VoidAwaitableLists.Get();
-            var createSavedEntryAwaitables = s_AsyncInstantiateMaps.Get();
-            foreach (var result in m_SaveAnchorResults)
-            {
-                if (result.resultStatus.IsError())
-                    continue;
-
-                var saveToFileAwaitable = SavePersistentAnchorGuidToFile(
-                    result.resultStatus,
-                    result.savedAnchorGuid);
-
-                if (saveToFileAwaitable != null)
-                    saveToFileAwaitables.Add(saveToFileAwaitable);
-
-                if (!m_SavedAnchorEntriesBySavedAnchorGuid.ContainsKey(result.savedAnchorGuid))
+                var anchorsToSave = new List<ARAnchor>();
+                foreach (var newAnchorEntry in m_NewAnchorEntriesByAnchorId.Values)
                 {
-                    var saveEntryAwaitable = InstantiateAsync(m_SavedAnchorEntryPrefab, m_ContentTransform);
-                    createSavedEntryAwaitables.Add(saveEntryAwaitable, result);
+                    anchorsToSave.Add(newAnchorEntry.representedAnchor);
+                    newAnchorEntry.EnableActionButton(false);
+                    newAnchorEntry.StartActionLoadingAnimation();
                 }
-            }
 
-            foreach (var (createSaveEntryAwaitable, result) in createSavedEntryAwaitables)
+                await m_AnchorManager.TrySaveAnchorsAsync(anchorsToSave, m_SaveAnchorResults);
+
+                saveToFileAwaitables = s_VoidAwaitableLists.Get();
+                var createSavedEntryAwaitables = s_AsyncInstantiateMaps.Get();
+                foreach (var result in m_SaveAnchorResults)
+                {
+                    if (result.resultStatus.IsError())
+                        continue;
+
+                    var saveToFileAwaitable = SavePersistentAnchorGuidToFile(
+                        result.resultStatus,
+                        result.savedAnchorGuid);
+
+                    if (saveToFileAwaitable != null)
+                        saveToFileAwaitables.Add(saveToFileAwaitable);
+
+                    if (!m_SavedAnchorEntriesBySavedAnchorGuid.ContainsKey(result.savedAnchorGuid))
+                    {
+                        var saveEntryAwaitable = InstantiateAsync(m_SavedAnchorEntryPrefab, m_ContentTransform);
+                        createSavedEntryAwaitables.Add(saveEntryAwaitable, result);
+                    }
+                }
+
+                foreach (var (createSaveEntryAwaitable, result) in createSavedEntryAwaitables)
+                {
+                    var saveAnchorEntry = await createSaveEntryAwaitable;
+                    var newAnchorEntry = m_NewAnchorEntriesByAnchorId[result.anchor.trackableId];
+                    var isAnchorActive = newAnchorEntry.representedAnchor != null;
+                    SetupSavedAnchorEntry(
+                        saveAnchorEntry[0],
+                        result.savedAnchorGuid,
+                        isAnchorActive,
+                        DateTime.Now,
+                        newAnchorEntry.AnchorDisplayText);
+
+                    UpdateSavedAnchorEntry(saveAnchorEntry[0], result.savedAnchorGuid, newAnchorEntry.representedAnchor);
+                }
+
+                foreach (var awaitable in saveToFileAwaitables)
+                {
+                    await awaitable;
+                }
+
+                showResultAwaitables = s_VoidAwaitableLists.Get();
+                foreach (var result in m_SaveAnchorResults)
+                {
+                    var entry = m_NewAnchorEntriesByAnchorId[result.anchor.trackableId];
+                    var showResultAwaitable = ShowEntryActionResult(entry, result.resultStatus, result.savedAnchorGuid);
+                    showResultAwaitables.Add(showResultAwaitable);
+                }
+
+                foreach (var awaitable in showResultAwaitables)
+                {
+                    await awaitable;
+                }
+
+                createSavedEntryAwaitables.Clear();
+                s_AsyncInstantiateMaps.Release(createSavedEntryAwaitables);
+            }
+            finally
             {
-                var saveAnchorEntry = await createSaveEntryAwaitable;
-                var newAnchorEntry = m_NewAnchorEntriesByAnchorId[result.anchor.trackableId];
-                var isAnchorActive = newAnchorEntry.representedAnchor != null;
-                SetupSavedAnchorEntry(
-                    saveAnchorEntry[0],
-                    result.savedAnchorGuid,
-                    isAnchorActive,
-                    DateTime.Now,
-                    newAnchorEntry.AnchorDisplayText);
+                if (saveToFileAwaitables != null)
+                {
+                    saveToFileAwaitables.Clear();
+                    s_VoidAwaitableLists.Release(saveToFileAwaitables);
+                }
 
-                UpdateSavedAnchorEntry(saveAnchorEntry[0], result.savedAnchorGuid, newAnchorEntry.representedAnchor);
+                if (showResultAwaitables != null)
+                {
+                    showResultAwaitables.Clear();
+                    s_VoidAwaitableLists.Release(showResultAwaitables);
+                }
+
+                m_IsSaveAllInProgress = false;
+                m_SaveAllAnchorsButton.interactable = true;
             }
-
-            foreach (var awaitable in saveToFileAwaitables)
-            {
-                await awaitable;
-            }
-
-            var showResultAwaitables = s_VoidAwaitableLists.Get();
-            foreach (var result in m_SaveAnchorResults)
-            {
-                var entry = m_NewAnchorEntriesByAnchorId[result.anchor.trackableId];
-                var showResultAwaitable = ShowEntryActionResult(entry, result.resultStatus, result.savedAnchorGuid);
-                showResultAwaitables.Add(showResultAwaitable);
-            }
-
-            foreach (var awaitable in showResultAwaitables)
-            {
-                await awaitable;
-            }
-
-            saveToFileAwaitables.Clear();
-            s_VoidAwaitableLists.Release(saveToFileAwaitables);
-
-            createSavedEntryAwaitables.Clear();
-            s_AsyncInstantiateMaps.Release(createSavedEntryAwaitables);
         }
 
         public async void LoadAllAnchors()
         {
-            if (!m_SupportsSaveAndLoadAnchors)
+            if (!m_SupportsSaveAndLoadAnchors || m_IsLoadAllInProgress)
                 return;
 
-            var anchorGuidsToLoad = new List<SerializableGuid>();
-            foreach (var (savedAnchorGuid, anchorEntry) in m_SavedAnchorEntriesBySavedAnchorGuid)
-            {
-                anchorGuidsToLoad.Add(savedAnchorGuid);
-                anchorEntry.EnableActionButton(false);
-                anchorEntry.StartActionLoadingAnimation();
-            }
+            m_IsLoadAllInProgress = true;
+            m_LoadAllAnchorsButton.interactable = false;
 
-            var loadAnchorResults = new List<ARSaveOrLoadAnchorResult>();
-            await m_AnchorManager.TryLoadAnchorsAsync(
-                anchorGuidsToLoad,
-                loadAnchorResults,
-                OnIncrementalLoadResultsAvailable);
-
-            var awaitables = new List<Awaitable>();
-            foreach (var loadAnchorResult in loadAnchorResults)
+            try
             {
-                var entry = m_SavedAnchorEntriesBySavedAnchorGuid[loadAnchorResult.savedAnchorGuid];
-                if (loadAnchorResult.resultStatus.IsSuccess())
+                var anchorGuidsToLoad = new List<SerializableGuid>();
+                foreach (var (savedAnchorGuid, anchorEntry) in m_SavedAnchorEntriesBySavedAnchorGuid)
                 {
-                    continue;
+                    anchorGuidsToLoad.Add(savedAnchorGuid);
+                    anchorEntry.EnableActionButton(false);
+                    anchorEntry.StartActionLoadingAnimation();
                 }
 
-                entry.StopActionLoadingAnimation();
-                awaitables.Add(entry.ShowActionResult(false, m_ResultDurationInSeconds));
-                entry.EnableActionButton(true);
-            }
+                var loadAnchorResults = new List<ARSaveOrLoadAnchorResult>();
+                await m_AnchorManager.TryLoadAnchorsAsync(
+                    anchorGuidsToLoad,
+                    loadAnchorResults,
+                    OnIncrementalLoadResultsAvailable);
 
-            foreach (var awaitable in awaitables)
+                var awaitables = new List<Awaitable>();
+                foreach (var loadAnchorResult in loadAnchorResults)
+                {
+                    var entry = m_SavedAnchorEntriesBySavedAnchorGuid[loadAnchorResult.savedAnchorGuid];
+                    if (loadAnchorResult.resultStatus.IsSuccess())
+                    {
+                        continue;
+                    }
+
+                    entry.StopActionLoadingAnimation();
+                    awaitables.Add(entry.ShowActionResult(false, m_ResultDurationInSeconds));
+                    entry.EnableActionButton(true);
+                }
+
+                foreach (var awaitable in awaitables)
+                {
+                    await awaitable;
+                }
+            }
+            finally
             {
-                await awaitable;
+                m_IsLoadAllInProgress = false;
+                m_LoadAllAnchorsButton.interactable = true;
             }
         }
 
@@ -292,84 +329,99 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public async void EraseAllAnchors()
         {
-            if (!m_SupportsEraseAnchors)
+            if (!m_SupportsEraseAnchors || m_IsEraseAllInProgress)
                 return;
 
-            var anchorsToErase = new List<SerializableGuid>();
-            foreach (var (savedAnchorGuid, anchorEntry) in m_SavedAnchorEntriesBySavedAnchorGuid)
+            m_IsEraseAllInProgress = true;
+            m_EraseAllAnchorsButton.interactable = false;
+            List<Awaitable> showResultAwaitables = null;
+
+            try
             {
-                anchorsToErase.Add(savedAnchorGuid);
-                anchorEntry.EnableActionButton(false);
-                anchorEntry.EnableEraseButton(false);
-                anchorEntry.StartEraseLoadingAnimation();
-            }
-
-            await m_AnchorManager.TryEraseAnchorsAsync(anchorsToErase, m_OutputEraseAnchorResults);
-
-            var showResultAwaitables = s_VoidAwaitableLists.Get();
-            for (var i = 0; i < m_OutputEraseAnchorResults.Count; i += 1)
-            {
-                var savedAnchorEntry = m_SavedAnchorEntriesBySavedAnchorGuid[m_OutputEraseAnchorResults[i].savedAnchorGuid];
-                var isAnchorInScene = savedAnchorEntry.representedAnchor != null;
-
-                savedAnchorEntry.StopEraseLoadingAnimation();
-                if (m_OutputEraseAnchorResults[i].resultStatus.IsError())
+                var anchorsToErase = new List<SerializableGuid>();
+                foreach (var (savedAnchorGuid, anchorEntry) in m_SavedAnchorEntriesBySavedAnchorGuid)
                 {
-                    var showFailedResultAwaitable = savedAnchorEntry.ShowEraseResult(false, m_ResultDurationInSeconds);
-                    showResultAwaitables.Add(showFailedResultAwaitable);
-                    savedAnchorEntry.EnableEraseButton(true);
-                    savedAnchorEntry.EnableActionButton(!isAnchorInScene);
-                    continue;
+                    anchorsToErase.Add(savedAnchorGuid);
+                    anchorEntry.EnableActionButton(false);
+                    anchorEntry.EnableEraseButton(false);
+                    anchorEntry.StartEraseLoadingAnimation();
                 }
 
-                if (!m_SupportsGetSavedAnchorIds)
+                await m_AnchorManager.TryEraseAnchorsAsync(anchorsToErase, m_OutputEraseAnchorResults);
+
+                showResultAwaitables = s_VoidAwaitableLists.Get();
+                for (var i = 0; i < m_OutputEraseAnchorResults.Count; i += 1)
                 {
-                    var eraseAnchorAwaitable = m_SaveAndLoadAnchorDataToFile.EraseAnchorIdAsync(savedAnchorEntry.savedAnchorGuid);
-                    showResultAwaitables.Add(eraseAnchorAwaitable);
+                    var savedAnchorEntry = m_SavedAnchorEntriesBySavedAnchorGuid[m_OutputEraseAnchorResults[i].savedAnchorGuid];
+                    var isAnchorInScene = savedAnchorEntry.representedAnchor != null;
+
+                    savedAnchorEntry.StopEraseLoadingAnimation();
+                    if (m_OutputEraseAnchorResults[i].resultStatus.IsError())
+                    {
+                        var showFailedResultAwaitable = savedAnchorEntry.ShowEraseResult(false, m_ResultDurationInSeconds);
+                        showResultAwaitables.Add(showFailedResultAwaitable);
+                        savedAnchorEntry.EnableEraseButton(true);
+                        savedAnchorEntry.EnableActionButton(!isAnchorInScene);
+                        continue;
+                    }
+
+                    if (!m_SupportsGetSavedAnchorIds)
+                    {
+                        var eraseAnchorAwaitable = m_SaveAndLoadAnchorDataToFile.EraseAnchorIdAsync(savedAnchorEntry.savedAnchorGuid);
+                        showResultAwaitables.Add(eraseAnchorAwaitable);
+                    }
+
+                    var showSuccessResultAwaitable = savedAnchorEntry.ShowEraseResult(true, m_ResultDurationInSeconds);
+                    showResultAwaitables.Add(showSuccessResultAwaitable);
                 }
 
-                var showSuccessResultAwaitable = savedAnchorEntry.ShowEraseResult(true, m_ResultDurationInSeconds);
-                showResultAwaitables.Add(showSuccessResultAwaitable);
-            }
-
-            foreach (var awaitable in showResultAwaitables)
-            {
-                await awaitable;
-            }
-
-            showResultAwaitables.Clear();
-            s_VoidAwaitableLists.Release(showResultAwaitables);
-
-            var erasedEntryAwaitables = s_ErasedEntryAwaitablesMaps.Get();
-            foreach (var eraseAnchorResult in m_OutputEraseAnchorResults)
-            {
-                var savedAnchorEntry = m_SavedAnchorEntriesBySavedAnchorGuid[eraseAnchorResult.savedAnchorGuid];
-                var isAnchorInScene = savedAnchorEntry.representedAnchor != null;
-                if (isAnchorInScene)
+                foreach (var awaitable in showResultAwaitables)
                 {
-                    var addNewEntryAwaitable = InstantiateAsync(m_NewAnchorEntryPrefab, m_ContentTransform);
-                    erasedEntryAwaitables.Add(addNewEntryAwaitable, eraseAnchorResult.savedAnchorGuid);
+                    await awaitable;
                 }
-                else
+
+                var erasedEntryAwaitables = s_ErasedEntryAwaitablesMaps.Get();
+                foreach (var eraseAnchorResult in m_OutputEraseAnchorResults)
                 {
+                    var savedAnchorEntry = m_SavedAnchorEntriesBySavedAnchorGuid[eraseAnchorResult.savedAnchorGuid];
+                    var isAnchorInScene = savedAnchorEntry.representedAnchor != null;
+                    if (isAnchorInScene)
+                    {
+                        var addNewEntryAwaitable = InstantiateAsync(m_NewAnchorEntryPrefab, m_ContentTransform);
+                        erasedEntryAwaitables.Add(addNewEntryAwaitable, eraseAnchorResult.savedAnchorGuid);
+                    }
+                    else
+                    {
+                        RemoveSavedAnchorEntry(savedAnchorEntry);
+                    }
+                }
+
+                foreach (var (awaitable, savedAnchorGuid) in erasedEntryAwaitables)
+                {
+                    var newAnchorEntry = await awaitable;
+                    var savedAnchorEntry = m_SavedAnchorEntriesBySavedAnchorGuid[savedAnchorGuid];
+                    SetupNewAnchorEntry(
+                        newAnchorEntry[0],
+                        savedAnchorEntry.representedAnchor,
+                        savedAnchorEntry.AnchorDisplayText);
+
                     RemoveSavedAnchorEntry(savedAnchorEntry);
                 }
-            }
 
-            foreach (var (awaitable, savedAnchorGuid) in erasedEntryAwaitables)
+                erasedEntryAwaitables.Clear();
+                s_ErasedEntryAwaitablesMaps.Release(erasedEntryAwaitables);
+            }
+            finally
             {
-                var newAnchorEntry = await awaitable;
-                var savedAnchorEntry = m_SavedAnchorEntriesBySavedAnchorGuid[savedAnchorGuid];
-                SetupNewAnchorEntry(
-                    newAnchorEntry[0],
-                    savedAnchorEntry.representedAnchor,
-                    savedAnchorEntry.AnchorDisplayText);
+                if (showResultAwaitables != null)
+                {
+                    showResultAwaitables.Clear();
+                    s_VoidAwaitableLists.Release(showResultAwaitables);
+                }
 
-                RemoveSavedAnchorEntry(savedAnchorEntry);
+                m_IsEraseAllInProgress = false;
+                m_EraseAllAnchorsButton.interactable = true;
             }
-
-            erasedEntryAwaitables.Clear();
-            s_ErasedEntryAwaitablesMaps.Release(erasedEntryAwaitables);
         }
 
         async void InitializeUI()

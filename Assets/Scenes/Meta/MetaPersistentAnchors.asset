@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SceneName: MetaPersistentAnchors
   m_Requirements:
-  - rid: 5145623472158540245
   - rid: 4788940866556788922
   - rid: 2862248137945776348
   - rid: 2862248137945776349
@@ -37,9 +36,3 @@ MonoBehaviour:
         m_RequiresEraseAnchor: 1
         m_RequiresGetSavedAnchorIds: 0
         m_RequiresAsyncCancellation: 0
-    - rid: 5145623472158540245
-      type: {class: RequiresOpenXRFeature, ns: UnityEngine.XR.ARFoundation.Samples,
-        asm: Unity.XR.ARFoundation.Samples}
-      data:
-        m_RequiredFeature: UnityEngine.XR.OpenXR.Features.Meta.ARAnchorFeature, Unity.XR.MetaOpenXR,
-          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null

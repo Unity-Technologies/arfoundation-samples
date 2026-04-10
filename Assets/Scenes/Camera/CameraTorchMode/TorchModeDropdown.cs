@@ -20,6 +20,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         const string k_OnString = "On";
         const string k_OffString = "Off";
 
+        bool m_HasTrackingStarted;
+
         public ARCameraManager cameraManager
         {
             get => m_CameraManager;
@@ -97,21 +99,26 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (m_CameraManager == null)
                 return;
 
-            if (change.state is ARSessionState.Ready or ARSessionState.SessionTracking
-                && m_CameraManager.DoesCurrentCameraSupportTorch())
+            setSupportedState(m_CameraManager.DoesCurrentCameraSupportTorch());
+
+            if (change.state is ARSessionState.Ready)
             {
-                if (torchModeSupported != null)
-                    torchModeSupported.Invoke(true);
-                if (m_NotSupportedLabel != null)
-                    m_NotSupportedLabel.SetActive(false);
+                CheckTorchMode();
             }
-            else
-            {
-                if (torchModeSupported != null)
-                    torchModeSupported.Invoke(false);
-                if (m_NotSupportedLabel != null)
-                    m_NotSupportedLabel.SetActive(true);
-            }
+        }
+
+        private async void CheckTorchMode()
+        {
+            await System.Threading.Tasks.Task.Yield();
+            setSupportedState(m_CameraManager.DoesCurrentCameraSupportTorch());
+        }
+
+        private void setSupportedState(bool isSupported)
+        {
+            if (torchModeSupported != null)
+                torchModeSupported.Invoke(isSupported);
+            if (m_NotSupportedLabel != null)
+                m_NotSupportedLabel.SetActive(!isSupported);
         }
     }
 }

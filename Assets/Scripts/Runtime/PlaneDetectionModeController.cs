@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine.XR.ARSubsystems;
 
 namespace UnityEngine.XR.ARFoundation.Samples
@@ -9,6 +10,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
     [RequireComponent(typeof(ARPlaneManager))]
     public class PlaneDetectionModeController : MonoBehaviour
     {
+        const float k_TimeoutDuration = 6;
+
         [Tooltip("The UI Text element used to display the state of the Plane Detection Mode flags.")]
         [SerializeField]
         TextMeshProUGUI m_FlagsText;
@@ -16,11 +19,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [Tooltip("The SliderToggle element used to control the on/off state of Horizontal plane detection.")]
         [SerializeField]
         SliderToggle m_HorizontalSliderToggle;
-        
+
         [Tooltip("The SliderToggle element used to control the on/off state of Vertical plane detection.")]
         [SerializeField]
         SliderToggle m_VerticalSliderToggle;
-        
+
         [Tooltip("The SliderToggle element used to control the on/off state of NotAxisAligned plane detection.")]
         [SerializeField]
         SliderToggle m_NotAxisAlignedSliderToggle;
@@ -34,9 +37,32 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             m_ARPlaneManager = GetComponent<ARPlaneManager>();
         }
-        
-        void Start()
+
+        async void Start()
         {
+            // This is a temporary fix until XRLoader.InitializeAsync is supported. Right now there is no way to know
+            // when spatial setup is complete, so we must poll until the subsystem is loaded.
+            try
+            {
+                var elapsedTime = 0f;
+                while (m_ARPlaneManager.descriptor == null && elapsedTime < k_TimeoutDuration)
+                {
+                    elapsedTime += Time.deltaTime;
+                    await Awaitable.NextFrameAsync();
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                // Graceful exit
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
+
+            if (m_ARPlaneManager.descriptor == null)
+                return;
+
             var detectionMode = m_ARPlaneManager.requestedDetectionMode;
             m_FlagsText.text = "Flags: " + detectionMode;
             m_DetectionMode = detectionMode;
@@ -45,12 +71,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_HorizontalSliderToggle.SetSliderValue((detectionMode & PlaneDetectionMode.Horizontal) == PlaneDetectionMode.Horizontal);
             else
                 m_HorizontalSliderToggle.SetEnabled(false);
-            
+
             if (m_ARPlaneManager.descriptor.supportsVerticalPlaneDetection)
                 m_VerticalSliderToggle.SetSliderValue((detectionMode & PlaneDetectionMode.Vertical) == PlaneDetectionMode.Vertical);
             else
                 m_VerticalSliderToggle.SetEnabled(false);
-            
+
             if (m_ARPlaneManager.descriptor.supportsArbitraryPlaneDetection)
                 m_NotAxisAlignedSliderToggle.SetSliderValue((detectionMode & PlaneDetectionMode.NotAxisAligned) == PlaneDetectionMode.NotAxisAligned);
             else

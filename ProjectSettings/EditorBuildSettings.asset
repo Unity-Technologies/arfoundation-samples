@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu/Menu.unity
     guid: 904110ab8cef14f7d96c56ca20774e5a
   - enabled: 1
-    path: Assets/Scenes/MetaMenu.unity
+    path: Assets/Scenes/Menu/MetaMenu.unity
     guid: de8b249d82ab34c99846a9604f80674c
   - enabled: 1
     path: Assets/Scenes/Menu/HoloLensMenu.unity
@@ -197,6 +197,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Meta/CpuImage/MetaCpuImage.unity
     guid: 7c213d67615214358800b0d66e092672
+  - enabled: 1
+    path: Assets/Scenes/Markers/Markers.unity
+    guid: 19084d21c0aeb47398a1a7680c7a2df8
   m_configObjects:
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: c52d3bb36b4c86f47af54ab9c7a02589,
       type: 2}
@@ -204,6 +207,8 @@ EditorBuildSettings:
       type: 2}
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 98c79e8cc22674a89a95a3a90e2b70cb,
       type: 2}
+    UnityEditor.XR.OpenXR.Features.SpatialEntities.SpatialEntitiesSettings: {fileID: 11400000,
+      guid: bf91a04c8292e4e07873776be76185bd, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 3d56fa548ade247c2890341fb8a12ac0,
       type: 3}
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 302e9f36808117f4184b07b05ca5bb47,
@@ -214,4 +219,3 @@ EditorBuildSettings:
       type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 07124a6b2286348128e5aecd8a4b3b80,
       type: 2}
-  m_UseUCBPForAssetBundles: 0

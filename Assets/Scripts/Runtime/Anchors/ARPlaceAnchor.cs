@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine.XR.ARSubsystems;
 
@@ -14,8 +13,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [Tooltip("The Scriptable Object Asset that contains the ARRaycastHit event.")]
         ARRaycastHitEventAsset m_RaycastHitEvent;
 
-        Dictionary<TrackableId, ARAnchor> m_AnchorsByTrackableId = new();
-        List<TrackableId> m_RemovedAnchorIds = new();
+        readonly Dictionary<TrackableId, ARAnchor> m_AnchorsByTrackableId = new();
+        readonly List<TrackableId> m_RemovedAnchorIds = new();
 
         public ARAnchorManager anchorManager
         {
@@ -51,17 +50,17 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (m_AnchorManager == null)
                 m_AnchorManager = FindAnyObjectByType<ARAnchorManager>();
 
-            if ((m_AnchorManager ? m_AnchorManager.subsystem : null) == null)
+            if (m_AnchorManager == null)
             {
                 enabled = false;
-                Debug.LogWarning($"No XRAnchorSubsystem was found in {nameof(ARPlaceAnchor)}'s {nameof(m_AnchorManager)}, so this script will be disabled.", this);
+                Debug.LogWarning($"Anchor Manager field on {nameof(ARPlaceAnchor)} component of {name} is not assigned. Disabling component.", this);
                 return;
             }
 
             if (m_RaycastHitEvent == null)
             {
                 enabled = false;
-                Debug.LogWarning($"{nameof(m_RaycastHitEvent)} field on {nameof(ARPlaceAnchor)} component of {name} is not assigned.", this);
+                Debug.LogWarning($"Raycast Hit Event field on {nameof(ARPlaceAnchor)} component of {name} is not assigned. Disabling component.", this);
                 return;
             }
 

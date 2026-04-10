@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.XR.CoreUtils.Collections;
 using UnityEngine.XR.ARSubsystems;
 #if METAOPENXR_2_2_OR_NEWER && (UNITY_ANDROID || UNITY_EDITOR)
 using UnityEngine.XR.OpenXR.NativeTypes;
@@ -27,9 +28,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         SaveAndLoadAnchorDataToFile m_SaveAndLoadAnchorDataToFile;
 
-        Dictionary<int, MetaPersistentAnchorEntry> m_AnchorEntryByEntryId = new();
-        Dictionary<TrackableId, int> m_EntryIdByTrackableId = new();
-        Dictionary<SerializableGuid, int> m_EntryIdBySavedAnchorGuid = new();
+        readonly Dictionary<int, MetaPersistentAnchorEntry> m_AnchorEntryByEntryId = new();
+        readonly Dictionary<TrackableId, int> m_EntryIdByTrackableId = new();
+        readonly Dictionary<SerializableGuid, int> m_EntryIdBySavedAnchorGuid = new();
 
         int m_NextEntryId = 1;
 
@@ -72,14 +73,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 {
                     entry.UpdateSaveStatus(true, result.savedAnchorGuid, dateTime);
                     m_EntryIdBySavedAnchorGuid.TryAdd(result.savedAnchorGuid, entryId);
-
-                    await m_SaveAndLoadAnchorDataToFile.SaveAnchorIdAsync(
-                        result.savedAnchorGuid,
-                        dateTime);
                 }
 
                 entry.ShowResult(result.resultStatus);
             }
+
+            await m_SaveAndLoadAnchorDataToFile.SaveAnchorIdsAsync(
+                new ReadOnlyListSpan<ARSaveOrLoadAnchorResult>(results), dateTime);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public async void LoadAnchors()
         {
-            if (!m_AnchorManager.subsystem.subsystemDescriptor.supportsLoadAnchor)
+            if (!m_AnchorManager.descriptor.supportsLoadAnchor)
                 return;
 
             var savedAnchorGuidsToLoad = new List<SerializableGuid>();
@@ -131,7 +131,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public async void EraseAnchors()
         {
-            if (!m_AnchorManager.subsystem.subsystemDescriptor.supportsEraseAnchor)
+            if (!m_AnchorManager.descriptor.supportsEraseAnchor)
                 return;
 
             var savedAnchorGuidsToErase = new List<SerializableGuid>();
@@ -163,7 +163,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 if (result.resultStatus.IsSuccess())
                 {
-                    await m_SaveAndLoadAnchorDataToFile.EraseAnchorIdAsync(result.savedAnchorGuid);
                     entry.UpdateSaveStatus(false, TrackableId.invalidId, default);
                     m_EntryIdBySavedAnchorGuid.Remove(result.savedAnchorGuid);
                     removedAnchorsEntryIds.Add(entry.entryId);
@@ -171,6 +170,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 entry.ShowResult(result.resultStatus);
             }
+
+            await m_SaveAndLoadAnchorDataToFile.EraseAnchorIdsAsync(
+                new ReadOnlyListSpan<XREraseAnchorResult>(results));
 
             foreach (var entryId in removedAnchorsEntryIds)
             {
@@ -368,7 +370,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         async void SaveAnchor(MetaPersistentAnchorEntry entry)
         {
-            if (!m_AnchorManager.subsystem.subsystemDescriptor.supportsSaveAnchor)
+            if (!m_AnchorManager.descriptor.supportsSaveAnchor)
                 return;
 
             try
@@ -409,7 +411,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         async void LoadAnchor(MetaPersistentAnchorEntry entry)
         {
-            if (!m_AnchorManager.subsystem.subsystemDescriptor.supportsLoadAnchor)
+            if (!m_AnchorManager.descriptor.supportsLoadAnchor)
                 return;
 
             try
