@@ -19,9 +19,9 @@ The `main` branch of this repository uses AR Foundation 6.3 and is compatible wi
 
 | Unity version  | AR Foundation version |
 | -------------- | --------------------- |
-| Unity 6.5 alpha (6000.5) | [6.5](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.5) |
-| Unity 6.4 alpha (6000.4) | [6.4](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.4) |
-| Unity 6.3 LTS (6000.3) | 6.3 ([main](https://github.com/Unity-Technologies/arfoundation-samples/) branch) |
+| Unity 6.5 beta (6000.5) | [6.5](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.5) |
+| Unity 6.4 (6000.4) | 6.4 ([main](https://github.com/Unity-Technologies/arfoundation-samples/) branch) |
+| Unity 6.3 LTS (6000.3) | [6.3](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.3)  |
 | Unity 6.0 LTS (6000.0) | [6.0](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.0) |
 | 2022.3 (Enterprise license only) | [5.2](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.2) |
 
