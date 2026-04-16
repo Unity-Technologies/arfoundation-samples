@@ -13,7 +13,13 @@ MonoBehaviour:
   m_Name: MetaSceneCapture
   m_EditorClassIdentifier: 
   m_SceneName: MetaSceneCapture
-  m_Requirements: []
+  m_Requirements:
+  - rid: 5191545613752205404
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 5191545613752205404
+      type: {class: RequiresOpenXRExtension, ns: UnityEngine.XR.ARFoundation.Samples,
+        asm: Unity.XR.ARFoundation.Samples}
+      data:
+        m_RequiredExtension: XR_FB_scene_capture

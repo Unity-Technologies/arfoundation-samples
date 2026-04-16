@@ -28,12 +28,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
         GameObject m_UnsupportedMessage;
 
 #if UNITY_IOS
-        SupportStatus status;
+        SupportStatus m_Status;
 
         ARKitCameraSubsystem m_Subsystem;
         ARKitLockedCamera m_LockedCamera;
 
-        protected List<TMode> m_SupportedModes;
+        protected List<TMode> m_SupportedModes = new();
 #endif
 
         public bool cameraLocked
@@ -87,9 +87,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public TMode currentMode { get; protected set; }
         public TConfigValue currentValue { get; protected set; }
 
-        void Awake()
+        void OnEnable()
         {
-            status = SupportStatus.Pending;
+            m_Status = SupportStatus.Pending;
 
             var cameraManager = GetComponent<ARCameraManager>();
             m_Subsystem = cameraManager.subsystem as ARKitCameraSubsystem;
@@ -99,17 +99,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 Debug.LogWarning(
                     $"No active instance of {nameof(ARKitCameraSubsystem)} found. {GetType().Name} will be disabled.");
                 enabled = false;
+                return;
             }
-        }
-
-        void OnEnable()
-        {
+            
             if (m_UnsupportedMessage)
             {
                 m_UnsupportedMessage.SetActive(false);
             }
 
-            status = SupportStatus.Checking;
+            m_Status = SupportStatus.Checking;
             StartCoroutine(CheckSupport());
 
             // Populate UI controls
@@ -136,16 +134,26 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         IEnumerator CheckSupport()
         {
-            // wait for one frame to allow the subsystems and plug-in to initialize before checking support
-            yield return null;
+            // wait until session tracking begins before checking advanced config support
+            while (ARSession.state != ARSessionState.SessionTracking)
+            {
+                if (ARSession.state == ARSessionState.Unsupported)
+                {
+                    // AR is unsupported; don't keep waiting for session tracking
+                    yield break;
+                }
+                
+                // wait until next frame
+                yield return null;
+            }
 
             if (m_Subsystem.advancedCameraConfigurationSupported)
             {
-                status = SupportStatus.Supported;
+                m_Status = SupportStatus.Supported;
                 yield break;
             }
 
-            status = SupportStatus.Unsupported;
+            m_Status = SupportStatus.Unsupported;
 
             if (m_UnsupportedMessage)
             {
@@ -160,10 +168,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void UpdateCurrentState()
         {
             if (!m_Subsystem.TryGetLockedCamera(out var lockedCamera))
-            {
-                Debug.LogError("Couldn't acquire lock on the camera.");
                 return;
-            }
 
             using (lockedCamera)
             {
@@ -174,9 +179,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
         IEnumerator PopulateControls()
         {
             // wait to check support and the platform plug-in to initialize
-            yield return new WaitWhile(() => status == SupportStatus.Pending || status == SupportStatus.Checking);
+            yield return new WaitWhile(() => m_Status == SupportStatus.Pending || m_Status == SupportStatus.Checking);
 
-            if (status == SupportStatus.Unsupported)
+            if (m_Status == SupportStatus.Unsupported)
             {
                 yield break;
             }
@@ -215,6 +220,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void RefreshCurrentMode()
         {
+            if (m_SupportedModes.Count == 0)
+                return;
+
             var mode = currentMode;
             if (m_SupportedModes[m_ModeDropdown.value].Equals(mode))
                 return;
