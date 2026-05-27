@@ -134,7 +134,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void RaycastFromHandPose(Pose handPose)
         {
 #if METAOPENXR_2_4_0_OR_NEWER && (UNITY_EDITOR || UNITY_ANDROID)
-            s_RaycastRay = new Ray(handPose.position, handPose.forward);
+            // Input System tracked device values are in session space.
+            // Convert to world space so EnvironmentRaycaster.Raycast receives the expected world-space ray.
+            var trackablesParent = m_XROrigin.TrackablesParent;
+            var worldSpacePosition = trackablesParent.TransformPoint(handPose.position);
+            var worldSpaceDirection = trackablesParent.TransformDirection(handPose.rotation * Vector3.forward);
+            s_RaycastRay = new Ray(worldSpacePosition, worldSpaceDirection);
             var size = Physics.RaycastNonAlloc(s_RaycastRay, m_UIRaycastHits, float.PositiveInfinity, m_UILayerMask);
             if (size > 0)
                 return;

@@ -92,10 +92,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
             Vector3 rayOrigin)
         {
             // Result is in "trackables space", so transform result back into world space
-            float distanceInWorldSpace = (nativeHit.value.hit.pose.position - rayOrigin).magnitude;
+            var worldHitPosition = m_Origin.TrackablesParent.TransformPoint(nativeHit.value.hit.pose.position);
+            var worldHitRotation = m_Origin.TrackablesParent.rotation * nativeHit.value.hit.pose.rotation;
+            float distanceInWorldSpace = (worldHitPosition - rayOrigin).magnitude;
             managedHit = new EnvironmentRaycastHit(
                 nativeHit.value.hitStatus,
-                new XRRaycastHit(TrackableId.invalidId, nativeHit.value.hit.pose, distanceInWorldSpace, TrackableType.Depth));
+                new XRRaycastHit(TrackableId.invalidId, new Pose(worldHitPosition, worldHitRotation), distanceInWorldSpace, TrackableType.Depth));
 
             return nativeHit.status.IsSuccess();
         }
