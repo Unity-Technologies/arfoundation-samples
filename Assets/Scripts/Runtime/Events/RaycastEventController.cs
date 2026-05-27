@@ -164,7 +164,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void RaycastFromHandPose(Pose handPose)
         {
-            s_RaycastRay = new Ray(handPose.position, handPose.forward);
+            var trackablesParent = m_XROrigin.TrackablesParent;
+            var worldSpacePosition = trackablesParent.TransformPoint(handPose.position);
+            var worldSpaceDirection = trackablesParent.TransformDirection(handPose.rotation * Vector3.forward);
+            s_RaycastRay = new Ray(worldSpacePosition, worldSpaceDirection);
+
             var size = Physics.RaycastNonAlloc(s_RaycastRay, m_UIRaycastHits, float.PositiveInfinity, m_UILayerMask);
             if (size > 0)
                 return;
