@@ -76,7 +76,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             Debug.Assert(m_ThermalStateText != null, "ThermalStateText cannot be null");
 
             ThermalStateForIOS.ThermalState thermalState = m_ThermalStateForIOS.currentThermalState;
-            m_ThermalStateText.text = $"Thermal State: {thermalState}";
+            m_ThermalStateText.text = $"Thermal State: {thermalState.ToString()}";
 
             SetARFeaturesBasedOnThermalState(thermalState);
 
@@ -91,7 +91,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             Debug.Assert(m_ThermalStateForIOS != null, "ThermalStateForIOS cannot be null");
             Debug.Assert(m_ThermalStateText != null, "ThermalStateText cannot be null");
 
-            m_ThermalStateText.text = $"Thermal State: {ThermalStateForIOS.ThermalState.Unknown}";
+            m_ThermalStateText.text = $"Thermal State: {ThermalStateForIOS.ThermalState.Unknown.ToString()}";
 
             m_ThermalStateForIOS.stateChanged -= OnThermalStateChanged;
         }
@@ -102,7 +102,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         void OnThermalStateChanged(ThermalStateForIOS.ThermalStateChange thermalStateChangeArgs)
         {
-            m_ThermalStateText.text = $"Thermal State: {thermalStateChangeArgs.currentThermalState}";
+            m_ThermalStateText.text = $"Thermal State: {thermalStateChangeArgs.currentThermalState.ToString()}";
             SetARFeaturesBasedOnThermalState(thermalStateChangeArgs.currentThermalState);
         }
 

@@ -1,0 +1,232 @@
+Button {
+    background-color: rgb(32, 150, 243);
+    color: rgb(255, 255, 255);
+    -unity-font-definition: url("project://database/Library/unity%20default%20resources?fileID=10102&guid=0000000000000000e000000000000000&type=0#LegacyRuntime");
+    min-height: 60px;
+    min-width: 180px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    translate: 0 0 20px;
+}
+
+Button.unity-button--with-icon {
+    background-color: rgb(46, 46, 46);
+    min-width: auto;
+    width: 60px;
+    height: 60px;
+}
+
+Button:hover {
+    background-color: rgb(24, 112, 182);
+}
+
+Button:active {
+    background-color: rgb(88, 176, 246);
+}
+
+Slider {
+    min-height: 48px;
+}
+
+Slider:hover .unity-base-slider__fill {
+    background-color: rgb(24, 112, 182);
+}
+
+Slider #unity-drag-container:active .unity-base-slider__fill {
+    background-color: rgb(88, 176, 246);
+}
+
+Slider .unity-base-slider__dragger {
+    visibility: hidden;
+}
+
+Slider .unity-base-slider__fill {
+    background-color: rgb(32, 150, 243);
+}
+
+Slider .unity-base-slider__tracker {
+    min-height: 100%;
+    position: absolute;
+    top: 3px;
+    background-color: rgb(46, 46, 46);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+}
+
+DropdownField {
+    min-height: 60px;
+}
+
+DropdownField .unity-base-popup-field__text {
+    color: rgb(255, 255, 255);
+    -unity-font-definition: url("project://database/Library/unity%20default%20resources?fileID=10102&guid=0000000000000000e000000000000000&type=0#LegacyRuntime");
+    -unity-text-align: middle-center;
+}
+
+DropdownField .unity-base-popup-field__input {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    background-color: rgb(32, 150, 243);
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+}
+
+DropdownField .unity-base-popup-field__arrow {
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+DropdownField:hover .unity-base-popup-field__input {
+    background-color: rgb(24, 112, 182);
+}
+
+.unity-base-dropdown .unity-scroll-view {
+    background-color: rgb(46, 46, 46);
+    color: rgb(255, 255, 255);
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+}
+
+.unity-base-dropdown__checkmark {
+    align-self: center;
+}
+
+Toggle {
+    translate: 0 0 20px;
+}
+
+Toggle #unity-checkmark {
+    background-image: none;
+    background-color: rgb(46, 46, 46);
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    min-width: 180px;
+    min-height: 60px;
+}
+
+Toggle .unity-toggle__text {
+    min-width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    min-height: 100%;
+    position: absolute;
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-center;
+    -unity-font-definition: url("project://database/Library/unity%20default%20resources?fileID=10102&guid=0000000000000000e000000000000000&type=0#LegacyRuntime");
+}
+
+Toggle.IconToggle #unity-checkmark {
+    background-color: rgb(46, 46, 46);
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border-bottom-left-radius: 50%;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    min-width: 60px;
+    min-height: 60px;
+}
+
+Toggle:hover #unity-checkmark {
+    background-image: none;
+    background-color: rgb(24, 112, 182);
+}
+
+Toggle.IconToggle:checked #unity-checkmark {
+    background-image: url("project://?fileID=2800000&guid=db3e7b7c8db355e499429545071a0321&type=3#Checkmark");
+    background-size: 50% 50%;
+}
+
+Toggle:checked #unity-checkmark {
+    background-image: none;
+    background-color: rgb(32, 150, 243);
+}
+
+Toggle:active #unity-checkmark {
+    background-image: none;
+    background-color: rgb(88, 176, 246);
+}
+
+ScrollView #unity-dragger {
+    background-color: rgb(255, 255, 255);
+}
+
+ScrollView #unity-tracker {
+    background-color: rgba(0, 0, 0, 0.36);
+    border-left-color: rgba(255, 255, 0, 0);
+    border-right-color: rgba(255, 255, 0, 0);
+    border-top-color: rgba(255, 255, 0, 0);
+    border-bottom-color: rgba(255, 255, 0, 0);
+}
+
+ScrollView #unity-low-button {
+    background-color: rgba(0, 0, 0, 0);
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+ScrollView #unity-high-button {
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+ScrollView .unity-scroll-view__vertical-scroller #unity-drag-container {
+    min-width: 50%;
+    align-self: center;
+}
+
+ScrollView .unity-scroll-view__horizontal-scroller #unity-drag-container {
+    align-self: center;
+    min-height: 50%;
+}
+
+ScrollView .unity-scroll-view__vertical-scroller #unity-dragger {
+    min-width: 6px;
+    max-width: 6px;
+}
+
+ScrollView .unity-scroll-view__horizontal-scroller #unity-dragger {
+    min-height: 6px;
+    max-height: 6px;
+}

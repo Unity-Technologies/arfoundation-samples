@@ -112,7 +112,7 @@ namespace UnityEditor.XR.ARFoundation.Samples
                         m_TemplateObjectsProp.GetArrayElementAtIndex(i % m_TemplateObjectsProp.arraySize).objectReferenceValue as GameObject,
                         pool);
 
-                    poolObject.name = $"Log Object {i}";
+                    poolObject.name = $"Log Object {i.ToString()}";
 
                     var rect = poolObject.GetComponent<RectTransform>();
                     rect.TranslateY(-poolHeight);

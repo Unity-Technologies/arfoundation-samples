@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.XR.ARFoundation;
 using Unity.XR.CoreUtils;
 
 namespace UnityEngine.XR.ARFoundation.Samples
@@ -20,8 +19,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public Slider slider
         {
-            get { return m_Slider; }
-            set { m_Slider = value; }
+            get => m_Slider;
+            set => m_Slider = value;
         }
 
         [SerializeField]
@@ -33,8 +32,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public Text text
         {
-            get { return m_Text; }
-            set { m_Text = value; }
+            get => m_Text;
+            set => m_Text = value;
         }
 
         [SerializeField]
@@ -46,8 +45,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public float min
         {
-            get { return m_Min; }
-            set { m_Min = value; }
+            get => m_Min;
+            set => m_Min = value;
         }
 
         [SerializeField]
@@ -59,8 +58,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// </summary>
         public float max
         {
-            get { return m_Max; }
-            set { m_Max = value; }
+            get => m_Max;
+            set => m_Max = value;
         }
 
         /// <summary>
@@ -74,10 +73,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         float scale
         {
-            get
-            {
-                return m_Origin.transform.localScale.x;
-            }
+            get => m_Origin.transform.localScale.x;
             set
             {
                 m_Origin.transform.localScale = Vector3.one * value;
@@ -100,7 +96,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void UpdateText()
         {
             if (text != null)
-                text.text = "Scale: " + scale;
+                text.text = $"Scale: {scale.ToString()}";
         }
 
         XROrigin m_Origin;

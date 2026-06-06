@@ -1,8 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -20,11 +20,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public Text text
         {
-            get { return m_Text; }
-            set { m_Text = value; }
+            get => m_Text;
+            set => m_Text = value;
         }
 
+        readonly StringBuilder m_StringBuilder = new();
+
         ARSession m_Session;
+        Guid m_SessionId;
+        ARSessionState m_SessionState;
+        TrackingState m_TrackingState;
 
         void Start()
         {
@@ -33,12 +38,25 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void Update()
         {
-            if (text != null)
-            {
-                text.text = $"Session ID = {m_Session.subsystem.sessionId}\n" +
-                            $"Session state = {ARSession.state.ToString()}\n" +
-                            $"Tracking state = {m_Session.subsystem.trackingState}";
-            }
+            if (text == null)
+                return;
+
+            var sessionId = m_Session.subsystem.sessionId;
+            var sessionState = ARSession.state;
+            var trackingState = m_Session.subsystem.trackingState;
+
+            if (sessionId == m_SessionId && sessionState == m_SessionState && trackingState == m_TrackingState)
+                return;
+
+            m_SessionId = sessionId;
+            m_SessionState = sessionState;
+            m_TrackingState = trackingState;
+
+            m_StringBuilder.Clear();
+            m_StringBuilder.Append("Session ID = ").Append(sessionId.ToString()).Append('\n');
+            m_StringBuilder.Append("Session state = ").Append(sessionState.ToString()).Append('\n');
+            m_StringBuilder.Append("Tracking state = ").Append(trackingState.ToString());
+            text.text = m_StringBuilder.ToString();
         }
     }
 }

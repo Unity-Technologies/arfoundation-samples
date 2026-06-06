@@ -15,14 +15,15 @@ Each AR Foundation feature is used in a minimal sample scene with example code t
 
 ## Which version should I use?
 
-The `main` branch of this repository uses AR Foundation 6.2 and is compatible with Unity versions 6000.0 and newer. Refer to the following table for links to other branches of this repository and their corresponding Unity versions.
+The `main` branch of this repository uses AR Foundation 6.3 and is compatible with Unity versions 6000.0 and newer. Refer to the following table for links to other branches of this repository and their corresponding Unity versions.
 
 | Unity version  | AR Foundation version |
 | -------------- | --------------------- |
-| Unity 6.5 alpha (6000.5) | [6.5](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.5) |
+| Unity 6.6 alpha (6000.6) | [6.6](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.6) |
+| Unity 6.5 beta (6000.5) | [6.5](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.5) |
 | Unity 6.4 (6000.4) | 6.4 ([main](https://github.com/Unity-Technologies/arfoundation-samples/) branch) |
-| Unity 6.3 (6000.3) | [6.3](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.3) |
-| Unity 6 (6000.0)   | [6.0](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.0) |
+| Unity 6.3 LTS (6000.3) | [6.3](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.3) |
+| Unity 6.0 LTS (6000.0) | [6.0](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.0) |
 | 2022.3 (Enterprise license only) | [5.2](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.2) |
 
 ## How to use these samples
@@ -39,7 +40,7 @@ To build to device, follow the steps below:
 
 ### Understand the sample code
 
-All sample scenes in this project can be found in the `Assets/Scenes` folder. To learn more about how each scene works, refer to the [AR Foundation samples](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@6.4/manual/samples.html) documentation, which is now published as part of the AR Foundation user manual.
+All sample scenes in this project can be found in the `Assets/Scenes` folder. To learn more about how each scene works, refer to the [AR Foundation samples](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@6.5/manual/samples.html) documentation, which is now published as part of the AR Foundation user manual.
 
 # Community and feedback
 

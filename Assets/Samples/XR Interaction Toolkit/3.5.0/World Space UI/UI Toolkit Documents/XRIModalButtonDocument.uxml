@@ -1,0 +1,8 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://?fileID=7433441132597879392&amp;guid=3245a7d03283da54db4385c49204e816&amp;type=3#XRIStyleSheet" />
+    <engine:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.75); color: rgb(255, 255, 255); padding-left: 10px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px;">
+        <engine:Label text="Button with Event" style="font-size: 24px; -unity-text-align: upper-center;" />
+        <engine:Button text="Button" />
+        <engine:Label text="Button clicked at:" name="DebugLabel" style="font-size: 18px;" />
+    </engine:VisualElement>
+</engine:UXML>

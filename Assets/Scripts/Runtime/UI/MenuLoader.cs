@@ -25,7 +25,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public static string GetMenuSceneName()
         {
 #if OPENXR_1_13_OR_NEWER
-            if (Application.platform == RuntimePlatform.WSAPlayerARM && OpenXRRuntime.name == "Windows Mixed Reality Runtime") 
+            if (Application.platform == RuntimePlatform.WSAPlayerARM && OpenXRRuntime.name == "Windows Mixed Reality Runtime")
             {
                 return k_HololensMenuScene;
             }

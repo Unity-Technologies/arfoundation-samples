@@ -89,11 +89,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             else
             {
                 stringBuilder.AppendLine("   Facing direction:");
-                stringBuilder.AppendLine($"      Requested: {m_CameraManager.requestedFacingDirection}");
-                stringBuilder.AppendLine($"      Current: {m_CameraManager.currentFacingDirection}");
+                stringBuilder.AppendLine($"      Requested: {m_CameraManager.requestedFacingDirection.ToString()}");
+                stringBuilder.AppendLine($"      Current: {m_CameraManager.currentFacingDirection.ToString()}");
                 stringBuilder.AppendLine("   Auto-focus:");
-                stringBuilder.AppendLine($"      Requested: {m_CameraManager.autoFocusRequested}");
-                stringBuilder.AppendLine($"      Current: {m_CameraManager.autoFocusEnabled}");
+                stringBuilder.AppendLine($"      Requested: {m_CameraManager.autoFocusRequested.ToString()}");
+                stringBuilder.AppendLine($"      Current: {m_CameraManager.autoFocusEnabled.ToString()}");
             }
         }
 
@@ -114,8 +114,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             else
             {
                 stringBuilder.AppendLine("   Detection mode:");
-                stringBuilder.AppendLine($"      Requested: {m_PlaneManager.requestedDetectionMode}");
-                stringBuilder.AppendLine($"      Current: {m_PlaneManager.currentDetectionMode}");
+                stringBuilder.AppendLine($"      Requested: {m_PlaneManager.requestedDetectionMode.ToString()}");
+                stringBuilder.AppendLine($"      Current: {m_PlaneManager.currentDetectionMode.ToString()}");
             }
         }
 

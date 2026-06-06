@@ -73,8 +73,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public ARAnchor anchor { get; private set; }
 
-        public TrackableId trackableId => anchor?.trackableId ?? TrackableId.invalidId;
-
         public bool isSaved { get; private set; }
 
         public SerializableGuid savedAnchorGuid { get; private set; }

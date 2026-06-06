@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adf2a45713b8498389fc5c57560f14d1, type: 3}
   m_Name: CameraFocus
   m_EditorClassIdentifier: 
-  m_SceneName: CameraFocus
+  m_DisplayName: CameraFocus
+  m_Description: Demonstrates locking the camera and manually adjusting lens focus position on compatible iOS 16+ devices.
+  m_PreviewImage: {fileID: 21300000, guid: fe728de418149476e98631239a06c8ea, type: 3}
+  m_Category: {fileID: 11400000, guid: f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1, type: 2}
   m_Requirements:
   - rid: 4788940866556788965
   - rid: 4788940866556788968
@@ -36,3 +39,4 @@ MonoBehaviour:
         m_RequiresCameraGrain: 0
         m_RequiresExifData: 0
         m_RequiresImageStabilization: 0
+        m_RequiresCameraTorchMode: 0

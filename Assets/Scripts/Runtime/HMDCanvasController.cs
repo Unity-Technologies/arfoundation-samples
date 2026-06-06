@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace UnityEngine.XR.ARFoundation.Samples
@@ -76,10 +75,22 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             m_HMDCanvasTargetSize = m_HMDCanvasDimensionsInMeters / k_CanvasWorldSpaceScale;
 
-            // Wait until next frame when the transform values are updated for the UI since
-            // they get updated in the frame some point after Start
-            await Awaitable.NextFrameAsync();
             SetToWorldSpace();
+
+            // Wait for the transform to update before setting up the UI and placing it in front of the camera
+            int timeoutAttempts = 20;
+            while (Application.isPlaying
+                && m_Camera.transform.localPosition.y == 0
+                && m_Camera.transform.localEulerAngles.y == 0
+                && timeoutAttempts > 0)
+            {
+                timeoutAttempts--;
+                await Awaitable.NextFrameAsync();
+            }
+
+            if (!Application.isPlaying || this == null)
+                return;
+
             PlaceInFrontOfCamera();
             AddUIWindowHandle();
         }

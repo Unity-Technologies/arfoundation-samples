@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -15,9 +16,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField, HideInInspector]
         Button m_Button;
 
+        readonly List<RequirementResult> m_RequirementResults = new();
+
         void OnEnable()
         {
-            if (sceneDescriptor.EvaluateRequirements())
+            if (sceneDescriptor.EvaluateRequirements(m_RequirementResults))
             {
                 m_Button.onClick.AddListener(LaunchScene);
                 m_Button.SetEnabled(true);
@@ -41,13 +44,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 return;
             }
 
-            if (!m_SceneDescriptor.EvaluateRequirements())
+            if (!m_SceneDescriptor.EvaluateRequirements(m_RequirementResults))
             {
-                Debug.LogError($"Cannot launch scene {m_SceneDescriptor.sceneName} because it is not supported on this device.");
+                Debug.LogError($"Cannot launch scene {m_SceneDescriptor.displayName} because it is not supported on this device.");
                 return;
             }
 
-            SceneManager.LoadScene(m_SceneDescriptor.sceneName, LoadSceneMode.Single);
+            SceneManager.LoadScene(m_SceneDescriptor.displayName, LoadSceneMode.Single);
         }
 
         void Reset()

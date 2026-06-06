@@ -23,12 +23,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 Debug.LogError($"Null reference in {nameof(ImageStabilization)} Inspector.", this);
                 enabled = false;
+                return;
             }
 
             if (ARSession.state == ARSessionState.SessionTracking)
                 m_Supported = m_CameraManager.descriptor.supportsImageStabilization;
             else
                 ARSession.stateChanged += OnSessionStateChange;
+        }
+
+        void OnDisable()
+        {
+            ARSession.stateChanged -= OnSessionStateChange;
         }
 
         void OnSessionStateChange(ARSessionStateChangedEventArgs args)

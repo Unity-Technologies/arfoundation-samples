@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adf2a45713b8498389fc5c57560f14d1, type: 3}
   m_Name: CameraExposure
   m_EditorClassIdentifier: 
-  m_SceneName: CameraExposure
+  m_DisplayName: CameraExposure
+  m_Description: Shows how to lock the camera and manually control exposure duration and ISO on compatible iOS devices.
+  m_PreviewImage: {fileID: 21300000, guid: fc2b660d389f644cd9797bc47cd286d4, type: 3}
+  m_Category: {fileID: 11400000, guid: f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1, type: 2}
   m_Requirements:
   - rid: 4788940866556788964
   - rid: 4788940866556788969
@@ -36,3 +39,4 @@ MonoBehaviour:
         m_RequiresCameraGrain: 0
         m_RequiresExifData: 0
         m_RequiresImageStabilization: 0
+        m_RequiresCameraTorchMode: 0

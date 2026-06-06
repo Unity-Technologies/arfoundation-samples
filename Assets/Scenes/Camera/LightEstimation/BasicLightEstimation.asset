@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adf2a45713b8498389fc5c57560f14d1, type: 3}
   m_Name: BasicLightEstimation
   m_EditorClassIdentifier: 
-  m_SceneName: BasicLightEstimation
+  m_DisplayName: BasicLightEstimation
+  m_Description: Displays ambient intensity and color extracted from AR camera frames to inform scene lighting.
+  m_PreviewImage: {fileID: 21300000, guid: 49f8b63adf1154b5dac9dbacdf3582e2, type: 3}
+  m_Category: {fileID: 11400000, guid: f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1, type: 2}
   m_Requirements:
   - rid: 4788940866556788928
   references:
@@ -27,3 +30,4 @@ MonoBehaviour:
         m_RequiresCameraGrain: 0
         m_RequiresExifData: 0
         m_RequiresImageStabilization: 0
+        m_RequiresCameraTorchMode: 0

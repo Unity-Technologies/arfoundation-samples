@@ -1,0 +1,20 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://?fileID=7433441132597879392&amp;guid=3245a7d03283da54db4385c49204e816&amp;type=3#XRIStyleSheet" />
+    <engine:VisualElement picking-mode="Ignore" style="flex-grow: 1; color: rgb(255, 255, 255); padding-left: 10px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; background-color: rgba(0, 0, 0, 0.75);">
+        <engine:Label text="UI Toolkit Controls" style="-unity-text-align: upper-center; font-size: 24px;" />
+        <engine:Label text="Slider" style="-unity-text-align: upper-center;" />
+        <engine:Slider value="42" high-value="100" fill="true" />
+        <engine:Label text="Dropdown" style="-unity-text-align: upper-center;" />
+        <engine:DropdownField choices="Option A,Option B,Option C" index="0" />
+        <engine:Label text="Buttons" style="-unity-text-align: upper-center;" />
+        <engine:VisualElement style="flex-grow: 0; flex-direction: row;">
+            <engine:Button text="Button" />
+            <engine:Button icon-image="project://?fileID=2800000&amp;guid=17d565bb4a7744b41b7e4dc7e3a09e35&amp;type=3#Asset" />
+        </engine:VisualElement>
+        <engine:Label text="Toggles" style="-unity-text-align: upper-center;" />
+        <engine:VisualElement style="flex-grow: 0; flex-direction: row;">
+            <engine:Toggle text="Text Toggle" style="color: rgb(255, 255, 255);" />
+            <engine:Toggle value="false" class="IconToggle" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

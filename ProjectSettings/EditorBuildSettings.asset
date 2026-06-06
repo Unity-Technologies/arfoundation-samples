@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu/Menu.unity
     guid: 904110ab8cef14f7d96c56ca20774e5a
   - enabled: 1
-    path: Assets/Scenes/MetaMenu.unity
+    path: Assets/Scenes/Menu/MetaMenu.unity
     guid: de8b249d82ab34c99846a9604f80674c
   - enabled: 1
     path: Assets/Scenes/Menu/HoloLensMenu.unity
@@ -39,11 +39,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Anchors/Anchors.unity
     guid: 5cba9114a192a46a7aef31da62316e39
   - enabled: 1
-    path: Assets/Scenes/Meta/MetaPersistentAnchors.unity
+    path: Assets/Scenes/Anchors/PersistentAnchors.unity
     guid: 1effa307351b84badb202ab85ec82ab8
-  - enabled: 1
-    path: Assets/Scenes/Anchors/TestAnchors.unity
-    guid: 59827dbbb0f3741848771ee28a1081d3
   - enabled: 1
     path: Assets/Scenes/Camera/CameraGrain/CameraGrain.unity
     guid: 68237ded327024ec39c1317a214ad56f
@@ -77,9 +74,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FaceTracking/ARKitFaceBlendShapes/ARKitFaceBlendShapes.unity
     guid: e9280441e79e84bdbbf6b724880ae2d9
-  - enabled: 1
-    path: Assets/Scenes/FaceTracking/EyeLasers/EyeLasers.unity
-    guid: c8ca2b95503fe4a7194f37bfbe5e4688
   - enabled: 1
     path: Assets/Scenes/FaceTracking/EyePoses/EyePoses.unity
     guid: 19344822e252a420e94db72338383cbc
@@ -120,25 +114,16 @@ EditorBuildSettings:
     path: Assets/Scenes/Meshing/NormalMeshes/NormalMeshes.unity
     guid: b8abb254c2f424d54921b442ad2f9f2e
   - enabled: 1
-    path: Assets/Scenes/Meshing/OcclusionMeshes/OcclusionMeshes.unity
-    guid: adcdbf89e115e4a489bd500be88c1459
-  - enabled: 1
     path: Assets/Scenes/ObjectTracking/ObjectTracking.unity
     guid: 8f797cefb98fe43109524cbbcc8faafc
   - enabled: 1
-    path: Assets/Scenes/PlaneDetection/TogglePlaneDetection/TogglePlaneDetection.unity
-    guid: eb4bbb3a5e81acc41a903b1c5f1c827b
-  - enabled: 1
-    path: Assets/Scenes/PlaneDetection/PlaneMasking/PlaneMasking.unity
-    guid: 82d84156010e4481498cad3bf12744bd
-  - enabled: 1
-    path: Assets/Scenes/PlaneDetection/PlaneDetectionMode/PlaneDetectionMode.unity
+    path: Assets/Scenes/PlaneDetection/PlaneDetectionMode.unity
     guid: c9de49d98546b4b769099449d82806db
   - enabled: 1
     path: Assets/Scenes/PointClouds/AllPointCloudPoints.unity
     guid: a84b70115cd154cf59b84651a828ac60
   - enabled: 1
-    path: Assets/Scenes/SimpleAR/SimpleAR.unity
+    path: Assets/Scenes/Raycasts/Raycasts.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
     path: Assets/Scenes/ARCore/ARCoreSessionRecording.unity
@@ -189,29 +174,30 @@ EditorBuildSettings:
     path: Assets/Scenes/Meta/MetaSharedAnchors.unity
     guid: 378abe601e1ed4f21b730a80c6caead9
   - enabled: 1
-    path: Assets/Scenes/Meta/CpuImage/MetaCpuImageMenu.unity
-    guid: f4c0e17cbc9b3465dbcc74faf0ef6059
-  - enabled: 1
     path: Assets/Scenes/Meta/CpuImage/MetaCpuMatrices.unity
     guid: 0c5b03c2202c9b143a6010d725af3ace
   - enabled: 1
     path: Assets/Scenes/Meta/CpuImage/MetaCpuImage.unity
     guid: 7c213d67615214358800b0d66e092672
+  - enabled: 1
+    path: Assets/Scenes/Meta/MetaGpuImage.unity
+    guid: 1ff86fefda99412995fe4c3851b30ae1
+  - enabled: 1
+    path: Assets/Scenes/Markers/Markers.unity
+    guid: 19084d21c0aeb47398a1a7680c7a2df8
+  - enabled: 1
+    path: Assets/Scenes/Menu/MobileMenu.unity
+    guid: 52aac6562f5514d5bb47d44eff37e25b
+  - enabled: 1
+    path: Assets/Scenes/Menu/HMDMenu.unity
+    guid: 614374472c76743e399f23fd8f2ec035
   m_configObjects:
-    Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: c52d3bb36b4c86f47af54ab9c7a02589,
-      type: 2}
-    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: f8ce26fe3bc69499b9be4b2378e97a94,
-      type: 2}
-    UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 98c79e8cc22674a89a95a3a90e2b70cb,
-      type: 2}
-    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 3d56fa548ade247c2890341fb8a12ac0,
-      type: 3}
-    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 302e9f36808117f4184b07b05ca5bb47,
-      type: 2}
-    com.unity.xr.arkit.PlayerSettings: {fileID: 11400000, guid: 2d5fb8e61571b4e3897f221189089fd6,
-      type: 2}
-    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: e2f869774b12e400996eb546603602e3,
-      type: 2}
-    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 07124a6b2286348128e5aecd8a4b3b80,
-      type: 2}
-  m_UseUCBPForAssetBundles: 0
+    Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: c52d3bb36b4c86f47af54ab9c7a02589, type: 2}
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: f8ce26fe3bc69499b9be4b2378e97a94, type: 2}
+    UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 98c79e8cc22674a89a95a3a90e2b70cb, type: 2}
+    UnityEditor.XR.OpenXR.Features.SpatialEntities.SpatialEntitiesSettings: {fileID: 11400000, guid: bf91a04c8292e4e07873776be76185bd, type: 2}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 3d56fa548ade247c2890341fb8a12ac0, type: 3}
+    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 302e9f36808117f4184b07b05ca5bb47, type: 2}
+    com.unity.xr.arkit.PlayerSettings: {fileID: 11400000, guid: 2d5fb8e61571b4e3897f221189089fd6, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: e2f869774b12e400996eb546603602e3, type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 07124a6b2286348128e5aecd8a4b3b80, type: 2}

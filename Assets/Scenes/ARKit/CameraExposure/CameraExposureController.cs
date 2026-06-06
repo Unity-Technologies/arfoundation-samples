@@ -79,8 +79,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             var range = lockedCamera.exposureRange;
-            Debug.Log($"Exposure Range: {range.minimumDuration}, {range.maximumDuration}");
-            Debug.Log($"ISO Range: {range.minimumIso}, {range.maximumIso}");
+            Debug.Log($"Exposure Range: {range.minimumDuration.ToString()}, {range.maximumDuration.ToString()}");
+            Debug.Log($"ISO Range: {range.minimumIso.ToString()}, {range.maximumIso.ToString()}");
 
             // update range of duration slider
             if (m_DurationSlider)

@@ -201,7 +201,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             SetFeatureDisplayState(m_SessionFpsText, isARSessionEnabled);
 
             int arFrameRate = isARSessionEnabled ? (m_Session.frameRate ?? 0) : 0;
-            m_SessionFpsText.text = $"AR Session FPS: {arFrameRate}";
+            m_SessionFpsText.text = $"AR Session FPS: {arFrameRate.ToString()}";
         }
 
         static void SetFeatureDisplayState(Text textUI, bool isActive)

@@ -1,4 +1,4 @@
-#if METAOPENXR_2_4_0_PRE_1_OR_NEWER
+#if METAOPENXR_2_4_0_OR_NEWER
 using System;
 using TMPro;
 using UnityEngine.Assertions;

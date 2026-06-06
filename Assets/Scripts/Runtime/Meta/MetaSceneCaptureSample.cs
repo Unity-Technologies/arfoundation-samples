@@ -38,7 +38,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
 #if METAOPENXR_0_2_OR_NEWER && UNITY_ANDROID
             var success = (m_ARSession.subsystem as MetaOpenXRSessionSubsystem)?.TryRequestSceneCapture() ?? false;
-            Debug.Log($"Meta OpenXR scene capture completed request with result: {success}");
+            Debug.Log($"Meta OpenXR scene capture completed request with result: {success.ToString()}");
 #else
             Debug.LogError("Meta-OpenXR is not installed. Please install the package \"Unity OpenXR: Meta\" version 0.2 or newer to use scene capture.");
 #endif

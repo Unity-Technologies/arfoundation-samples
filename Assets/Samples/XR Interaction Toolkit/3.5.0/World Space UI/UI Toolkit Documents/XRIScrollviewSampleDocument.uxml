@@ -1,0 +1,10 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://?fileID=7433441132597879392&amp;guid=3245a7d03283da54db4385c49204e816&amp;type=3#XRIStyleSheet" />
+    <engine:VisualElement picking-mode="Ignore" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.75); color: rgb(255, 255, 255); padding-left: 10px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px;">
+        <engine:Label text="Test Scrollview&#10;" enable-rich-text="false" style="-unity-text-align: upper-center; font-size: 24px;" />
+        <engine:VisualElement name="VisualElement" style="max-width: 95%; max-height: 2px; background-color: rgb(255, 255, 255); align-self: center; min-width: 95%; min-height: 2px;" />
+        <engine:ScrollView mode="VerticalAndHorizontal">
+            <engine:Label text="You can scroll this window&#10;using the scrollbars or with &#10;the arrow buttons.&#10;&#10;Vertical and horizontal scrolling &#10;are both supported. This can be &#10;modified in the attributes section &#10;in the  XRIScrollviewSampleDocument.uxml &#10;to allow only horizontal &#10;or vertical scrolling." style="font-size: 24px;" />
+        </engine:ScrollView>
+    </engine:VisualElement>
+</engine:UXML>

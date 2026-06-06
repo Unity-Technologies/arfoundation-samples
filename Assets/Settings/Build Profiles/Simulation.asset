@@ -1,0 +1,119 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 15003, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: Simulation
+  m_EditorClassIdentifier: UnityEditor.dll::UnityEditor.Build.Profile.BuildProfile
+  m_AssetVersion: 2
+  m_BuildTarget: 2
+  m_Subtarget: 2
+  m_PlatformId: 0d2129357eac403d8b359c2dcbf82502
+  m_PlatformBuildProfile:
+    rid: 5953728234672357475
+  m_ActivePlatformGuid: 
+  m_AdditionalPlatformBuildSettings: []
+  m_OverrideGlobalSceneList: 1
+  m_Scenes:
+  - m_enabled: 1
+    m_path: Assets/Scenes/Menu/MenuLoader.unity
+    m_guid: 6688ff74f56714cfeb7c919bcdbfe269
+  - m_enabled: 1
+    m_path: Assets/Scenes/Menu/MobileMenu.unity
+    m_guid: 52aac6562f5514d5bb47d44eff37e25b
+  - m_enabled: 1
+    m_path: Assets/Scenes/Raycasts/Raycasts.unity
+    m_guid: 99c9720ab356a0642a771bea13969a05
+  - m_enabled: 1
+    m_path: Assets/Scenes/Camera/CpuImages/CpuImages.unity
+    m_guid: e769916924fd3814ab1d9474de816b22
+  - m_enabled: 1
+    m_path: Assets/Scenes/Camera/LightEstimation/BasicLightEstimation.unity
+    m_guid: 2f0cbc82480584c258f99f0d9e4ba302
+  - m_enabled: 1
+    m_path: Assets/Scenes/Camera/BackgroundRenderOrder/BackgroundRenderOrder.unity
+    m_guid: dd6d3723894ae4618b821f1e99d0a4c7
+  - m_enabled: 1
+    m_path: Assets/Scenes/Camera/ExifData/ExifData.unity
+    m_guid: 668735f787b9248c2bee5111449a40bf
+  - m_enabled: 1
+    m_path: Assets/Scenes/Camera/CameraTorchMode/CameraTorchMode.unity
+    m_guid: ee0cc5dcbc42d5044a743cc572c4f8f1
+  - m_enabled: 1
+    m_path: Assets/Scenes/PlaneDetection/PlaneDetectionMode.unity
+    m_guid: c9de49d98546b4b769099449d82806db
+  - m_enabled: 1
+    m_path: Assets/Scenes/BoundingBoxDetection/BoundingBoxes.unity
+    m_guid: e5d8c18ab0c954fd4a7aee48dffe9836
+  - m_enabled: 1
+    m_path: Assets/Scenes/ImageTracking/BasicImageTracking/BasicImageTracking.unity
+    m_guid: e0b018a3c3b5cfd4c8e316706ec0a18c
+  - m_enabled: 1
+    m_path: Assets/Scenes/ImageTracking/ImageTrackingWithMultiplePrefabs/ImageTrackingWithMultiplePrefabs.unity
+    m_guid: a1bf0e7b9cece455f81c1d2731ba76e7
+  - m_enabled: 1
+    m_path: Assets/Scenes/PointClouds/AllPointCloudPoints.unity
+    m_guid: a84b70115cd154cf59b84651a828ac60
+  - m_enabled: 1
+    m_path: Assets/Scenes/Anchors/Anchors.unity
+    m_guid: 5cba9114a192a46a7aef31da62316e39
+  - m_enabled: 1
+    m_path: Assets/Scenes/Meshing/ClassificationMeshes/ClassificationMeshes.unity
+    m_guid: edd18841a7a8f4a68a80239a5e7f14f9
+  - m_enabled: 1
+    m_path: Assets/Scenes/Meshing/NormalMeshes/NormalMeshes.unity
+    m_guid: b8abb254c2f424d54921b442ad2f9f2e
+  - m_enabled: 1
+    m_path: Assets/Scenes/EnvironmentProbes/EnvironmentProbes.unity
+    m_guid: d568d188cadf141e38769dbabd3fe385
+  - m_enabled: 1
+    m_path: Assets/Scenes/Occlusion/SimpleOcclusion/SimpleOcclusion.unity
+    m_guid: 50a69364b393d4ce8a8b3589422b67b7
+  - m_enabled: 1
+    m_path: Assets/Scenes/Occlusion/DepthImages/DepthImages.unity
+    m_guid: ed5207d50697d40d688249cd6c59608b
+  - m_enabled: 1
+    m_path: Assets/Scenes/CheckSupport/CheckSupport.unity
+    m_guid: cf67ab53e5ff241dfa61608222d82109
+  - m_enabled: 1
+    m_path: Assets/Scenes/ConfigurationChooser/ConfigurationChooser.unity
+    m_guid: 3aae069bebee946a090ed6a756a1e77b
+  - m_enabled: 1
+    m_path: Assets/Scenes/DebugMenu/DebugMenu.unity
+    m_guid: 15456b85ccc6645c8825f7a70ae23ff1
+  m_HasScriptingDefines: 0
+  m_ScriptingDefines: []
+  m_PlayerSettingsYaml:
+    m_Settings: []
+  requiredComponents: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 5953728234672357475
+      type: {class: OSXStandaloneBuildProfile, ns: UnityEditor.OSXStandalone, asm: UnityEditor.OSXStandalone.Extensions}
+      data:
+        m_Development: 0
+        m_ConnectProfiler: 0
+        m_BuildWithDeepProfilingSupport: 0
+        m_BuildWithCodeCoverage: 0
+        m_AllowDebugging: 0
+        m_WaitForManagedDebugger: 0
+        m_ManagedDebuggerFixedPort: 0
+        m_ExplicitNullChecks: 0
+        m_ExplicitDivideByZeroChecks: 0
+        m_ExplicitArrayBoundsChecks: 0
+        m_CompressionType: 0
+        m_InstallInBuildFolder: 0
+        m_InsightsSettingsContainer:
+          m_BuildProfileEngineDiagnosticsState: 2
+        m_AdaptivePerformanceEnabled: 0
+        m_MacOSXcodeBuildConfig: 1
+        m_Architecture: 2
+        m_CreateXcodeProject: 0

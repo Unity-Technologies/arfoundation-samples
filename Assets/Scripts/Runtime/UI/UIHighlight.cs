@@ -7,10 +7,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
 {
     public class UIHighlight : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        [SerializeField, ReadOnlyField]
-        Image m_ImageToHighlight;
+        [SerializeField]
+        Graphic m_GraphicToHighlight;
 
-        [SerializeField, ReadOnlyField]
+        [SerializeField]
         Color m_DefaultColor;
 
         [SerializeField]
@@ -24,21 +24,22 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            m_ImageToHighlight.color = m_HighlightColor;
+            m_GraphicToHighlight.color = m_HighlightColor;
             m_HighlightEnabled?.Invoke();
         }
+
         public void OnPointerExit(PointerEventData eventData)
         {
-            m_ImageToHighlight.color = m_DefaultColor;
+            m_GraphicToHighlight.color = m_DefaultColor;
             m_HighlightDisabled?.Invoke();
         }
 
         void Reset()
         {
-            m_ImageToHighlight = GetComponent<Image>();
+            m_GraphicToHighlight = GetComponent<Graphic>();
 
-            if (m_ImageToHighlight != null)
-                m_DefaultColor = m_ImageToHighlight.color;
+            if (m_GraphicToHighlight != null)
+                m_DefaultColor = m_GraphicToHighlight.color;
         }
     }
 }

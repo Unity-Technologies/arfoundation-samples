@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Unity.XR.CoreUtils.Collections;
 using UnityEngine.XR.ARSubsystems;
 
 namespace UnityEngine.XR.ARFoundation.Samples
@@ -27,7 +28,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
         /// Saves a `SerializableGuid` to a file asynchronously, appending to the list of ids already saved.
         /// If no file exists or the file is unreadable, a new file is created.
         /// </summary>
-        /// <param name="savedAnchorId">The `SerializableGuid` to save.</param>
         public async Awaitable SaveAnchorIdAsync(SerializableGuid savedAnchorId, DateTime dateTime)
         {
             try
@@ -35,8 +35,30 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 if (!m_Initialized)
                     await m_InitializeAwaitable;
 
-                if (!m_SavedAnchorsData.TryAdd(savedAnchorId, dateTime))
-                    m_SavedAnchorsData[savedAnchorId] = dateTime;
+                m_SavedAnchorsData[savedAnchorId] = dateTime;
+                await WriteSavedAnchorIdsToFile();
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
+        }
+
+        public async Awaitable SaveAnchorIdsAsync(
+            ReadOnlyListSpan<ARSaveOrLoadAnchorResult> saveResults, DateTime dateTime)
+        {
+            try
+            {
+                if (!m_Initialized)
+                    await m_InitializeAwaitable;
+
+                foreach (var result in saveResults)
+                {
+                    if (result.resultStatus.IsError())
+                        continue;
+
+                    m_SavedAnchorsData[result.savedAnchorGuid] = dateTime;
+                }
 
                 await WriteSavedAnchorIdsToFile();
             }
@@ -54,6 +76,29 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     await m_InitializeAwaitable;
 
                 m_SavedAnchorsData.Remove(savedAnchorId);
+                await WriteSavedAnchorIdsToFile();
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
+        }
+        
+        public async Awaitable EraseAnchorIdsAsync(ReadOnlyListSpan<XREraseAnchorResult> eraseResults)
+        {
+            try
+            {
+                if (!m_Initialized)
+                    await m_InitializeAwaitable;
+
+                foreach (var result in eraseResults)
+                {
+                    if (result.resultStatus.IsError())
+                        continue;
+
+                    m_SavedAnchorsData.Remove(result.savedAnchorGuid);
+                }
+
                 await WriteSavedAnchorIdsToFile();
             }
             catch (Exception e)

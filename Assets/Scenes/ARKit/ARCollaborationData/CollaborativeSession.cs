@@ -105,7 +105,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         // Only log 'critical' data as 'optional' data tends to come every frame
                         if (collaborationData.priority == ARCollaborationDataPriority.Critical)
                         {
-                            Logger.Log($"Sent {data.Length} bytes of collaboration data.");
+                            Logger.Log($"Sent {data.Length.ToString()} bytes of collaboration data.");
                         }
                     }
                 }
@@ -124,12 +124,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         subsystem.UpdateWithCollaborationData(collaborationData);
                         if (collaborationData.priority == ARCollaborationDataPriority.Critical)
                         {
-                            Logger.Log($"Received {data.Bytes.Length} bytes of collaboration data.");
+                            Logger.Log($"Received {data.Bytes.Length.ToString()} bytes of collaboration data.");
                         }
                     }
                     else
                     {
-                        Logger.Log($"Received {data.Bytes.Length} bytes from remote, but the collaboration data was not valid.");
+                        Logger.Log($"Received {data.Bytes.Length.ToString()} bytes from remote, but the collaboration data was not valid.");
                     }
                 }
             }

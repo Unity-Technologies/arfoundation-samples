@@ -57,7 +57,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             var range = lockedCamera.focusRange;
-            Debug.Log($"Lens Position Range: {range.minimumLensPosition}, {range.maximumLensPosition}");
+            Debug.Log($"Lens Position Range: {range.minimumLensPosition.ToString()}, {range.maximumLensPosition.ToString()}");
 
             // update range of lens position slider
             if (m_LensPositionSlider)

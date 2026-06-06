@@ -1,0 +1,134 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 15003, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: ARCore
+  m_EditorClassIdentifier: UnityEditor.dll::UnityEditor.Build.Profile.BuildProfile
+  m_AssetVersion: 2
+  m_BuildTarget: 13
+  m_Subtarget: 0
+  m_PlatformId: b9b35072a6f44c2e863f17467ea3dc13
+  m_PlatformBuildProfile:
+    rid: 5953728234672357471
+  m_ActivePlatformGuid: 
+  m_AdditionalPlatformBuildSettings: []
+  m_OverrideGlobalSceneList: 1
+  m_Scenes:
+  - m_enabled: 1
+    m_path: Assets/Scenes/Menu/MenuLoader.unity
+    m_guid: 6688ff74f56714cfeb7c919bcdbfe269
+  - m_enabled: 1
+    m_path: Assets/Scenes/Menu/MobileMenu.unity
+    m_guid: 52aac6562f5514d5bb47d44eff37e25b
+  - m_enabled: 1
+    m_path: Assets/Scenes/Anchors/Anchors.unity
+    m_guid: 5cba9114a192a46a7aef31da62316e39
+  - m_enabled: 1
+    m_path: Assets/Scenes/ARCore/ARCoreSessionRecording.unity
+    m_guid: 5950f406e5177479b89e0c8d9160b0a9
+  - m_enabled: 1
+    m_path: Assets/Scenes/Camera/CpuImages/CpuImages.unity
+    m_guid: e769916924fd3814ab1d9474de816b22
+  - m_enabled: 1
+    m_path: Assets/Scenes/Camera/LightEstimation/BasicLightEstimation.unity
+    m_guid: 2f0cbc82480584c258f99f0d9e4ba302
+  - m_enabled: 1
+    m_path: Assets/Scenes/Camera/LightEstimation/HDRLightEstimation.unity
+    m_guid: 9d96daba3bd254cfebe94efd2d61b2c3
+  - m_enabled: 1
+    m_path: Assets/Scenes/Camera/BackgroundRenderOrder/BackgroundRenderOrder.unity
+    m_guid: dd6d3723894ae4618b821f1e99d0a4c7
+  - m_enabled: 1
+    m_path: Assets/Scenes/Camera/ExifData/ExifData.unity
+    m_guid: 668735f787b9248c2bee5111449a40bf
+  - m_enabled: 1
+    m_path: Assets/Scenes/Camera/ImageStabilization/ImageStabilization.unity
+    m_guid: 8226f3835be3c46ce8a41c734ef3feb2
+  - m_enabled: 1
+    m_path: Assets/Scenes/Camera/CameraTorchMode/CameraTorchMode.unity
+    m_guid: ee0cc5dcbc42d5044a743cc572c4f8f1
+  - m_enabled: 1
+    m_path: Assets/Scenes/FaceTracking/FacePose/FacePose.unity
+    m_guid: d8b65509a10894e1dbb93c799ececfd9
+  - m_enabled: 1
+    m_path: Assets/Scenes/FaceTracking/FaceMesh/FaceMesh.unity
+    m_guid: 6dd901454502546c88b6cf8b9f47ded0
+  - m_enabled: 1
+    m_path: Assets/Scenes/FaceTracking/ARCoreFaceRegions/ARCoreFaceRegions.unity
+    m_guid: d1739ac106ca65e4b83528a440314bd9
+  - m_enabled: 1
+    m_path: Assets/Scenes/ImageTracking/BasicImageTracking/BasicImageTracking.unity
+    m_guid: e0b018a3c3b5cfd4c8e316706ec0a18c
+  - m_enabled: 1
+    m_path: Assets/Scenes/ImageTracking/ImageTrackingWithMultiplePrefabs/ImageTrackingWithMultiplePrefabs.unity
+    m_guid: a1bf0e7b9cece455f81c1d2731ba76e7
+  - m_enabled: 1
+    m_path: Assets/Scenes/PlaneDetection/PlaneDetectionMode.unity
+    m_guid: c9de49d98546b4b769099449d82806db
+  - m_enabled: 1
+    m_path: Assets/Scenes/PointClouds/AllPointCloudPoints.unity
+    m_guid: a84b70115cd154cf59b84651a828ac60
+  - m_enabled: 1
+    m_path: Assets/Scenes/EnvironmentProbes/EnvironmentProbes.unity
+    m_guid: d568d188cadf141e38769dbabd3fe385
+  - m_enabled: 1
+    m_path: Assets/Scenes/Occlusion/SimpleOcclusion/SimpleOcclusion.unity
+    m_guid: 50a69364b393d4ce8a8b3589422b67b7
+  - m_enabled: 1
+    m_path: Assets/Scenes/Occlusion/DepthImages/DepthImages.unity
+    m_guid: ed5207d50697d40d688249cd6c59608b
+  - m_enabled: 1
+    m_path: Assets/Scenes/CheckSupport/CheckSupport.unity
+    m_guid: cf67ab53e5ff241dfa61608222d82109
+  - m_enabled: 1
+    m_path: Assets/Scenes/ConfigurationChooser/ConfigurationChooser.unity
+    m_guid: 3aae069bebee946a090ed6a756a1e77b
+  - m_enabled: 1
+    m_path: Assets/Scenes/DebugMenu/DebugMenu.unity
+    m_guid: 15456b85ccc6645c8825f7a70ae23ff1
+  m_HasScriptingDefines: 0
+  m_ScriptingDefines: []
+  m_PlayerSettingsYaml:
+    m_Settings: []
+  requiredComponents: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 5953728234672357471
+      type: {class: AndroidPlatformBuildSettings, ns: UnityEditor.Android, asm: UnityEditor.Android.Extensions}
+      data:
+        m_Development: 0
+        m_ConnectProfiler: 0
+        m_BuildWithDeepProfilingSupport: 0
+        m_BuildWithCodeCoverage: 0
+        m_AllowDebugging: 0
+        m_WaitForManagedDebugger: 0
+        m_ManagedDebuggerFixedPort: 0
+        m_ExplicitNullChecks: 0
+        m_ExplicitDivideByZeroChecks: 0
+        m_ExplicitArrayBoundsChecks: 0
+        m_CompressionType: 2
+        m_InstallInBuildFolder: 0
+        m_InsightsSettingsContainer:
+          m_BuildProfileEngineDiagnosticsState: 2
+        m_AdaptivePerformanceEnabled: 0
+        m_BuildSubtarget: 0
+        m_BuildSystem: 1
+        m_ExportAsGoogleAndroidProject: 0
+        m_DebugSymbolLevel: 1
+        m_DebugSymbolFormat: 5
+        m_CurrentDeploymentTargetId: __builtin__target_default
+        m_BuildType: 2
+        m_LinkTimeOptimization: 0
+        m_BuildAppBundle: 0
+        m_ProfileableShell: 0
+        m_IPAddressToConnect: 
+        m_SymlinkSources: 0

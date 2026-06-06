@@ -112,6 +112,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 rt.SetWidth(600 * ((float)cpuImage.width / cpuImage.height));
             }
 
+            int imageWidth;
+            int imageHeight;
+
             // Render the CPU image to our Raw Image texture
             var conversionParams = new XRCpuImage.ConversionParams(cpuImage, k_DesiredTextureFormat, XRCpuImage.Transformation.MirrorY);
             var rawTextureData = texture.GetRawTextureData<byte>();
@@ -125,13 +128,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 // Release the ARKit resources associated with the CPU image.
                 // In this sample we no longer need the CPU image after we have copied its pixels into our texture.
+                imageWidth = cpuImage.width;
+                imageHeight = cpuImage.height;
                 cpuImage.Dispose();
             }
 
             // Update any other UI elements
             if (m_ImageSizeValueText != null)
-                m_ImageSizeValueText.text = $"{cpuImage.width} x {cpuImage.height}";
-            
+                m_ImageSizeValueText.text = $"{imageWidth.ToString()} x {imageHeight.ToString()}";
+
             if (m_ResultsPanel != null)
                 m_ResultsPanel.SetActive(true);
         }

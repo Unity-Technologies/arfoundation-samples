@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 #if UNITY_IOS
@@ -16,6 +17,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
     /// </summary>
     public class ARWorldMapController : MonoBehaviour
     {
+        readonly StringBuilder m_StringBuilder = new();
+
         List<string> m_LogMessages;
 
         [Tooltip("The ARSession component controlling the session from which to generate ARWorldMaps.")]
@@ -234,13 +237,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 return;
 
             var numLogsToShow = 20;
-            string msg = "";
+            m_StringBuilder.Clear();
             for (int i = Mathf.Max(0, m_LogMessages.Count - numLogsToShow); i < m_LogMessages.Count; ++i)
             {
-                msg += m_LogMessages[i];
-                msg += "\n";
+                m_StringBuilder.Append(m_LogMessages[i]);
+                m_StringBuilder.Append('\n');
             }
-            SetText(m_LogText, msg);
+            SetText(m_LogText, m_StringBuilder.ToString());
             SetText(m_MappingStatusText, $"Mapping Status: {sessionSubsystem.worldMappingStatus}");
 #endif
         }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using Unity.Collections;
 using UnityEngine;
@@ -40,6 +41,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         SaveAndLoadAnchorDataToFile m_SaveAndLoadAnchorDataToFile;
         Dictionary<TrackableId, TestAnchorScrollViewEntry> m_ActiveTestAnchorEntriesByAnchorId = new();
         SerializableGuid m_InvalidAnchorGuid = default;
+
+        readonly StringBuilder m_StringBuilder = new();
 
         List<ARSaveOrLoadAnchorResult> m_OutputSavedAnchorResults = new();
 
@@ -198,8 +201,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
             for (var i = 0; i < anchorsToSave.Count; i += 1)
             {
                 var wasSaveSuccessful = m_OutputSavedAnchorResults[i].resultStatus.IsSuccess();
-                Debug.Log("ARF_Anchors_TestAnchorsScrollView.SaveAnchorBatch: " +
-                    $"{m_OutputSavedAnchorResults[i].resultStatus.statusCode}");
+                m_StringBuilder.Clear();
+                m_StringBuilder.Append("ARF_Anchors_TestAnchorsScrollView.SaveAnchorBatch: ");
+                m_StringBuilder.Append(m_OutputSavedAnchorResults[i].resultStatus.statusCode);
+                Debug.Log(m_StringBuilder.ToString());
 
                 if (!m_SupportsGetSavedAnchorIds && wasSaveSuccessful)
                 {
@@ -247,9 +252,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             foreach (var saveAnchorResult in saveAnchorResults)
             {
-                Debug.Log("ARF_Anchors_TestAnchorsScrollView.SaveAllAnchorsWithInvalidAnchor: " +
-                    $"anchor: {saveAnchorResult.trackableId} " +
-                    $"result status: {saveAnchorResult.resultStatus.statusCode}");
+                m_StringBuilder.Clear();
+                m_StringBuilder.Append("ARF_Anchors_TestAnchorsScrollView.SaveAllAnchorsWithInvalidAnchor: ");
+                m_StringBuilder.Append("anchor: ").Append(saveAnchorResult.trackableId);
+                m_StringBuilder.Append(" result status: ").Append(saveAnchorResult.resultStatus.statusCode);
+                Debug.Log(m_StringBuilder.ToString());
             }
         }
 
@@ -465,10 +472,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     foreach (var loadAnchorResult in incrementalResults)
                     {
                         m_LoadRequest.Add(loadAnchorResult.anchor.trackableId);
-                        Debug.Log(
-                            $"ARF_Anchors_TestAnchorsScrollView.LoadAnchorsAsync:  " +
-                            $"serializableGuid: {loadAnchorResult.savedAnchorGuid} " +
-                            $"result status: {loadAnchorResult.resultStatus.statusCode}");
+                        m_StringBuilder.Clear();
+                        m_StringBuilder.Append("ARF_Anchors_TestAnchorsScrollView.LoadAnchorsAsync:  ");
+                        m_StringBuilder.Append("serializableGuid: ").Append(loadAnchorResult.savedAnchorGuid);
+                        m_StringBuilder.Append(" result status: ").Append(loadAnchorResult.resultStatus.statusCode);
+                        Debug.Log(m_StringBuilder.ToString());
                     }
                 });
 
@@ -476,10 +484,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 if (loadAnchorResult.resultStatus.IsError())
                 {
-                    Debug.Log(
-                        $"ARF_Anchors_TestAnchorsScrollView.LoadAnchorsAsync:  " +
-                        $"serializableGuid: {loadAnchorResult.savedAnchorGuid} " +
-                        $"result status: {loadAnchorResult.resultStatus.statusCode}");
+                    m_StringBuilder.Clear();
+                    m_StringBuilder.Append("ARF_Anchors_TestAnchorsScrollView.LoadAnchorsAsync:  ");
+                    m_StringBuilder.Append("serializableGuid: ").Append(loadAnchorResult.savedAnchorGuid);
+                    m_StringBuilder.Append(" result status: ").Append(loadAnchorResult.resultStatus.statusCode);
+                    Debug.Log(m_StringBuilder.ToString());
                 }
             }
         }
@@ -664,11 +673,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             foreach (var eraseAnchorResult in eraseAnchorResults)
             {
-                Debug.Log(
-                    $"ARF_Anchors_TestAnchorsScrollView.EraseAnchorsAsync:  " +
-                    $"serializableGuid: {eraseAnchorResult.savedAnchorGuid} " +
-                    $"result status: {eraseAnchorResult.resultStatus.statusCode}, " +
-                    $"native code: {eraseAnchorResult.resultStatus.nativeStatusCode}");
+                m_StringBuilder.Clear();
+                m_StringBuilder.Append("ARF_Anchors_TestAnchorsScrollView.EraseAnchorsAsync:  ");
+                m_StringBuilder.Append("serializableGuid: ").Append(eraseAnchorResult.savedAnchorGuid);
+                m_StringBuilder.Append(" result status: ").Append(eraseAnchorResult.resultStatus.statusCode);
+                m_StringBuilder.Append(", native code: ").Append(eraseAnchorResult.resultStatus.nativeStatusCode);
+                Debug.Log(m_StringBuilder.ToString());
 
                 if (eraseAnchorResult.resultStatus.IsSuccess())
                 {

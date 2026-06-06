@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
@@ -23,7 +22,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField, HideInInspector]
         MenuSelector m_MenuSelector;
 
-        List<IList<IBooleanExpression>> m_AllRequirementsInCategory = new();
+        List<SampleSceneDescriptor> m_AllSceneDescriptors = new();
+        readonly List<RequirementResult> m_RequirementResults = new();
 
         void Awake()
         {
@@ -35,17 +35,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             var sceneLaunchers = m_CategoryRootGameObject.GetComponentsInChildren<SceneLauncher>();
             foreach (var s in sceneLaunchers)
-            {
-                m_AllRequirementsInCategory.Add(s.sceneDescriptor.requirements);
-            }
+                if (s.sceneDescriptor != null)
+                    m_AllSceneDescriptors.Add(s.sceneDescriptor);
         }
 
         void OnEnable()
         {
-            foreach (var sceneRequirements in m_AllRequirementsInCategory)
+            foreach (var descriptor in m_AllSceneDescriptors)
             {
                 // Only enable the menu button if at least one sample scene in the category is supported on this device
-                if (sceneRequirements.EvaluateAll())
+                if (descriptor.EvaluateRequirements(m_RequirementResults))
                 {
                     m_Button.onClick.AddListener(SelectCategory);
                     return;

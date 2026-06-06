@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adf2a45713b8498389fc5c57560f14d1, type: 3}
   m_Name: MetaBoundaryVisibility
   m_EditorClassIdentifier: 
-  m_SceneName: MetaBoundaryVisibility
+  m_DisplayName: MetaBoundaryVisibility
+  m_Description: Demonstrates controlling the visibility of the Meta Quest guardian boundary during a session.
+  m_Category: {fileID: 11400000, guid: ff1bc2b3f2ca6417faf8c84840c8fff9, type: 2}
+  m_PreviewImage: {fileID: 21300000, guid: b478dca327f724c1b8a67457f202c285, type: 3}
   m_Requirements:
   - rid: 1024468945353834572
   references:
     version: 2
     RefIds:
     - rid: 1024468945353834572
-      type: {class: RequiresOpenXRFeature, ns: UnityEngine.XR.ARFoundation.Samples,
-        asm: Unity.XR.ARFoundation.Samples}
+      type: {class: RequiresOpenXRFeature, ns: UnityEngine.XR.ARFoundation.Samples, asm: Unity.XR.ARFoundation.Samples}
       data:
-        m_RequiredFeature: UnityEngine.XR.OpenXR.Features.Meta.BoundaryVisibilityFeature,
-          Unity.XR.MetaOpenXR, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        m_RequiredFeature: UnityEngine.XR.OpenXR.Features.Meta.BoundaryVisibilityFeature, Unity.XR.MetaOpenXR, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null

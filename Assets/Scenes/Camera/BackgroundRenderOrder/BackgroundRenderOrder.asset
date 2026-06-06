@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adf2a45713b8498389fc5c57560f14d1, type: 3}
   m_Name: BackgroundRenderOrder
   m_EditorClassIdentifier: 
-  m_SceneName: BackgroundRenderOrder
+  m_DisplayName: BackgroundRenderOrder
+  m_Description: Demonstrates switching the AR camera background render order between before and after opaque geometry.
+  m_PreviewImage: {fileID: 21300000, guid: d82319f11abdf4f5faaa3371d8f8595a, type: 3}
+  m_Category: {fileID: 11400000, guid: f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1, type: 2}
   m_Requirements:
   - rid: 4788940866556788930
   references:
@@ -27,3 +30,4 @@ MonoBehaviour:
         m_RequiresCameraGrain: 0
         m_RequiresExifData: 0
         m_RequiresImageStabilization: 0
+        m_RequiresCameraTorchMode: 0
