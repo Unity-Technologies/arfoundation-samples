@@ -23,7 +23,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     descriptor.environmentDepthImageSupported != Supported.Unsupported ||
                     descriptor.humanSegmentationDepthImageSupported != Supported.Unsupported ||
                     descriptor.humanSegmentationStencilImageSupported != Supported.Unsupported;
-                results.Add(new RequirementResult(depthSupported, nameof(m_RequiresDepth)));
+                results.Add(new RequirementResult(depthSupported, "Depth Image", k_SubRequirementRemediationText));
             }
         }
     }

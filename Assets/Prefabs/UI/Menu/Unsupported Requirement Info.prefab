@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 2804770992760427060}
   - component: {fileID: 4937872735700805045}
   - component: {fileID: 1712692818975148661}
+  - component: {fileID: 3039870058424281779}
+  - component: {fileID: 2240429965559540110}
   m_Layer: 5
   m_Name: Index Label
   m_TagString: Untagged
@@ -115,7 +117,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 0
-  m_ActiveFontFeatures: {_typeName: unsigned int, _data: 6e72656b}
+  m_ActiveFontFeatures: 6e72656bu
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -137,6 +139,30 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3039870058424281779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165277299441365769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21148b11685c6d8428a9575f3ace46a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.XR.CompositionLayers.UIInteraction::Unity.XR.CompositionLayers.UIInteraction.UIHandle
+--- !u!114 &2240429965559540110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165277299441365769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 181c41ea912306f44b5cbdf201b102aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.XR.CompositionLayers.UIInteraction::Unity.XR.CompositionLayers.UIInteraction.UIFocus
 --- !u!1 &2223767281692775212
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,6 +175,8 @@ GameObject:
   - component: {fileID: 2957131046166943610}
   - component: {fileID: 8004682313724359846}
   - component: {fileID: 4517736570704694610}
+  - component: {fileID: 2695171741068944966}
+  - component: {fileID: 1763375728522269497}
   m_Layer: 5
   m_Name: Content Label
   m_TagString: Untagged
@@ -172,7 +200,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 446.11426, y: -15.735}
+  m_AnchoredPosition: {x: 471.11426, y: -25.735}
   m_SizeDelta: {x: 808.2285, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2957131046166943610
@@ -203,7 +231,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<b>Requirement</b>: <color=#AAAAAA>Remediation text.</color> '
+  m_text: '<b>Requirement</b>: <color=#AAAAAA>Remediation text here.</color> '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39867e5449c844cbaa691f241ee9e41d, type: 2}
   m_sharedMaterial: {fileID: 2119413175553802479, guid: 39867e5449c844cbaa691f241ee9e41d, type: 2}
@@ -253,7 +281,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 0
-  m_ActiveFontFeatures: {_typeName: unsigned int, _data: 6e72656b}
+  m_ActiveFontFeatures: 6e72656bu
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -289,6 +317,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &2695171741068944966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2223767281692775212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21148b11685c6d8428a9575f3ace46a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.XR.CompositionLayers.UIInteraction::Unity.XR.CompositionLayers.UIInteraction.UIHandle
+--- !u!114 &1763375728522269497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2223767281692775212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 181c41ea912306f44b5cbdf201b102aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.XR.CompositionLayers.UIInteraction::Unity.XR.CompositionLayers.UIInteraction.UIFocus
 --- !u!1 &5925590912457815151
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,6 +355,8 @@ GameObject:
   - component: {fileID: 8085487944229718081}
   - component: {fileID: 689237894723947145}
   - component: {fileID: 8309129351499496759}
+  - component: {fileID: 313774992508699081}
+  - component: {fileID: 1651485379831972187}
   m_Layer: 5
   m_Name: Unsupported Requirement Info
   m_TagString: Untagged
@@ -346,13 +400,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5925590912457815151}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.18431373}
+  m_Color: {r: 0.0627451, g: 0.0627451, b: 0.0627451, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -382,10 +436,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.HorizontalLayoutGroup
   m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
+    m_Left: 25
+    m_Right: 25
+    m_Top: 10
+    m_Bottom: 10
   m_ChildAlignment: 0
   m_Spacing: 12
   m_ChildForceExpandWidth: 1
@@ -423,3 +477,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.XR.ARFoundation.Samples::UnityEngine.XR.ARFoundation.Samples.RequirementEntryView
   m_IndexLabel: {fileID: 1712692818975148661}
   m_ContentLabel: {fileID: 8004682313724359846}
+  m_BackgroundImage: {fileID: 3070762246002178575}
+--- !u!114 &313774992508699081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5925590912457815151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21148b11685c6d8428a9575f3ace46a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.XR.CompositionLayers.UIInteraction::Unity.XR.CompositionLayers.UIInteraction.UIHandle
+--- !u!114 &1651485379831972187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5925590912457815151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 181c41ea912306f44b5cbdf201b102aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.XR.CompositionLayers.UIInteraction::Unity.XR.CompositionLayers.UIInteraction.UIFocus

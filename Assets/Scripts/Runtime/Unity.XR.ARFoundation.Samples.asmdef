@@ -14,6 +14,7 @@
         "Unity.XR.ARCore",
         "Unity.XR.MetaOpenXR",
         "Unity.XR.OpenXR",
+        "Unity.XR.OpenXR.Features.MetaHandMeshData",
         "Unity.XR.Simulation",
         "Unity.XR.AndroidOpenXR",
         "Unity.Netcode.Runtime",
@@ -92,6 +93,16 @@
             "name": "com.unity.xr.meta-openxr",
             "expression": "2.6.0-pre.1",
             "define": "METAOPENXR_2_6_0_1_OR_NEWER"
+        },
+        {
+            "name": "com.unity.xr.openxr",
+            "expression": "1.18.0-pre.1",
+            "define": "OPENXR_1_18_0_1_OR_NEWER"
+        },
+        {
+            "name": "com.unity.xr.hands",
+            "expression": "1.9.0-pre.1",
+            "define": "XR_HANDS_1_9_0_1_OR_NEWER "
         }
     ],
     "noEngineReferences": false

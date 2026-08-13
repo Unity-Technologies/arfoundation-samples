@@ -6,7 +6,6 @@ using Unity.XR.CoreUtils.Collections;
 using UnityEngine.UI;
 using UnityEngine.XR.ARSubsystems;
 using SerializableGuid = UnityEngine.XR.ARSubsystems.SerializableGuid;
-
 #if UNITY_ANDROID && ARCORE_4_2_OR_NEWER && !UNITY_EDITOR
 using UnityEngine.XR.ARCore;
 #endif
@@ -227,6 +226,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 createSavedEntryAwaitables.Clear();
                 s_AsyncInstantiateMaps.Release(createSavedEntryAwaitables);
             }
+            catch (OperationCanceledException)
+            {
+                // do nothing
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e, this);
+            }
             finally
             {
                 if (saveToFileAwaitables != null)
@@ -248,14 +255,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public async void LoadAllAnchors()
         {
-            if (!m_SupportsSaveAndLoadAnchors || m_IsLoadAllInProgress)
-                return;
-
-            m_IsLoadAllInProgress = true;
-            m_LoadAllAnchorsButton.interactable = false;
-
             try
             {
+                if (!m_SupportsSaveAndLoadAnchors || m_IsLoadAllInProgress)
+                    return;
+
+                m_IsLoadAllInProgress = true;
+                m_LoadAllAnchorsButton.interactable = false;
+
                 var anchorGuidsToLoad = new List<SerializableGuid>();
                 foreach (var (savedAnchorGuid, anchorEntry) in m_SavedAnchorEntriesBySavedAnchorGuid)
                 {
@@ -289,6 +296,14 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     await awaitable;
                 }
             }
+            catch (OperationCanceledException)
+            {
+                // do nothing
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e, this);
+            }
             finally
             {
                 m_IsLoadAllInProgress = false;
@@ -298,33 +313,44 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         async void OnIncrementalLoadResultsAvailable(ReadOnlyListSpan<ARSaveOrLoadAnchorResult> loadAnchorResults)
         {
-            var showResultAwaitables = s_VoidAwaitableLists.Get();
-            foreach (var loadAnchorResult in loadAnchorResults)
+            try
             {
-                var entry = m_SavedAnchorEntriesBySavedAnchorGuid[loadAnchorResult.savedAnchorGuid];
-                entry.representedAnchor = loadAnchorResult.anchor;
-                entry.EnableActionButton(false);
+                var showResultAwaitables = s_VoidAwaitableLists.Get();
+                foreach (var loadAnchorResult in loadAnchorResults)
+                {
+                    var entry = m_SavedAnchorEntriesBySavedAnchorGuid[loadAnchorResult.savedAnchorGuid];
+                    entry.representedAnchor = loadAnchorResult.anchor;
+                    entry.EnableActionButton(false);
 
-                m_SavedAnchorGuidByAnchorId.TryAdd(
-                    loadAnchorResult.anchor.trackableId,
-                    loadAnchorResult.savedAnchorGuid);
+                    m_SavedAnchorGuidByAnchorId.TryAdd(
+                        loadAnchorResult.anchor.trackableId,
+                        loadAnchorResult.savedAnchorGuid);
 
-                // add anchor id to the load request list so when the added anchor change event
-                // is raised from the anchor trackable manager, we can know if an entry for this anchor already exists
-                m_LoadRequests.Add(loadAnchorResult.anchor.trackableId);
+                    // add anchor id to the load request list so when the added anchor change event
+                    // is raised from the anchor trackable manager, we can know if an entry for this anchor already exists
+                    m_LoadRequests.Add(loadAnchorResult.anchor.trackableId);
 
-                entry.StopActionLoadingAnimation();
-                showResultAwaitables.Add(entry.ShowActionResult(true, m_ResultDurationInSeconds));
-                entry.EnableActionButton(false);
+                    entry.StopActionLoadingAnimation();
+                    showResultAwaitables.Add(entry.ShowActionResult(true, m_ResultDurationInSeconds));
+                    entry.EnableActionButton(false);
+                }
+
+                foreach (var awaitable in showResultAwaitables)
+                {
+                    await awaitable;
+                }
+
+                showResultAwaitables.Clear();
+                s_VoidAwaitableLists.Release(showResultAwaitables);
             }
-
-            foreach (var awaitable in showResultAwaitables)
+            catch (OperationCanceledException)
             {
-                await awaitable;
+                // do nothing
             }
-
-            showResultAwaitables.Clear();
-            s_VoidAwaitableLists.Release(showResultAwaitables);
+            catch (Exception e)
+            {
+                Debug.LogException(e, this);
+            }
         }
 
         public async void EraseAllAnchors()
@@ -426,14 +452,30 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         async void InitializeUI()
         {
-            var addSavedEntryAwaitables = new Dictionary<AsyncInstantiateOperation<AnchorScrollViewEntry>, SerializableGuid>();
-            Dictionary<SerializableGuid, DateTime> savedAnchorData = new();
-            if (m_SupportsGetSavedAnchorIds)
+            try
             {
-                var result = await m_AnchorManager.TryGetSavedAnchorIdsAsync(Allocator.Temp);
-                if (result.status.IsSuccess())
+                var addSavedEntryAwaitables = new Dictionary<AsyncInstantiateOperation<AnchorScrollViewEntry>, SerializableGuid>();
+                IReadOnlyDictionary<SerializableGuid, DateTime> savedAnchorData = null;
+                if (m_SupportsGetSavedAnchorIds)
                 {
-                    foreach (var savedAnchorGuid in result.value)
+                    var result = await m_AnchorManager.TryGetSavedAnchorIdsAsync(Allocator.Temp);
+                    if (result.status.IsSuccess())
+                    {
+                        foreach (var savedAnchorGuid in result.value)
+                        {
+                            if (!m_SavedAnchorEntriesBySavedAnchorGuid.ContainsKey(savedAnchorGuid))
+                            {
+                                var saveEntryAwaitable = InstantiateAsync(m_SavedAnchorEntryPrefab, m_ContentTransform);
+                                addSavedEntryAwaitables.Add(saveEntryAwaitable, savedAnchorGuid);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    m_SaveAndLoadAnchorDataToFile ??= new SaveAndLoadAnchorDataToFile();
+                    savedAnchorData = await m_SaveAndLoadAnchorDataToFile.GetSavedAnchorsDataAsync();
+                    foreach (var savedAnchorGuid in savedAnchorData.Keys)
                     {
                         if (!m_SavedAnchorEntriesBySavedAnchorGuid.ContainsKey(savedAnchorGuid))
                         {
@@ -442,101 +484,107 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         }
                     }
                 }
-            }
-            else
-            {
-                m_SaveAndLoadAnchorDataToFile ??= new SaveAndLoadAnchorDataToFile();
-                savedAnchorData = await m_SaveAndLoadAnchorDataToFile.GetSavedAnchorsDataAsync();
-                foreach (var savedAnchorGuid in savedAnchorData.Keys)
+
+                foreach (var (saveEntryAwaitable, serializableGuid) in addSavedEntryAwaitables)
                 {
-                    if (!m_SavedAnchorEntriesBySavedAnchorGuid.ContainsKey(savedAnchorGuid))
-                    {
-                        var saveEntryAwaitable = InstantiateAsync(m_SavedAnchorEntryPrefab, m_ContentTransform);
-                        addSavedEntryAwaitables.Add(saveEntryAwaitable, savedAnchorGuid);
-                    }
+                    DateTime dateTime = default;
+                    if (savedAnchorData != null)
+                        dateTime = savedAnchorData[serializableGuid];
+
+                    var savedAnchorEntry = await saveEntryAwaitable;
+                    SetupSavedAnchorEntry(
+                        savedAnchorEntry[0],
+                        serializableGuid,
+                        false,
+                        dateTime,
+                        $"Anchor {m_EntryCount}");
+
+                    m_EntryCount += 1;
                 }
-            }
 
-            foreach (var (saveEntryAwaitable, serializableGuid) in addSavedEntryAwaitables)
-            {
-                DateTime dateTime = default;
-                if (!m_SupportsGetSavedAnchorIds)
-                    dateTime = savedAnchorData[serializableGuid];
+                addSavedEntryAwaitables.Clear();
 
-                var savedAnchorEntry = await saveEntryAwaitable;
-                SetupSavedAnchorEntry(
-                    savedAnchorEntry[0],
-                    serializableGuid,
-                    false,
-                    dateTime,
-                    $"Anchor {m_EntryCount}");
-
-                m_EntryCount += 1;
-            }
-
-            addSavedEntryAwaitables.Clear();
-
-            var addNewEntryAwaitables = s_AddNewEntryAwaitablesMaps.Get();
-            foreach (var anchor in m_AnchorManager.trackables)
-            {
-                var addNewEntryAwaitable = InstantiateAsync(m_NewAnchorEntryPrefab, m_ContentTransform);
-                addNewEntryAwaitables.Add(addNewEntryAwaitable, anchor);
-            }
-
-            m_AnchorManager.trackablesChanged.AddListener(OnAnchorsChanged);
-            foreach (var (awaitable, anchor) in addNewEntryAwaitables)
-            {
-                var newAnchorEntry = await awaitable;
-                SetupNewAnchorEntry(
-                    newAnchorEntry[0],
-                    anchor,
-                    null);
-            }
-
-            addNewEntryAwaitables.Clear();
-            s_AddNewEntryAwaitablesMaps.Release(addNewEntryAwaitables);
-        }
-
-        async void OnAnchorsChanged(ARTrackablesChangedEventArgs<ARAnchor> changes)
-        {
-            var addNewEntryAwaitables = s_AddNewEntryAwaitablesMaps.Get();
-            foreach (var anchor in changes.added)
-            {
-                if (m_LoadRequests.Contains(anchor.trackableId))
-                {
-                    m_LoadRequests.Remove(anchor.trackableId);
-                }
-                else
+                var addNewEntryAwaitables = s_AddNewEntryAwaitablesMaps.Get();
+                foreach (var anchor in m_AnchorManager.trackables)
                 {
                     var addNewEntryAwaitable = InstantiateAsync(m_NewAnchorEntryPrefab, m_ContentTransform);
                     addNewEntryAwaitables.Add(addNewEntryAwaitable, anchor);
                 }
-            }
 
-            foreach (var (awaitable, anchor) in addNewEntryAwaitables)
-            {
-                var newAnchorEntry = await awaitable;
-                SetupNewAnchorEntry(
-                    newAnchorEntry[0],
-                    anchor,
-                    null);
-            }
-
-            addNewEntryAwaitables.Clear();
-            s_AddNewEntryAwaitablesMaps.Release(addNewEntryAwaitables);
-
-            foreach (var (anchorId, _) in changes.removed)
-            {
-                var doesSavedEntryExist = m_SavedAnchorGuidByAnchorId.TryGetValue(anchorId, out var savedAnchorGuid);
-                if (doesSavedEntryExist &&
-                    m_SavedAnchorEntriesBySavedAnchorGuid.TryGetValue(savedAnchorGuid, out var savedAnchorEntry))
+                m_AnchorManager.trackablesChanged.AddListener(OnAnchorsChanged);
+                foreach (var (awaitable, anchor) in addNewEntryAwaitables)
                 {
-                    savedAnchorEntry.EnableActionButton(true);
+                    var newAnchorEntry = await awaitable;
+                    SetupNewAnchorEntry(
+                        newAnchorEntry[0],
+                        anchor,
+                        null);
                 }
-                else if (m_NewAnchorEntriesByAnchorId.TryGetValue(anchorId, out var newAnchorEntry))
+
+                addNewEntryAwaitables.Clear();
+                s_AddNewEntryAwaitablesMaps.Release(addNewEntryAwaitables);
+            }
+            catch (OperationCanceledException)
+            {
+                // do nothing
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e, this);
+            }
+        }
+
+        async void OnAnchorsChanged(ARTrackablesChangedEventArgs<ARAnchor> changes)
+        {
+            try
+            {
+                var addNewEntryAwaitables = s_AddNewEntryAwaitablesMaps.Get();
+                foreach (var anchor in changes.added)
                 {
-                    RemoveNewAnchorEntry(newAnchorEntry);
+                    if (m_LoadRequests.Contains(anchor.trackableId))
+                    {
+                        m_LoadRequests.Remove(anchor.trackableId);
+                    }
+                    else
+                    {
+                        var addNewEntryAwaitable = InstantiateAsync(m_NewAnchorEntryPrefab, m_ContentTransform);
+                        addNewEntryAwaitables.Add(addNewEntryAwaitable, anchor);
+                    }
                 }
+
+                foreach (var (awaitable, anchor) in addNewEntryAwaitables)
+                {
+                    var newAnchorEntry = await awaitable;
+                    SetupNewAnchorEntry(
+                        newAnchorEntry[0],
+                        anchor,
+                        null);
+                }
+
+                addNewEntryAwaitables.Clear();
+                s_AddNewEntryAwaitablesMaps.Release(addNewEntryAwaitables);
+
+                foreach (var (anchorId, _) in changes.removed)
+                {
+                    var doesSavedEntryExist = m_SavedAnchorGuidByAnchorId.TryGetValue(anchorId, out var savedAnchorGuid);
+                    if (doesSavedEntryExist &&
+                        m_SavedAnchorEntriesBySavedAnchorGuid.TryGetValue(savedAnchorGuid, out var savedAnchorEntry))
+                    {
+                        savedAnchorEntry.EnableActionButton(true);
+                    }
+                    else if (m_NewAnchorEntriesByAnchorId.TryGetValue(anchorId, out var newAnchorEntry))
+                    {
+                        RemoveNewAnchorEntry(newAnchorEntry);
+                    }
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                // do nothing
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e, this);
             }
         }
 
@@ -680,9 +728,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
 
         void UpdateSavedAnchorEntry(
-            AnchorScrollViewEntry savedAnchorEntry,
-            SerializableGuid savedAnchorGuid,
-            ARAnchor anchor)
+            AnchorScrollViewEntry savedAnchorEntry, SerializableGuid savedAnchorGuid, ARAnchor anchor)
         {
             m_SavedAnchorEntriesBySavedAnchorGuid.TryAdd(savedAnchorGuid, savedAnchorEntry);
             m_SavedAnchorGuidByAnchorId.TryAdd(anchor.trackableId, savedAnchorGuid);
@@ -691,9 +737,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         }
 
         Awaitable ShowEntryActionResult(
-            AnchorScrollViewEntry newAnchorEntry,
-            XRResultStatus resultStatus,
-            SerializableGuid savedAnchorGuid)
+            AnchorScrollViewEntry newAnchorEntry, XRResultStatus resultStatus, SerializableGuid savedAnchorGuid)
         {
             newAnchorEntry.StopActionLoadingAnimation();
             var wasSaveSuccessful = resultStatus.IsSuccess();
@@ -716,60 +760,83 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         async void RequestLoadAnchor(AnchorScrollViewEntry entry)
         {
-            entry.EnableActionButton(false);
-            entry.StartActionLoadingAnimation();
-
-            var result = await m_AnchorManager.TryLoadAnchorAsync(entry.savedAnchorGuid, entry.cancellationTokenSource.Token);
-            var wasLoadSuccessful = result.status.IsSuccess();
-            if (wasLoadSuccessful)
+            try
             {
-                entry.representedAnchor = result.value;
                 entry.EnableActionButton(false);
-                // add anchor id to load request list so when the added anchor change event
-                // is raised, we can know an entry for this anchor already exists
-                m_LoadRequests.Add(entry.representedAnchor.trackableId);
-                m_SavedAnchorGuidByAnchorId.TryAdd(entry.representedAnchor.trackableId, entry.savedAnchorGuid);
-            }
+                entry.StartActionLoadingAnimation();
 
-            entry.StopActionLoadingAnimation();
-            await entry.ShowActionResult(wasLoadSuccessful, m_ResultDurationInSeconds);
-            entry.EnableActionButton(!wasLoadSuccessful);
+                var result = await m_AnchorManager.TryLoadAnchorAsync(entry.savedAnchorGuid, entry.cancellationTokenSource.Token);
+                var wasLoadSuccessful = result.status.IsSuccess();
+                if (wasLoadSuccessful)
+                {
+                    entry.representedAnchor = result.value;
+                    entry.EnableActionButton(false);
+
+                    // add anchor id to load request list so when the added anchor change event
+                    // is raised, we can know an entry for this anchor already exists
+                    m_LoadRequests.Add(entry.representedAnchor.trackableId);
+                    m_SavedAnchorGuidByAnchorId.TryAdd(entry.representedAnchor.trackableId, entry.savedAnchorGuid);
+                }
+
+                entry.StopActionLoadingAnimation();
+                await entry.ShowActionResult(wasLoadSuccessful, m_ResultDurationInSeconds);
+                entry.EnableActionButton(!wasLoadSuccessful);
+            }
+            catch (OperationCanceledException)
+            {
+                // do nothing
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e, this);
+            }
         }
 
         async void RequestEraseAnchor(AnchorScrollViewEntry savedAnchorEntry)
         {
-            savedAnchorEntry.EnableActionButton(false);
-            savedAnchorEntry.EnableEraseButton(false);
-            savedAnchorEntry.StartEraseLoadingAnimation();
-
-            var result = await m_AnchorManager.TryEraseAnchorAsync(savedAnchorEntry.savedAnchorGuid);
-            var isAnchorInScene = savedAnchorEntry.representedAnchor != null;
-
-            if (!result.IsSuccess())
+            try
             {
+                savedAnchorEntry.EnableActionButton(false);
+                savedAnchorEntry.EnableEraseButton(false);
+                savedAnchorEntry.StartEraseLoadingAnimation();
+
+                var result = await m_AnchorManager.TryEraseAnchorAsync(savedAnchorEntry.savedAnchorGuid);
+                var isAnchorInScene = savedAnchorEntry.representedAnchor != null;
+
+                if (!result.IsSuccess())
+                {
+                    savedAnchorEntry.StopEraseLoadingAnimation();
+                    await savedAnchorEntry.ShowEraseResult(false, m_ResultDurationInSeconds);
+                    savedAnchorEntry.EnableEraseButton(true);
+                    savedAnchorEntry.EnableActionButton(!isAnchorInScene);
+                    return;
+                }
+
+                if (!m_SupportsGetSavedAnchorIds)
+                    await m_SaveAndLoadAnchorDataToFile.EraseAnchorIdAsync(savedAnchorEntry.savedAnchorGuid);
+
                 savedAnchorEntry.StopEraseLoadingAnimation();
-                await savedAnchorEntry.ShowEraseResult(false, m_ResultDurationInSeconds);
-                savedAnchorEntry.EnableEraseButton(true);
-                savedAnchorEntry.EnableActionButton(!isAnchorInScene);
-                return;
+                await savedAnchorEntry.ShowEraseResult(true, m_ResultDurationInSeconds);
+
+                if (isAnchorInScene)
+                {
+                    var newAnchorEntry = await InstantiateAsync(m_NewAnchorEntryPrefab, m_ContentTransform);
+                    SetupNewAnchorEntry(
+                        newAnchorEntry[0],
+                        savedAnchorEntry.representedAnchor,
+                        savedAnchorEntry.AnchorDisplayText);
+                }
+
+                RemoveSavedAnchorEntry(savedAnchorEntry);
             }
-
-            if (!m_SupportsGetSavedAnchorIds)
-                await m_SaveAndLoadAnchorDataToFile.EraseAnchorIdAsync(savedAnchorEntry.savedAnchorGuid);
-
-            savedAnchorEntry.StopEraseLoadingAnimation();
-            await savedAnchorEntry.ShowEraseResult(true, m_ResultDurationInSeconds);
-
-            if (isAnchorInScene)
+            catch (OperationCanceledException)
             {
-                var newAnchorEntry = await InstantiateAsync(m_NewAnchorEntryPrefab, m_ContentTransform);
-                SetupNewAnchorEntry(
-                    newAnchorEntry[0],
-                    savedAnchorEntry.representedAnchor,
-                    savedAnchorEntry.AnchorDisplayText);
+                // do nothing
             }
-
-            RemoveSavedAnchorEntry(savedAnchorEntry);
+            catch (Exception e)
+            {
+                Debug.LogException(e, this);
+            }
         }
     }
 }

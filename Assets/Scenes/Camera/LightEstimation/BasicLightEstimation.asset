@@ -17,6 +17,7 @@ MonoBehaviour:
   m_PreviewImage: {fileID: 21300000, guid: 49f8b63adf1154b5dac9dbacdf3582e2, type: 3}
   m_Category: {fileID: 11400000, guid: f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1, type: 2}
   m_Requirements:
+  - rid: 4838107887509701051
   - rid: 4788940866556788928
   references:
     version: 2
@@ -31,3 +32,9 @@ MonoBehaviour:
         m_RequiresExifData: 0
         m_RequiresImageStabilization: 0
         m_RequiresCameraTorchMode: 0
+    - rid: 4838107887509701051
+      type: {class: RequiresPermission, ns: UnityEngine.XR.ARFoundation.Samples, asm: Unity.XR.ARFoundation.Samples}
+      data:
+        m_PermissionsPerPlatform:
+        - platform: 1
+          permissionId: android.permission.SCENE_UNDERSTANDING_COARSE

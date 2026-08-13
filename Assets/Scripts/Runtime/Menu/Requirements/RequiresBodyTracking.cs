@@ -22,10 +22,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
             var descriptor = s_LoadedSubsystem.subsystemDescriptor;
 
             if (m_Requires2DTracking)
-                results.Add(new RequirementResult(descriptor.supportsHumanBody2D, nameof(m_Requires2DTracking)));
+                results.Add(new RequirementResult(
+                    descriptor.supportsHumanBody2D,
+                    "2D Body Tracking",
+                    k_SubRequirementRemediationText));
 
             if (m_Requires3DTracking)
-                results.Add(new RequirementResult(descriptor.supportsHumanBody3D, nameof(m_Requires3DTracking)));
+                results.Add(new RequirementResult(
+                    descriptor.supportsHumanBody3D,
+                    "3D Body Tracking",
+                    k_SubRequirementRemediationText));
         }
     }
 }

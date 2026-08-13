@@ -19,23 +19,26 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public virtual void Evaluate(List<RequirementResult> results)
         {
+            var requirementName = $"Platform ({m_RequiredPlatform})";
+            var remediationText = $"This scene requires the {m_RequiredPlatform} platform.";
+
 #if !UNITY_IOS
             if (m_RequiredPlatform == Platform.iOS)
             {
-                results.Add(new RequirementResult(false, $"{GetType().Name} ({m_RequiredPlatform})"));
+                results.Add(new RequirementResult(false, requirementName, remediationText));
                 return;
             }
 #elif !UNITY_ANDROID
             if (m_RequiredPlatform == Platform.Android)
             {
-                results.Add(new RequirementResult(false, $"{GetType().Name} ({m_RequiredPlatform})"));
+                results.Add(new RequirementResult(false, requirementName, remediationText));
                 return;
             }
 #endif
 
             if (Application.isEditor && !m_AllowEditor)
             {
-                results.Add(new RequirementResult(false, $"{GetType().Name} ({m_RequiredPlatform})"));
+                results.Add(new RequirementResult(false, requirementName, remediationText));
                 return;
             }
 
@@ -46,12 +49,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 int major = int.Parse(version.Split(".")[0]);
                 if (major < m_VersionRequirement.minimumVersion)
                 {
-                    results.Add(new RequirementResult(false, $"{GetType().Name} ({m_RequiredPlatform})"));
+                    results.Add(new RequirementResult(false, requirementName, remediationText));
                     return;
                 }
             }
 #endif
-            results.Add(new RequirementResult(true, $"{GetType().Name} ({m_RequiredPlatform})"));
+            results.Add(new RequirementResult(true, requirementName, remediationText));
         }
 
         [Serializable]

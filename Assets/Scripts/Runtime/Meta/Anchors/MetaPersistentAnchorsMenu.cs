@@ -26,205 +26,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         bool m_VerboseLogging;
 
-        SaveAndLoadAnchorDataToFile m_SaveAndLoadAnchorDataToFile;
+        ISavedAnchorDataStore m_AnchorDataStore;
 
         readonly Dictionary<int, MetaPersistentAnchorEntry> m_AnchorEntryByEntryId = new();
         readonly Dictionary<TrackableId, int> m_EntryIdByTrackableId = new();
         readonly Dictionary<SerializableGuid, int> m_EntryIdBySavedAnchorGuid = new();
 
         int m_NextEntryId = 1;
-
-        /// <summary>
-        /// Saves the ARAnchors associated with the <see cref="MetaPersistentAnchorEntry"/> from <see cref="MetaBatchPersistentAnchors.selectedEntries"/>.
-        /// </summary>
-        public async void SaveAnchors()
-        {
-            if (!m_AnchorManager.subsystem.subsystemDescriptor.supportsSaveAnchor)
-                return;
-
-            var anchorsToSave = new List<ARAnchor>();
-            var entries = m_MetaBatchPersistentAnchors.selectedEntries;
-            foreach (var entry in entries)
-            {
-                if (!entry.isInScene)
-                    continue;
-
-                entry.ShowInProgress();
-                anchorsToSave.Add(entry.anchor);
-            }
-
-            var results = new List<ARSaveOrLoadAnchorResult>();
-
-            if (m_VerboseLogging)
-                Debug.Log($"Saving anchors:\n{anchorsToSave}", this);
-
-            await m_AnchorManager.TrySaveAnchorsAsync(anchorsToSave, results);
-
-            if (m_VerboseLogging)
-                Debug.Log($"Save results:\n{results}", this);
-
-            var dateTime = DateTime.Now;
-            foreach (var result in results)
-            {
-                var entryId = m_EntryIdByTrackableId[result.anchor.trackableId];
-                var entry = m_AnchorEntryByEntryId[entryId];
-
-                if (result.resultStatus.IsSuccess())
-                {
-                    entry.UpdateSaveStatus(true, result.savedAnchorGuid, dateTime);
-                    m_EntryIdBySavedAnchorGuid.TryAdd(result.savedAnchorGuid, entryId);
-                }
-
-                entry.ShowResult(result.resultStatus);
-            }
-
-            await m_SaveAndLoadAnchorDataToFile.SaveAnchorIdsAsync(
-                new ReadOnlyListSpan<ARSaveOrLoadAnchorResult>(results), dateTime);
-        }
-
-        /// <summary>
-        /// Loads the ARAnchors associated with the <see cref="MetaPersistentAnchorEntry"/> from <see cref="MetaBatchPersistentAnchors.selectedEntries"/>.
-        /// </summary>
-        public async void LoadAnchors()
-        {
-            if (!m_AnchorManager.descriptor.supportsLoadAnchor)
-                return;
-
-            var savedAnchorGuidsToLoad = new List<SerializableGuid>();
-            var entries = m_MetaBatchPersistentAnchors.selectedEntries;
-            foreach (var entry in entries)
-            {
-                if (!entry.isSaved)
-                    continue;
-
-                entry.ShowInProgress();
-                savedAnchorGuidsToLoad.Add(entry.savedAnchorGuid);
-            }
-
-            var results = new List<ARSaveOrLoadAnchorResult>();
-
-            if (m_VerboseLogging)
-                Debug.Log($"Loading anchors:\n{savedAnchorGuidsToLoad}", this);
-
-            await m_AnchorManager.TryLoadAnchorsAsync(
-                savedAnchorGuidsToLoad,
-                results,
-                incrementalResults =>
-                {
-                    foreach (var result in incrementalResults)
-                    {
-                        var entryId = m_EntryIdBySavedAnchorGuid[result.savedAnchorGuid];
-                        var entry = m_AnchorEntryByEntryId[entryId];
-
-                        entry.ShowResult(result.resultStatus);
-                        entry.UpdateInSceneStatus(result.anchor);
-                        m_EntryIdByTrackableId.TryAdd(result.anchor.trackableId, entryId);
-                    }
-                });
-
-            if (m_VerboseLogging)
-                Debug.Log($"Load results:\n{results}", this);
-        }
-
-        /// <summary>
-        /// Erases the ARAnchors associated with the <see cref="MetaPersistentAnchorEntry"/> from <see cref="MetaBatchPersistentAnchors.selectedEntries"/>.
-        /// </summary>
-        public async void EraseAnchors()
-        {
-            if (!m_AnchorManager.descriptor.supportsEraseAnchor)
-                return;
-
-            var savedAnchorGuidsToErase = new List<SerializableGuid>();
-            var entries = m_MetaBatchPersistentAnchors.selectedEntries;
-            foreach (var entry in entries)
-            {
-                if (!entry.isSaved)
-                    continue;
-
-                entry.ShowInProgress();
-                savedAnchorGuidsToErase.Add(entry.savedAnchorGuid);
-            }
-
-            var results = new List<XREraseAnchorResult>();
-
-            if (m_VerboseLogging)
-                Debug.Log($"Erasing anchors:\n{savedAnchorGuidsToErase}");
-
-            await m_AnchorManager.TryEraseAnchorsAsync(savedAnchorGuidsToErase, results);
-
-            if (m_VerboseLogging)
-                Debug.Log($"Erase results:\n{results}");
-
-            var removedAnchorsEntryIds = new List<int>();
-            foreach (var result in results)
-            {
-                var entryId = m_EntryIdBySavedAnchorGuid[result.savedAnchorGuid];
-                var entry = m_AnchorEntryByEntryId[entryId];
-
-                if (result.resultStatus.IsSuccess())
-                {
-                    entry.UpdateSaveStatus(false, TrackableId.invalidId, default);
-                    m_EntryIdBySavedAnchorGuid.Remove(result.savedAnchorGuid);
-                    removedAnchorsEntryIds.Add(entry.entryId);
-                }
-
-                entry.ShowResult(result.resultStatus);
-            }
-
-            await m_SaveAndLoadAnchorDataToFile.EraseAnchorIdsAsync(
-                new ReadOnlyListSpan<XREraseAnchorResult>(results));
-
-            foreach (var entryId in removedAnchorsEntryIds)
-            {
-                CheckToRemoveEntry(entryId);
-            }
-        }
-
-        /// <summary>
-        /// Removes the ARAnchors associated with the <see cref="MetaPersistentAnchorEntry"/> from <see cref="MetaBatchPersistentAnchors.selectedEntries"/>.
-        /// </summary>
-        public void RemoveAnchors()
-        {
-            var entries = m_MetaBatchPersistentAnchors.selectedEntries;
-            foreach (var entry in entries)
-            {
-                if (!entry.isInScene)
-                    continue;
-
-                if (m_VerboseLogging)
-                    Debug.Log($"Removing anchor:\n{entry.anchor}", this);
-
-                var success = m_AnchorManager.TryRemoveAnchor(entry.anchor);
-
-                if (m_VerboseLogging)
-                    Debug.Log($"Remove result: {success.ToString()}", this);
-
-                entry.ShowResult(success);
-            }
-        }
-
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]
-        static async void InitializeDateTime()
-        {
-            try
-            {
-                // Initiate time zone look up so the system can cache it for faster calls.
-                // Run on background thread so no delay startup.
-                await Awaitable.BackgroundThreadAsync();
-                _ = DateTime.Now;
-                await Awaitable.MainThreadAsync();
-            }
-            catch (OperationCanceledException)
-            {
-                // ignore
-            }
-        }
-
-        void Reset()
-        {
-            m_AnchorManager = FindAnyObjectByType<ARAnchorManager>();
-            m_MetaBatchPersistentAnchors = FindAnyObjectByType<MetaBatchPersistentAnchors>();
-        }
 
         void Awake()
         {
@@ -252,20 +60,21 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 return;
             }
 
+            m_AnchorDataStore = m_AnchorManager.descriptor.supportsGetSavedAnchorIds
+                ? new SubsystemSavedAnchorDataStore(m_AnchorManager)
+                : new SaveAndLoadAnchorDataToFile();
+
             m_AnchorManager.trackablesChanged.AddListener(OnTrackablesChanged);
         }
 
-        void Start()
-        {
-            PopulateMenuEntriesFromFile();
-        }
-
-        async void PopulateMenuEntriesFromFile()
+        async void Start()
         {
             try
             {
-                m_SaveAndLoadAnchorDataToFile ??= new SaveAndLoadAnchorDataToFile();
-                var savedAnchorData = await m_SaveAndLoadAnchorDataToFile.GetSavedAnchorsDataAsync();
+                if (m_AnchorDataStore == null)
+                    return;
+
+                var savedAnchorData = await m_AnchorDataStore.GetSavedAnchorsDataAsync();
                 foreach (var (savedAnchorGuid, dateTime) in savedAnchorData)
                 {
                     AddSavedEntry(savedAnchorGuid, dateTime);
@@ -275,49 +84,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 Debug.LogException(e);
             }
-        }
-
-        void OnTrackablesChanged(ARTrackablesChangedEventArgs<ARAnchor> eventArgs)
-        {
-            foreach (var anchor in eventArgs.added)
-                AddNewEntry(anchor);
-
-            foreach (var (trackableId, _) in eventArgs.removed)
-            {
-                var entryIntId = m_EntryIdByTrackableId[trackableId];
-                m_EntryIdByTrackableId.Remove(trackableId);
-                var entry = m_AnchorEntryByEntryId[entryIntId];
-                entry.UpdateInSceneStatus(null);
-                CheckToRemoveEntry(entryIntId);
-            }
-        }
-
-        void AddNewEntry(ARAnchor anchor)
-        {
-            if (m_EntryIdByTrackableId.ContainsKey(anchor.trackableId))
-                return;
-
-            var entry = Instantiate(m_MetaPersistentAnchorEntryPrefab, m_ContentTransform);
-            entry.UpdateInSceneStatus(anchor);
-
-            entry.saveRequested.AddListener(SaveAnchor);
-            entry.loadRequested.AddListener(LoadAnchor);
-            entry.eraseRequested.AddListener(EraseAnchor);
-            entry.removeRequested.AddListener(RemoveAnchor);
-
-            var entryId = m_NextEntryId++;
-            entry.SetEntryId(entryId);
-
-            if (!m_AnchorManager.subsystem.subsystemDescriptor.supportsSaveAnchor ||
-                !m_AnchorManager.subsystem.subsystemDescriptor.supportsLoadAnchor)
-                entry.DisableSaveAndLoadButtons();
-
-            if (!m_AnchorManager.subsystem.subsystemDescriptor.supportsEraseAnchor)
-                entry.DisableEraseButton();
-
-            m_AnchorEntryByEntryId.Add(entryId, entry);
-            m_EntryIdByTrackableId.Add(anchor.trackableId, entryId);
-            m_MetaBatchPersistentAnchors.EntryAdded(entry);
         }
 
         void AddSavedEntry(SerializableGuid savedAnchorGuid, DateTime dateTime)
@@ -348,33 +114,118 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_MetaBatchPersistentAnchors.EntryAdded(entry);
         }
 
-        void CheckToRemoveEntry(int entryId)
+        void OnTrackablesChanged(ARTrackablesChangedEventArgs<ARAnchor> eventArgs)
         {
-            var found = m_AnchorEntryByEntryId.TryGetValue(entryId, out var entry);
-            if (!found)
+            // A trackable with the same ID could be removed and re-added in the same frame (Android XR),
+            // so process removals first.
+            foreach (var (trackableId, _) in eventArgs.removed)
+            {
+                var entryIntId = m_EntryIdByTrackableId[trackableId];
+                var entry = m_AnchorEntryByEntryId[entryIntId];
+                entry.UpdateInSceneStatus(null);
+                CheckToRemoveEntry(entryIntId);
+                m_EntryIdByTrackableId.Remove(trackableId);
+            }
+
+            foreach (var anchor in eventArgs.added)
+                AddNewEntry(anchor);
+        }
+
+        void AddNewEntry(ARAnchor anchor)
+        {
+            if (m_EntryIdByTrackableId.ContainsKey(anchor.trackableId))
                 return;
 
-            if (entry.isInScene || entry.isSaved)
-                return;
+            var entry = Instantiate(m_MetaPersistentAnchorEntryPrefab, m_ContentTransform);
+            entry.UpdateInSceneStatus(anchor);
 
-            entry.saveRequested.RemoveListener(SaveAnchor);
-            entry.loadRequested.RemoveListener(LoadAnchor);
-            entry.eraseRequested.RemoveListener(EraseAnchor);
-            entry.removeRequested.RemoveListener(RemoveAnchor);
+            entry.saveRequested.AddListener(SaveAnchor);
+            entry.loadRequested.AddListener(LoadAnchor);
+            entry.eraseRequested.AddListener(EraseAnchor);
+            entry.removeRequested.AddListener(RemoveAnchor);
 
-            m_EntryIdBySavedAnchorGuid.Remove(entry.savedAnchorGuid);
-            m_AnchorEntryByEntryId.Remove(entryId);
-            m_MetaBatchPersistentAnchors.EntryRemoved(entry);
-            Destroy(entry.gameObject);
+            var entryId = m_NextEntryId++;
+            entry.SetEntryId(entryId);
+
+            if (!m_AnchorManager.subsystem.subsystemDescriptor.supportsSaveAnchor ||
+                !m_AnchorManager.subsystem.subsystemDescriptor.supportsLoadAnchor)
+                entry.DisableSaveAndLoadButtons();
+
+            if (!m_AnchorManager.subsystem.subsystemDescriptor.supportsEraseAnchor)
+                entry.DisableEraseButton();
+
+            m_AnchorEntryByEntryId.Add(entryId, entry);
+            m_EntryIdByTrackableId.Add(anchor.trackableId, entryId);
+            m_MetaBatchPersistentAnchors.EntryAdded(entry);
+        }
+
+        /// <summary>
+        /// Saves the ARAnchors associated with the <see cref="MetaPersistentAnchorEntry"/> from
+        /// <see cref="MetaBatchPersistentAnchors.selectedEntries"/>.
+        /// </summary>
+        public async void SaveAnchors()
+        {
+            try
+            {
+                if (!m_AnchorManager.subsystem.subsystemDescriptor.supportsSaveAnchor)
+                    return;
+
+                var anchorsToSave = new List<ARAnchor>();
+                var entries = m_MetaBatchPersistentAnchors.selectedEntries;
+                foreach (var entry in entries)
+                {
+                    if (!entry.isInScene)
+                        continue;
+
+                    entry.ShowInProgress();
+                    anchorsToSave.Add(entry.anchor);
+                }
+
+                var results = new List<ARSaveOrLoadAnchorResult>();
+
+                if (m_VerboseLogging)
+                    Debug.Log($"Saving anchors:\n{anchorsToSave}", this);
+
+                await m_AnchorManager.TrySaveAnchorsAsync(anchorsToSave, results);
+
+                if (m_VerboseLogging)
+                    Debug.Log($"Save results:\n{results}", this);
+
+                var dateTime = DateTime.Now;
+                foreach (var result in results)
+                {
+                    var entryId = m_EntryIdByTrackableId[result.anchor.trackableId];
+                    var entry = m_AnchorEntryByEntryId[entryId];
+
+                    if (result.resultStatus.IsSuccess())
+                    {
+                        entry.UpdateSaveStatus(true, result.savedAnchorGuid, dateTime);
+                        m_EntryIdBySavedAnchorGuid.TryAdd(result.savedAnchorGuid, entryId);
+                    }
+
+                    entry.ShowResult(result.resultStatus);
+                }
+
+                await m_AnchorDataStore.SaveAnchorIdsAsync(
+                    new ReadOnlyListSpan<ARSaveOrLoadAnchorResult>(results), dateTime);
+            }
+            catch (OperationCanceledException)
+            {
+                // do nothing
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e, this);
+            }
         }
 
         async void SaveAnchor(MetaPersistentAnchorEntry entry)
         {
-            if (!m_AnchorManager.descriptor.supportsSaveAnchor)
-                return;
-
             try
             {
+                if (!m_AnchorManager.descriptor.supportsSaveAnchor)
+                    return;
+
                 if (entry == null || !entry.isInScene)
                     return;
 
@@ -394,7 +245,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 {
                     entry.UpdateSaveStatus(true, result.value, DateTime.Now);
                     m_EntryIdBySavedAnchorGuid.TryAdd(result.value, entry.entryId);
-                    await m_SaveAndLoadAnchorDataToFile.SaveAnchorIdAsync(result.value, DateTime.Now);
+                    await m_AnchorDataStore.SaveAnchorIdAsync(result.value, DateTime.Now);
                 }
 
                 entry.ShowResult(result.status);
@@ -409,14 +260,66 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
-        async void LoadAnchor(MetaPersistentAnchorEntry entry)
+        /// <summary>
+        /// Loads the ARAnchors associated with the <see cref="MetaPersistentAnchorEntry"/> from <see cref="MetaBatchPersistentAnchors.selectedEntries"/>.
+        /// </summary>
+        public async void LoadAnchors()
         {
-            if (!m_AnchorManager.descriptor.supportsLoadAnchor)
-                return;
-
             try
             {
-                if (entry == null || !entry.isSaved)
+                if (!m_AnchorManager.descriptor.supportsLoadAnchor)
+                    return;
+
+                var savedAnchorGuidsToLoad = new List<SerializableGuid>();
+                var entries = m_MetaBatchPersistentAnchors.selectedEntries;
+                foreach (var entry in entries)
+                {
+                    if (!entry.isSaved)
+                        continue;
+
+                    entry.ShowInProgress();
+                    savedAnchorGuidsToLoad.Add(entry.savedAnchorGuid);
+                }
+
+                var results = new List<ARSaveOrLoadAnchorResult>();
+
+                if (m_VerboseLogging)
+                    Debug.Log($"Loading anchors:\n{savedAnchorGuidsToLoad}", this);
+
+                await m_AnchorManager.TryLoadAnchorsAsync(
+                    savedAnchorGuidsToLoad,
+                    results,
+                    incrementalResults =>
+                    {
+                        foreach (var result in incrementalResults)
+                        {
+                            var entryId = m_EntryIdBySavedAnchorGuid[result.savedAnchorGuid];
+                            var entry = m_AnchorEntryByEntryId[entryId];
+
+                            entry.ShowResult(result.resultStatus);
+                            entry.UpdateInSceneStatus(result.anchor);
+                            m_EntryIdByTrackableId.TryAdd(result.anchor.trackableId, entryId);
+                        }
+                    });
+
+                if (m_VerboseLogging)
+                    Debug.Log($"Load results:\n{results}", this);
+            }
+            catch (OperationCanceledException)
+            {
+                // do nothing
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e, this);
+            }
+        }
+
+        async void LoadAnchor(MetaPersistentAnchorEntry entry)
+        {
+            try
+            {
+                if (!m_AnchorManager.descriptor.supportsLoadAnchor || entry == null || !entry.isSaved)
                     return;
 
                 entry.ShowInProgress();
@@ -449,14 +352,76 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
-        async void EraseAnchor(MetaPersistentAnchorEntry entry)
+        /// <summary>
+        /// Erases the ARAnchors associated with the <see cref="MetaPersistentAnchorEntry"/> from <see cref="MetaBatchPersistentAnchors.selectedEntries"/>.
+        /// </summary>
+        public async void EraseAnchors()
         {
-            if (!m_AnchorManager.subsystem.subsystemDescriptor.supportsEraseAnchor)
-                return;
-
             try
             {
-                if (entry == null || !entry.isSaved)
+                if (!m_AnchorManager.descriptor.supportsEraseAnchor)
+                    return;
+
+                var savedAnchorGuidsToErase = new List<SerializableGuid>();
+                var entries = m_MetaBatchPersistentAnchors.selectedEntries;
+                foreach (var entry in entries)
+                {
+                    if (!entry.isSaved)
+                        continue;
+
+                    entry.ShowInProgress();
+                    savedAnchorGuidsToErase.Add(entry.savedAnchorGuid);
+                }
+
+                var results = new List<XREraseAnchorResult>();
+
+                if (m_VerboseLogging)
+                    Debug.Log($"Erasing anchors:\n{savedAnchorGuidsToErase}");
+
+                await m_AnchorManager.TryEraseAnchorsAsync(savedAnchorGuidsToErase, results);
+
+                if (m_VerboseLogging)
+                    Debug.Log($"Erase results:\n{results}");
+
+                var removedAnchorsEntryIds = new List<int>();
+                foreach (var result in results)
+                {
+                    var entryId = m_EntryIdBySavedAnchorGuid[result.savedAnchorGuid];
+                    var entry = m_AnchorEntryByEntryId[entryId];
+
+                    if (result.resultStatus.IsSuccess())
+                    {
+                        entry.UpdateSaveStatus(false, TrackableId.invalidId, default);
+                        m_EntryIdBySavedAnchorGuid.Remove(result.savedAnchorGuid);
+                        removedAnchorsEntryIds.Add(entry.entryId);
+                    }
+
+                    entry.ShowResult(result.resultStatus);
+                }
+
+                await m_AnchorDataStore.EraseAnchorIdsAsync(
+                    new ReadOnlyListSpan<XREraseAnchorResult>(results));
+
+                foreach (var entryId in removedAnchorsEntryIds)
+                {
+                    CheckToRemoveEntry( entryId);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                // do nothing
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e, this);
+            }
+        }
+
+        async void EraseAnchor(MetaPersistentAnchorEntry entry)
+        {
+            try
+            {
+                if (!m_AnchorManager.subsystem.subsystemDescriptor.supportsEraseAnchor || entry == null || !entry.isSaved)
                     return;
 
                 entry.ShowInProgress();
@@ -473,7 +438,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 if (resultStatus.IsSuccess())
                 {
-                    await m_SaveAndLoadAnchorDataToFile.EraseAnchorIdAsync(entry.savedAnchorGuid);
+                    await m_AnchorDataStore.EraseAnchorIdAsync(entry.savedAnchorGuid);
                     entry.UpdateSaveStatus(false, TrackableId.invalidId, default);
                     m_EntryIdBySavedAnchorGuid.Remove(entry.savedAnchorGuid);
                     CheckToRemoveEntry(entry.entryId);
@@ -491,6 +456,29 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
+        /// <summary>
+        /// Removes the ARAnchors associated with the <see cref="MetaPersistentAnchorEntry"/> from <see cref="MetaBatchPersistentAnchors.selectedEntries"/>.
+        /// </summary>
+        public void RemoveAnchors()
+        {
+            var entries = m_MetaBatchPersistentAnchors.selectedEntries;
+            foreach (var entry in entries)
+            {
+                if (!entry.isInScene)
+                    continue;
+
+                if (m_VerboseLogging)
+                    Debug.Log($"Removing anchor:\n{entry.anchor}", this);
+
+                var success = m_AnchorManager.TryRemoveAnchor(entry.anchor);
+
+                if (m_VerboseLogging)
+                    Debug.Log($"Remove result: {success.ToString()}", this);
+
+                entry.ShowResult(success);
+            }
+        }
+
         void RemoveAnchor(MetaPersistentAnchorEntry entry)
         {
             if (entry == null || !entry.isInScene)
@@ -505,6 +493,53 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 Debug.Log($"Remove result: {success.ToString()}", this);
 
             entry.ShowResult(success);
+        }
+
+        void CheckToRemoveEntry(int entryId)
+        {
+            var found = m_AnchorEntryByEntryId.TryGetValue(entryId, out var entry);
+            if (!found)
+                return;
+
+            if (entry.isInScene || entry.isSaved)
+                return;
+
+            entry.saveRequested.RemoveListener(SaveAnchor);
+            entry.loadRequested.RemoveListener(LoadAnchor);
+            entry.eraseRequested.RemoveListener(EraseAnchor);
+            entry.removeRequested.RemoveListener(RemoveAnchor);
+
+            m_EntryIdBySavedAnchorGuid.Remove(entry.savedAnchorGuid);
+            m_AnchorEntryByEntryId.Remove(entryId);
+            m_MetaBatchPersistentAnchors.EntryRemoved(entry);
+            Destroy(entry.gameObject);
+        }
+
+        void Reset()
+        {
+            m_AnchorManager = FindAnyObjectByType<ARAnchorManager>();
+            m_MetaBatchPersistentAnchors = FindAnyObjectByType<MetaBatchPersistentAnchors>();
+        }
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]
+        static async void InitializeDateTime()
+        {
+            try
+            {
+                // Initiate time zone look up so the system can cache it for faster calls.
+                // Run on background thread so no delay startup.
+                await Awaitable.BackgroundThreadAsync();
+                _ = DateTime.Now;
+                await Awaitable.MainThreadAsync();
+            }
+            catch (OperationCanceledException)
+            {
+                // ignore
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
         }
     }
 }

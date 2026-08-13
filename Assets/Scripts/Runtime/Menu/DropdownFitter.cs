@@ -1,3 +1,5 @@
+using System;
+
 namespace UnityEngine.XR.ARFoundation.Samples
 {
     public class DropdownFitter : MonoBehaviour
@@ -16,35 +18,48 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         float m_BottomPadding = 10f;
 
-        void Start()
+        async void Start()
         {
-            var corners = new Vector3[4];
-            m_TemplateRect.GetWorldCorners(corners);
+            try
+            {
+                await Awaitable.NextFrameAsync(destroyCancellationToken);
 
-            var topEdgeWorld = corners[1];
+                var corners = new Vector3[4];
+                m_TemplateRect.GetWorldCorners(corners);
 
-            var canvasRect = m_Canvas.GetComponent<RectTransform>();
-            var topEdgeCanvasSpace = canvasRect.InverseTransformPoint(topEdgeWorld);
+                var topEdgeWorld = corners[1];
 
-            var safeAreaBottomScreenPos = new Vector2(Screen.width / 2f, Screen.safeArea.yMin);
+                var canvasRect = m_Canvas.GetComponent<RectTransform>();
+                var topEdgeCanvasSpace = canvasRect.InverseTransformPoint(topEdgeWorld);
 
-            var camera = m_Canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : m_Canvas.worldCamera;
+                var safeAreaBottomScreenPos = new Vector2(Screen.width / 2f, Screen.safeArea.yMin);
 
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                canvasRect,
-                safeAreaBottomScreenPos,
-                camera,
-                out var safeAreaBottomCanvasSpace);
+                var camera = m_Canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : m_Canvas.worldCamera;
 
-            var maxAvailableHeight = topEdgeCanvasSpace.y - safeAreaBottomCanvasSpace.y;
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                    canvasRect,
+                    safeAreaBottomScreenPos,
+                    camera,
+                    out var safeAreaBottomCanvasSpace);
 
-            maxAvailableHeight -= m_BottomPadding;
+                var maxAvailableHeight = topEdgeCanvasSpace.y - safeAreaBottomCanvasSpace.y;
 
-            // clamp max height to be a minimum of k_MinWindowHeight (canvas space units) in case the dropdown windows
-            // top edge is below the bottom of the screen.
-            maxAvailableHeight = Mathf.Max(maxAvailableHeight, k_MinWindowHeight);
+                maxAvailableHeight -= m_BottomPadding;
 
-            m_TemplateRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, maxAvailableHeight);
+                // clamp max height to be a minimum of k_MinWindowHeight (canvas space units) in case the dropdown windows
+                // top edge is below the bottom of the screen.
+                maxAvailableHeight = Mathf.Max(maxAvailableHeight, k_MinWindowHeight);
+
+                m_TemplateRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, maxAvailableHeight);
+            }
+            catch (OperationCanceledException)
+            {
+                // do nothing
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+            }
         }
     }
 }

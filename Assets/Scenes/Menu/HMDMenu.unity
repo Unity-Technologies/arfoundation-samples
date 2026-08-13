@@ -165,8 +165,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.XR.CompositionLayers::Unity.XR.CompositionLayers.Extensions.TexturesExtension
   m_SourceTexture: 0
   m_TargetEye: 0
-  m_LeftTexture: {fileID: 368436565}
-  m_RightTexture: {fileID: 324253361}
+  m_LeftTexture: {fileID: 618758176}
+  m_RightTexture: {fileID: 231178058}
   m_InEditorEmulation: 0
   m_CustomRects: 0
   m_Resolution: {x: 0, y: 0}
@@ -210,7 +210,7 @@ MonoBehaviour:
   m_UICanvas: {fileID: 0}
   m_UIMirrorComponent: {fileID: 0}
   m_LayerOutline: {fileID: 141076487}
-  m_Order: 10
+  m_Order: 14
   m_LayerData:
     rid: 6036458074790166626
   m_PlatformLayerDataKeys: []
@@ -252,8 +252,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c5226e4e178b44c09f779d37799b005, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.XR.ARFoundation.Samples::UnityEngine.XR.ARFoundation.Samples.SetCompositionLayerOrder
-  m_Layer: 10
+  m_Layer: 14
   m_CompositionLayer: {fileID: 141076489}
+--- !u!84 &231178058
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Foreground_right
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 6
+  m_Width: 1378
+  m_Height: 1998
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 93
+  m_ColorFormat: 4
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 1
+  m_UseDynamicScale: 0
+  m_UseDynamicScaleExplicit: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1001 &308107167
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -293,6 +330,14 @@ PrefabInstance:
     - target: {fileID: 754700124249478678, guid: 8f2c1ffdafd49a943ac79dc0ff480220, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 765129373515222579, guid: 8f2c1ffdafd49a943ac79dc0ff480220, type: 3}
+      propertyPath: m_UIHoverExited.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 765129373515222579, guid: 8f2c1ffdafd49a943ac79dc0ff480220, type: 3}
+      propertyPath: m_UIHoverEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 805695516126164540, guid: 8f2c1ffdafd49a943ac79dc0ff480220, type: 3}
       propertyPath: m_Layer
@@ -449,10 +494,6 @@ PrefabInstance:
     - target: {fileID: 3447509975066847119, guid: 8f2c1ffdafd49a943ac79dc0ff480220, type: 3}
       propertyPath: m_Layer
       value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 3447509975066847121, guid: 8f2c1ffdafd49a943ac79dc0ff480220, type: 3}
-      propertyPath: m_DragThreshold
-      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3505364863645504834, guid: 8f2c1ffdafd49a943ac79dc0ff480220, type: 3}
       propertyPath: m_Layer
@@ -714,6 +755,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 8226138986855224334, guid: 8f2c1ffdafd49a943ac79dc0ff480220, type: 3}
+      propertyPath: m_UIHoverExited.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8226138986855224334, guid: 8f2c1ffdafd49a943ac79dc0ff480220, type: 3}
+      propertyPath: m_UIHoverEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8474652623116754038, guid: 8f2c1ffdafd49a943ac79dc0ff480220, type: 3}
       propertyPath: m_Layer
       value: 14
@@ -756,7 +805,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8766024634595469703, guid: 8f2c1ffdafd49a943ac79dc0ff480220, type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 4294951935
+      value: 4294919167
       objectReference: {fileID: 0}
     - target: {fileID: 8766024634641266082, guid: 8f2c1ffdafd49a943ac79dc0ff480220, type: 3}
       propertyPath: m_Layer
@@ -802,49 +851,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7957942351869948126, guid: 8f2c1ffdafd49a943ac79dc0ff480220, type: 3}
   m_PrefabInstance: {fileID: 308107167}
   m_PrefabAsset: {fileID: 0}
---- !u!20 &308107169 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 8766024634595469703, guid: 8f2c1ffdafd49a943ac79dc0ff480220, type: 3}
-  m_PrefabInstance: {fileID: 308107167}
-  m_PrefabAsset: {fileID: 0}
---- !u!84 &324253361
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Foreground_right
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 6
-  m_Width: 1527
-  m_Height: 1998
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 93
-  m_ColorFormat: 4
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 1
-  m_UseDynamicScale: 0
-  m_UseDynamicScaleExplicit: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
---- !u!84 &368436565
+--- !u!84 &618758176
 RenderTexture:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -856,7 +863,7 @@ RenderTexture:
     Hash: 00000000000000000000000000000000
   m_IsAlphaChannelOptional: 0
   serializedVersion: 6
-  m_Width: 1527
+  m_Width: 1378
   m_Height: 1998
   m_AntiAliasing: 1
   m_MipCount: -1
@@ -1162,7 +1169,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 16384
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 368436565}
+  m_TargetTexture: {fileID: 618758176}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -1299,221 +1306,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!84 &1378183295
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 6
-  m_Width: 2880
-  m_Height: 2048
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 94
-  m_ColorFormat: 4
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 1
-  m_UseDynamicScale: 0
-  m_UseDynamicScaleExplicit: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
---- !u!43 &2033780553
-Mesh:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Composition Layer Plane
-  serializedVersion: 12
-  m_SubMeshes:
-  - serializedVersion: 2
-    firstByte: 0
-    indexCount: 6
-    topology: 0
-    baseVertex: 0
-    firstVertex: 0
-    vertexCount: 4
-    localAABB:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 0.703125, y: 0.5, z: 0}
-  m_Shapes:
-    vertices: []
-    shapes: []
-    channels: []
-    fullWeights: []
-  m_BindPose: []
-  m_BoneNameHashes: 
-  m_RootBoneNameHash: 0
-  m_BonesAABB: []
-  m_VariableBoneCountWeights:
-    m_Data: 
-  m_MeshCompression: 0
-  m_IsReadable: 1
-  m_KeepVertices: 1
-  m_KeepIndices: 1
-  m_IndexFormat: 0
-  m_IndexBuffer: 000001000200020003000000
-  m_VertexData:
-    serializedVersion: 3
-    m_VertexCount: 4
-    m_Channels:
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 12
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 24
-      format: 0
-      dimension: 2
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    m_DataSize: 128
-    _typelessdata: 713d0abfa69bc4be0000000000000000000000000000803f0000803f00000000713d0abfa69bc43e0000000000000000000000000000803f0000803f0000803f713d0a3fa69bc43e0000000000000000000000000000803f000000000000803f713d0a3fa69bc4be0000000000000000000000000000803f0000000000000000
-  m_CompressedMesh:
-    m_Vertices:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UV:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Normals:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Tangents:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Weights:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_NormalSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_TangentSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_FloatColors:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_BoneIndices:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Triangles:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UVInfo: 0
-  m_LocalAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0.703125, y: 0.5, z: 0}
-  m_MeshUsageFlags: 0
-  m_CookingOptions: 30
-  m_BakedConvexCollisionMesh: 
-  m_BakedTriangleCollisionMesh: 
-  'm_MeshMetrics[0]': 1
-  'm_MeshMetrics[1]': 1
-  m_MeshOptimizationFlags: 1
-  m_StreamData:
-    serializedVersion: 2
-    offset: 0
-    size: 0
-    path: 
-  m_MeshLodInfo:
-    serializedVersion: 2
-    m_LodSelectionCurve:
-      serializedVersion: 1
-      m_LodSlope: 0
-      m_LodBias: 0
-    m_NumLevels: 1
-    m_SubMeshes:
-    - serializedVersion: 2
-      m_Levels:
-      - serializedVersion: 1
-        m_IndexStart: 0
-        m_IndexCount: 0
 --- !u!1 &2064899136
 GameObject:
   m_ObjectHideFlags: 0
@@ -1718,7 +1510,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 16384
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 324253361}
+  m_TargetTexture: {fileID: 231178058}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -1832,30 +1624,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3370735438715345658, guid: 0cc70ca91e1cc4bd5813ab45a37e76f7, type: 3}
-      propertyPath: m_TargetTexture
-      value: 
-      objectReference: {fileID: 1378183295}
-    - target: {fileID: 4437854204598306693, guid: 0cc70ca91e1cc4bd5813ab45a37e76f7, type: 3}
-      propertyPath: m_LeftTexture
-      value: 
-      objectReference: {fileID: 1378183295}
-    - target: {fileID: 4437854204598306693, guid: 0cc70ca91e1cc4bd5813ab45a37e76f7, type: 3}
-      propertyPath: m_RightTexture
-      value: 
-      objectReference: {fileID: 1378183295}
+    - target: {fileID: 3427273288660785164, guid: 0cc70ca91e1cc4bd5813ab45a37e76f7, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4678384134536116058, guid: 0cc70ca91e1cc4bd5813ab45a37e76f7, type: 3}
       propertyPath: m_Name
-      value: HMDMenu (Comp Layers)
+      value: HMDMenu
       objectReference: {fileID: 0}
-    - target: {fileID: 6272855752518030561, guid: 0cc70ca91e1cc4bd5813ab45a37e76f7, type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 308107169}
-    - target: {fileID: 7647387400607438578, guid: 0cc70ca91e1cc4bd5813ab45a37e76f7, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 2033780553}
+    - target: {fileID: 6468475923955782660, guid: 0cc70ca91e1cc4bd5813ab45a37e76f7, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6468475923955782660, guid: 0cc70ca91e1cc4bd5813ab45a37e76f7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8345704377746791941, guid: 0cc70ca91e1cc4bd5813ab45a37e76f7, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0

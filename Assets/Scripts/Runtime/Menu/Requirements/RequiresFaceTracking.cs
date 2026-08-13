@@ -19,7 +19,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (m_RequiresEyeTracking)
                 results.Add(new RequirementResult(
                     s_LoadedSubsystem.subsystemDescriptor.supportsEyeTracking,
-                    nameof(m_RequiresEyeTracking)));
+                    "Eye Tracking",
+                    k_SubRequirementRemediationText));
         }
     }
 }

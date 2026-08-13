@@ -14,21 +14,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_DisplayName: MetaCpuImage
   m_Description: Demonstrates accessing Meta Quest camera frames as CPU-side images for processing.
-  m_PreviewImage: {fileID: 21300000, guid: ca6591cb0033a4eb3a9210993b921d64, type: 3}
   m_Category: {fileID: 11400000, guid: f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1, type: 2}
+  m_PreviewImage: {fileID: 21300000, guid: ca6591cb0033a4eb3a9210993b921d64, type: 3}
   m_Requirements:
+  - rid: 4838107887509701044
   - rid: 3006186322434981966
   - rid: 3090702012384280665
   references:
     version: 2
     RefIds:
     - rid: 3006186322434981966
-      type: {class: RequiresOpenXRFeature, ns: UnityEngine.XR.ARFoundation.Samples,
-        asm: Unity.XR.ARFoundation.Samples}
+      type: {class: RequiresOpenXRFeature, ns: UnityEngine.XR.ARFoundation.Samples, asm: Unity.XR.ARFoundation.Samples}
       data:
-        m_RequiredFeature: UnityEngine.XR.OpenXR.Features.Meta.ARCameraFeature, Unity.XR.MetaOpenXR,
-          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        m_RequiredFeature: UnityEngine.XR.OpenXR.Features.Meta.ARCameraFeature, Unity.XR.MetaOpenXR, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
     - rid: 3090702012384280665
-      type: {class: RequiresMetaCameraImageSupport, ns: UnityEngine.XR.ARFoundation.Samples,
-        asm: Unity.XR.ARFoundation.Samples}
-      data: {}
+      type: {class: RequiresMetaCameraImageSupport, ns: UnityEngine.XR.ARFoundation.Samples, asm: Unity.XR.ARFoundation.Samples}
+      data:
+    - rid: 4838107887509701044
+      type: {class: RequiresPermission, ns: UnityEngine.XR.ARFoundation.Samples, asm: Unity.XR.ARFoundation.Samples}
+      data:
+        m_PermissionsPerPlatform:
+        - platform: 0
+          permissionId: com.oculus.permission.USE_SCENE
+        - platform: 0
+          permissionId: horizonos.permission.HEADSET_CAMERA

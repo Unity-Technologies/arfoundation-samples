@@ -54,7 +54,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     throw new NotSupportedException($"Unsupported XRLoader type: {m_LoaderType}");
             }
 
-            results.Add(new RequirementResult(isSupported, $"{GetType().Name} ({m_LoaderType})"));
+            results.Add(new RequirementResult(
+                isSupported,
+                $"XR Loader ({m_LoaderType})",
+                $"Enable the {m_LoaderType} loader in <b>Project Settings</b> > <b>XR Plug-in Management</b>."));
         }
     }
 }

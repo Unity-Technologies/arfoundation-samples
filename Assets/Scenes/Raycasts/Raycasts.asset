@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_DisplayName: Raycasts
   m_Description: Demonstrates AR raycasting against detected planes and feature points to place virtual content in the real world.
-  m_PreviewImage: {fileID: 21300000, guid: be543a6bd4e044b2abdbc4019c01f541, type: 3}
   m_Category: {fileID: 11400000, guid: e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2, type: 2}
+  m_PreviewImage: {fileID: 21300000, guid: be543a6bd4e044b2abdbc4019c01f541, type: 3}
   m_Requirements:
+  - rid: 4838107887509701036
   - rid: 4788940866556788925
   references:
     version: 2
@@ -25,3 +26,11 @@ MonoBehaviour:
       type: {class: RequiresPlaneDetection, ns: UnityEngine.XR.ARFoundation.Samples, asm: Unity.XR.ARFoundation.Samples}
       data:
         m_RequiresPlaneClassifications: 0
+    - rid: 4838107887509701036
+      type: {class: RequiresPermission, ns: UnityEngine.XR.ARFoundation.Samples, asm: Unity.XR.ARFoundation.Samples}
+      data:
+        m_PermissionsPerPlatform:
+        - platform: 0
+          permissionId: com.oculus.permission.USE_SCENE
+        - platform: 1
+          permissionId: android.permission.SCENE_UNDERSTANDING_COARSE

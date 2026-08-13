@@ -19,7 +19,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (m_RequiresPlaneClassifications)
                 results.Add(new RequirementResult(
                     s_LoadedSubsystem.subsystemDescriptor.supportsClassification,
-                    nameof(m_RequiresPlaneClassifications)));
+                    "Plane Classifications",
+                    k_SubRequirementRemediationText));
         }
     }
 }

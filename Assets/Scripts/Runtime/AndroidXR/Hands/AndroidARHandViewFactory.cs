@@ -1,10 +1,12 @@
+using System;
 using UnityEngine.XR.ARFoundation.Samples.Runtime;
 
 namespace UnityEngine.XR.ARFoundation.Samples.Hands
 {
+    [Obsolete("AndroidARHandViewFactory is deprecated. Use MetaHandViewFactory instead.")]
     public class AndroidARHandViewFactory : IARHandViewFactory
     {
-        IARHandView IARHandViewFactory.CreateHand(string name, Material material, ARShaderOcclusion shaderOcclusion)
+        IARHandView IARHandViewFactory.CreateHand(string name, Material material, ARShaderOcclusion shaderOcclusion, Transform xrOriginTransform)
         {
             var hand = new GameObject(name);
             var mesh = new Mesh();

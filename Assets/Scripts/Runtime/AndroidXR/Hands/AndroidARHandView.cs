@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using Unity.Collections;
+using UnityEngine.XR.Hands;
 using UnityEngine.XR.Hands.Meshing;
 
 namespace UnityEngine.XR.ARFoundation.Samples.Hands
 {
+    [Obsolete("AndroidARHandView is deprecated. Use MetaHandView instead.")]
     public class AndroidARHandView : IARHandView
     {
         Material m_PrevMaterial;
@@ -12,8 +14,11 @@ namespace UnityEngine.XR.ARFoundation.Samples.Hands
 
         ARShaderOcclusion m_ShaderOcclusion;
 
-        public MeshFilter meshFilter { get; }
-        public MeshRenderer meshRenderer { get; }
+        MeshFilter m_MeshFilter;
+        MeshRenderer m_MeshRenderer;
+
+        public Renderer renderer => m_MeshRenderer;
+        public bool isInitialized => false;
 
         public AndroidARHandView(MeshFilter meshFilter, MeshRenderer meshRenderer, Material material,
             ARShaderOcclusion shaderOcclusion = null)
@@ -30,9 +35,9 @@ namespace UnityEngine.XR.ARFoundation.Samples.Hands
                 return;
             }
 
-            this.meshFilter = meshFilter;
-            this.meshRenderer = meshRenderer;
-            this.meshRenderer.material = material;
+            m_MeshFilter = meshFilter;
+            m_MeshRenderer = meshRenderer;
+            m_MeshRenderer.material = material;
             m_ShaderOcclusion = shaderOcclusion;
 
             if (shaderOcclusion != null)
@@ -43,17 +48,25 @@ namespace UnityEngine.XR.ARFoundation.Samples.Hands
 
         void IDisposable.Dispose()
         {
-            m_ShaderOcclusion.occlusionSourceSet -= OnOcclusionSourceSet;
+            if (m_ShaderOcclusion != null)
+                m_ShaderOcclusion.occlusionSourceSet -= OnOcclusionSourceSet;
         }
 
-        void IARHandView.Update(in XRHandMeshData meshData)
+        void IARHandView.Update(XRHandSubsystem subsystem, in XRHandMeshData meshData)
         {
-            UpdateVerticesAndIndices(meshData, meshFilter);
+            UpdateVerticesAndIndices(meshData, m_MeshFilter);
 
             if ((m_OcclusionSources & AROcclusionSources.HandMesh) != AROcclusionSources.HandMesh)
             {
-                UpdateNormalsAndUVs(meshData, meshFilter);
+                UpdateNormalsAndUVs(meshData, m_MeshFilter);
             }
+        }
+
+        void IARHandView.UpdatePoses(XRHandSubsystem subsystem)
+        {
+            // AndroidARHandView requires fresh mesh data every frame (direct vertex
+            // updates), so isInitialized always returns false to prevent the cached
+            // pose-only path from being used. This method should never be called.
         }
 
         void UpdateVerticesAndIndices(in XRHandMeshData meshData, MeshFilter meshFilter)
@@ -145,14 +158,14 @@ namespace UnityEngine.XR.ARFoundation.Samples.Hands
             {
                 if (m_PrevMaterial != null)
                 {
-                    meshRenderer.material = m_PrevMaterial;
+                    m_MeshRenderer.material = m_PrevMaterial;
                 }
 
                 return;
             }
 
-            m_PrevMaterial = meshRenderer.material;
-            meshRenderer.material = material;
+            m_PrevMaterial = m_MeshRenderer.material;
+            m_MeshRenderer.material = material;
         }
     }
 }

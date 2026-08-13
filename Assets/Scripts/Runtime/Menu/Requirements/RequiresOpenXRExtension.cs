@@ -14,19 +14,24 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         public virtual void Evaluate(List<RequirementResult> results)
         {
+            var requirementName = $"OpenXR Extension ({m_RequiredExtension})";
+            var remediationText = $"The {m_RequiredExtension} extension is not supported by the current runtime.";
+
 #if !OPENXR_1_13_OR_NEWER
-            results.Add(new RequirementResult(false, $"{GetType().Name} ({m_RequiredExtension})"));
+            results.Add(new RequirementResult(
+                false,
+                requirementName,
+                remediationText));
 #else
-            var name = $"{GetType().Name} ({m_RequiredExtension})";
 
             if (!XRManagerUtility.IsLoaderActive<OpenXRLoader>())
             {
-                results.Add(new RequirementResult(false, name));
+                results.Add(new RequirementResult(false, requirementName, remediationText));
                 return;
             }
 
             var isExtensionEnabled = OpenXRRuntime.IsExtensionEnabled(m_RequiredExtension);
-            results.Add(new RequirementResult(isExtensionEnabled, name));
+            results.Add(new RequirementResult(isExtensionEnabled, requirementName, remediationText));
 #endif
         }
     }

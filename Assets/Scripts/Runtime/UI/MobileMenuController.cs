@@ -11,9 +11,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         protected override void BuildMenuLayout()
         {
-            foreach (var category in m_CategoryOrder)
+            foreach (var category in categoryOrder)
             {
-                if (!m_ScenesByCategory.TryGetValue(category, out var entries))
+                if (!scenesByCategory.TryGetValue(category, out var entries))
                     continue;
 
                 var categoryView = Instantiate(m_CategoryGroupPrefab, contentParent);
@@ -21,18 +21,28 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_CategoryViews[category] = categoryView;
 
                 foreach (var entry in entries)
+                    CreateSceneButton(category, entry, categoryView.buttonContainer);
+            }
+        }
+
+        protected override void OnCategoryFilterApplied()
+        {
+            foreach (var (category, categoryView) in m_CategoryViews)
+            {
+                var hasVisibleButton = false;
+                if (buttonsByCategory.TryGetValue(category, out var buttons))
                 {
-                    var sceneName = entry.descriptor.name;
-                    var buttonView = Instantiate(sceneButtonPrefab, categoryView.buttonContainer);
-                    buttonView.Initialize(
-                        sceneName,
-                        entry.descriptor.description,
-                        entry.isSupported,
-                        entry.descriptor.previewImage,
-                        entry.isSupported
-                            ? () => LaunchScene(sceneName)
-                            : () => ShowRequirementsPopup(entry.descriptor));
+                    foreach (var button in buttons)
+                    {
+                        if (button.gameObject.activeSelf)
+                        {
+                            hasVisibleButton = true;
+                            break;
+                        }
+                    }
                 }
+
+                categoryView.gameObject.SetActive(hasVisibleButton);
             }
         }
 

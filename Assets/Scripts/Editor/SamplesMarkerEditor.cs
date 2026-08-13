@@ -6,17 +6,18 @@ namespace UnityEditor.XR.ARFoundation.Samples
     [CustomEditor(typeof(SampleMarkers))]
     public class SampleMarkersEditor : Editor
     {
-        SerializedProperty m_QRCodesProperty;
+        SerializedProperty m_QRCodesProp;
+        SerializedProperty m_ArucoMarkersProp;
+        SerializedProperty m_AprilTagsProp;
 
         GUIStyle m_TitleStyle;
         GUIStyle m_DescStyle;
 
         void OnEnable()
         {
-            if (target == null)
-                return;
-
-            m_QRCodesProperty = serializedObject.FindProperty("m_QRCodes");
+            m_QRCodesProp = serializedObject.FindProperty("m_QRCodes");
+            m_ArucoMarkersProp = serializedObject.FindProperty("m_ArucoMarkers");
+            m_AprilTagsProp = serializedObject.FindProperty("m_AprilTags");
         }
 
         void InitStyles()
@@ -37,65 +38,76 @@ namespace UnityEditor.XR.ARFoundation.Samples
 
         public override void OnInspectorGUI()
         {
-            if (target == null)
-                return;
-
             InitStyles();
 
             serializedObject.Update();
 
             DrawDefaultInspector();
 
-            if (m_QRCodesProperty == null || !m_QRCodesProperty.isArray)
+            if (m_QRCodesProp == null || !m_QRCodesProp.isArray)
                 return;
 
-            for (var i = 0; i < m_QRCodesProperty.arraySize; i++)
+            for (var i = 0; i < m_QRCodesProp.arraySize; i++)
             {
-                var element = m_QRCodesProperty.GetArrayElementAtIndex(i);
+                DrawMarkerData(m_QRCodesProp.GetArrayElementAtIndex(i));
+                GUILayout.Space(20);
+            }
 
-                var titleProp = element.FindPropertyRelative("m_Title");
-                var descProp = element.FindPropertyRelative("m_Description");
-                var texProp = element.FindPropertyRelative("m_MarkerTexture");
+            for (var i = 0; i < m_ArucoMarkersProp.arraySize; i++)
+            {
+                DrawMarkerData(m_ArucoMarkersProp.GetArrayElementAtIndex(i));
+                GUILayout.Space(20);
+            }
 
-                var texture = (Texture2D)texProp.objectReferenceValue;
-
-                if (texture == null)
-                    continue;
-
-                var titleText = titleProp.stringValue;
-                var descriptionText = descProp.stringValue;
-
-                EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
-
-                GUILayout.BeginHorizontal();
-
-                GUILayout.Label(string.IsNullOrEmpty(titleText) ? "Untitled" : titleText, m_TitleStyle, GUILayout.ExpandWidth(true));
-
-                if (GUILayout.Button("Open Image", EditorStyles.miniButton, GUILayout.Width(80)))
-                {
-                    var assetPath = AssetDatabase.GetAssetPath(texture);
-                    EditorUtility.OpenWithDefaultApp(assetPath);
-                }
-
-                GUILayout.EndHorizontal();
-
-                GUILayout.Label(descriptionText, m_DescStyle);
-
-                GUILayout.Space(10);
-
-                var aspectRatio = (float)texture.width / Mathf.Max(1, texture.height);
-                var width = EditorGUIUtility.currentViewWidth - 40;
-                var height = width / aspectRatio;
-
-                var rect = GUILayoutUtility.GetRect(width, height);
-
-                if (Event.current.type == EventType.Repaint)
-                    EditorGUI.DrawPreviewTexture(rect, texture, null, ScaleMode.ScaleToFit);
-
+            for (var i = 0; i < m_AprilTagsProp.arraySize; i++)
+            {
+                DrawMarkerData(m_AprilTagsProp.GetArrayElementAtIndex(i));
                 GUILayout.Space(20);
             }
 
             serializedObject.ApplyModifiedProperties();
+        }
+
+        void DrawMarkerData(SerializedProperty element)
+        {
+            var titleProp = element.FindPropertyRelative("m_Title");
+            var descProp = element.FindPropertyRelative("m_Description");
+            var texProp = element.FindPropertyRelative("m_MarkerTexture");
+
+            var texture = (Texture2D)texProp.objectReferenceValue;
+
+            if (texture == null)
+                return;
+
+            var titleText = titleProp.stringValue;
+            var descriptionText = descProp.stringValue;
+
+            EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+
+            GUILayout.BeginHorizontal();
+
+            GUILayout.Label(string.IsNullOrEmpty(titleText) ? "Untitled" : titleText, m_TitleStyle, GUILayout.ExpandWidth(true));
+
+            if (GUILayout.Button("Open Image", EditorStyles.miniButton, GUILayout.Width(80)))
+            {
+                var assetPath = AssetDatabase.GetAssetPath(texture);
+                EditorUtility.OpenWithDefaultApp(assetPath);
+            }
+
+            GUILayout.EndHorizontal();
+
+            GUILayout.Label(descriptionText, m_DescStyle);
+
+            GUILayout.Space(10);
+
+            var aspectRatio = (float)texture.width / Mathf.Max(1, texture.height);
+            var width = EditorGUIUtility.currentViewWidth - 40;
+            var height = width / aspectRatio;
+
+            var rect = GUILayoutUtility.GetRect(width, height);
+
+            if (Event.current.type == EventType.Repaint)
+                EditorGUI.DrawPreviewTexture(rect, texture, null, ScaleMode.ScaleToFit);
         }
     }
 }

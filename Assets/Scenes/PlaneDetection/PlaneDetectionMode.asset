@@ -14,15 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_DisplayName: PlaneDetectionMode
   m_Description: Demonstrates toggling plane detection between horizontal, vertical, and non-axis-aligned modes at runtime.
-  m_PreviewImage: {fileID: 21300000, guid: a330d7580f4c84c6a9ea1074a7e82112, type: 3}
   m_Category: {fileID: 11400000, guid: c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0, type: 2}
+  m_PreviewImage: {fileID: 21300000, guid: a330d7580f4c84c6a9ea1074a7e82112, type: 3}
   m_Requirements:
+  - rid: 4838107887509701039
   - rid: 8682563511733190656
   references:
     version: 2
     RefIds:
+    - rid: 4838107887509701039
+      type: {class: RequiresPermission, ns: UnityEngine.XR.ARFoundation.Samples, asm: Unity.XR.ARFoundation.Samples}
+      data:
+        m_PermissionsPerPlatform:
+        - platform: 0
+          permissionId: com.oculus.permission.USE_SCENE
     - rid: 8682563511733190656
-      type: {class: RequiresPlaneDetection, ns: UnityEngine.XR.ARFoundation.Samples,
-        asm: Unity.XR.ARFoundation.Samples}
+      type: {class: RequiresPlaneDetection, ns: UnityEngine.XR.ARFoundation.Samples, asm: Unity.XR.ARFoundation.Samples}
       data:
         m_RequiresPlaneClassifications: 0

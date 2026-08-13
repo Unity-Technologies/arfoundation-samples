@@ -19,7 +19,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (m_RequiresBoundingBoxClassifications)
                 results.Add(new RequirementResult(
                     s_LoadedSubsystem.subsystemDescriptor.supportsClassifications,
-                    nameof(m_RequiresBoundingBoxClassifications)));
+                    "Bounding Box Classifications",
+                    k_SubRequirementRemediationText));
         }
     }
 }

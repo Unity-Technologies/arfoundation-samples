@@ -26,8 +26,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             if (isSaved)
             {
-                m_DateLabel.text = $"{dateTime:d}";
-                m_TimeLabel.text = $"{dateTime:t}";
+                if (dateTime != default)
+                {
+                    m_DateLabel.text = $"{dateTime:d}";
+                    m_TimeLabel.text = $"{dateTime:t}";
+                }
+                else
+                {
+                    m_DateLabel.text = string.Empty;
+                    m_TimeLabel.text = string.Empty;
+                }
             }
         }
     }

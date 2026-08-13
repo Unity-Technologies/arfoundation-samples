@@ -14,15 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_DisplayName: BoundingBoxes
   m_Description: Demonstrates detection and visualization of 3D bounding boxes around real-world objects.
-  m_PreviewImage: {fileID: 21300000, guid: ec50697f11f7f4cf6bde85749b271fc0, type: 3}
   m_Category: {fileID: 11400000, guid: e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0, type: 2}
+  m_PreviewImage: {fileID: 21300000, guid: ec50697f11f7f4cf6bde85749b271fc0, type: 3}
   m_Requirements:
+  - rid: 4838107887509701040
   - rid: 2862248271362916605
   references:
     version: 2
     RefIds:
     - rid: 2862248271362916605
-      type: {class: RequiresBoundingBoxes, ns: UnityEngine.XR.ARFoundation.Samples,
-        asm: Unity.XR.ARFoundation.Samples}
+      type: {class: RequiresBoundingBoxes, ns: UnityEngine.XR.ARFoundation.Samples, asm: Unity.XR.ARFoundation.Samples}
       data:
         m_RequiresBoundingBoxClassifications: 0
+    - rid: 4838107887509701040
+      type: {class: RequiresPermission, ns: UnityEngine.XR.ARFoundation.Samples, asm: Unity.XR.ARFoundation.Samples}
+      data:
+        m_PermissionsPerPlatform:
+        - platform: 0
+          permissionId: com.oculus.permission.USE_SCENE
+        - platform: 1
+          permissionId: android.permission.SCENE_UNDERSTANDING_COARSE

@@ -40,17 +40,28 @@ namespace UnityEngine.XR.ARFoundation.Samples
 #endif
 
             if (m_RequiresWorldMap)
-                results.Add(new RequirementResult(worldMapSupported, nameof(m_RequiresWorldMap)));
+                results.Add(new RequirementResult(
+                    worldMapSupported,
+                    "ARKit World Map",
+                    k_SubRequirementRemediationText));
 
             if (m_RequiresGeoAnchors)
-                results.Add(new RequirementResult(geoAnchorsSupported, nameof(m_RequiresGeoAnchors)));
+                results.Add(new RequirementResult(
+                    geoAnchorsSupported,
+                    "ARKit Geo Anchors",
+                    k_SubRequirementRemediationText));
 
             if (m_RequiresCollaborativeParticipants)
                 results.Add(new RequirementResult(
-                    collaborativeParticipantsSupported, nameof(m_RequiresCollaborativeParticipants)));
+                    collaborativeParticipantsSupported,
+                    "ARKit Collaborative Participants",
+                    k_SubRequirementRemediationText));
 
             if (m_RequiresCoachingOverlay)
-                results.Add(new RequirementResult(coachingOverlaySupported, nameof(m_RequiresCoachingOverlay)));
+                results.Add(new RequirementResult(
+                    coachingOverlaySupported,
+                    "ARKit Coaching Overlay",
+                    k_SubRequirementRemediationText));
         }
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d236b7d11115f2143951f1e14045df39, type: 3}
   m_Name: WSA Settings
   m_EditorClassIdentifier: 
-  m_LoaderManagerInstance: {fileID: -4513317593576149969}
+  m_Manager: {fileID: -4513317593576149969}
   m_InitManagerOnStart: 1
 --- !u!114 &-7479341934665344595
 MonoBehaviour:
@@ -26,7 +26,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d236b7d11115f2143951f1e14045df39, type: 3}
   m_Name: iPhone Settings
   m_EditorClassIdentifier: 
-  m_LoaderManagerInstance: {fileID: -5700808019788505979}
+  m_Manager: {fileID: -5700808019788505979}
   m_InitManagerOnStart: 1
 --- !u!114 &-6578646718636408846
 MonoBehaviour:
@@ -57,7 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d236b7d11115f2143951f1e14045df39, type: 3}
   m_Name: Android Settings
   m_EditorClassIdentifier: 
-  m_LoaderManagerInstance: {fileID: 8219600196680876422}
+  m_Manager: {fileID: 8219600196680876422}
   m_InitManagerOnStart: 1
 --- !u!114 &-5700808019788505979
 MonoBehaviour:
@@ -121,13 +121,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2dc886499c26824283350fa532d087d, type: 3}
   m_Name: XRGeneralSettings
   m_EditorClassIdentifier: 
-  Keys: 0100000004000000070000000e0000001c000000
-  Values:
-  - {fileID: 9199417772918132285}
-  - {fileID: -7479341934665344595}
-  - {fileID: -6122771651556369562}
-  - {fileID: -7898491119958230352}
-  - {fileID: 2923266180642563041}
+  Keys: 
+  Values: []
+  m_SettingsPerBuildTarget:
+  - buildTarget: 1
+    settings: {fileID: 9199417772918132285}
+  - buildTarget: 4
+    settings: {fileID: -7479341934665344595}
+  - buildTarget: 7
+    settings: {fileID: -6122771651556369562}
+  - buildTarget: 14
+    settings: {fileID: -7898491119958230352}
+  - buildTarget: 28
+    settings: {fileID: 2923266180642563041}
 --- !u!114 &2923266180642563041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d236b7d11115f2143951f1e14045df39, type: 3}
   m_Name: Lumin Settings
   m_EditorClassIdentifier: 
-  m_LoaderManagerInstance: {fileID: -1427808412599618977}
+  m_Manager: {fileID: -1427808412599618977}
   m_InitManagerOnStart: 1
 --- !u!114 &8219600196680876422
 MonoBehaviour:
@@ -171,5 +177,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d236b7d11115f2143951f1e14045df39, type: 3}
   m_Name: Standalone Settings
   m_EditorClassIdentifier: 
-  m_LoaderManagerInstance: {fileID: -6578646718636408846}
+  m_Manager: {fileID: -6578646718636408846}
   m_InitManagerOnStart: 1

@@ -31,19 +31,34 @@ namespace UnityEngine.XR.ARFoundation.Samples
             var descriptor = s_LoadedSubsystem.subsystemDescriptor;
 
             if (m_RequiresSaveAnchor)
-                results.Add(new RequirementResult(descriptor.supportsSaveAnchor, nameof(m_RequiresSaveAnchor)));
+                results.Add(new RequirementResult(
+                    descriptor.supportsSaveAnchor,
+                    "Save Anchor",
+                    k_SubRequirementRemediationText));
 
             if (m_RequiresLoadAnchor)
-                results.Add(new RequirementResult(descriptor.supportsLoadAnchor, nameof(m_RequiresLoadAnchor)));
+                results.Add(new RequirementResult(
+                    descriptor.supportsLoadAnchor,
+                    "Load Anchor",
+                    k_SubRequirementRemediationText));
 
             if (m_RequiresEraseAnchor)
-                results.Add(new RequirementResult(descriptor.supportsEraseAnchor, nameof(m_RequiresEraseAnchor)));
+                results.Add(new RequirementResult(
+                    descriptor.supportsEraseAnchor,
+                    "Erase Anchor",
+                    k_SubRequirementRemediationText));
 
             if (m_RequiresGetSavedAnchorIds)
-                results.Add(new RequirementResult(descriptor.supportsGetSavedAnchorIds, nameof(m_RequiresGetSavedAnchorIds)));
+                results.Add(new RequirementResult(
+                    descriptor.supportsGetSavedAnchorIds,
+                    "Get Saved Anchor IDs",
+                    k_SubRequirementRemediationText));
 
             if (m_RequiresAsyncCancellation)
-                results.Add(new RequirementResult(descriptor.supportsAsyncCancellation, nameof(m_RequiresAsyncCancellation)));
+                results.Add(new RequirementResult(
+                    descriptor.supportsAsyncCancellation,
+                    "Async Cancellation",
+                    k_SubRequirementRemediationText));
         }
     }
 }

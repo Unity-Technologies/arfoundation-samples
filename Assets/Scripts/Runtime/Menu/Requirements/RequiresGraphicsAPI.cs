@@ -14,7 +14,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             results.Add(new RequirementResult(
                 SystemInfo.graphicsDeviceType == m_RequiredGraphicsDeviceType,
-                $"{GetType().Name} ({m_RequiredGraphicsDeviceType})"));
+                $"Graphics API ({m_RequiredGraphicsDeviceType})",
+                $"Enable {m_RequiredGraphicsDeviceType} in <b>Project Settings</b> > <b>Player</b> > <b>Other Settings</b> > <b>Graphics API</b>."));
         }
     }
 }

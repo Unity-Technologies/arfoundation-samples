@@ -35,6 +35,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField, HideInInspector]
         List<GameObject> m_SpawnedCopies = new();
 
+        [SerializeField]
+        Vector3 m_GridOffset;
+
         XRInputSubsystem m_XRInputSubsystem;
         XROrigin m_XROrigin;
 
@@ -122,10 +125,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
             var prefabMesh = m_PrefabToSpawn.GetComponent<MeshFilter>();
             var bounds = prefabMesh == null ? new Bounds(Vector3.zero, Vector3.zero) : prefabMesh.sharedMesh.bounds;
             var size = bounds.size * m_Scale;
-            var originPos = m_XROrigin.transform.position;
+            var originPos = m_XROrigin.transform.position + m_GridOffset;
             var startPos = new Vector3(
                 originPos.x - ComputeStartOffset(m_GridColumns, size.x, m_GridPadding),
-                m_SpawnHeight,
+                m_SpawnHeight + m_GridOffset.y,
                 originPos.z - ComputeStartOffset(m_GridRows, size.z, m_GridPadding));
 
             for (int layer = 0; layer < m_Layers; ++layer)

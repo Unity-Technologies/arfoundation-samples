@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_DisplayName: NormalMeshes
   m_Description: Visualizes scanned surface geometry by rendering normal-direction overlays on detected mesh surfaces.
-  m_PreviewImage: {fileID: 21300000, guid: abc5fbd90de214ac49fe263dd95321ff, type: 3}
   m_Category: {fileID: 11400000, guid: e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6, type: 2}
+  m_PreviewImage: {fileID: 21300000, guid: abc5fbd90de214ac49fe263dd95321ff, type: 3}
   m_Requirements:
+  - rid: 4838107887509701041
   - rid: 4788940866556788954
   references:
     version: 2
@@ -24,3 +25,9 @@ MonoBehaviour:
     - rid: 4788940866556788954
       type: {class: RequiresMeshing, ns: UnityEngine.XR.ARFoundation.Samples, asm: Unity.XR.ARFoundation.Samples}
       data: 
+    - rid: 4838107887509701041
+      type: {class: RequiresPermission, ns: UnityEngine.XR.ARFoundation.Samples, asm: Unity.XR.ARFoundation.Samples}
+      data:
+        m_PermissionsPerPlatform:
+        - platform: 0
+          permissionId: com.oculus.permission.USE_SCENE

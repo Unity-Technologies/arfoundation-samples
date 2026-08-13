@@ -21,5 +21,11 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         [SerializeField]
         List<MarkerData> m_QRCodes = new();
+
+        [SerializeField]
+        List<MarkerData> m_ArucoMarkers = new();
+
+        [SerializeField]
+        List<MarkerData> m_AprilTags = new();
     }
 }

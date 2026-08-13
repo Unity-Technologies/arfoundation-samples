@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_DisplayName: MetaSharedAnchors
   m_Description: Demonstrates sharing spatial anchors between multiple Meta Quest users for collaborative AR.
-  m_PreviewImage: {fileID: 21300000, guid: 24e58cb06a8f14cf994b20528e82521c, type: 3}
   m_Category: {fileID: 11400000, guid: a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6, type: 2}
+  m_PreviewImage: {fileID: 21300000, guid: 24e58cb06a8f14cf994b20528e82521c, type: 3}
   m_Requirements:
+  - rid: 4838107887509701038
   - rid: 5145623472158540244
   - rid: 4788940866556788922
   - rid: 2862248137945776348
@@ -27,8 +28,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 2862248137945776348
-      type: {class: RequiresPlaneDetection, ns: UnityEngine.XR.ARFoundation.Samples,
-        asm: Unity.XR.ARFoundation.Samples}
+      type: {class: RequiresPlaneDetection, ns: UnityEngine.XR.ARFoundation.Samples, asm: Unity.XR.ARFoundation.Samples}
       data:
         m_RequiresPlaneClassifications: 0
     - rid: 2862248137945776349
@@ -42,19 +42,20 @@ MonoBehaviour:
         m_RequiresEraseAnchor: 0
         m_RequiresGetSavedAnchorIds: 0
         m_RequiresAsyncCancellation: 0
-    - rid: 5145623472158540244
-      type: {class: RequiresOpenXRFeature, ns: UnityEngine.XR.ARFoundation.Samples,
-        asm: Unity.XR.ARFoundation.Samples}
+    - rid: 4838107887509701038
+      type: {class: RequiresPermission, ns: UnityEngine.XR.ARFoundation.Samples, asm: Unity.XR.ARFoundation.Samples}
       data:
-        m_RequiredFeature: UnityEngine.XR.OpenXR.Features.Meta.ARAnchorFeature, Unity.XR.MetaOpenXR,
-          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        m_PermissionsPerPlatform:
+        - platform: 0
+          permissionId: com.oculus.permission.USE_SCENE
+    - rid: 5145623472158540244
+      type: {class: RequiresOpenXRFeature, ns: UnityEngine.XR.ARFoundation.Samples, asm: Unity.XR.ARFoundation.Samples}
+      data:
+        m_RequiredFeature: UnityEngine.XR.OpenXR.Features.Meta.ARAnchorFeature, Unity.XR.MetaOpenXR, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
     - rid: 9206641917974020535
-      type: {class: RequiresMetaSharedAnchors, ns: UnityEngine.XR.ARFoundation.Samples,
-        asm: Unity.XR.ARFoundation.Samples}
+      type: {class: RequiresMetaSharedAnchors, ns: UnityEngine.XR.ARFoundation.Samples, asm: Unity.XR.ARFoundation.Samples}
       data: 
     - rid: 9206642367775899938
-      type: {class: RequiresOpenXRFeature, ns: UnityEngine.XR.ARFoundation.Samples,
-        asm: Unity.XR.ARFoundation.Samples}
+      type: {class: RequiresOpenXRFeature, ns: UnityEngine.XR.ARFoundation.Samples, asm: Unity.XR.ARFoundation.Samples}
       data:
-        m_RequiredFeature: UnityEngine.XR.OpenXR.Features.Meta.ColocationDiscoveryFeature,
-          Unity.XR.MetaOpenXR, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        m_RequiredFeature: UnityEngine.XR.OpenXR.Features.Meta.ColocationDiscoveryFeature, Unity.XR.MetaOpenXR, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null

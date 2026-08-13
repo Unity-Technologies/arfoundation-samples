@@ -1,5 +1,6 @@
 using System;
 using UnityEditor.Build;
+using UnityEditor.Build.Profile;
 using UnityEditor.Build.Reporting;
 
 namespace UnityEditor.XR.ARFoundation.Samples
@@ -12,7 +13,8 @@ namespace UnityEditor.XR.ARFoundation.Samples
         {
             try
             {
-                SceneManifestGenerator.RefreshFromActiveBuildProfile();
+                var profile = AssetDatabase.LoadAssetAtPath<BuildProfile>(report.summary.buildProfilePath);
+                SceneManifestGenerator.Refresh(profile);
             }
             catch (InvalidOperationException ex)
             {

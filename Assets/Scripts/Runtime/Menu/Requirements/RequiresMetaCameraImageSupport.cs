@@ -20,9 +20,15 @@ namespace UnityEngine.XR.ARFoundation.Samples
 #if METAOPENXR_2_4_0_OR_NEWER && UNITY_ANDROID
             var feature = OpenXRSettings.Instance.GetFeature<ARCameraFeature>();
             var isSupported = feature != null && feature.enabled && feature.cameraImageSupportEnabled;
-            results.Add(new RequirementResult(isSupported, GetType().Name));
+            results.Add(new RequirementResult(
+                isSupported,
+                "Meta Camera Image Support",
+                "Ensure <b>Meta Quest: Camera (Passthrough)</b> is enabled in <b>Project Settings</b> > <b>XR Plug-in Management</b> > <b>OpenXR</b> and that <b>Camera Image Support</b> is enabled in its feature settings."));
 #else
-            results.Add(new RequirementResult(false, GetType().Name));
+            results.Add(new RequirementResult(
+                false,
+                "Meta Camera Image Support",
+                "Ensure <b>Meta Quest: Camera (Passthrough)</b> is enabled in <b>Project Settings</b> > <b>XR Plug-in Management</b> > <b>OpenXR</b> and that <b>Camera Image Support</b> is enabled in its feature settings."));
 #endif
         }
     }

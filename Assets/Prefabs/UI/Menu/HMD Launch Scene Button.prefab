@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2364246492223373102}
   - component: {fileID: 4837592237490445052}
   - component: {fileID: 2601469422008703347}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Scene Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,8 +70,7 @@ MonoBehaviour:
   m_text: Raycasts
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3e262267a8bff4052949f3cbc5f2820f, type: 2}
-  m_sharedMaterial: {fileID: 3374262808974120758, guid: 3e262267a8bff4052949f3cbc5f2820f,
-    type: 2}
+  m_sharedMaterial: {fileID: 3374262808974120758, guid: 3e262267a8bff4052949f3cbc5f2820f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -118,7 +117,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 0
-  m_ActiveFontFeatures: 6e72656b
+  m_ActiveFontFeatures: 6e72656bu
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -177,7 +176,7 @@ GameObject:
   - component: {fileID: 5973576428196667867}
   - component: {fileID: 4638428179019707038}
   - component: {fileID: 6421578517430422446}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -278,7 +277,7 @@ GameObject:
   - component: {fileID: 3421507649127498242}
   - component: {fileID: 1529668867557441583}
   - component: {fileID: 2985198382257598505}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Outline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -381,7 +380,8 @@ GameObject:
   - component: {fileID: 7267417700447562584}
   - component: {fileID: 8775486556801143489}
   - component: {fileID: 8804369786605030091}
-  m_Layer: 10
+  - component: {fileID: 7382259814148955873}
+  m_Layer: 5
   m_Name: HMD Launch Scene Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -492,20 +492,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2510815639933214853}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8804369786605030091}
-        m_TargetAssemblyTypeName: UnityEngine.XR.ARFoundation.Samples.UIHighlight,
-          Unity.XR.ARFoundation.Samples
-        m_MethodName: OnClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_ExtraGraphics:
   - {fileID: 2470499553509450582}
   - {fileID: 5973576428196667867}
@@ -556,6 +543,24 @@ MonoBehaviour:
   m_HighlightDisabled:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7382259814148955873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2567303315351227511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbd336afdb4ed462a82ed00cb3c964d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.XR.ARFoundation.Samples::UnityEngine.XR.ARFoundation.Samples.SceneButtonView
+  m_LaunchButton: {fileID: 8438063324431532558}
+  m_SceneNameLabel: {fileID: 2364246492223373102}
+  m_DescriptionLabel: {fileID: 1731550040053774108}
+  m_FallbackImage: {fileID: 7747900656364423368}
+  m_PreviewImage: {fileID: 7469629570767593789}
+  m_UnsupportedBadge: {fileID: 7589765626129056705}
 --- !u!1 &3500041728672912102
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,7 +574,7 @@ GameObject:
   - component: {fileID: 1731550040053774108}
   - component: {fileID: 3427103450448880281}
   - component: {fileID: 5394244522828179961}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -626,8 +631,7 @@ MonoBehaviour:
   m_text: Occlude AR content with physical objects and perform human segmentation.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39867e5449c844cbaa691f241ee9e41d, type: 2}
-  m_sharedMaterial: {fileID: 2119413175553802479, guid: 39867e5449c844cbaa691f241ee9e41d,
-    type: 2}
+  m_sharedMaterial: {fileID: 2119413175553802479, guid: 39867e5449c844cbaa691f241ee9e41d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -651,10 +655,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24.68
+  m_fontSize: 18
   m_fontSizeBase: 24.68
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -674,7 +678,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 0
-  m_ActiveFontFeatures: 6e72656b
+  m_ActiveFontFeatures: 6e72656bu
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -733,7 +737,7 @@ GameObject:
   - component: {fileID: 5534550701329943428}
   - component: {fileID: 7147197440802347712}
   - component: {fileID: 380637050090582788}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Footer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -837,7 +841,7 @@ GameObject:
   - component: {fileID: 4809838379558088972}
   - component: {fileID: 6472103274689309994}
   - component: {fileID: 206256220971864432}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Thumbnail Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -953,7 +957,7 @@ GameObject:
   - component: {fileID: 8181665471257308717}
   - component: {fileID: 141306106403372165}
   - component: {fileID: 5609196832203803254}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1054,7 +1058,7 @@ GameObject:
   - component: {fileID: 7583175788601116124}
   - component: {fileID: 7130443972386930354}
   - component: {fileID: 1935534982330840148}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Unsupported Badge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1156,7 +1160,7 @@ GameObject:
   - component: {fileID: 2470499553509450582}
   - component: {fileID: 8829157242651644732}
   - component: {fileID: 6795434592177525994}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Fallback Thumbnail Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1258,7 +1262,7 @@ GameObject:
   - component: {fileID: 7469629570767593789}
   - component: {fileID: 4922931589926595428}
   - component: {fileID: 1627347834087824508}
-  m_Layer: 10
+  m_Layer: 5
   m_Name: Thumbnail
   m_TagString: Untagged
   m_Icon: {fileID: 0}

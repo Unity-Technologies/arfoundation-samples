@@ -27,7 +27,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField]
         GameObject m_UnsupportedBadge;
 
+        string m_SceneDisplayName;
         Action m_OnLaunchClicked;
+
+        public string sceneDisplayName => m_SceneDisplayName;
 
         void Reset()
         {
@@ -40,14 +43,20 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_LaunchButton = GetComponent<Button>();
         }
 
+        public void SetDisplayNameLabel(string richText)
+        {
+            m_SceneNameLabel.text = richText;
+        }
+
         public void Initialize(
-            string sceneName,
+            string sceneDisplayName,
             string description,
             bool isSupported,
             Sprite previewImage,
             Action onLaunchClicked)
         {
-            m_SceneNameLabel.text = sceneName;
+            m_SceneDisplayName = sceneDisplayName;
+            m_SceneNameLabel.text = sceneDisplayName;
             m_DescriptionLabel.text = description;
             m_UnsupportedBadge.SetActive(!isSupported);
 

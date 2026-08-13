@@ -9,6 +9,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
         where TSubsystem : SubsystemWithProvider
         where TSubsystemDescriptor : ISubsystemDescriptor
     {
+        protected const string k_SubRequirementRemediationText =
+            "Verify this feature is supported on your device, enabled in <b>Project Settings</b>, and has the required permissions.";
+
         // ReSharper disable once StaticMemberInGenericType
         static bool s_Initialized;
         static List<TSubsystemDescriptor> s_Descriptors = new();
@@ -24,7 +27,10 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 s_LoadedSubsystem = LoaderUtility.GetActiveLoader()?.GetLoadedSubsystem<TSubsystem>();
             }
 
-            results.Add(new RequirementResult(s_LoadedSubsystem != null && s_Descriptors.Count != 0, GetType().Name));
+            results.Add(new RequirementResult(
+                s_LoadedSubsystem != null && s_Descriptors.Count != 0,
+                typeof(TSubsystem).Name,
+                "The subsystem was not loaded."));
         }
     }
 }

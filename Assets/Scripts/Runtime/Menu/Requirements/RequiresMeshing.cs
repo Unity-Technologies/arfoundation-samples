@@ -19,7 +19,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     s_MeshingSupported = true;
             }
 
-            results.Add(new RequirementResult(s_MeshingSupported, GetType().Name));
+            results.Add(new RequirementResult(s_MeshingSupported, nameof(XRMeshSubsystem), "The subsystem was not loaded."));
         }
     }
 }

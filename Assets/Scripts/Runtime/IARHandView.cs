@@ -1,13 +1,15 @@
 using System;
+using UnityEngine.XR.Hands;
 using UnityEngine.XR.Hands.Meshing;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
     public interface IARHandView : IDisposable
     {
-        MeshFilter meshFilter { get; }
-        MeshRenderer meshRenderer { get; }
+        Renderer renderer { get; }
+        bool isInitialized { get; }
 
-        void Update(in XRHandMeshData meshData);
+        void Update(XRHandSubsystem subsystem, in XRHandMeshData meshData);
+        void UpdatePoses(XRHandSubsystem subsystem);
     }
 }

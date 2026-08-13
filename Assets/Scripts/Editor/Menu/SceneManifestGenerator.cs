@@ -9,9 +9,8 @@ namespace UnityEditor.XR.ARFoundation.Samples
 {
     static class SceneManifestGenerator
     {
-        const string k_MenuScenesDirectory = "Scenes/Menu/";
-        const string k_ResourcesDirectory = "Assets/Settings/Build Profiles/Resources";
-        const string k_ManifestAssetPath = k_ResourcesDirectory + "/RuntimeSceneManifest.asset";
+        static readonly HashSet<string> s_ScenePathSet = new();
+        static readonly List<string> s_ScenePathList = new();
 
         [MenuItem("AR Foundation/Refresh Scene Manifest")]
         public static void RefreshFromActiveBuildProfile()
@@ -19,8 +18,18 @@ namespace UnityEditor.XR.ARFoundation.Samples
             Refresh(BuildProfile.GetActiveBuildProfile());
         }
 
+        /// <summary>
+        /// Refreshes the scene manifest from the given build profile. If <paramref name="profile"/>
+        /// is <c>null</c>, falls back to collecting scenes from all build profile assets.
+        /// </summary>
         public static RuntimeSceneManifest Refresh(BuildProfile profile)
         {
+            if (profile == null)
+            {
+                Debug.LogWarning("[SceneManifestGenerator] No build profile provided. Falling back to all build profile scenes.");
+                return RefreshAll();
+            }
+
             var scenePaths = new List<string>();
             ResolveScenePaths(profile, scenePaths);
             var descriptors = CurateDescriptors(scenePaths);
@@ -30,20 +39,7 @@ namespace UnityEditor.XR.ARFoundation.Samples
         static void ResolveScenePaths(BuildProfile profile, List<string> scenePathsOutput)
         {
             scenePathsOutput.Clear();
-
-            if (profile != null)
-            {
-                foreach (var scene in profile.scenes)
-                {
-                    if (scene.enabled)
-                        scenePathsOutput.Add(scene.path);
-                }
-
-                return;
-            }
-
-            // Fallback for non-profile build path
-            foreach (var scene in EditorBuildSettings.scenes)
+            foreach (var scene in profile.scenes)
             {
                 if (scene.enabled)
                     scenePathsOutput.Add(scene.path);
@@ -62,7 +58,7 @@ namespace UnityEditor.XR.ARFoundation.Samples
                 if (descriptor == null)
                 {
                     throw new InvalidOperationException(
-                        $"No {nameof(SampleSceneDescriptor)} found for scene: <color=white>{scenePath}</color>. Expected a co-located .asset file with the same name.");
+                        $"[SceneManifestGenerator] No {nameof(SampleSceneDescriptor)} found for scene: <color=white>{scenePath}</color>. Expected a co-located .asset file with the same name.");
                 }
 
                 result.Add(descriptor);
@@ -79,20 +75,20 @@ namespace UnityEditor.XR.ARFoundation.Samples
 
         static bool IsMenuScene(string scenePath)
         {
-            return scenePath.Contains(k_MenuScenesDirectory);
+            return scenePath.Contains(SceneManifestPaths.menuScenesDirectory);
         }
 
         static RuntimeSceneManifest SaveManifest(List<SampleSceneDescriptor> descriptors)
         {
             EnsureResourcesDirectoryExists();
 
-            var manifest = AssetDatabase.LoadAssetAtPath<RuntimeSceneManifest>(k_ManifestAssetPath);
+            var manifest = AssetDatabase.LoadAssetAtPath<RuntimeSceneManifest>(SceneManifestPaths.manifestAssetPath);
             if (manifest == null)
             {
                 manifest = ScriptableObject.CreateInstance<RuntimeSceneManifest>();
-                AssetDatabase.CreateAsset(manifest, k_ManifestAssetPath);
+                AssetDatabase.CreateAsset(manifest, SceneManifestPaths.manifestAssetPath);
                 Debug.Log(
-                    $"[SceneManifestGenerator] Created RuntimeSceneManifest at {k_ManifestAssetPath}",
+                    $"[SceneManifestGenerator] Created RuntimeSceneManifest at {SceneManifestPaths.manifestAssetPath}",
                     manifest);
             }
 
@@ -101,10 +97,41 @@ namespace UnityEditor.XR.ARFoundation.Samples
             return manifest;
         }
 
+        static RuntimeSceneManifest RefreshAll()
+        {
+            s_ScenePathSet.Clear();
+            if (!Directory.Exists(SceneManifestPaths.buildProfilesDirectory))
+            {
+                Debug.LogWarning($"[SceneManifestGenerator] Build profiles directory does not exist: {SceneManifestPaths.buildProfilesDirectory}");
+                return SaveManifest(new List<SampleSceneDescriptor>());
+            }
+            var files = Directory.GetFiles(SceneManifestPaths.buildProfilesDirectory, "*.asset");
+
+            foreach (var file in files)
+            {
+                var assetPath = file.Replace('\\', '/');
+                var profile = AssetDatabase.LoadAssetAtPath<BuildProfile>(assetPath);
+
+                if (profile == null)
+                    continue;
+
+                foreach (var scene in profile.scenes)
+                {
+                    if (scene.enabled)
+                        s_ScenePathSet.Add(scene.path);
+                }
+            }
+
+            s_ScenePathList.Clear();
+            s_ScenePathList.AddRange(s_ScenePathSet);
+            var descriptors = CurateDescriptors(s_ScenePathList);
+            return SaveManifest(descriptors);
+        }
+
         static void EnsureResourcesDirectoryExists()
         {
-            if (!AssetDatabase.IsValidFolder(k_ResourcesDirectory))
-                Directory.CreateDirectory(k_ResourcesDirectory);
+            if (!AssetDatabase.IsValidFolder(SceneManifestPaths.resourcesDirectory))
+                Directory.CreateDirectory(SceneManifestPaths.resourcesDirectory);
         }
     }
 }

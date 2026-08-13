@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_DisplayName: HMDOcclusion
   m_Description: Demonstrates shader-based occlusion of virtual content by real geometry on OpenXR head-mounted displays.
-  m_PreviewImage: {fileID: 21300000, guid: 2a907b83b139e47eea46fa1483288bc1, type: 3}
   m_Category: {fileID: 11400000, guid: b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9, type: 2}
+  m_PreviewImage: {fileID: 21300000, guid: 2a907b83b139e47eea46fa1483288bc1, type: 3}
   m_Requirements:
+  - rid: 4838107887509701042
   - rid: 196393980134162706
   - rid: 196393980134162707
   references:
@@ -30,3 +31,11 @@ MonoBehaviour:
       type: {class: RequiresXRLoader, ns: UnityEngine.XR.ARFoundation.Samples, asm: Unity.XR.ARFoundation.Samples}
       data:
         m_LoaderType: 0
+    - rid: 4838107887509701042
+      type: {class: RequiresPermission, ns: UnityEngine.XR.ARFoundation.Samples, asm: Unity.XR.ARFoundation.Samples}
+      data:
+        m_PermissionsPerPlatform:
+        - platform: 0
+          permissionId: com.oculus.permission.USE_SCENE
+        - platform: 1
+          permissionId: android.permission.SCENE_UNDERSTANDING_COARSE
