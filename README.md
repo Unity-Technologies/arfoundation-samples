@@ -19,8 +19,9 @@ Refer to the following table for links to branches of this repository and their 
 
 | Unity version  | AR Foundation version |
 | -------------- | --------------------- |
-| Unity 6.6 alpha (6000.6) | [6.6](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.6) |
-| Unity 6.5 (6000.5) | 6.5 [main](https://github.com/Unity-Technologies/arfoundation-samples/) branch |
+| Unity 6.7 alpha (6000.7) | [6.6](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.6) |
+| Unity 6.6 beta (6000.6) | [6.6](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.6) |
+| Unity 6.5 (6000.5) | 6.5 ([main](https://github.com/Unity-Technologies/arfoundation-samples/) branch) |
 | Unity 6.3 LTS (6000.3) | [6.3](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.3) |
 | Unity 6.0 LTS (6000.0) | [6.0](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.0) |
 
