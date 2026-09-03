@@ -287,7 +287,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 var entryIntId = m_EntryIdByTrackableId[trackableId];
                 var entry = m_AnchorEntryByEntryId[entryIntId];
                 entry.UpdateInSceneStatus(null);
-                CheckToRemoveEntry(entryIntId);
+                CheckToRemoveEntry(entryIntId, trackableId);
             }
         }
 
@@ -347,7 +347,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             m_MetaBatchPersistentAnchors.EntryAdded(entry);
         }
 
-        void CheckToRemoveEntry(int entryId)
+        void CheckToRemoveEntry(int entryId, TrackableId trackableId = default)
         {
             var found = m_AnchorEntryByEntryId.TryGetValue(entryId, out var entry);
             if (!found)
@@ -361,7 +361,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             entry.eraseRequested.RemoveListener(EraseAnchor);
             entry.removeRequested.RemoveListener(RemoveAnchor);
 
-            m_EntryIdByTrackableId.Remove(entry.trackableId);
+            m_EntryIdByTrackableId.Remove(entry.trackableId ?? trackableId);
             m_EntryIdBySavedAnchorGuid.Remove(entry.savedAnchorGuid);
             m_AnchorEntryByEntryId.Remove(entryId);
             m_MetaBatchPersistentAnchors.EntryRemoved(entry);

@@ -475,6 +475,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -639,6 +640,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1128947533}
+    - targetCorrespondingSourceObject: {fileID: 7957942351869948125, guid: 8f2c1ffdafd49a943ac79dc0ff480220,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1128947536}
+    - targetCorrespondingSourceObject: {fileID: 7957942351869948125, guid: 8f2c1ffdafd49a943ac79dc0ff480220,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1128947535}
     - targetCorrespondingSourceObject: {fileID: 8766024634595469697, guid: 8f2c1ffdafd49a943ac79dc0ff480220,
         type: 3}
       insertIndex: -1
@@ -722,13 +731,14 @@ MonoBehaviour:
   m_PrefabToSpawn: {fileID: 723666215476564441, guid: 6f06c503fd3e00744b7f0f2c504c1be4,
     type: 3}
   m_SpawnHeight: 0
-  m_GridRows: 10
-  m_GridColumns: 10
-  m_Layers: 10
-  m_Scale: 0.3
-  m_GridPadding: 0
+  m_GridRows: 6
+  m_GridColumns: 6
+  m_Layers: 6
+  m_Scale: 0.2
+  m_GridPadding: 0.3
   m_DistanceToClosestObject: 1
   m_SpawnedCopies: []
+  m_GridOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1128947534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -745,6 +755,52 @@ MonoBehaviour:
   m_InputActionReferences: {fileID: 11400000, guid: 0601a0c2bd60343458dc7aca9d61251a,
     type: 2}
   m_PoseEvent: {fileID: 11400000, guid: b4c22be57749c834fb731b76b2e2e0d2, type: 2}
+--- !u!114 &1128947535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1128947529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60490cc6dc6bb467e858e52fc066eb06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PrefabToSpawn: {fileID: 723666215476564441, guid: 2d9ca4a7bd0cef046ac41b06eba199ad,
+    type: 3}
+  m_SpawnHeight: 0
+  m_GridRows: 3
+  m_GridColumns: 3
+  m_Layers: 3
+  m_Scale: 0.2
+  m_GridPadding: 0.3
+  m_DistanceToClosestObject: 1
+  m_SpawnedCopies: []
+  m_GridOffset: {x: 0.4, y: 0, z: 0.4}
+--- !u!114 &1128947536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1128947529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60490cc6dc6bb467e858e52fc066eb06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PrefabToSpawn: {fileID: 723666215476564441, guid: eaaf702c4a775924ead727a283d41b2b,
+    type: 3}
+  m_SpawnHeight: 0
+  m_GridRows: 3
+  m_GridColumns: 3
+  m_Layers: 3
+  m_Scale: 0.2
+  m_GridPadding: 0.3
+  m_DistanceToClosestObject: 1
+  m_SpawnedCopies: []
+  m_GridOffset: {x: -0.4, y: 0, z: -0.4}
 --- !u!1 &1778612937
 GameObject:
   m_ObjectHideFlags: 0
@@ -800,7 +856,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1778612937}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 13
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
@@ -852,7 +908,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1

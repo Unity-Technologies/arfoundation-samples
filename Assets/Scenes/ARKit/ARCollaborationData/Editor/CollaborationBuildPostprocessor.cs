@@ -96,7 +96,11 @@ namespace UnityEditor.XR.ARFoundation.Samples
         [PostProcessScene]
         static void OnPostProcessScene()
         {
+#if UNITY_6000_4_OR_NEWER
+            foreach (var collaborativeSession in Object.FindObjectsByType<CollaborativeSession>())
+#else
             foreach (var collaborativeSession in Object.FindObjectsByType<CollaborativeSession>(FindObjectsSortMode.None))
+#endif
             {
                 s_CollaborativeSessions.Add(collaborativeSession);
             }

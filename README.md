@@ -15,15 +15,15 @@ Each AR Foundation feature is used in a minimal sample scene with example code t
 
 ## Which version should I use?
 
-The `main` branch of this repository uses AR Foundation 6.3 and is compatible with Unity versions 6000.0 and newer. Refer to the following table for links to other branches of this repository and their corresponding Unity versions.
+Refer to the following table for links to branches of this repository and their corresponding Unity versions:
 
 | Unity version  | AR Foundation version |
 | -------------- | --------------------- |
-| Unity 6.5 beta (6000.5) | [6.5](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.5) |
-| Unity 6.4 (6000.4) | 6.4 ([main](https://github.com/Unity-Technologies/arfoundation-samples/) branch) |
-| Unity 6.3 LTS (6000.3) | [6.3](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.3)  |
+| Unity 6.7 alpha (6000.7) | [6.6](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.6) |
+| Unity 6.6 beta (6000.6) | [6.6](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.6) |
+| Unity 6.5 (6000.5) | 6.5 ([main](https://github.com/Unity-Technologies/arfoundation-samples/) branch) |
+| Unity 6.3 LTS (6000.3) | [6.3](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.3) |
 | Unity 6.0 LTS (6000.0) | [6.0](https://github.com/Unity-Technologies/arfoundation-samples/tree/6.0) |
-| 2022.3 (Enterprise license only) | [5.2](https://github.com/Unity-Technologies/arfoundation-samples/tree/5.2) |
 
 ## How to use these samples
 
